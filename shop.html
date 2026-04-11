@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HEKU Zubehör-Shop – Kielrollen, Stützräder, Windenständer und mehr. Direkt vom Hersteller, Vorkasse, ab Werk Bielefeld.">
+  <title>Shop – Zubehör & Ersatzteile | HEKU Fahrzeugbau GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
+      --text: #2C2C2C; --muted: #6B6B6B; --border: #E8E8E8;
+      --bg: #FFFFFF; --bg2: #F7F7F7; --bg3: #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover, .nav-center a.active { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; align-items: center; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); }
+    .cart-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; background: var(--bg); font-size: 13px; font-weight: 600; color: var(--text); }
+    .cart-btn:hover { border-color: var(--text); }
+    .cart-count { background: var(--rot); color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .cart-count.hidden { display: none; }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* PAGE HEADER */
+    .page-header { margin-top: 64px; background: var(--schwarz); padding: 56px 80px; }
+    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
+    .page-title { font-family: var(--font-head); font-size: clamp(32px, 4vw, 50px); color: #fff; line-height: 1.05; margin-bottom: 12px; }
+    .page-sub { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.65; max-width: 500px; }
+
+    /* INFO BAND */
+    .info-band { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 80px; display: flex; gap: 32px; flex-wrap: wrap; }
+    .info-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text); }
+    .info-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; }
+
+    /* SHOP LAYOUT */
+    .shop-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; padding: 48px 80px; align-items: start; }
+
+    /* SIDEBAR FILTER */
+    .shop-sidebar { position: sticky; top: 80px; padding-right: 32px; }
+    .filter-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .filter-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 32px; }
+    .filter-item { padding: 9px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .filter-item:hover { background: var(--bg2); color: var(--text); }
+    .filter-item.active { background: rgba(232,0,14,0.08); color: var(--rot); font-weight: 600; }
+
+    /* PRODUCT GRID */
+    .shop-main {}
+    .shop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+    .shop-count { font-size: 14px; color: var(--muted); }
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .product-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); display: flex; flex-direction: column; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+    .product-img { aspect-ratio: 4/3; background: var(--bg2); display: flex; align-items: center; justify-content: center; }
+    .product-img svg { opacity: 0.2; }
+    .product-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
+    .product-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rot); margin-bottom: 5px; }
+    .product-name { font-size: 14px; font-weight: 600; color: var(--schwarz); margin-bottom: 6px; line-height: 1.4; }
+    .product-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; margin-bottom: 14px; flex: 1; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+    .product-price { font-size: 18px; font-weight: 600; color: var(--schwarz); }
+    .btn-add { display: flex; align-items: center; gap: 6px; background: var(--rot); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease); white-space: nowrap; font-family: var(--font-body); }
+    .btn-add:hover { background: var(--rot-dark); transform: translateY(-1px); }
+    .btn-add.added { background: #15803d; }
+
+    /* CART DRAWER */
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--bg); z-index: 301; transform: translateX(100%); transition: transform 0.35s var(--ease); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,0.12); }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-head { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .cart-head-title { font-family: var(--font-head); font-size: 22px; color: var(--schwarz); }
+    .cart-close { width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .cart-close:hover { border-color: var(--text); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px 28px; }
+    .cart-empty { text-align: center; padding: 48px 0; }
+    .cart-empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.3; }
+    .cart-empty-text { font-size: 15px; color: var(--muted); }
+    .cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img { width: 56px; height: 56px; border-radius: 8px; background: var(--bg2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cart-item-img svg { opacity: 0.25; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: 14px; font-weight: 600; color: var(--schwarz); margin-bottom: 3px; line-height: 1.4; }
+    .cart-item-price { font-size: 13px; color: var(--muted); }
+    .cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--border); background: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; line-height: 1; font-family: var(--font-body); }
+    .qty-btn:hover { border-color: var(--text); }
+    .qty-num { font-size: 14px; font-weight: 600; min-width: 24px; text-align: center; }
+    .cart-item-del { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--border); background: none; cursor: pointer; font-size: 14px; color: var(--muted); display: flex; align-items: center; justify-content: center; transition: all 0.15s; margin-left: auto; }
+    .cart-item-del:hover { border-color: #E24B4A; color: #E24B4A; }
+    .cart-foot { padding: 20px 28px; border-top: 1px solid var(--border); }
+    .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+    .cart-total-label { font-size: 13px; color: var(--muted); }
+    .cart-total-value { font-size: 24px; font-weight: 600; color: var(--schwarz); }
+    .cart-mwst { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+    .btn-checkout { width: 100%; height: 52px; background: var(--rot); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+    .btn-checkout:hover { background: var(--rot-dark); }
+    .btn-checkout:disabled { background: var(--bg3); color: var(--muted); cursor: not-allowed; }
+
+    /* CHECKOUT MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 400; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg); border-radius: 16px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+    .modal-head { padding: 28px 32px 0; display: flex; justify-content: space-between; align-items: center; }
+    .modal-title { font-family: var(--font-head); font-size: 24px; color: var(--schwarz); }
+    .modal-close { width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid var(--border); background: none; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+    .modal-body { padding: 24px 32px 32px; }
+    .modal-section { margin-bottom: 24px; }
+    .modal-section-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-grid.full { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .form-label span { color: var(--rot); }
+    .form-input { height: 44px; padding: 0 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; font-family: var(--font-body); }
+    .form-input:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .form-select { height: 44px; padding: 0 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); background: var(--bg); outline: none; appearance: none; font-family: var(--font-body); }
+    .order-summary { background: var(--bg2); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .order-summary-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .order-line { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--text); }
+    .order-line.total { font-weight: 700; font-size: 15px; border-top: 1px solid var(--border); padding-top: 10px; margin-top: 6px; }
+    .vorkasse-box { background: rgba(232,0,14,0.05); border: 1px solid rgba(232,0,14,0.15); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .vorkasse-title { font-size: 13px; font-weight: 700; color: var(--rot); margin-bottom: 8px; }
+    .vorkasse-text { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+    .vorkasse-bank { margin-top: 10px; font-size: 13px; line-height: 1.8; color: var(--text); }
+    .consent-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .consent-check { width: 17px; height: 17px; border-radius: 4px; border: 1.5px solid var(--border); flex-shrink: 0; margin-top: 2px; cursor: pointer; appearance: none; transition: all 0.2s; }
+    .consent-check:checked { background: var(--rot); border-color: var(--rot); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .consent-text { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .consent-text a { color: var(--rot); }
+    .form-error { font-size: 13px; color: #E24B4A; margin-bottom: 14px; display: none; }
+    .form-error.show { display: block; }
+    .btn-order { width: 100%; height: 52px; background: var(--rot); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.22s; font-family: var(--font-body); }
+    .btn-order:hover { background: var(--rot-dark); }
+    .btn-order:disabled { background: var(--bg3); color: var(--muted); cursor: not-allowed; }
+
+    /* SUCCESS */
+    .order-success { display: none; text-align: center; padding: 40px 32px; }
+    .order-success.show { display: block; }
+    .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(34,197,94,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-icon svg { width: 28px; height: 28px; }
+    .success-title { font-family: var(--font-head); font-size: 26px; color: var(--schwarz); margin-bottom: 10px; }
+    .success-text { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .success-ref { display: inline-block; background: var(--bg2); border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--schwarz); }
+
+    /* FOOTER */
+    footer { background: var(--schwarz); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 80px; }
+    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
+    .ft-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 1024px) {
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .nav-burger { display: flex; }
+      .page-header { padding: 48px 24px; }
+      .info-band { padding: 14px 24px; }
+      .shop-layout { grid-template-columns: 1fr; padding: 32px 24px; }
+      .shop-sidebar { position: static; padding-right: 0; padding-bottom: 24px; }
+      .filter-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .product-grid { grid-template-columns: 1fr 1fr; }
+      .cart-drawer { width: 100%; max-width: 420px; }
+      footer { padding: 32px 24px; }
+    }
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .modal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Warenkorb
+        <span class="cart-count hidden" id="cartCount">0</span>
+      </button>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="page-header">
+    <div class="eyebrow">Zubehör & Ersatzteile</div>
+    <h1 class="page-title">HEKU Shop</h1>
+    <p class="page-sub">Original HEKU-Zubehör direkt vom Hersteller. Alle Preise inkl. 19% MwSt., ab Werk Bielefeld.</p>
+  </div>
+
+  <div class="info-band">
+    <div class="info-item"><div class="info-dot"></div>Vorkasse per Überweisung</div>
+    <div class="info-item"><div class="info-dot"></div>Ab Werk Bielefeld</div>
+    <div class="info-item"><div class="info-dot"></div>Original HEKU-Teile</div>
+    <div class="info-item"><div class="info-dot"></div>Alle Preise inkl. 19% MwSt.</div>
+  </div>
+
+  <div class="shop-layout">
+    <!-- SIDEBAR -->
+    <div class="shop-sidebar">
+      <div class="filter-title">Kategorie</div>
+      <div class="filter-list" id="filterList">
+        <div class="filter-item active" data-cat="alle" onclick="filterCat(this)">Alle Produkte</div>
+        <div class="filter-item" data-cat="winden" onclick="filterCat(this)">Windenständer & Winden</div>
+        <div class="filter-item" data-cat="stuetzraeder" onclick="filterCat(this)">Stützräder</div>
+        <div class="filter-item" data-cat="rollen" onclick="filterCat(this)">Kiel- & Stützrollen</div>
+        <div class="filter-item" data-cat="auflagen" onclick="filterCat(this)">Auflagen & Kissen</div>
+        <div class="filter-item" data-cat="raeder" onclick="filterCat(this)">Räder & Reifen</div>
+        <div class="filter-item" data-cat="sonstiges" onclick="filterCat(this)">Sonstiges</div>
+      </div>
+    </div>
+
+    <!-- PRODUKTE -->
+    <div class="shop-main">
+      <div class="shop-header">
+        <div class="shop-count" id="shopCount"></div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </div>
+
+  <!-- WARENKORB DRAWER -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <div class="cart-head-title">Warenkorb</div>
+      <button class="cart-close" onclick="toggleCart()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span class="cart-total-label">Gesamtbetrag</span>
+        <span class="cart-total-value" id="cartTotal">0,00 €</span>
+      </div>
+      <div class="cart-mwst">Inkl. 19% MwSt. · zzgl. Versandkosten</div>
+      <button class="btn-checkout" id="checkoutBtn" onclick="openCheckout()" disabled>Zur Bestellung →</button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div id="checkoutForm">
+        <div class="modal-head">
+          <div class="modal-title">Bestellung aufgeben</div>
+          <button class="modal-close" onclick="closeCheckout()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="order-summary" id="orderSummary"></div>
+
+          <div class="vorkasse-box">
+            <div class="vorkasse-title">Zahlung per Vorkasse</div>
+            <div class="vorkasse-text">Nach Eingang Ihrer Bestellung erhalten Sie eine Bestellbestätigung mit unseren Bankdaten. Wir versenden die Ware nach Zahlungseingang.</div>
+            <div class="vorkasse-bank">
+              HEKU Fahrzeugbau GmbH<br>
+              Bank: <strong>Sparkasse Bielefeld</strong><br>
+              IBAN: <strong>DE59 4805 0161 0070 0053 84</strong>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-title">Ihre Daten</div>
+            <div class="modal-grid" style="margin-bottom:14px">
+              <div class="form-group">
+                <label class="form-label">Anrede <span>*</span></label>
+                <select class="form-select form-input" id="co-anrede">
+                  <option value="">— Bitte wählen —</option>
+                  <option>Herr</option><option>Frau</option><option>Familie</option><option>Firma</option>
+                </select>
+              </div>
+              <div></div>
+            </div>
+            <div class="modal-grid" style="margin-bottom:14px">
+              <div class="form-group">
+                <label class="form-label">Vorname <span>*</span></label>
+                <input type="text" class="form-input" id="co-vorname" placeholder="Max">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nachname <span>*</span></label>
+                <input type="text" class="form-input" id="co-nachname" placeholder="Mustermann">
+              </div>
+            </div>
+            <div class="modal-grid" style="margin-bottom:14px">
+              <div class="form-group">
+                <label class="form-label">E-Mail <span>*</span></label>
+                <input type="email" class="form-input" id="co-email" placeholder="max@beispiel.de">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Telefon</label>
+                <input type="tel" class="form-input" id="co-telefon" placeholder="+49 521 ...">
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-section">
+            <div class="modal-section-title">Lieferadresse</div>
+            <div class="modal-grid full" style="margin-bottom:14px">
+              <div class="form-group">
+                <label class="form-label">Straße & Nr. <span>*</span></label>
+                <input type="text" class="form-input" id="co-strasse" placeholder="Musterstraße 1">
+              </div>
+            </div>
+            <div class="modal-grid" style="margin-bottom:14px">
+              <div class="form-group">
+                <label class="form-label">PLZ <span>*</span></label>
+                <input type="text" class="form-input" id="co-plz" placeholder="12345" maxlength="10">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ort <span>*</span></label>
+                <input type="text" class="form-input" id="co-ort" placeholder="Musterstadt">
+              </div>
+            </div>
+            <div class="modal-grid full">
+              <div class="form-group">
+                <label class="form-label">Anmerkung zur Bestellung</label>
+                <input type="text" class="form-input" id="co-notiz" placeholder="Optional">
+              </div>
+            </div>
+          </div>
+
+          <div class="consent-row">
+            <input type="checkbox" class="consent-check" id="co-consent">
+            <label class="consent-text" for="co-consent">
+              Ich akzeptiere die <a href="#">AGB</a> und habe die <a href="#">Datenschutzerklärung</a> zur Kenntnis genommen. Ich bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Bestellung verwendet werden.
+            </label>
+          </div>
+
+          <div class="form-error" id="co-error"></div>
+          <button class="btn-order" id="orderBtn" onclick="submitOrder()">Bestellung verbindlich absenden →</button>
+        </div>
+      </div>
+
+      <div class="order-success" id="orderSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div class="success-title">Bestellung eingegangen!</div>
+        <p class="success-text">Vielen Dank für Ihre Bestellung. Wir senden Ihnen die Bankdaten und Bestellbestätigung per E-Mail. Bitte überweisen Sie den Betrag mit Ihrer Bestellnummer als Verwendungszweck.</p>
+        <div class="success-ref" id="orderRef"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH · Alle Preise inkl. 19% MwSt., ab Werk Bielefeld</span>
+      <div class="ft-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
+    </div>
+  </footer>
+
+  <script>
+  // ─── PRODUKTDATENBANK ──────────────────────────────────────────────────────
+  const PRODUKTE = [
+    // Windenständer & Winden
+    { id:1, cat:'winden', name:'Windenstand mit Winde 1-2', desc:'Für Boote bis 500 kg', preis:295 },
+    { id:2, cat:'winden', name:'Windenstand mit Winde 1-3', desc:'Für Boote bis 1.500 kg', preis:385 },
+    { id:3, cat:'winden', name:'Windenstand mit Winde 1-8', desc:'Für Boote bis 3.000 kg', preis:495 },
+    { id:4, cat:'winden', name:'Windenstand mit Winde und Masthalter 1-2', desc:'Mit Masthalter', preis:385 },
+    { id:5, cat:'winden', name:'Windenstand mit Winde und Masthalter 1-3', desc:'Mit Masthalter', preis:445 },
+    { id:6, cat:'winden', name:'Bugstütze mit Masthalter', desc:'', preis:135 },
+    { id:7, cat:'winden', name:'Winde untersetzt 1-2', desc:'Für Boote bis 500 kg', preis:145 },
+    { id:8, cat:'winden', name:'Winde untersetzt 1-3', desc:'Für Boote bis 1.500 kg', preis:230 },
+    { id:9, cat:'winden', name:'Winde untersetzt 1-8', desc:'Für Boote bis 3.000 kg', preis:295 },
+    { id:10, cat:'winden', name:'Stahlseil verz. mit Haken', desc:'', preis:35 },
+    { id:11, cat:'winden', name:'Stahlseil verz. mit Haken und Umlenkrolle', desc:'Für Boote bis 2.850 kg', preis:95 },
+
+    // Stützräder
+    { id:12, cat:'stuetzraeder', name:'Stützrad, Vollgummi mit Klemmhalter', desc:'Standardausführung', preis:75 },
+    { id:13, cat:'stuetzraeder', name:'Stützrad, Vollgummi mit Klemmhalter', desc:'Schwere Ausführung', preis:148 },
+
+    // Kiel- & Stützrollen
+    { id:14, cat:'rollen', name:'Seitenstützrolle 120×250 höhenverstellbar', desc:'Mit Klemmhalter', preis:85 },
+    { id:15, cat:'rollen', name:'Seitenstützrolle 120×250 mit Gewindespindel', desc:'Mit Klemmhalter', preis:156 },
+    { id:16, cat:'rollen', name:'Seitenstützrolle 120×75', desc:'', preis:23 },
+    { id:17, cat:'rollen', name:'Kielrolle mit Halter Ø 80×130', desc:'Für Rohr 60, 70 □ u. Ø 60, 70', preis:55 },
+    { id:18, cat:'rollen', name:'Kielrolle mit Halter Ø 80×130 höhenverstellbar', desc:'Für Rohr 60, 70 □ u. Ø 60+70', preis:72 },
+    { id:19, cat:'rollen', name:'Kielrolle Ø 90×200 mit U-Halter', desc:'', preis:55 },
+    { id:20, cat:'rollen', name:'Kielrolle mit Halter Ø 90×200 höhenverstellbar', desc:'Für Rohr 60 □', preis:83 },
+    { id:21, cat:'rollen', name:'Kielrolle Ø 80×130', desc:'', preis:27 },
+    { id:22, cat:'rollen', name:'Kielrolle Ø 90×200', desc:'', preis:30 },
+    { id:23, cat:'rollen', name:'POLY-Kielrolle Ø 90×200', desc:'', preis:39 },
+    { id:24, cat:'rollen', name:'3 Hecksliprollen mit V-Einführung höhenverstellbar', desc:'', preis:295 },
+    { id:25, cat:'rollen', name:'Heck-V-Einführung 60 □', desc:'', preis:120 },
+    { id:26, cat:'rollen', name:'Gewindespindel mit Befestigungshalter', desc:'', preis:110 },
+    { id:27, cat:'rollen', name:'Seitliche Führungsrollen steck- und abnehmbar', desc:'', preis:240 },
+
+    // Auflagen & Kissen
+    { id:28, cat:'auflagen', name:'Langauflage mit U-Halter 60 cm', desc:'', preis:49 },
+    { id:29, cat:'auflagen', name:'Langauflage mit U-Halter 90 cm', desc:'', preis:69 },
+    { id:30, cat:'auflagen', name:'Polsterkissen mit U-Halter', desc:'', preis:48 },
+    { id:31, cat:'auflagen', name:'Kielauflage, klappbar mit Halter', desc:'', preis:110 },
+    { id:32, cat:'auflagen', name:'Kielauflage mit Polsterkissen für Schlauchboot', desc:'', preis:135 },
+    { id:33, cat:'auflagen', name:'Vordere Rumpfstütze mit Gewindespindel und Polsterkissen', desc:'Stück', preis:145 },
+    { id:34, cat:'auflagen', name:'Heckstütze höhenverstellbar', desc:'Stück', preis:60 },
+    { id:35, cat:'auflagen', name:'Laufsteg (Gangway)', desc:'', preis:295 },
+
+    // Räder & Reifen
+    { id:36, cat:'raeder', name:'Reserverad 145 R 10', desc:'', preis:90 },
+    { id:37, cat:'raeder', name:'Reserverad 155 R-13', desc:'', preis:120 },
+    { id:38, cat:'raeder', name:'Reserverad 185 R-14 C, 8 PR', desc:'', preis:152 },
+    { id:39, cat:'raeder', name:'Reserveradhalter', desc:'', preis:49 },
+    { id:40, cat:'raeder', name:'Radstoßdämpfer 1-achsig', desc:'Für 100 km/h-Zulassung', preis:140 },
+    { id:41, cat:'raeder', name:'Radstoßdämpfer Tandem', desc:'Für 100 km/h-Zulassung', preis:280 },
+
+    // Sonstiges
+    { id:42, cat:'sonstiges', name:'Kasten-Sicherungsschloss', desc:'', preis:40 },
+    { id:43, cat:'sonstiges', name:'V-Gummi für Buganschlag bis Typ 500', desc:'', preis:20 },
+    { id:44, cat:'sonstiges', name:'V-Gummi für Buganschlag bis Typ 3500', desc:'', preis:28 },
+    { id:45, cat:'sonstiges', name:'Adapterstecker 7- bis 13-polig', desc:'', preis:39 },
+    { id:46, cat:'sonstiges', name:'Katamaranauflage für G 355', desc:'Aufpreis', preis:260 },
+    { id:47, cat:'sonstiges', name:'Huckepack-Transportwagen für G 500', desc:'Aufpreis', preis:245 },
+    { id:48, cat:'sonstiges', name:'Auflagen für 1 Jet-Ski', desc:'Aufpreis', preis:105 },
+    { id:49, cat:'sonstiges', name:'Auflagen für 2 Jet-Ski', desc:'Aufpreis', preis:210 },
+    { id:50, cat:'sonstiges', name:'2 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:410 },
+    { id:51, cat:'sonstiges', name:'4 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:475 },
+    { id:52, cat:'sonstiges', name:'6 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:595 },
+  ];
+
+  // ─── STATE ──────────────────────────────────────────────────────────────────
+  let cart = [];
+  let currentCat = 'alle';
+
+  // ─── RENDER PRODUKTE ────────────────────────────────────────────────────────
+  function renderProducts(cat) {
+    const filtered = cat === 'alle' ? PRODUKTE : PRODUKTE.filter(p => p.cat === cat);
+    document.getElementById('shopCount').textContent = `${filtered.length} Artikel`;
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = filtered.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="8" width="20" height="10" rx="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">${catLabel(p.cat)}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc || '&nbsp;'}</div>
+          <div class="product-footer">
+            <div class="product-price">${fmt(p.preis)}</div>
+            <button class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})">
+              + Warenkorb
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function catLabel(cat) {
+    const m = { winden:'Winden & Ständer', stuetzraeder:'Stützräder', rollen:'Kiel- & Stützrollen', auflagen:'Auflagen & Kissen', raeder:'Räder & Reifen', sonstiges:'Sonstiges' };
+    return m[cat] || cat;
+  }
+
+  function fmt(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
+
+  // ─── FILTER ──────────────────────────────────────────────────────────────────
+  function filterCat(el) {
+    document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    currentCat = el.dataset.cat;
+    renderProducts(currentCat);
+  }
+
+  // ─── WARENKORB ───────────────────────────────────────────────────────────────
+  function addToCart(id) {
+    const p = PRODUKTE.find(x => x.id === id);
+    const existing = cart.find(x => x.id === id);
+    if (existing) { existing.qty++; } else { cart.push({ ...p, qty: 1 }); }
+    updateCartUI();
+    const btn = document.getElementById('btn-' + id);
+    if (btn) { btn.textContent = '✓ Hinzugefügt'; btn.classList.add('added'); setTimeout(() => { btn.textContent = '+ Warenkorb'; btn.classList.remove('added'); }, 1500); }
+    if (!document.getElementById('cartDrawer').classList.contains('open')) toggleCart();
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(x => x.id !== id);
+    updateCartUI();
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(x => x.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    const countEl = document.getElementById('cartCount');
+    countEl.textContent = count;
+    countEl.classList.toggle('hidden', count === 0);
+    document.getElementById('cartTotal').textContent = fmt(total);
+    document.getElementById('checkoutBtn').disabled = cart.length === 0;
+
+    const itemsEl = document.getElementById('cartItems');
+    if (cart.length === 0) {
+      itemsEl.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div class="cart-empty-text">Ihr Warenkorb ist leer</div></div>`;
+    } else {
+      itemsEl.innerHTML = cart.map(i => `
+        <div class="cart-item">
+          <div class="cart-item-img"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="8" width="20" height="10" rx="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${i.name}</div>
+            <div class="cart-item-price">${fmt(i.preis)} / Stück</div>
+            <div class="cart-item-controls">
+              <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+              <span class="qty-num">${i.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+              <button class="cart-item-del" onclick="removeFromCart(${i.id})">✕</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function toggleCart() {
+    const drawer = document.getElementById('cartDrawer');
+    const overlay = document.getElementById('cartOverlay');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('open');
+  }
+
+  // ─── CHECKOUT ────────────────────────────────────────────────────────────────
+  function openCheckout() {
+    const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
+    const lines = cart.map(i => `<div class="order-line"><span>${i.name} ×${i.qty}</span><span>${fmt(i.preis * i.qty)}</span></div>`).join('');
+    document.getElementById('orderSummary').innerHTML = `
+      <div class="order-summary-title">Ihre Bestellung</div>
+      ${lines}
+      <div class="order-line total"><span>Gesamtbetrag</span><span>${fmt(total)}</span></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">Inkl. 19% MwSt. · zzgl. Versandkosten nach Absprache</div>`;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('checkoutForm').style.display = '';
+    document.getElementById('orderSuccess').classList.remove('show');
+    toggleCart();
+  }
+
+  function closeCheckout() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  async function submitOrder() {
+    const anrede  = document.getElementById('co-anrede').value;
+    const vorname = document.getElementById('co-vorname').value.trim();
+    const nachname= document.getElementById('co-nachname').value.trim();
+    const email   = document.getElementById('co-email').value.trim();
+    const telefon = document.getElementById('co-telefon').value.trim();
+    const strasse = document.getElementById('co-strasse').value.trim();
+    const plz     = document.getElementById('co-plz').value.trim();
+    const ort     = document.getElementById('co-ort').value.trim();
+    const notiz   = document.getElementById('co-notiz').value.trim();
+    const consent = document.getElementById('co-consent').checked;
+    const errEl   = document.getElementById('co-error');
+
+    if (!anrede || !vorname || !nachname || !email || !strasse || !plz || !ort) {
+      errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.'; errEl.classList.add('show'); return;
+    }
+    if (!email.includes('@')) {
+      errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'; errEl.classList.add('show'); return;
+    }
+    if (!consent) {
+      errEl.textContent = 'Bitte akzeptieren Sie die AGB und Datenschutzerklärung.'; errEl.classList.add('show'); return;
+    }
+    errEl.classList.remove('show');
+
+    const btn = document.getElementById('orderBtn');
+    btn.disabled = true; btn.textContent = 'Wird übermittelt...';
+
+    const ref = 'HK-' + Date.now().toString(36).toUpperCase();
+    const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
+    const bestellungText = cart.map(i => `${i.name} ×${i.qty} = ${fmt(i.preis * i.qty)}`).join('\n');
+
+    try {
+      const res = await fetch('https://formspree.io/f/xgopgpye', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `Shop-Bestellung ${ref} – ${anrede} ${vorname} ${nachname}`,
+          bestellnummer: ref,
+          anrede, vorname, nachname, email, telefon,
+          strasse, plz, ort,
+          bestellung: bestellungText,
+          gesamtbetrag: fmt(total),
+          notiz,
+          _replyto: email
+        })
+      });
+      if (res.ok) {
+        cart = [];
+        updateCartUI();
+        document.getElementById('checkoutForm').style.display = 'none';
+        document.getElementById('orderRef').textContent = 'Bestellnummer: ' + ref;
+        document.getElementById('orderSuccess').classList.add('show');
+      } else throw new Error();
+    } catch {
+      btn.disabled = false; btn.textContent = 'Bestellung verbindlich absenden →';
+      errEl.textContent = 'Fehler beim Senden. Bitte schreiben Sie uns an info@heku-fahrzeugbau.de.';
+      errEl.classList.add('show');
+    }
+  }
+
+  // ─── INIT ────────────────────────────────────────────────────────────────────
+  renderProducts('alle');
+  updateCartUI();
+
+  function toggleMenu() {
+    const c = document.querySelector('.nav-center');
+    const open = c.style.display === 'flex';
+    c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
+  }
+  </script>
+</body>
+</html>
