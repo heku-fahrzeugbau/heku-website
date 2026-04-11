@@ -265,6 +265,7 @@
 
       <div class="sidebar-result" id="sidebarResult">
         <div class="sidebar-result-label">Ihr Anhänger</div>
+        <div id="srBoat" style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:6px"></div>
         <div id="srModel" class="sidebar-result-empty">Noch nicht konfiguriert</div>
         <div id="srPrice" style="display:none" class="sidebar-result-price"></div>
       </div>
@@ -306,13 +307,19 @@
               <div class="card-label">Schlauchboot</div>
               <div class="card-sub">RIB, Festrumpf</div>
             </div>
-            <div class="select-card" data-value="hausboot" onclick="selectCard(this,'bootstyp')">
-              <div class="card-icon">🏠</div>
-              <div class="card-label">Hausboot / Sonstiges</div>
-              <div class="card-sub">Auf Anfrage</div>
-            </div>
+
           </div>
           <div class="form-error" id="err-bootstyp">Bitte wählen Sie einen Bootstyp aus.</div>
+        </div>
+
+        <!-- Bootsbezeichnung -->
+        <div class="form-grid single" style="margin-bottom:28px">
+          <div class="form-group">
+            <label class="form-label">Genaue Bootsbezeichnung <span>*</span></label>
+            <input type="text" class="form-input" id="bootsbezeichnung" placeholder="z.B. Jeanneau Sun Fast 3300, Bayliner VR5, Zodiac Pro 550">
+            <span class="form-hint">Hersteller + Modell + ggf. Baujahr — so können wir Ihr Boot vor dem Angebot prüfen</span>
+            <span class="form-error" id="err-bootsbezeichnung">Bitte geben Sie die Bootsbezeichnung ein.</span>
+          </div>
         </div>
 
         <!-- Maße -->
@@ -596,7 +603,7 @@
 
   // ─── STATE ─────────────────────────────────────────────────────────────────
   const state = {
-    bootstyp: null, laenge: null, breite: null, tiefgang: null, gewicht: null,
+    bootstyp: null, bootsbezeichnung: null, laenge: null, breite: null, tiefgang: null, gewicht: null,
     antrieb: null, zubehoer: [], empfohlenesModell: null,
     anrede:'', vorname:'', nachname:'', email:'', telefon:'',
     strasse:'', plz:'', ort:'', nachricht:''
@@ -624,6 +631,8 @@
     let ok = true;
     if (n === 1) {
       if (!state.bootstyp) { showErr('err-bootstyp'); ok=false; } else hideErr('err-bootstyp');
+      const bez = document.getElementById('bootsbezeichnung').value.trim();
+      if (!bez) { showErr('err-bootsbezeichnung'); ok=false; } else { hideErr('err-bootsbezeichnung'); state.bootsbezeichnung = bez; }
       const l = parseFloat(document.getElementById('laenge').value);
       if (!l || l<1||l>15) { showErr('err-laenge'); ok=false; } else { hideErr('err-laenge'); state.laenge=l; }
       const b = parseFloat(document.getElementById('breite').value);
@@ -667,6 +676,10 @@
     document.getElementById('srModel').textContent = '';
     document.getElementById('srModel').className = 'sidebar-result-model';
     document.getElementById('srModel').textContent = 'HEKU ' + modell.name;
+    if (state.bootsbezeichnung) {
+      const boatEl = document.getElementById('srBoat');
+      if (boatEl) boatEl.textContent = state.bootsbezeichnung;
+    }
     document.getElementById('srPrice').style.display = 'block';
     document.getElementById('srPrice').textContent = `ab ca. ${pMin.toLocaleString('de-DE')} €`;
 
@@ -753,6 +766,7 @@
     const nachrichtFull = `
 HEKU Engineer Konfiguration:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
+Boot:         ${state.bootsbezeichnung || '–'}
 Bootstyp:     ${state.bootstyp}
 Länge:        ${state.laenge} m
 Breite:       ${state.breite} m
@@ -781,6 +795,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
           _subject: betreff,
           anrede, vorname, nachname, email, telefon,
           strasse, plz, ort,
+          bootsbezeichnung: state.bootsbezeichnung,
           bootstyp: state.bootstyp,
           laenge: state.laenge, breite: state.breite,
           tiefgang: state.tiefgang, gewicht: state.gewicht,
