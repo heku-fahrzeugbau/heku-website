@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HEKU Fahrzeugbau GmbH – Familienunternehmen in der dritten Generation seit 1959. Geschichte, Werte und das Team hinter dem Bootsanhänger mit der wasserdichten Radnabe.">
+  <title>Über uns | HEKU Fahrzeugbau GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
+      --text: #2C2C2C; --muted: #6B6B6B; --border: #E8E8E8;
+      --bg: #FFFFFF; --bg2: #F7F7F7; --bg3: #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover, .nav-center a.active { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* HERO */
+    .hero { margin-top: 64px; background: var(--schwarz); padding: 96px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; overflow: hidden; }
+    .hero::before { content: '1959'; position: absolute; right: -20px; bottom: -20px; font-family: var(--font-head); font-size: 220px; color: rgba(255,255,255,0.03); pointer-events: none; line-height: 1; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 16px; }
+    .hero-title { font-family: var(--font-head); font-size: clamp(38px, 4.5vw, 62px); color: #fff; line-height: 1.05; margin-bottom: 24px; }
+    .hero-body { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 36px; }
+    .hero-stats { display: flex; gap: 40px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-stat-num { font-family: var(--font-head); font-size: 36px; color: #fff; }
+    .hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+    .hero-img { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; }
+    .hero-img-placeholder { text-align: center; }
+    .hero-img-placeholder svg { opacity: 0.15; margin-bottom: 12px; }
+    .hero-img-placeholder span { font-size: 13px; color: rgba(255,255,255,0.2); display: block; }
+
+    /* TIMELINE */
+    .timeline-section { padding: 80px 80px; background: var(--bg); }
+    .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
+    .section-title { font-family: var(--font-head); font-size: clamp(28px, 3.5vw, 44px); color: var(--schwarz); margin-bottom: 48px; }
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1.5px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 40px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot { position: absolute; left: -38px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--rot); border: 3px solid var(--bg); box-shadow: 0 0 0 1.5px var(--rot); }
+    .timeline-year { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--rot); text-transform: uppercase; margin-bottom: 6px; }
+    .timeline-event { font-size: 16px; font-weight: 600; color: var(--schwarz); margin-bottom: 6px; }
+    .timeline-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+    /* WERTE */
+    .values-section { padding: 80px 80px; background: var(--bg2); }
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+    .value-card { background: var(--bg); border-radius: 14px; padding: 36px 28px; border: 1px solid var(--border); transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+    .value-num { font-family: var(--font-head); font-size: 48px; color: var(--bg3); line-height: 1; margin-bottom: 16px; }
+    .value-bar { width: 28px; height: 3px; background: var(--rot); margin-bottom: 16px; }
+    .value-title { font-size: 16px; font-weight: 600; color: var(--schwarz); margin-bottom: 10px; }
+    .value-text { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* TEAM */
+    .team-section { padding: 80px 80px; }
+    .team-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px; margin-top: 48px; }
+    .team-card { display: flex; gap: 24px; padding: 28px; border: 1px solid var(--border); border-radius: 14px; align-items: flex-start; transition: border-color 0.2s; }
+    .team-card:hover { border-color: var(--rot); }
+    .team-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--bg3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-head); font-size: 22px; color: var(--muted); }
+    .team-name { font-size: 16px; font-weight: 600; color: var(--schwarz); margin-bottom: 3px; }
+    .team-role { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rot); margin-bottom: 8px; }
+    .team-bio { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* STANDORT */
+    .standort-section { padding: 80px 80px; background: var(--bg2); }
+    .standort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 48px; }
+    .standort-info { display: flex; flex-direction: column; gap: 20px; }
+    .standort-item { display: flex; gap: 16px; }
+    .standort-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(232,0,14,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .standort-icon svg { width: 18px; height: 18px; }
+    .standort-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .standort-value { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; }
+    .standort-value a { color: var(--rot); }
+    .standort-map { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+    .standort-map iframe { width: 100%; height: 280px; border: none; display: block; }
+
+    /* CTA */
+    .cta-banner { background: var(--schwarz); padding: 72px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .cta-title { font-family: var(--font-head); font-size: clamp(28px, 3vw, 42px); color: #fff; margin-bottom: 10px; }
+    .cta-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); max-width: 480px; line-height: 1.65; }
+    .btn-rot { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 8px; white-space: nowrap; transition: all 0.22s; }
+    .btn-rot:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,0,14,0.35); }
+
+    /* FOOTER */
+    footer { background: var(--schwarz); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
+    .ft-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .nav-burger { display: flex; }
+      .hero { grid-template-columns: 1fr; padding: 56px 24px; gap: 40px; }
+      .hero::before { display: none; }
+      .timeline-section, .values-section, .team-section, .standort-section { padding: 56px 24px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .standort-grid { grid-template-columns: 1fr; }
+      .cta-banner { grid-template-columns: 1fr; padding: 48px 24px; gap: 24px; }
+      footer { padding: 32px 24px; }
+    }
+    @media (max-width: 640px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html" class="active">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Familienunternehmen · 3. Generation</div>
+      <h1 class="hero-title">Seit 1959.<br>Made in Bielefeld.</h1>
+      <p class="hero-body">HEKU Fahrzeugbau steht für über 65 Jahre Erfahrung im Bootsanhängerbau. Was als Einzelunternehmen begann, ist heute ein Familienunternehmen in der dritten Generation — mit denselben Werten wie am ersten Tag.</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">1959</div><div class="hero-stat-lbl">Gründungsjahr</div></div>
+        <div><div class="hero-stat-num">3.</div><div class="hero-stat-lbl">Generation</div></div>
+        <div><div class="hero-stat-num">65+</div><div class="hero-stat-lbl">Jahre Erfahrung</div></div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-img-placeholder">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Foto folgt</span>
+        <span style="margin-top:4px;font-size:11px">Robin Kollmeier, Geschäftsführer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div class="reveal">
+      <div class="section-eyebrow">Unsere Geschichte</div>
+      <div class="section-title">Meilensteine seit 1959</div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1959</div>
+        <div class="timeline-event">Gründung durch Helmut Kollmeier</div>
+        <div class="timeline-desc">HEKU Fahrzeugbau wird in Bielefeld gegründet. Von Anfang an mit einem klaren Fokus: der beste Bootsanhänger für den deutschen Markt.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Frühe 1970er</div>
+        <div class="timeline-event">Eigenentwicklung der wasserdichten Radnabe</div>
+        <div class="timeline-desc">Helmut Kollmeier entwickelt die wasserdichte Radnabe — wartungsfrei, kein Fettwechsel nötig. Eine Eigenentwicklung, die bis heute einzigartig in der Branche ist.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1970er</div>
+        <div class="timeline-event">HEKU erkämpft die Steuerfreiheit für alle Bootsanhänger</div>
+        <div class="timeline-desc">Helmut Kollmeier klagt erfolgreich vor Gericht: Bootsanhänger werden in Deutschland von der Kfz-Steuer befreit. Dieses Urteil gilt bis heute — für jeden Bootsanhänger in Deutschland, nicht nur für HEKU.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1980</div>
+        <div class="timeline-event">TH Hannover bestätigt: alle Radnaben wasserdicht</div>
+        <div class="timeline-desc">Im letzten Gerichtsprozess, eingeleitet durch Mitbewerber, werden 10 HEKU-Radnaben durch die TH Hannover (Prof. Dr.-Ing. Kieper) geprüft. Ergebnis: alle Radnaben wasserdicht.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Ab 1982</div>
+        <div class="timeline-event">Erweiterung: Wohnmobilproduktion</div>
+        <div class="timeline-desc">HEKU produziert bis 2013 auch Wohnmobile — eine zweite Produktlinie, die das Unternehmen über drei Jahrzehnte begleitet.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026</div>
+        <div class="timeline-event">Robin Kollmeier übernimmt die Geschäftsführung</div>
+        <div class="timeline-desc">Die dritte Generation tritt an. Robin Kollmeier führt das Unternehmen in die digitale Ära — mit neuem Webauftritt, Online-Konfigurator und modernisierter Infrastruktur.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WERTE -->
+  <section class="values-section">
+    <div class="reveal">
+      <div class="section-eyebrow">Was uns ausmacht</div>
+      <div class="section-title">Unsere Werte</div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-num">01</div>
+        <div class="value-bar"></div>
+        <div class="value-title">Qualität ohne Kompromisse</div>
+        <p class="value-text">Jeder Anhänger ist eine Einzelfertigung. Wir verwenden ausschließlich Bauteile von zertifizierten 1A-Qualitätsherstellern — kein Serienprodukt, kein Kompromiss.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">02</div>
+        <div class="value-bar"></div>
+        <div class="value-title">Langlebige Technik</div>
+        <p class="value-text">Wartungsfreie Radnabe, feuerverzinktes Fahrgestell nach DIN 1461, Bremsseile aus Edelstahl — konstruiert für ein Anhängerleben, nicht für eine Saison.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">03</div>
+        <div class="value-bar"></div>
+        <div class="value-title">Ehrlichkeit & Transparenz</div>
+        <p class="value-text">Klare Preise, direkt ab Werk. Kein Händleraufschlag, keine versteckten Kosten. Was wir anbieten, steht auf der Preisliste — unverbindlich und offen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="reveal">
+      <div class="section-eyebrow">Das Team</div>
+      <div class="section-title">Die Menschen hinter HEKU</div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">RK</div>
+        <div>
+          <div class="team-name">Robin Kollmeier</div>
+          <div class="team-role">Geschäftsführer · 3. Generation</div>
+          <div class="team-bio">Seit April 2026 Geschäftsführer von HEKU. Robin modernisiert das Unternehmen digital und operativ — mit dem Ziel, die Qualität des Großvaters in die Zukunft zu führen.</div>
+        </div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">HK</div>
+        <div>
+          <div class="team-name">Helmut Kollmeier</div>
+          <div class="team-role">Gründer · 1. Generation</div>
+          <div class="team-bio">Gründer von HEKU und Entwickler der wasserdichten Radnabe. Hat die Steuerfreiheit für alle Bootsanhänger in Deutschland erkämpft. Sein Erbe lebt in jedem HEKU-Anhänger weiter.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STANDORT -->
+  <section class="standort-section">
+    <div class="reveal">
+      <div class="section-eyebrow">Wo wir sind</div>
+      <div class="section-title">Ab Werk in Bielefeld</div>
+    </div>
+    <div class="standort-grid">
+      <div class="standort-info">
+        <div class="standort-item reveal">
+          <div class="standort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="standort-label">Adresse</div><div class="standort-value">Bunzlauer Str. 6<br>33719 Bielefeld</div></div>
+        </div>
+        <div class="standort-item reveal">
+          <div class="standort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg></div>
+          <div><div class="standort-label">Telefon</div><div class="standort-value"><a href="tel:+4952120066">0521 200066</a></div></div>
+        </div>
+        <div class="standort-item reveal">
+          <div class="standort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="standort-label">E-Mail</div><div class="standort-value"><a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a></div></div>
+        </div>
+        <div class="standort-item reveal">
+          <div class="standort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><div class="standort-label">Öffnungszeiten</div><div class="standort-value">Mo–Fr, 08:00–16:30 Uhr</div></div>
+        </div>
+      </div>
+      <div class="standort-map reveal">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2471.123!2d8.5897!3d52.0167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ba3b9b9b9b9b9b%3A0x0!2sBunzlauer+Str.+6%2C+33719+Bielefeld!5e0!3m2!1sde!2sde!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="HEKU Fahrzeugbau Standort Bielefeld"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div>
+      <div class="cta-title">Überzeugt? Konfigurieren Sie jetzt.</div>
+      <p class="cta-sub">Mit dem HEKU Engineer finden Sie in 3 Schritten den passenden Anhänger — direkt vom Hersteller, ab Werk Bielefeld.</p>
+    </div>
+    <a href="konfigurator.html" class="btn-rot">HEKU Engineer starten →</a>
+  </div>
+
+  <footer>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld</span>
+      <div class="ft-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    function toggleMenu() {
+      const c = document.querySelector('.nav-center');
+      const open = c.style.display === 'flex';
+      c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
+    }
+  </script>
+</body>
+</html>
