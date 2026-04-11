@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HEKU Engineer – Finden Sie in 3 Schritten den passenden Bootsanhänger. Kostenlos, unverbindlich, direkt vom Hersteller.">
+  <title>HEKU Engineer – Konfigurator | HEKU Fahrzeugbau GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
+      --text: #2C2C2C; --muted: #6B6B6B; --border: #E8E8E8;
+      --bg: #FFFFFF; --bg2: #F7F7F7; --bg3: #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    input, select, textarea { font-family: var(--font-body); }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* PAGE */
+    .page { margin-top: 64px; min-height: calc(100vh - 64px); display: grid; grid-template-columns: 380px 1fr; }
+
+    /* SIDEBAR */
+    .sidebar { background: var(--schwarz); padding: 48px 40px; position: sticky; top: 64px; height: calc(100vh - 64px); display: flex; flex-direction: column; overflow-y: auto; }
+    .sidebar-logo { margin-bottom: 40px; }
+    .sidebar-logo img { height: 24px; filter: brightness(0) invert(1); opacity: 0.8; }
+    .sidebar-title { font-family: var(--font-head); font-size: 28px; font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 12px; }
+    .sidebar-sub { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.65; margin-bottom: 40px; }
+
+    /* STEPS INDICATOR */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; position: relative; }
+    .step-item:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 48px; width: 1px; height: calc(100% - 16px); background: rgba(255,255,255,0.1); }
+    .step-dot { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+    .step-dot span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.3); }
+    .step-item.active .step-dot { border-color: var(--rot); background: var(--rot); }
+    .step-item.active .step-dot span { color: #fff; }
+    .step-item.done .step-dot { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
+    .step-item.done .step-dot span { color: rgba(255,255,255,0.6); }
+    .step-item.done .step-dot::after { content: '✓'; font-size: 13px; color: rgba(255,255,255,0.8); }
+    .step-item.done .step-dot span { display: none; }
+    .step-info { padding-top: 4px; }
+    .step-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.3); transition: color 0.3s; }
+    .step-item.active .step-label { color: #fff; }
+    .step-item.done .step-label { color: rgba(255,255,255,0.5); }
+    .step-desc { font-size: 12px; color: rgba(255,255,255,0.2); margin-top: 2px; }
+    .step-item.active .step-desc { color: rgba(255,255,255,0.4); }
+
+    /* RESULT PREVIEW in Sidebar */
+    .sidebar-result { margin-top: auto; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-result-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 14px; }
+    .sidebar-result-model { font-family: var(--font-head); font-size: 22px; color: #fff; margin-bottom: 4px; }
+    .sidebar-result-price { font-size: 28px; font-weight: 300; color: var(--rot); }
+    .sidebar-result-empty { font-size: 14px; color: rgba(255,255,255,0.2); font-weight: 300; }
+
+    /* MAIN CONTENT */
+    .main { padding: 52px 64px; max-width: 760px; }
+    .step-page { display: none; }
+    .step-page.active { display: block; }
+
+    .step-header { margin-bottom: 40px; }
+    .step-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 10px; }
+    .step-title { font-family: var(--font-head); font-size: clamp(28px, 3vw, 40px); font-weight: 400; color: var(--schwarz); line-height: 1.1; margin-bottom: 10px; }
+    .step-subtitle { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* FORM ELEMENTS */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+    .form-grid.single { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .form-label span { color: var(--rot); }
+    .form-input {
+      height: 48px; padding: 0 16px; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: 15px; color: var(--text);
+      background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .form-input.error { border-color: #E24B4A; }
+    .form-hint { font-size: 12px; color: var(--muted); }
+    .form-error { font-size: 12px; color: #E24B4A; display: none; }
+    .form-error.show { display: block; }
+
+    /* SELECT CARDS */
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+    .card-grid.two { grid-template-columns: repeat(2, 1fr); }
+    .select-card {
+      border: 1.5px solid var(--border); border-radius: 12px; padding: 20px 16px;
+      cursor: pointer; transition: all 0.2s var(--ease); text-align: center;
+      background: var(--bg);
+    }
+    .select-card:hover { border-color: var(--muted); background: var(--bg2); }
+    .select-card.selected { border-color: var(--rot); background: rgba(232,0,14,0.04); }
+    .select-card.selected .card-label { color: var(--rot); }
+    .card-icon { font-size: 28px; margin-bottom: 8px; line-height: 1; }
+    .card-label { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+    .card-sub { font-size: 12px; color: var(--muted); }
+
+    /* CHECKBOX ITEMS */
+    .check-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .check-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 18px; border: 1.5px solid var(--border); border-radius: 10px;
+      cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .check-item:hover { border-color: var(--muted); background: var(--bg2); }
+    .check-item.checked { border-color: var(--rot); background: rgba(232,0,14,0.03); }
+    .check-box {
+      width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--border);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .check-item.checked .check-box { background: var(--rot); border-color: var(--rot); }
+    .check-box::after { content: ''; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); opacity: 0; transition: opacity 0.15s; }
+    .check-item.checked .check-box::after { opacity: 1; }
+    .check-text { flex: 1; }
+    .check-title { font-size: 14px; font-weight: 500; color: var(--text); }
+    .check-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .check-price { font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .check-item.checked .check-price { color: var(--rot); }
+
+    /* NAVIGATION BUTTONS */
+    .step-nav { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); margin-top: 8px; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s; }
+    .btn-back:hover { color: var(--text); }
+    .btn-next { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; background: var(--rot); color: #fff; border: none; cursor: pointer; padding: 14px 32px; border-radius: 8px; transition: all 0.22s var(--ease); }
+    .btn-next:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,0,14,0.28); }
+    .btn-next:disabled { background: var(--bg3); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* RESULT PAGE */
+    .result-hero { background: var(--schwarz); border-radius: 16px; padding: 40px; margin-bottom: 32px; }
+    .result-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .result-model { font-family: var(--font-head); font-size: 36px; color: #fff; margin-bottom: 6px; }
+    .result-price-range { font-size: 42px; font-weight: 300; color: var(--rot); margin-bottom: 12px; }
+    .result-disclaimer { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.55; }
+    .result-specs { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
+    .spec-card { background: var(--bg2); border-radius: 10px; padding: 20px; }
+    .spec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .spec-value { font-size: 18px; font-weight: 500; color: var(--schwarz); }
+
+    /* LEAD FORM */
+    .lead-form { background: var(--bg2); border-radius: 16px; padding: 36px; }
+    .lead-form-title { font-family: var(--font-head); font-size: 24px; color: var(--schwarz); margin-bottom: 6px; }
+    .lead-form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+    .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .lead-grid.full { grid-template-columns: 1fr; }
+    .lead-select { height: 48px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+    .lead-select:focus { border-color: var(--rot); }
+    .lead-textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; resize: vertical; min-height: 100px; transition: border-color 0.2s; }
+    .lead-textarea:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .consent-row { display: flex; align-items: flex-start; gap: 12px; margin: 16px 0 24px; }
+    .consent-check { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border); flex-shrink: 0; margin-top: 2px; cursor: pointer; appearance: none; transition: all 0.2s; }
+    .consent-check:checked { background: var(--rot); border-color: var(--rot); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .consent-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .btn-submit { width: 100%; height: 52px; background: var(--rot); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.22s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-submit:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,0,14,0.28); }
+    .btn-submit:disabled { background: var(--bg3); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* SUCCESS */
+    .success-page { display: none; text-align: center; padding: 64px 32px; }
+    .success-page.show { display: block; }
+    .success-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(34,197,94,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+    .success-icon svg { width: 32px; height: 32px; }
+    .success-title { font-family: var(--font-head); font-size: 32px; color: var(--schwarz); margin-bottom: 12px; }
+    .success-text { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 440px; margin: 0 auto 32px; }
+    .success-back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--rot); }
+
+    /* PROGRESS BAR */
+    .progress-bar { height: 3px; background: var(--bg3); border-radius: 2px; margin-bottom: 40px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--rot); border-radius: 2px; transition: width 0.4s var(--ease); }
+
+    @media (max-width: 900px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; padding: 32px 24px; }
+      .steps { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .step-item::after { display: none; }
+      .main { padding: 32px 24px; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .result-specs { grid-template-columns: 1fr 1fr; }
+      .lead-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .nav-burger { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="page">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-logo"><img src="logo.png" alt="HEKU"></div>
+      <div class="sidebar-title">HEKU<br>Engineer</div>
+      <div class="sidebar-sub">In 3 Schritten zum passenden Anhänger. Kostenlos und unverbindlich.</div>
+
+      <div class="steps">
+        <div class="step-item active" id="si-1">
+          <div class="step-dot"><span>1</span></div>
+          <div class="step-info">
+            <div class="step-label">Ihr Boot</div>
+            <div class="step-desc">Typ, Maße, Gewicht</div>
+          </div>
+        </div>
+        <div class="step-item" id="si-2">
+          <div class="step-dot"><span>2</span></div>
+          <div class="step-info">
+            <div class="step-label">Antrieb &amp; Zubehör</div>
+            <div class="step-desc">Motor, Extras</div>
+          </div>
+        </div>
+        <div class="step-item" id="si-3">
+          <div class="step-dot"><span>3</span></div>
+          <div class="step-info">
+            <div class="step-label">Ihr Ergebnis</div>
+            <div class="step-desc">Modell + Preisrange</div>
+          </div>
+        </div>
+        <div class="step-item" id="si-4">
+          <div class="step-dot"><span>4</span></div>
+          <div class="step-info">
+            <div class="step-label">Anfrage stellen</div>
+            <div class="step-desc">Kontaktdaten</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-result" id="sidebarResult">
+        <div class="sidebar-result-label">Ihr Anhänger</div>
+        <div id="srModel" class="sidebar-result-empty">Noch nicht konfiguriert</div>
+        <div id="srPrice" style="display:none" class="sidebar-result-price"></div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- SCHRITT 1: Boot -->
+      <div class="step-page active" id="step1">
+        <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+        <div class="step-header">
+          <div class="step-eyebrow">Schritt 1 von 3</div>
+          <h1 class="step-title">Angaben zu Ihrem Boot</h1>
+          <p class="step-subtitle">Damit wir den richtigen Anhänger finden, benötigen wir einige Angaben zu Ihrem Boot.</p>
+        </div>
+
+        <!-- Bootstyp -->
+        <div style="margin-bottom:28px">
+          <div class="form-label" style="margin-bottom:12px">Bootstyp <span>*</span></div>
+          <div class="card-grid" id="bootstypGrid">
+            <div class="select-card" data-value="segelboot" onclick="selectCard(this,'bootstyp')">
+              <div class="card-icon">⛵</div>
+              <div class="card-label">Segelboot</div>
+              <div class="card-sub">Kielboot, Jolle</div>
+            </div>
+            <div class="select-card" data-value="motorboot" onclick="selectCard(this,'bootstyp')">
+              <div class="card-icon">🚤</div>
+              <div class="card-label">Motorboot</div>
+              <div class="card-sub">Außen- / Innenborder</div>
+            </div>
+            <div class="select-card" data-value="sportboot" onclick="selectCard(this,'bootstyp')">
+              <div class="card-icon">🏎️</div>
+              <div class="card-label">Sportboot</div>
+              <div class="card-sub">Schnellboot, Bowrider</div>
+            </div>
+            <div class="select-card" data-value="schlauchboot" onclick="selectCard(this,'bootstyp')">
+              <div class="card-icon">🛥️</div>
+              <div class="card-label">Schlauchboot</div>
+              <div class="card-sub">RIB, Festrumpf</div>
+            </div>
+            <div class="select-card" data-value="hausboot" onclick="selectCard(this,'bootstyp')">
+              <div class="card-icon">🏠</div>
+              <div class="card-label">Hausboot / Sonstiges</div>
+              <div class="card-sub">Auf Anfrage</div>
+            </div>
+          </div>
+          <div class="form-error" id="err-bootstyp">Bitte wählen Sie einen Bootstyp aus.</div>
+        </div>
+
+        <!-- Maße -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Länge über alles <span>*</span></label>
+            <input type="number" class="form-input" id="laenge" placeholder="z.B. 5.5" step="0.1" min="1" max="15">
+            <span class="form-hint">in Metern</span>
+            <span class="form-error" id="err-laenge">Bitte gültige Länge eingeben (1–15 m)</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Breite <span>*</span></label>
+            <input type="number" class="form-input" id="breite" placeholder="z.B. 2.2" step="0.1" min="0.5" max="5">
+            <span class="form-hint">in Metern</span>
+            <span class="form-error" id="err-breite">Bitte gültige Breite eingeben</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tiefgang</label>
+            <input type="number" class="form-input" id="tiefgang" placeholder="z.B. 0.8" step="0.05" min="0" max="3">
+            <span class="form-hint">in Metern (optional)</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bootsgewicht <span>*</span></label>
+            <input type="number" class="form-input" id="gewicht" placeholder="z.B. 800" step="10" min="50" max="3000">
+            <span class="form-hint">in Kilogramm (leer)</span>
+            <span class="form-error" id="err-gewicht">Bitte gültiges Gewicht eingeben (50–3000 kg)</span>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <span></span>
+          <button class="btn-next" onclick="goToStep(2)">Weiter: Antrieb & Zubehör →</button>
+        </div>
+      </div>
+
+      <!-- SCHRITT 2: Antrieb & Zubehör -->
+      <div class="step-page" id="step2">
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="step-header">
+          <div class="step-eyebrow">Schritt 2 von 3</div>
+          <h2 class="step-title">Antrieb &amp; Zubehör</h2>
+          <p class="step-subtitle">Wählen Sie die Antriebsart und gewünschtes Zubehör für Ihren Anhänger.</p>
+        </div>
+
+        <!-- Antrieb -->
+        <div style="margin-bottom:32px">
+          <div class="form-label" style="margin-bottom:12px">Antriebsart <span>*</span></div>
+          <div class="card-grid two" id="antriebGrid">
+            <div class="select-card" data-value="aussenbord" onclick="selectCard(this,'antrieb')">
+              <div class="card-icon">⚙️</div>
+              <div class="card-label">Außenbordmotor</div>
+              <div class="card-sub">Motor am Heck</div>
+            </div>
+            <div class="select-card" data-value="innenbord" onclick="selectCard(this,'antrieb')">
+              <div class="card-icon">🔧</div>
+              <div class="card-label">Innenbordmotor</div>
+              <div class="card-sub">Motor im Rumpf</div>
+            </div>
+            <div class="select-card" data-value="wellenantrieb" onclick="selectCard(this,'antrieb')">
+              <div class="card-icon">🌀</div>
+              <div class="card-label">Wellenantrieb</div>
+              <div class="card-sub">Durchgehende Welle</div>
+            </div>
+            <div class="select-card" data-value="kein" onclick="selectCard(this,'antrieb')">
+              <div class="card-icon">🌬️</div>
+              <div class="card-label">Kein Antrieb</div>
+              <div class="card-sub">Segelboot / Jolle</div>
+            </div>
+          </div>
+          <div class="form-error" id="err-antrieb">Bitte wählen Sie eine Antriebsart aus.</div>
+        </div>
+
+        <!-- Zubehör -->
+        <div style="margin-bottom:8px">
+          <div class="form-label" style="margin-bottom:12px">Zubehör <span style="font-weight:300;color:var(--muted)">(optional, Mehrfachauswahl)</span></div>
+          <div class="check-list" id="zubehoerList">
+            <div class="check-item" data-value="kielrolle_extra" data-price="85" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">Zusätzliche Kielrolle</div>
+                <div class="check-desc">90×200 mm, höhenverstellbar</div>
+              </div>
+              <div class="check-price">+ ca. 85 €</div>
+            </div>
+            <div class="check-item" data-value="stuetzrad" data-price="120" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">Stützrad</div>
+                <div class="check-desc">Erleichtert das Ankuppeln</div>
+              </div>
+              <div class="check-price">+ ca. 120 €</div>
+            </div>
+            <div class="check-item" data-value="seitenstuetzrolle" data-price="95" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">Seitenstützrollen (Paar)</div>
+                <div class="check-desc">Für breite Rümpfe</div>
+              </div>
+              <div class="check-price">+ ca. 95 €</div>
+            </div>
+            <div class="check-item" data-value="kielverlaengerung" data-price="150" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">Kielverlängerung (70 cm)</div>
+                <div class="check-desc">Für Kielboote mit tiefem Kiel</div>
+              </div>
+              <div class="check-price">+ ca. 150 €</div>
+            </div>
+            <div class="check-item" data-value="100kmh" data-price="180" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">100 km/h Zulassung</div>
+                <div class="check-desc">Eingetragen im Fahrzeugschein</div>
+              </div>
+              <div class="check-price">+ ca. 180 €</div>
+            </div>
+            <div class="check-item" data-value="gewindespindel" data-price="65" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div class="check-text">
+                <div class="check-title">Gewindespindel (zusätzlich)</div>
+                <div class="check-desc">Für Höhenverstellung</div>
+              </div>
+              <div class="check-price">+ ca. 65 €</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(1)">← Zurück</button>
+          <button class="btn-next" onclick="goToStep(3)">Ergebnis anzeigen →</button>
+        </div>
+      </div>
+
+      <!-- SCHRITT 3: ERGEBNIS -->
+      <div class="step-page" id="step3">
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+        <div class="step-header">
+          <div class="step-eyebrow">Ihr Ergebnis</div>
+          <h2 class="step-title">Empfohlener Anhänger</h2>
+          <p class="step-subtitle">Basierend auf Ihren Angaben empfehlen wir folgendes Modell.</p>
+        </div>
+
+        <div class="result-hero">
+          <div class="result-label">Empfohlenes Modell</div>
+          <div class="result-model" id="resultModel">—</div>
+          <div class="result-price-range" id="resultPrice">—</div>
+          <div class="result-disclaimer">Unverbindliche Preisrange inkl. 19% MwSt. · Endpreis nach individueller Konfiguration</div>
+        </div>
+
+        <div class="result-specs" id="resultSpecs"></div>
+
+        <div style="background:rgba(232,0,14,0.05);border:1.5px solid rgba(232,0,14,0.15);border-radius:12px;padding:20px;margin-bottom:32px">
+          <div style="font-size:14px;font-weight:600;color:var(--rot);margin-bottom:6px">Nächster Schritt</div>
+          <div style="font-size:14px;font-weight:300;color:var(--muted);line-height:1.65">Füllen Sie das Kontaktformular aus — wir erstellen Ihnen ein verbindliches Angebot direkt ab Werk Bielefeld. Kostenlos und unverbindlich.</div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="goToStep(2)">← Zurück</button>
+          <button class="btn-next" onclick="goToStep(4)">Jetzt Angebot anfordern →</button>
+        </div>
+      </div>
+
+      <!-- SCHRITT 4: KONTAKTFORMULAR -->
+      <div class="step-page" id="step4">
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+        <div class="step-header">
+          <div class="step-eyebrow">Schritt 3 von 3</div>
+          <h2 class="step-title">Angebot anfordern</h2>
+          <p class="step-subtitle">Fast geschafft — Ihre Konfiguration wird mit der Anfrage direkt übermittelt.</p>
+        </div>
+
+        <div class="lead-form">
+          <div class="lead-form-title">Ihre Kontaktdaten</div>
+          <div class="lead-form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder.</div>
+
+          <div class="lead-grid">
+            <div class="form-group">
+              <label class="form-label">Anrede <span>*</span></label>
+              <select class="lead-select form-input" id="anrede">
+                <option value="">— Bitte wählen —</option>
+                <option value="Herr">Herr</option>
+                <option value="Frau">Frau</option>
+                <option value="Familie">Familie</option>
+                <option value="Firma">Firma</option>
+              </select>
+            </div>
+            <div></div>
+          </div>
+          <div class="lead-grid">
+            <div class="form-group">
+              <label class="form-label">Vorname <span>*</span></label>
+              <input type="text" class="form-input" id="vorname" placeholder="Max">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nachname <span>*</span></label>
+              <input type="text" class="form-input" id="nachname" placeholder="Mustermann">
+            </div>
+          </div>
+          <div class="lead-grid">
+            <div class="form-group">
+              <label class="form-label">E-Mail-Adresse <span>*</span></label>
+              <input type="email" class="form-input" id="email" placeholder="max@beispiel.de">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefon</label>
+              <input type="tel" class="form-input" id="telefon" placeholder="+49 521 ...">
+            </div>
+          </div>
+          <div class="lead-grid">
+            <div class="form-group">
+              <label class="form-label">PLZ <span>*</span></label>
+              <input type="text" class="form-input" id="plz" placeholder="12345" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ort <span>*</span></label>
+              <input type="text" class="form-input" id="ort" placeholder="Musterstadt">
+            </div>
+          </div>
+          <div class="lead-grid full">
+            <div class="form-group">
+              <label class="form-label">Straße &amp; Nr.</label>
+              <input type="text" class="form-input" id="strasse" placeholder="Musterstraße 1">
+            </div>
+          </div>
+          <div class="lead-grid full">
+            <div class="form-group">
+              <label class="form-label">Anmerkungen / Fragen</label>
+              <textarea class="lead-textarea" id="nachricht" placeholder="Haben Sie weitere Fragen oder Wünsche zu Ihrem Anhänger?"></textarea>
+            </div>
+          </div>
+
+          <div class="consent-row">
+            <input type="checkbox" class="consent-check" id="consent">
+            <label class="consent-text" for="consent">
+              Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert und verarbeitet werden. Die <a href="#" style="color:var(--rot)">Datenschutzerklärung</a> habe ich zur Kenntnis genommen.
+            </label>
+          </div>
+
+          <div class="form-error" id="err-form" style="margin-bottom:16px;font-size:14px"></div>
+
+          <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+            <span id="submitText">Anfrage absenden →</span>
+          </button>
+        </div>
+
+        <div class="step-nav" style="border:none;padding-top:16px">
+          <button class="btn-back" onclick="goToStep(3)">← Zurück zum Ergebnis</button>
+          <span></span>
+        </div>
+      </div>
+
+      <!-- ERFOLG -->
+      <div class="success-page" id="successPage">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2 class="success-title">Anfrage gesendet!</h2>
+        <p class="success-text">Vielen Dank, <span id="successName"></span>. Wir haben Ihre Konfiguration erhalten und melden uns in der Regel innerhalb von 1–2 Werktagen mit einem verbindlichen Angebot.</p>
+        <a href="index.html" class="success-back">← Zurück zur Startseite</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  // ─── DATENBASIS ────────────────────────────────────────────────────────────
+  // B-Serie 2026 — Modelle mit Gewichtsgrenzen und Preisranges
+  const MODELLE = [
+    { id:'B750',  name:'B 750',   maxGewicht:750,  gebremst:false, preisMin:1650,  preisMax:2050  },
+    { id:'B1000', name:'B 1000',  maxGewicht:1000, gebremst:true,  preisMin:2200,  preisMax:2700  },
+    { id:'B1300', name:'B 1300',  maxGewicht:1300, gebremst:true,  preisMin:2600,  preisMax:3100  },
+    { id:'B1500', name:'B 1500',  maxGewicht:1500, gebremst:true,  preisMin:2900,  preisMax:3500  },
+    { id:'B1800', name:'B 1800',  maxGewicht:1800, gebremst:true,  preisMin:3300,  preisMax:4000  },
+    { id:'B2000', name:'B 2000',  maxGewicht:2000, gebremst:true,  preisMin:3700,  preisMax:4500  },
+    { id:'B2500', name:'B 2500',  maxGewicht:2500, gebremst:true,  preisMin:4400,  preisMax:5300  },
+    { id:'B3000', name:'B 3000',  maxGewicht:3000, gebremst:true,  preisMin:5100,  preisMax:6200  },
+    { id:'B3500', name:'B 3500',  maxGewicht:3500, gebremst:true,  preisMin:5800,  preisMax:7000  },
+  ];
+
+  const SICHERHEITSFAKTOR = 1.25; // Bootsgewicht × 1.25 = Mindest-zGG
+
+  // ─── STATE ─────────────────────────────────────────────────────────────────
+  const state = {
+    bootstyp: null, laenge: null, breite: null, tiefgang: null, gewicht: null,
+    antrieb: null, zubehoer: [], empfohlenesModell: null,
+    anrede:'', vorname:'', nachname:'', email:'', telefon:'',
+    strasse:'', plz:'', ort:'', nachricht:''
+  };
+
+  // ─── NAVIGATION ────────────────────────────────────────────────────────────
+  let currentStep = 1;
+
+  function goToStep(n) {
+    if (n > currentStep && !validateStep(currentStep)) return;
+    if (n === 3) berechneErgebnis();
+
+    document.getElementById('step'+currentStep).classList.remove('active');
+    document.getElementById('si-'+currentStep).classList.remove('active');
+    if (n > currentStep) document.getElementById('si-'+currentStep).classList.add('done');
+
+    currentStep = n;
+    document.getElementById('step'+n).classList.add('active');
+    document.getElementById('si-'+n).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // ─── VALIDATION ────────────────────────────────────────────────────────────
+  function validateStep(n) {
+    let ok = true;
+    if (n === 1) {
+      if (!state.bootstyp) { showErr('err-bootstyp'); ok=false; } else hideErr('err-bootstyp');
+      const l = parseFloat(document.getElementById('laenge').value);
+      if (!l || l<1||l>15) { showErr('err-laenge'); ok=false; } else { hideErr('err-laenge'); state.laenge=l; }
+      const b = parseFloat(document.getElementById('breite').value);
+      if (!b || b<0.5||b>5) { showErr('err-breite'); ok=false; } else { hideErr('err-breite'); state.breite=b; }
+      const g = parseFloat(document.getElementById('gewicht').value);
+      if (!g || g<50||g>3000) { showErr('err-gewicht'); ok=false; } else { hideErr('err-gewicht'); state.gewicht=g; }
+      state.tiefgang = parseFloat(document.getElementById('tiefgang').value) || 0;
+    }
+    if (n === 2) {
+      if (!state.antrieb) { showErr('err-antrieb'); ok=false; } else hideErr('err-antrieb');
+    }
+    return ok;
+  }
+
+  function showErr(id) { document.getElementById(id).classList.add('show'); }
+  function hideErr(id) { document.getElementById(id).classList.remove('show'); }
+
+  // ─── MODELL-EMPFEHLUNG ─────────────────────────────────────────────────────
+  function berechneErgebnis() {
+    const minZGG = state.gewicht * SICHERHEITSFAKTOR;
+    let modell = MODELLE.find(m => m.maxGewicht >= minZGG) || MODELLE[MODELLE.length-1];
+
+    // Kielverlängerung: tiefer Kiel > 0.7m → anderes Modell ggf.
+    if (state.tiefgang > 0.7 && !state.zubehoer.includes('kielverlaengerung')) {
+      state.zubehoer.push('kielverlaengerung');
+      document.querySelector('[data-value="kielverlaengerung"]')?.classList.add('checked');
+    }
+
+    // Zubehör-Aufpreis berechnen
+    let zubehoerAufpreis = 0;
+    state.zubehoer.forEach(z => {
+      const el = document.querySelector(`[data-value="${z}"]`);
+      if (el) zubehoerAufpreis += parseInt(el.dataset.price || 0);
+    });
+
+    state.empfohlenesModell = modell;
+    const pMin = modell.preisMin + zubehoerAufpreis;
+    const pMax = modell.preisMax + zubehoerAufpreis;
+
+    // Sidebar aktualisieren
+    document.getElementById('srModel').textContent = '';
+    document.getElementById('srModel').className = 'sidebar-result-model';
+    document.getElementById('srModel').textContent = 'HEKU ' + modell.name;
+    document.getElementById('srPrice').style.display = 'block';
+    document.getElementById('srPrice').textContent = `ab ca. ${pMin.toLocaleString('de-DE')} €`;
+
+    // Ergebnis-Seite füllen
+    document.getElementById('resultModel').textContent = 'HEKU ' + modell.name;
+    document.getElementById('resultPrice').textContent =
+      `ab ca. ${pMin.toLocaleString('de-DE')} € – ${pMax.toLocaleString('de-DE')} €`;
+
+    // Specs
+    const specsEl = document.getElementById('resultSpecs');
+    specsEl.innerHTML = `
+      <div class="spec-card">
+        <div class="spec-label">Max. Gesamtgewicht</div>
+        <div class="spec-value">${modell.maxGewicht.toLocaleString('de-DE')} kg</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Bremssystem</div>
+        <div class="spec-value">${modell.gebremst ? 'Gebremst' : 'Ungebremst'}</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Zulassung</div>
+        <div class="spec-value">${modell.maxGewicht <= 2000 ? 'KBA-Typprüfung' : 'TÜV EG-Typgen.'}</div>
+      </div>`;
+  }
+
+  // ─── KARTEN & CHECKBOXEN ───────────────────────────────────────────────────
+  function selectCard(el, field) {
+    el.closest('.card-grid').querySelectorAll('.select-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    state[field] = el.dataset.value;
+    hideErr('err-' + field);
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    const val = el.dataset.value;
+    if (el.classList.contains('checked')) {
+      if (!state.zubehoer.includes(val)) state.zubehoer.push(val);
+    } else {
+      state.zubehoer = state.zubehoer.filter(v => v !== val);
+    }
+  }
+
+  // ─── FORMULAR ABSENDEN ─────────────────────────────────────────────────────
+  async function submitForm() {
+    const anrede   = document.getElementById('anrede').value;
+    const vorname  = document.getElementById('vorname').value.trim();
+    const nachname = document.getElementById('nachname').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const telefon  = document.getElementById('telefon').value.trim();
+    const plz      = document.getElementById('plz').value.trim();
+    const ort      = document.getElementById('ort').value.trim();
+    const strasse  = document.getElementById('strasse').value.trim();
+    const nachricht = document.getElementById('nachricht').value.trim();
+    const consent  = document.getElementById('consent').checked;
+
+    const errEl = document.getElementById('err-form');
+    if (!anrede || !vorname || !nachname || !email || !plz || !ort) {
+      errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+      errEl.classList.add('show'); return;
+    }
+    if (!email.includes('@')) {
+      errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      errEl.classList.add('show'); return;
+    }
+    if (!consent) {
+      errEl.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
+      errEl.classList.add('show'); return;
+    }
+    errEl.classList.remove('show');
+
+    const btn = document.getElementById('submitBtn');
+    const txt = document.getElementById('submitText');
+    btn.disabled = true;
+    txt.textContent = 'Wird gesendet...';
+
+    // Konfigurations-Zusammenfassung
+    const modell = state.empfohlenesModell;
+    const zubehoerText = state.zubehoer.length > 0
+      ? state.zubehoer.map(z => document.querySelector(`[data-value="${z}"] .check-title`)?.textContent || z).join(', ')
+      : 'Kein Zubehör';
+
+    const betreff = `HEKU Engineer Anfrage: ${anrede} ${vorname} ${nachname} – ${modell ? 'HEKU '+modell.name : 'Sonderanfrage'}`;
+    const nachrichtFull = `
+HEKU Engineer Konfiguration:
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+Bootstyp:     ${state.bootstyp}
+Länge:        ${state.laenge} m
+Breite:       ${state.breite} m
+Tiefgang:     ${state.tiefgang || '–'} m
+Gewicht:      ${state.gewicht} kg
+Antrieb:      ${state.antrieb}
+Zubehör:      ${zubehoerText}
+
+Empfohlenes Modell: HEKU ${modell?.name || '–'}
+
+Kundendaten:
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+${anrede} ${vorname} ${nachname}
+${strasse ? strasse + '\n' : ''}${plz} ${ort}
+E-Mail: ${email}
+${telefon ? 'Tel: ' + telefon : ''}
+${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
+    `.trim();
+
+    try {
+      // Formspree – WICHTIG: Ersetze XXXXXXX mit deiner Formspree-ID
+      const res = await fetch('https://formspree.io/f/XXXXXXX', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: betreff,
+          anrede, vorname, nachname, email, telefon,
+          strasse, plz, ort,
+          bootstyp: state.bootstyp,
+          laenge: state.laenge, breite: state.breite,
+          tiefgang: state.tiefgang, gewicht: state.gewicht,
+          antrieb: state.antrieb,
+          zubehoer: zubehoerText,
+          modell: modell ? 'HEKU ' + modell.name : '–',
+          nachricht,
+          _replyto: email
+        })
+      });
+
+      if (res.ok) {
+        // Erfolg
+        document.getElementById('step4').classList.remove('active');
+        document.getElementById('si-4').classList.add('done');
+        document.getElementById('successPage').classList.add('show');
+        document.getElementById('successName').textContent = vorname;
+        window.scrollTo({top:0, behavior:'smooth'});
+      } else {
+        throw new Error('Netzwerkfehler');
+      }
+    } catch(e) {
+      btn.disabled = false;
+      txt.textContent = 'Anfrage absenden →';
+      errEl.textContent = 'Fehler beim Senden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an info@heku-fahrzeugbau.de.';
+      errEl.classList.add('show');
+    }
+  }
+
+  // ─── MOBILE NAV ────────────────────────────────────────────────────────────
+  function toggleMenu() {
+    const c = document.querySelector('.nav-center');
+    const open = c.style.display === 'flex';
+    c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
+  }
+  </script>
+</body>
+</html>
