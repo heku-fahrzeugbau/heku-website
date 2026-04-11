@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HEKU Fahrzeugbau GmbH – Bootsanhänger mit patentierter wasserdichter Radnabe. Seit 1959. TÜV-geprüft, Made in Germany.">
+  <title>HEKU Fahrzeugbau GmbH – Bootsanhänger seit 1959</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --rot:      #E8000E;
+      --rot-dark: #B8000B;
+      --dunkel:   #111111;
+      --grau-1:   #1C1C1C;
+      --grau-2:   #2E2E2E;
+      --grau-3:   #4A4A4A;
+      --grau-4:   #888888;
+      --grau-5:   #D4D4D4;
+      --grau-6:   #F2F2F2;
+      --weiss:    #FFFFFF;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+      --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--weiss);
+      color: var(--dunkel);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      background: rgba(17,17,17,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,0,14,0.3);
+      transition: background var(--transition);
+    }
+
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--weiss); }
+
+    .nav-cta {
+      background: var(--rot) !important;
+      color: var(--weiss) !important;
+      padding: 8px 20px;
+      border-radius: 2px;
+    }
+
+    .nav-cta:hover { background: var(--rot-dark) !important; }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--weiss);
+      border-radius: 1px;
+      transition: var(--transition);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--dunkel);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%),
+        linear-gradient(105deg, #1a1a1a 0%, #2a0a0a 50%, #1a1a1a 100%);
+    }
+
+    /* Diagonales Raster als Hintergrundtextur */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 40px,
+          rgba(232,0,14,0.04) 40px,
+          rgba(232,0,14,0.04) 41px
+        );
+    }
+
+    /* Großer Hintergrundtext */
+    .hero-watermark {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-head);
+      font-size: clamp(140px, 22vw, 320px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 40px 80px;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rot);
+      color: var(--weiss);
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-badge::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: var(--weiss);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(52px, 8vw, 110px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--weiss);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.35s forwards;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--rot);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.65s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--rot);
+      color: var(--weiss);
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: var(--rot-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--weiss);
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--weiss);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .btn-arrow {
+      font-size: 18px;
+      line-height: 1;
+      transition: transform var(--transition);
+    }
+
+    .btn-primary:hover .btn-arrow,
+    .btn-secondary:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ─── STATS-BAND ─── */
+    .stats-band {
+      background: var(--grau-1);
+      border-top: 3px solid var(--rot);
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat-item {
+      padding: 32px 24px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--rot);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── SEKTIONEN ALLGEMEIN ─── */
+    section { padding: 96px 40px; }
+
+    .section-tag {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rot);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      line-height: 1.0;
+      color: var(--dunkel);
+      margin-bottom: 20px;
+    }
+
+    .section-intro {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--grau-3);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ─── USP SEKTION ─── */
+    .usp-section {
+      background: var(--grau-6);
+    }
+
+    .usp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 56px;
+      background: var(--grau-5);
+    }
+
+    .usp-card {
+      background: var(--weiss);
+      padding: 44px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition);
+    }
+
+    .usp-card:hover { background: #FAFAFA; }
+
+    .usp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--rot);
+      transition: height 0.35s ease;
+    }
+
+    .usp-card:hover::before { height: 100%; }
+
+    .usp-icon {
+      font-family: var(--font-head);
+      font-size: 48px;
+      font-weight: 800;
+      color: rgba(232,0,14,0.1);
+      line-height: 1;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    .usp-title {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--dunkel);
+      margin-bottom: 12px;
+    }
+
+    .usp-text {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--grau-3);
+      line-height: 1.7;
+    }
+
+    /* ─── PRODUKT-PREVIEW ─── */
+    .products-section {
+      background: var(--dunkel);
+    }
+
+    .products-section .section-title { color: var(--weiss); }
+    .products-section .section-intro { color: rgba(255,255,255,0.5); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .product-card {
+      background: var(--grau-1);
+      padding: 48px 36px;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition);
+      border-bottom: 3px solid transparent;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .product-card:hover {
+      background: var(--grau-2);
+      border-bottom-color: var(--rot);
+    }
+
+    .product-range {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rot);
+      margin-bottom: 16px;
+    }
+
+    .product-name {
+      font-family: var(--font-head);
+      font-size: 32px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--weiss);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .product-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .product-link {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rot);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap var(--transition);
+    }
+
+    .product-card:hover .product-link { gap: 14px; }
+
+    /* ─── ENGINEER CTA ─── */
+    .engineer-section {
+      background: var(--rot);
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .engineer-title {
+      font-family: var(--font-head);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--weiss);
+      line-height: 1.0;
+      margin-bottom: 12px;
+    }
+
+    .engineer-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      max-width: 500px;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--weiss);
+      color: var(--rot);
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      border-radius: 2px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-white:hover {
+      background: var(--grau-6);
+      transform: translateY(-2px);
+    }
+
+    /* ─── VERTRAUEN / ZERTIFIKATE ─── */
+    .trust-section {
+      background: var(--weiss);
+      padding: 64px 40px;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--grau-5);
+      border-bottom: 1px solid var(--grau-5);
+    }
+
+    .trust-label {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grau-4);
+      white-space: nowrap;
+    }
+
+    .trust-items {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      align-items: center;
+      flex: 1;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trust-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--rot);
+      flex-shrink: 0;
+    }
+
+    .trust-text {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dunkel);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--grau-1);
+      padding: 64px 40px 32px;
+      border-top: 3px solid var(--rot);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand img {
+      height: 28px;
+      margin-bottom: 20px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .footer-contact {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 2;
+    }
+
+    .footer-contact strong {
+      display: block;
+      color: var(--rot);
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .footer-heading {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover { color: var(--weiss); }
+
+    .footer-links a::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: var(--rot);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+    /* ─── ANIMATIONEN ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+
+      .hero-content { padding: 0 20px 60px; }
+      .hero-watermark { display: none; }
+
+      .stats-band { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+
+      section { padding: 64px 20px; }
+
+      .usp-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+
+      .engineer-section {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
+      }
+
+      .trust-section { padding: 48px 20px; gap: 32px; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; padding: 0; }
+      footer { padding: 48px 20px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .stats-band { grid-template-columns: repeat(2, 1fr); }
+      .stat-number { font-size: 36px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="logo.png" alt="HEKU Fahrzeugbau GmbH">
+    </a>
+    <ul class="nav-links">
+      <li><a href="produkte.html">Produkte</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="haendler.html">Händler</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="konfigurator.html" class="nav-cta">Anhänger konfigurieren</a></li>
+    </ul>
+    <div class="nav-burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-watermark">HEKU</div>
+    <div class="hero-content">
+      <div class="hero-badge">Seit 1959 · Made in Germany · Bielefeld</div>
+      <h1 class="hero-title">
+        Bootsanhänger<br>
+        <em>die halten.</em>
+      </h1>
+      <p class="hero-sub">
+        Patentierte wasserdichte Radnabe. TÜV-geprüft. Einzelfertigung nach Maß.
+        Seit über 65 Jahren das Original aus Bielefeld.
+      </p>
+      <div class="hero-actions">
+        <a href="konfigurator.html" class="btn-primary">
+          Anhänger konfigurieren
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="produkte.html" class="btn-secondary">
+          Alle Produkte
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="stat-item">
+      <div class="stat-number">65+</div>
+      <div class="stat-label">Jahre Erfahrung</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Jahre Garantie</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">25+</div>
+      <div class="stat-label">Modelle verfügbar</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">3,5t</div>
+      <div class="stat-label">Max. Zuglast</div>
+    </div>
+  </div>
+
+  <!-- TRUST BAND -->
+  <div class="trust-section">
+    <span class="trust-label">Zertifiziert &amp; geprüft</span>
+    <div class="trust-items">
+      <div class="trust-item reveal">
+        <div class="trust-dot"></div>
+        <span class="trust-text">TÜV EG-Typgenehmigung</span>
+      </div>
+      <div class="trust-item reveal">
+        <div class="trust-dot"></div>
+        <span class="trust-text">Kraftfahrt-Bundesamt</span>
+      </div>
+      <div class="trust-item reveal">
+        <div class="trust-dot"></div>
+        <span class="trust-text">Patent wasserdichte Radnabe</span>
+      </div>
+      <div class="trust-item reveal">
+        <div class="trust-dot"></div>
+        <span class="trust-text">DIN 1461 Feuerverzinkt</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- USP SEKTION -->
+  <section class="usp-section">
+    <div class="reveal">
+      <div class="section-tag">Warum HEKU</div>
+      <h2 class="section-title">Technik, die<br>überzeugt</h2>
+      <p class="section-intro">Jeder HEKU-Anhänger ist eine Einzelanfertigung. Kein Serienprodukt, sondern präzise auf Ihr Boot abgestimmt.</p>
+    </div>
+    <div class="usp-grid">
+      <div class="usp-card reveal">
+        <div class="usp-icon">01</div>
+        <div class="usp-title">Wasserdichte Radnabe</div>
+        <p class="usp-text">Eigenentwicklung und Patent seit über 40 Jahren. Gerichtlich bestätigt, vom TH Hannover geprüft: alle 10 Testnaben für wasserdicht erklärt. 5 Jahre Garantie.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">02</div>
+        <div class="usp-title">Feuerverzinktes Fahrgestell</div>
+        <p class="usp-text">Tauchbad-Feuerverzinkung nach DIN 1461. Maximaler Korrosionsschutz für Salz- und Süßwasser. Jedes Bauteil einzeln austauschbar.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">03</div>
+        <div class="usp-title">Verstellbarer Rahmen</div>
+        <p class="usp-text">Patentierter Stahlbriedenverschraubung mit gelbchromatierter Oberfläche. Breitspur-V-Rahmen für optimale Straßenlage und tiefen Schwerpunkt.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">04</div>
+        <div class="usp-title">Einzelfertigung nach Maß</div>
+        <p class="usp-text">Kein Anhänger wie der andere. Individuell auf Bootstyp, Länge, Gewicht und Tiefgang abgestimmt. Zulassung bis 3.500 kg mit EG-Typgenehmigung.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUKTE PREVIEW -->
+  <section class="products-section">
+    <div class="reveal">
+      <div class="section-tag" style="color: rgba(232,0,14,0.9)">Produktübersicht</div>
+      <h2 class="section-title">Unsere Anhänger</h2>
+      <p class="section-intro">Von der leichten Jolle bis zum schweren Sportboot — HEKU hat den richtigen Anhänger.</p>
+    </div>
+    <div class="products-grid">
+      <a href="produkte.html#bootsanhaenger" class="product-card reveal">
+        <div class="product-range">B-Serie 2026</div>
+        <div class="product-name">Bootsanhänger</div>
+        <p class="product-desc">25 Modelle, ungebremst bis 750 kg und gebremst bis 3.500 kg. TÜV-geprüft, einzeln konfigurierbar.</p>
+        <div class="product-link">Alle Modelle <span>→</span></div>
+      </a>
+      <a href="produkte.html#motorrad" class="product-card reveal">
+        <div class="product-range">Sonderprodukte</div>
+        <div class="product-name">Motorrad&shy;anhänger</div>
+        <p class="product-desc">1er und 2er Anhänger mit Kipprahmen. Verladung durch eine Person, kein Auffahrrampe nötig.</p>
+        <div class="product-link">Details ansehen <span>→</span></div>
+      </a>
+      <a href="shop.html" class="product-card reveal">
+        <div class="product-range">Zubehör &amp; Ersatzteile</div>
+        <div class="product-name">Shop</div>
+        <p class="product-desc">Kielrollen, Stützräder, Gewindespindeln und mehr. Direkt bestellen, schnell geliefert.</p>
+        <div class="product-link">Zum Shop <span>→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- HEKU ENGINEER CTA -->
+  <div class="engineer-section reveal">
+    <div>
+      <h2 class="engineer-title">HEKU Engineer</h2>
+      <p class="engineer-sub">
+        In 3 Schritten zum passenden Anhänger. Geben Sie Ihr Boot ein — wir berechnen die passenden Modelle und geben Ihnen eine unverbindliche Preisrange.
+      </p>
+    </div>
+    <a href="konfigurator.html" class="btn-white">
+      Jetzt konfigurieren <span class="btn-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logo.png" alt="HEKU">
+        <p class="footer-tagline">Der Bootsanhänger mit der<br>wasserdichten Radnabe.<br>Seit 1959, Made in Germany.</p>
+        <div class="footer-contact">
+          <strong>Kontakt</strong>
+          HEKU Fahrzeugbau GmbH<br>
+          Bunzlauer Str. 6 · 33719 Bielefeld<br>
+          Tel: 0521 200066<br>
+          info@heku-fahrzeugbau.de
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Produkte</div>
+        <ul class="footer-links">
+          <li><a href="produkte.html">Bootsanhänger</a></li>
+          <li><a href="produkte.html#motorrad">Motorradanhänger</a></li>
+          <li><a href="shop.html">Zubehör &amp; Ersatzteile</a></li>
+          <li><a href="konfigurator.html">HEKU Engineer</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="haendler.html">Händlernetz</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Service</div>
+        <ul class="footer-links">
+          <li><a href="kontakt.html">Anfrage stellen</a></li>
+          <li><a href="#">Downloads</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 HEKU Fahrzeugbau GmbH · Alle Rechte vorbehalten</span>
+      <div class="footer-legal">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile Menü
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const isOpen = links.style.display === 'flex';
+      links.style.cssText = isOpen
+        ? ''
+        : 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(17,17,17,0.98);padding:24px 20px;gap:20px;z-index:99;';
+    }
+  </script>
+</body>
+</html>
