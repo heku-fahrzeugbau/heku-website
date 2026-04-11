@@ -4,991 +4,385 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="HEKU Fahrzeugbau GmbH – Bootsanhänger mit patentierter wasserdichter Radnabe. Seit 1959. TÜV-geprüft, Made in Germany.">
-  <title>HEKU Fahrzeugbau GmbH – Bootsanhänger seit 1959</title>
-
+  <title>HEKU Fahrzeugbau – Bootsanhänger seit 1959</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     :root {
-      --rot:      #E8000E;
-      --rot-dark: #B8000B;
-      --dunkel:   #111111;
-      --grau-1:   #1C1C1C;
-      --grau-2:   #2E2E2E;
-      --grau-3:   #4A4A4A;
-      --grau-4:   #888888;
-      --grau-5:   #D4D4D4;
-      --grau-6:   #F2F2F2;
-      --weiss:    #FFFFFF;
-      --font-head: 'Barlow Condensed', sans-serif;
-      --font-body: 'Barlow', sans-serif;
-      --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+      --rot:       #E8000E;
+      --rot-dark:  #B8000B;
+      --schwarz:   #0A0A0A;
+      --text:      #2C2C2C;
+      --muted:     #6B6B6B;
+      --border:    #E8E8E8;
+      --bg:        #FFFFFF;
+      --bg2:       #F7F7F7;
+      --bg3:       #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease:      cubic-bezier(0.4,0,0.2,1);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--weiss);
-      color: var(--dunkel);
-      overflow-x: hidden;
-    }
-
-    /* ─── NAVIGATION ─── */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 68px;
-      background: rgba(17,17,17,0.97);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(232,0,14,0.3);
-      transition: background var(--transition);
-    }
-
-    .nav-logo img {
-      height: 32px;
-      width: auto;
-      display: block;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--font-head);
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-
-    .nav-links a:hover { color: var(--weiss); }
-
-    .nav-cta {
-      background: var(--rot) !important;
-      color: var(--weiss) !important;
-      padding: 8px 20px;
-      border-radius: 2px;
-    }
-
-    .nav-cta:hover { background: var(--rot-dark) !important; }
-
-    .nav-burger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .nav-burger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--weiss);
-      border-radius: 1px;
-      transition: var(--transition);
-    }
-
-    /* ─── HERO ─── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 640px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      background: var(--dunkel);
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(10,10,10,0.55) 0%,
-          rgba(10,10,10,0.45) 40%,
-          rgba(10,10,10,0.82) 100%),
-        url('hero.jpg') center center / cover no-repeat;
-    }
-
-    /* Diagonales Raster als Hintergrundtextur */
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          -45deg,
-          transparent,
-          transparent 40px,
-          rgba(232,0,14,0.04) 40px,
-          rgba(232,0,14,0.04) 41px
-        );
-    }
-
-    /* Großer Hintergrundtext */
-    .hero-watermark {
-      position: absolute;
-      right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--font-head);
-      font-size: clamp(140px, 22vw, 320px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: rgba(255,255,255,0.03);
-      line-height: 1;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 40px 80px;
-      max-width: 900px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--rot);
-      color: var(--weiss);
-      font-family: var(--font-head);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 2px;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
-    }
-
-    .hero-badge::before {
-      content: '';
-      display: block;
-      width: 6px;
-      height: 6px;
-      background: var(--weiss);
-      border-radius: 50%;
-    }
-
-    .hero-title {
-      font-family: var(--font-head);
-      font-size: clamp(52px, 8vw, 110px);
-      font-weight: 800;
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      color: var(--weiss);
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.35s forwards;
-    }
-
-    .hero-title em {
-      font-style: normal;
-      color: var(--rot);
-    }
-
-    .hero-sub {
-      font-size: 17px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.65;
-      max-width: 520px;
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.5s forwards;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.65s forwards;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--rot);
-      color: var(--weiss);
-      font-family: var(--font-head);
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 15px 32px;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: background var(--transition), transform var(--transition);
-    }
-
-    .btn-primary:hover {
-      background: var(--rot-dark);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: transparent;
-      color: var(--weiss);
-      font-family: var(--font-head);
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 15px 32px;
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 2px;
-      text-decoration: none;
-      transition: border-color var(--transition), background var(--transition);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--weiss);
-      background: rgba(255,255,255,0.07);
-    }
-
-    .btn-arrow {
-      font-size: 18px;
-      line-height: 1;
-      transition: transform var(--transition);
-    }
-
-    .btn-primary:hover .btn-arrow,
-    .btn-secondary:hover .btn-arrow {
-      transform: translateX(4px);
-    }
-
-    /* ─── STATS-BAND ─── */
-    .stats-band {
-      background: var(--grau-1);
-      border-top: 3px solid var(--rot);
-      padding: 0 40px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .stat-item {
-      padding: 32px 24px;
-      border-right: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .stat-item:last-child { border-right: none; }
-
-    .stat-number {
-      font-family: var(--font-head);
-      font-size: 48px;
-      font-weight: 800;
-      color: var(--rot);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    /* ─── SEKTIONEN ALLGEMEIN ─── */
-    section { padding: 96px 40px; }
-
-    .section-tag {
-      font-family: var(--font-head);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rot);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: var(--font-head);
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      line-height: 1.0;
-      color: var(--dunkel);
-      margin-bottom: 20px;
-    }
-
-    .section-intro {
-      font-size: 17px;
-      font-weight: 300;
-      color: var(--grau-3);
-      line-height: 1.7;
-      max-width: 560px;
-    }
-
-    /* ─── USP SEKTION ─── */
-    .usp-section {
-      background: var(--grau-6);
-    }
-
-    .usp-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      margin-top: 56px;
-      background: var(--grau-5);
-    }
-
-    .usp-card {
-      background: var(--weiss);
-      padding: 44px 40px;
-      position: relative;
-      overflow: hidden;
-      transition: background var(--transition);
-    }
-
-    .usp-card:hover { background: #FAFAFA; }
-
-    .usp-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 4px;
-      height: 0;
-      background: var(--rot);
-      transition: height 0.35s ease;
-    }
-
-    .usp-card:hover::before { height: 100%; }
-
-    .usp-icon {
-      font-family: var(--font-head);
-      font-size: 48px;
-      font-weight: 800;
-      color: rgba(232,0,14,0.1);
-      line-height: 1;
-      margin-bottom: 20px;
-      user-select: none;
-    }
-
-    .usp-title {
-      font-family: var(--font-head);
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--dunkel);
-      margin-bottom: 12px;
-    }
-
-    .usp-text {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--grau-3);
-      line-height: 1.7;
-    }
-
-    /* ─── PRODUKT-PREVIEW ─── */
-    .products-section {
-      background: var(--dunkel);
-    }
-
-    .products-section .section-title { color: var(--weiss); }
-    .products-section .section-intro { color: rgba(255,255,255,0.5); }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 56px;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .product-card {
-      background: var(--grau-1);
-      padding: 48px 36px;
-      text-decoration: none;
-      display: block;
-      position: relative;
-      overflow: hidden;
-      transition: background var(--transition);
-      border-bottom: 3px solid transparent;
-      transition: border-color var(--transition), background var(--transition);
-    }
-
-    .product-card:hover {
-      background: var(--grau-2);
-      border-bottom-color: var(--rot);
-    }
-
-    .product-range {
-      font-family: var(--font-head);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rot);
-      margin-bottom: 16px;
-    }
-
-    .product-name {
-      font-family: var(--font-head);
-      font-size: 32px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--weiss);
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-
-    .product-desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.65;
-      margin-bottom: 32px;
-    }
-
-    .product-link {
-      font-family: var(--font-head);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--rot);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: gap var(--transition);
-    }
-
-    .product-card:hover .product-link { gap: 14px; }
-
-    /* ─── ENGINEER CTA ─── */
-    .engineer-section {
-      background: var(--rot);
-      padding: 80px 40px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .engineer-title {
-      font-family: var(--font-head);
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--weiss);
-      line-height: 1.0;
-      margin-bottom: 12px;
-    }
-
-    .engineer-sub {
-      font-size: 16px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.6;
-      max-width: 500px;
-    }
-
-    .btn-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--weiss);
-      color: var(--rot);
-      font-family: var(--font-head);
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 18px 36px;
-      border-radius: 2px;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background var(--transition), transform var(--transition);
-    }
-
-    .btn-white:hover {
-      background: var(--grau-6);
-      transform: translateY(-2px);
-    }
-
-    /* ─── VERTRAUEN / ZERTIFIKATE ─── */
-    .trust-section {
-      background: var(--weiss);
-      padding: 64px 40px;
-      display: flex;
-      align-items: center;
-      gap: 60px;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--grau-5);
-      border-bottom: 1px solid var(--grau-5);
-    }
-
-    .trust-label {
-      font-family: var(--font-head);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--grau-4);
-      white-space: nowrap;
-    }
-
-    .trust-items {
-      display: flex;
-      gap: 48px;
-      flex-wrap: wrap;
-      align-items: center;
-      flex: 1;
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .trust-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--rot);
-      flex-shrink: 0;
-    }
-
-    .trust-text {
-      font-family: var(--font-head);
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--dunkel);
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--grau-1);
-      padding: 64px 40px 32px;
-      border-top: 3px solid var(--rot);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
-    }
-
-    .footer-brand img {
-      height: 28px;
-      margin-bottom: 20px;
-    }
-
-    .footer-tagline {
-      font-size: 14px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.65;
-      margin-bottom: 20px;
-    }
-
-    .footer-contact {
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
-      line-height: 2;
-    }
-
-    .footer-contact strong {
-      display: block;
-      color: var(--rot);
-      font-family: var(--font-head);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .footer-heading {
-      font-family: var(--font-head);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 20px;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .footer-links a {
-      font-size: 14px;
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      transition: color var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .footer-links a:hover { color: var(--weiss); }
-
-    .footer-links a::before {
-      content: '';
-      display: block;
-      width: 4px;
-      height: 4px;
-      background: var(--rot);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding-top: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-copy {
-      font-size: 12px;
-      color: rgba(255,255,255,0.25);
-    }
-
-    .footer-legal {
-      display: flex;
-      gap: 24px;
-    }
-
-    .footer-legal a {
-      font-size: 12px;
-      color: rgba(255,255,255,0.25);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-
-    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
-
-    /* ─── ANIMATIONEN ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.07); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,0,14,0.28); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* HERO */
+    .hero { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 64px); }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 64px 80px 80px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 28px; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--rot); }
+    .hero-title { font-family: var(--font-head); font-size: clamp(40px, 4.5vw, 68px); font-weight: 400; line-height: 1.08; letter-spacing: -0.01em; color: var(--schwarz); margin-bottom: 24px; }
+    .hero-title span { color: var(--rot); }
+    .hero-body { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--muted); max-width: 400px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-lg { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 14px 26px; border-radius: 8px; transition: all 0.22s var(--ease); }
+    .btn-lg.red { background: var(--rot); color: #fff; }
+    .btn-lg.red:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,0,14,0.28); }
+    .btn-lg.ghost { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-lg.ghost:hover { border-color: var(--text); background: var(--bg2); }
+    .btn-arr { transition: transform 0.2s; }
+    .btn-lg:hover .btn-arr { transform: translateX(4px); }
+    .hero-stats { display: flex; gap: 36px; margin-top: 52px; padding-top: 36px; border-top: 1px solid var(--border); }
+    .stat-num { font-family: var(--font-head); font-size: 30px; font-weight: 400; color: var(--schwarz); }
+    .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .hero-right { position: relative; background: var(--schwarz); overflow: hidden; }
+    .hero-right video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+    .hero-right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-video-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.15) 0%, transparent 70%); pointer-events: none; z-index: 1; }
+    .hero-badge { position: absolute; bottom: 28px; left: 28px; z-index: 2; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-radius: 12px; padding: 14px 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 12px; }
+    .badge-dot { width: 9px; height: 9px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+    .badge-t { font-size: 13px; font-weight: 500; }
+    .badge-s { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    /* CERTS */
+    .certs { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 80px; display: flex; align-items: center; gap: 0; }
+    .certs-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; margin-right: 48px; }
+    .certs-items { display: flex; gap: 40px; flex-wrap: wrap; }
+    .cert { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; color: var(--text); }
+    .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; }
+
+    /* SECTIONS */
+    .sec { padding: 96px 80px; }
+    .sec-gray { background: var(--bg2); }
+    .sec-dark { background: var(--schwarz); }
+    .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 14px; }
+    .h2 { font-family: var(--font-head); font-size: clamp(30px, 3.5vw, 50px); font-weight: 400; letter-spacing: -0.01em; line-height: 1.06; color: var(--schwarz); margin-bottom: 18px; }
+    .h2.w { color: #fff; }
+    .p { font-size: 16px; font-weight: 300; line-height: 1.75; color: var(--muted); max-width: 500px; }
+    .p.w { color: rgba(255,255,255,0.5); }
+
+    /* USPs */
+    .usp-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); margin-top: 56px; }
+    .usp-card { background: var(--bg); padding: 40px 32px; transition: background 0.25s; }
+    .usp-card:hover { background: var(--bg2); }
+    .usp-n { font-family: var(--font-body); font-size: 52px; font-weight: 300; color: var(--bg3); line-height: 1; margin-bottom: 20px; }
+    .usp-bar { width: 28px; height: 3px; background: var(--rot); margin-bottom: 16px; }
+    .usp-t { font-size: 15px; font-weight: 600; color: var(--schwarz); margin-bottom: 10px; }
+    .usp-b { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--muted); }
+
+    /* PRODUCTS */
+    .prod-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 52px; }
+    .prod-card { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.09); }
+    .prod-img { aspect-ratio: 4/3; background: var(--bg2); overflow: hidden; }
+    .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+    .prod-card:hover .prod-img img { transform: scale(1.04); }
+    .prod-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--bg3); }
+    .prod-placeholder span { font-size: 12px; color: var(--muted); }
+    .prod-body { padding: 24px 26px; }
+    .prod-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rot); margin-bottom: 7px; }
+    .prod-name { font-family: var(--font-head); font-size: 21px; font-weight: 800; color: var(--schwarz); margin-bottom: 9px; }
+    .prod-desc { font-size: 13px; font-weight: 300; line-height: 1.65; color: var(--muted); margin-bottom: 18px; }
+    .prod-lnk { font-size: 13px; font-weight: 600; color: var(--rot); display: flex; align-items: center; gap: 5px; }
+
+    /* ENGINEER */
+    .eng { background: var(--schwarz); padding: 80px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; position: relative; overflow: hidden; }
+    .eng::before { content: 'ENGINEER'; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-family: var(--font-head); font-size: 160px; font-weight: 800; color: rgba(255,255,255,0.025); white-space: nowrap; pointer-events: none; }
+    .eng-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 14px; }
+    .eng-t { font-family: var(--font-head); font-size: clamp(32px, 3.5vw, 52px); font-weight: 800; letter-spacing: -0.025em; color: #fff; line-height: 1.05; margin-bottom: 16px; }
+    .eng-b { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.45); max-width: 440px; }
+    .btn-eng { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; background: var(--rot); color: #fff; font-size: 15px; font-weight: 600; padding: 17px 34px; border-radius: 10px; transition: all 0.22s var(--ease); position: relative; z-index: 1; }
+    .btn-eng:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,0,14,0.38); }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .about-img { border-radius: 14px; overflow: hidden; aspect-ratio: 4/3; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+    .about-since { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 18px; }
+    .about-since::before { content: ''; width: 18px; height: 1.5px; background: var(--rot); }
+    .about-feats { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .feat { display: flex; align-items: flex-start; gap: 12px; }
+    .feat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; margin-top: 7px; }
+    .feat-t { font-size: 15px; line-height: 1.55; color: var(--text); }
+
+    /* FOOTER */
+    footer { background: var(--schwarz); padding: 68px 80px 32px; }
+    .ft { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 52px; }
+    .ft-logo img { height: 26px; margin-bottom: 18px; }
+    .ft-desc { font-size: 13px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .ft-contact { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 2.1; }
+    .ft-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 18px; }
+    .ft-links { display: flex; flex-direction: column; gap: 10px; }
+    .ft-links a { font-size: 13px; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+    .ft-links a:hover { color: #fff; }
+    .ft-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.18); }
+    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.18); transition: color 0.2s; }
+    .ft-legal a:hover { color: rgba(255,255,255,0.45); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
       nav { padding: 0 20px; }
-
-      .nav-links { display: none; }
+      .nav-center { display: none; }
       .nav-burger { display: flex; }
-
-      .hero-content { padding: 0 20px 60px; }
-      .hero-watermark { display: none; }
-
-      .stats-band { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
-
-      section { padding: 64px 20px; }
-
-      .usp-grid { grid-template-columns: 1fr; }
-      .products-grid { grid-template-columns: 1fr; }
-
-      .engineer-section {
-        grid-template-columns: 1fr;
-        padding: 60px 20px;
-      }
-
-      .trust-section { padding: 48px 20px; gap: 32px; }
-
-      .footer-grid { grid-template-columns: 1fr 1fr; padding: 0; }
-      footer { padding: 48px 20px 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 56px 24px; }
+      .hero-right { aspect-ratio: 16/9; }
+      .certs { padding: 20px 24px; }
+      .sec { padding: 64px 24px; }
+      .usp-grid { grid-template-columns: 1fr 1fr; }
+      .prod-grid { grid-template-columns: 1fr 1fr; }
+      .eng { grid-template-columns: 1fr; padding: 56px 24px; gap: 28px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .ft { grid-template-columns: 1fr 1fr; }
+      footer { padding: 52px 24px 28px; }
     }
-
     @media (max-width: 600px) {
-      .stats-band { grid-template-columns: repeat(2, 1fr); }
-      .stat-number { font-size: 36px; }
-      .footer-grid { grid-template-columns: 1fr; }
+      .usp-grid, .prod-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 20px; }
+      .ft { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <a href="/" class="nav-logo">
-      <img src="logo.png" alt="HEKU Fahrzeugbau GmbH">
-    </a>
-    <ul class="nav-links">
-      <li><a href="produkte.html">Produkte</a></li>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="ueber-uns.html">Über uns</a></li>
-      <li><a href="haendler.html">Händler</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
-      <li><a href="konfigurator.html" class="nav-cta">Anhänger konfigurieren</a></li>
-    </ul>
-    <div class="nav-burger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
+  <nav id="nav">
+    <a href="/" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
     </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-watermark">HEKU</div>
-    <div class="hero-content">
-      <div class="hero-badge">Seit 1959 · Made in Germany · Bielefeld</div>
-      <h1 class="hero-title">
-        Bootsanhänger<br>
-        <em>die halten.</em>
-      </h1>
-      <p class="hero-sub">
-        Patentierte wasserdichte Radnabe. TÜV-geprüft. Einzelfertigung nach Maß.
-        Seit über 65 Jahren das Original aus Bielefeld.
-      </p>
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Familienunternehmen · 3. Generation · Made in Germany</div>
+      <h1 class="hero-title">Der Anhänger,<br>der zu Ihrem<br><span>Boot passt.</span></h1>
+      <p class="hero-body">Eigenentwickelte wasserdichte Radnabe. Einzelfertigung nach Maß. TÜV-geprüft bis 3.500 kg. Feuerverzinktes Fahrgestell nach DIN 1461.</p>
       <div class="hero-actions">
-        <a href="konfigurator.html" class="btn-primary">
-          Anhänger konfigurieren
-          <span class="btn-arrow">→</span>
-        </a>
-        <a href="produkte.html" class="btn-secondary">
-          Alle Produkte
-          <span class="btn-arrow">→</span>
-        </a>
+        <a href="konfigurator.html" class="btn-lg red">Anhänger konfigurieren <span class="btn-arr">→</span></a>
+        <a href="produkte.html" class="btn-lg ghost">Alle Produkte</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">65+</div><div class="stat-lbl">Jahre Erfahrung</div></div>
+        <div><div class="stat-num">5J.</div><div class="stat-lbl">Garantie Radnabe</div></div>
+        <div><div class="stat-num">25+</div><div class="stat-lbl">Modelle</div></div>
       </div>
     </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-band">
-    <div class="stat-item">
-      <div class="stat-number">65+</div>
-      <div class="stat-label">Jahre Erfahrung</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">5</div>
-      <div class="stat-label">Jahre Garantie</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">25+</div>
-      <div class="stat-label">Modelle verfügbar</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">3,5t</div>
-      <div class="stat-label">Max. Zuglast</div>
-    </div>
-  </div>
-
-  <!-- TRUST BAND -->
-  <div class="trust-section">
-    <span class="trust-label">Zertifiziert &amp; geprüft</span>
-    <div class="trust-items">
-      <div class="trust-item reveal">
-        <div class="trust-dot"></div>
-        <span class="trust-text">TÜV EG-Typgenehmigung</span>
-      </div>
-      <div class="trust-item reveal">
-        <div class="trust-dot"></div>
-        <span class="trust-text">Kraftfahrt-Bundesamt</span>
-      </div>
-      <div class="trust-item reveal">
-        <div class="trust-dot"></div>
-        <span class="trust-text">Patent wasserdichte Radnabe</span>
-      </div>
-      <div class="trust-item reveal">
-        <div class="trust-dot"></div>
-        <span class="trust-text">DIN 1461 Feuerverzinkt</span>
+    <div class="hero-right">
+      <video autoplay muted loop playsinline poster="hero.jpg">
+        <source src="hero-video.mp4" type="video/mp4">
+      </video>
+      <img src="hero.jpg" alt="HEKU Bootsanhänger" id="hero-fallback">
+      <div class="hero-video-overlay"></div>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        <div><div class="badge-t">Familienunternehmen · 3. Generation</div><div class="badge-s">Bielefeld, seit 1959</div></div>
       </div>
     </div>
   </div>
 
-  <!-- USP SEKTION -->
-  <section class="usp-section">
+  <!-- CERTS -->
+  <div class="certs">
+    <span class="certs-lbl">Zertifiziert</span>
+    <div class="certs-items">
+      <div class="cert"><div class="cert-dot"></div>Eigenentwickelte Radnabe</div>
+      <div class="cert"><div class="cert-dot"></div>TÜV EG-Typgenehmigung</div>
+      <div class="cert"><div class="cert-dot"></div>DIN 1461 Feuerverzinkt</div>
+      <div class="cert"><div class="cert-dot"></div>Kraftfahrt-Bundesamt</div>
+      <div class="cert"><div class="cert-dot"></div>5 Jahre Garantie</div>
+    </div>
+  </div>
+
+  <!-- USPs -->
+  <section class="sec sec-gray">
     <div class="reveal">
-      <div class="section-tag">Warum HEKU</div>
-      <h2 class="section-title">Technik, die<br>überzeugt</h2>
-      <p class="section-intro">Jeder HEKU-Anhänger ist eine Einzelanfertigung. Kein Serienprodukt, sondern präzise auf Ihr Boot abgestimmt.</p>
+      <div class="lbl">Warum HEKU</div>
+      <h2 class="h2">Technik, die überzeugt</h2>
+      <p class="p">Kein Serienprodukt. Jeder Anhänger wird individuell auf Ihr Boot abgestimmt — mit über 65 Jahren Erfahrung aus Bielefeld.</p>
     </div>
     <div class="usp-grid">
-      <div class="usp-card reveal">
-        <div class="usp-icon">01</div>
-        <div class="usp-title">Wasserdichte Radnabe</div>
-        <p class="usp-text">Eigenentwicklung und Patent seit über 40 Jahren. Gerichtlich bestätigt, vom TH Hannover geprüft: alle 10 Testnaben für wasserdicht erklärt. 5 Jahre Garantie.</p>
-      </div>
-      <div class="usp-card reveal">
-        <div class="usp-icon">02</div>
-        <div class="usp-title">Feuerverzinktes Fahrgestell</div>
-        <p class="usp-text">Tauchbad-Feuerverzinkung nach DIN 1461. Maximaler Korrosionsschutz für Salz- und Süßwasser. Jedes Bauteil einzeln austauschbar.</p>
-      </div>
-      <div class="usp-card reveal">
-        <div class="usp-icon">03</div>
-        <div class="usp-title">Verstellbarer Rahmen</div>
-        <p class="usp-text">Patentierter Stahlbriedenverschraubung mit gelbchromatierter Oberfläche. Breitspur-V-Rahmen für optimale Straßenlage und tiefen Schwerpunkt.</p>
-      </div>
-      <div class="usp-card reveal">
-        <div class="usp-icon">04</div>
-        <div class="usp-title">Einzelfertigung nach Maß</div>
-        <p class="usp-text">Kein Anhänger wie der andere. Individuell auf Bootstyp, Länge, Gewicht und Tiefgang abgestimmt. Zulassung bis 3.500 kg mit EG-Typgenehmigung.</p>
-      </div>
+      <div class="usp-card reveal"><div class="usp-n">01</div><div class="usp-bar"></div><div class="usp-t">Wasserdichte Radnabe</div><p class="usp-b">Eigenentwicklung seit über 40 Jahren — vom TH Hannover geprüft: alle Testnaben für wasserdicht erklärt. 5 Jahre Garantie.</p></div>
+      <div class="usp-card reveal"><div class="usp-n">02</div><div class="usp-bar"></div><div class="usp-t">Feuerverzinktes Fahrgestell</div><p class="usp-b">Tauchbad-Feuerverzinkung nach DIN 1461. Maximaler Korrosionsschutz für Salz- und Süßwasser.</p></div>
+      <div class="usp-card reveal"><div class="usp-n">03</div><div class="usp-bar"></div><div class="usp-t">Verstellbarer Rahmen</div><p class="usp-b">Patentierter Breitspur-V-Rahmen. Gelbchromatierte Oberfläche. Jedes Bauteil einzeln austauschbar.</p></div>
+      <div class="usp-card reveal"><div class="usp-n">04</div><div class="usp-bar"></div><div class="usp-t">Einzelfertigung nach Maß</div><p class="usp-b">Individuell auf Bootstyp, Länge, Gewicht und Tiefgang abgestimmt. Zulassung bis 3.500 kg.</p></div>
     </div>
   </section>
 
-  <!-- PRODUKTE PREVIEW -->
-  <section class="products-section">
+  <!-- PRODUKTE -->
+  <section class="sec">
     <div class="reveal">
-      <div class="section-tag" style="color: rgba(232,0,14,0.9)">Produktübersicht</div>
-      <h2 class="section-title">Unsere Anhänger</h2>
-      <p class="section-intro">Von der leichten Jolle bis zum schweren Sportboot — HEKU hat den richtigen Anhänger.</p>
+      <div class="lbl">Produktübersicht</div>
+      <h2 class="h2">Unsere Anhänger</h2>
+      <p class="p">Von der leichten Jolle bis zum schweren Sportboot — HEKU hat den passenden Anhänger.</p>
     </div>
-    <div class="products-grid">
-      <a href="produkte.html#bootsanhaenger" class="product-card reveal">
-        <div class="product-range">B-Serie 2026</div>
-        <div class="product-name">Bootsanhänger</div>
-        <p class="product-desc">25 Modelle, ungebremst bis 750 kg und gebremst bis 3.500 kg. TÜV-geprüft, einzeln konfigurierbar.</p>
-        <div class="product-link">Alle Modelle <span>→</span></div>
+    <div class="prod-grid">
+      <a href="produkte.html" class="prod-card reveal">
+        <div class="prod-img"><img src="hero.jpg" alt="Bootsanhänger"></div>
+        <div class="prod-body">
+          <div class="prod-tag">B-Serie 2026 · 25 Modelle</div>
+          <div class="prod-name">Bootsanhänger</div>
+          <p class="prod-desc">Ungebremst bis 750 kg, gebremst bis 3.500 kg. TÜV-geprüft, einzeln konfigurierbar.</p>
+          <div class="prod-lnk">Alle Modelle →</div>
+        </div>
       </a>
-      <a href="produkte.html#motorrad" class="product-card reveal">
-        <div class="product-range">Sonderprodukte</div>
-        <div class="product-name">Motorrad&shy;anhänger</div>
-        <p class="product-desc">1er und 2er Anhänger mit Kipprahmen. Verladung durch eine Person, kein Auffahrrampe nötig.</p>
-        <div class="product-link">Details ansehen <span>→</span></div>
-      </a>
-      <a href="shop.html" class="product-card reveal">
-        <div class="product-range">Zubehör &amp; Ersatzteile</div>
-        <div class="product-name">Shop</div>
-        <p class="product-desc">Kielrollen, Stützräder, Gewindespindeln und mehr. Direkt bestellen, schnell geliefert.</p>
-        <div class="product-link">Zum Shop <span>→</span></div>
+
+      <a href="shop.html" class="prod-card reveal">
+        <div class="prod-img">
+          <div class="prod-placeholder">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span>Zubehör &amp; Ersatzteile</span>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-tag">Online-Shop</div>
+          <div class="prod-name">Zubehör &amp; Ersatzteile</div>
+          <p class="prod-desc">Kielrollen, Stützräder, Gewindespindeln und mehr. Direkt bestellen, Vorkasse.</p>
+          <div class="prod-lnk">Zum Shop →</div>
+        </div>
       </a>
     </div>
   </section>
 
-  <!-- HEKU ENGINEER CTA -->
-  <div class="engineer-section reveal">
+  <!-- HEKU ENGINEER -->
+  <div class="eng reveal">
     <div>
-      <h2 class="engineer-title">HEKU Engineer</h2>
-      <p class="engineer-sub">
-        In 3 Schritten zum passenden Anhänger. Geben Sie Ihr Boot ein — wir berechnen die passenden Modelle und geben Ihnen eine unverbindliche Preisrange.
-      </p>
+      <div class="eng-tag">Ihr digitaler Berater</div>
+      <h2 class="eng-t">HEKU Engineer —<br>Ihr Konfigurator</h2>
+      <p class="eng-b">In 3 Schritten zum passenden Anhänger. Geben Sie Ihr Boot ein, wir berechnen die passenden Modelle und liefern eine unverbindliche Preisrange.</p>
     </div>
-    <a href="konfigurator.html" class="btn-white">
-      Jetzt konfigurieren <span class="btn-arrow">→</span>
-    </a>
+    <a href="konfigurator.html" class="btn-eng">Jetzt konfigurieren →</a>
   </div>
+
+  <!-- ÜBER UNS -->
+  <section class="sec">
+    <div class="about-grid">
+      <div class="about-img reveal"><img src="hero.jpg" alt="HEKU Werk Bielefeld"></div>
+      <div class="reveal">
+        <div class="about-since">Familienunternehmen · 3. Generation</div>
+        <h2 class="h2">65 Jahre Leidenschaft<br>für den perfekten<br>Anhänger</h2>
+        <p class="p">HEKU steht für Qualität, die man sieht und fühlt. Heute in der dritten Generation geführt von Robin Kollmeier. Gegründet von Helmut Kollmeier, der die wasserdichte Radnabe eigenhändig entwickelte.</p>
+        <div class="about-feats">
+          <div class="feat"><div class="feat-dot"></div><span class="feat-t">Wasserdichte Radnabe — Eigenentwicklung, vom TH Hannover geprüft</span></div>
+          <div class="feat"><div class="feat-dot"></div><span class="feat-t">Alle Bauteile von zertifizierten 1A-Qualitätsherstellern</span></div>
+          <div class="feat"><div class="feat-dot"></div><span class="feat-t">Typprüfung durch das Kraftfahrt-Bundesamt</span></div>
+          <div class="feat"><div class="feat-dot"></div><span class="feat-t">Direktvertrieb ab Werk in Bielefeld</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <img src="logo.png" alt="HEKU">
-        <p class="footer-tagline">Der Bootsanhänger mit der<br>wasserdichten Radnabe.<br>Seit 1959, Made in Germany.</p>
-        <div class="footer-contact">
-          <strong>Kontakt</strong>
-          HEKU Fahrzeugbau GmbH<br>
-          Bunzlauer Str. 6 · 33719 Bielefeld<br>
-          Tel: 0521 200066<br>
-          info@heku-fahrzeugbau.de
+    <div class="ft">
+      <div>
+        <div class="ft-logo"><img src="logo.png" alt="HEKU"></div>
+        <p class="ft-desc">Familienunternehmen in der dritten Generation. Eigenentwickelte wasserdichte Radnabe. Einzelfertigung seit 1959.</p>
+        <div class="ft-contact">Bunzlauer Str. 6 · 33719 Bielefeld<br>0521 200066<br>info@heku-fahrzeugbau.de</div>
+      </div>
+      <div>
+        <div class="ft-head">Produkte</div>
+        <div class="ft-links">
+          <a href="produkte.html">Bootsanhänger</a>
+          <a href="shop.html">Zubehör &amp; Shop</a>
+          <a href="konfigurator.html">HEKU Engineer</a>
         </div>
       </div>
       <div>
-        <div class="footer-heading">Produkte</div>
-        <ul class="footer-links">
-          <li><a href="produkte.html">Bootsanhänger</a></li>
-          <li><a href="produkte.html#motorrad">Motorradanhänger</a></li>
-          <li><a href="shop.html">Zubehör &amp; Ersatzteile</a></li>
-          <li><a href="konfigurator.html">HEKU Engineer</a></li>
-        </ul>
+        <div class="ft-head">Unternehmen</div>
+        <div class="ft-links">
+          <a href="ueber-uns.html">Über uns</a>
+          <a href="haendler.html">Händlernetz</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
       </div>
       <div>
-        <div class="footer-heading">Unternehmen</div>
-        <ul class="footer-links">
-          <li><a href="ueber-uns.html">Über uns</a></li>
-          <li><a href="haendler.html">Händlernetz</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Service</div>
-        <ul class="footer-links">
-          <li><a href="kontakt.html">Anfrage stellen</a></li>
-          <li><a href="#">Downloads</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
+        <div class="ft-head">Service</div>
+        <div class="ft-links">
+          <a href="kontakt.html">Anfrage stellen</a>
+          <a href="#">Downloads</a>
+          <a href="#">FAQ</a>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 HEKU Fahrzeugbau GmbH · Alle Rechte vorbehalten</span>
-      <div class="footer-legal">
-        <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a>
-        <a href="#">AGB</a>
-      </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
+      <div class="ft-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
     </div>
   </footer>
 
   <script>
-    // Scroll-Reveal
-    const observer = new IntersectionObserver((entries) => {
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+    const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 80);
-          observer.unobserve(e.target);
+          setTimeout(() => e.target.classList.add('visible'), i * 90);
+          obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Mobile Menü
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     function toggleMenu() {
-      const links = document.querySelector('.nav-links');
-      const isOpen = links.style.display === 'flex';
-      links.style.cssText = isOpen
-        ? ''
-        : 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(17,17,17,0.98);padding:24px 20px;gap:20px;z-index:99;';
+      const c = document.querySelector('.nav-center');
+      const open = c.style.display === 'flex';
+      c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
     }
-  </script>
+    // Hide fallback img if video plays
+  const vid = document.querySelector('.hero-right video');
+  const fb = document.getElementById('hero-fallback');
+  if(vid && fb){ vid.addEventListener('playing', () => { fb.style.display='none'; }); }
+</script>
 </body>
 </html>
