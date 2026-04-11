@@ -386,7 +386,7 @@
       c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
     }
     // Hide fallback img if video plays
-  const vid = document.querySelector('.hero-right video');
+  const vid = document.getElementById('hero-video');
   const fb = document.getElementById('hero-fallback');
   if(vid && fb){ vid.addEventListener('playing', () => { fb.style.display='none'; }); }
 </script>
