@@ -189,6 +189,27 @@
       .hero-stats { flex-wrap: wrap; gap: 20px; }
       .ft { grid-template-columns: 1fr; }
     }
+  
+    /* FAQ */
+    .faq-grid { display: flex; flex-direction: column; gap: 0; margin-top: 52px; border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; background: none; border: none; cursor: pointer;
+      font-family: var(--font-body); font-size: 16px; font-weight: 500;
+      color: var(--text); text-align: left; gap: 24px;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--rot); }
+    .faq-icon { width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+    .faq-icon::before { content: '+'; font-size: 16px; color: var(--muted); line-height: 1; transition: transform 0.25s; }
+    .faq-item.open .faq-icon { background: var(--rot); border-color: var(--rot); }
+    .faq-item.open .faq-icon::before { content: '+'; color: #fff; transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-answer-inner { padding: 0 0 24px; font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--muted); max-width: 680px; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-more-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 36px; font-size: 14px; font-weight: 600; color: var(--rot); transition: gap 0.2s; }
+    .faq-more-link:hover { gap: 12px; }
   </style>
 </head>
 <body>
@@ -328,6 +349,89 @@
     </div>
   </section>
 
+
+
+  <!-- ERBE / GESCHICHTE -->
+  <section class="sec">
+    <div class="reveal" style="max-width: 780px; margin: 0 auto; text-align: center;">
+      <div class="lbl">Ein Stück Geschichte</div>
+      <h2 class="h2" style="font-size: clamp(28px, 3.5vw, 46px);">Der Mann, der Bootsanhänger steuerfrei gemacht hat</h2>
+      <p class="p" style="margin: 20px auto 0; max-width: 600px; font-size: 17px;">
+        Helmut Kollmeier, Gründer von HEKU, hat in den 1970er Jahren erfolgreich eingeklagt, 
+        dass Bootsanhänger in Deutschland von der Kfz-Steuer befreit werden. 
+        Dieses Urteil gilt bis heute — für jeden Bootsanhänger in Deutschland.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 48px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-head); font-size: 36px; color: var(--schwarz);">1959</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Gründung durch Helmut Kollmeier</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-head); font-size: 36px; color: var(--rot);">0 €</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Kfz-Steuer für Bootsanhänger</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-head); font-size: 36px; color: var(--schwarz);">3.</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Generation führt das Unternehmen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec sec-gray">
+    <div class="reveal">
+      <div class="lbl">Häufige Fragen</div>
+      <h2 class="h2">Das fragen unsere Kunden</h2>
+      <p class="p">Alles Wichtige zu Technik, Bestellung und Pflege — kurz und klar beantwortet.</p>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Was ist die wasserdichte Radnabe und warum ist sie besonders?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Die wasserdichte Radnabe ist eine Eigenentwicklung von HEKU — einzigartig in der Branche. Sie schützt Lager und Bremsanlage beim Einfahren ins Wasser zuverlässig vor Eindringen von Wasser und Salzwasser. Vom TH Hannover geprüft und für wasserdicht erklärt. Wir gewähren darauf 5 Jahre Garantie.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Bis zu welchem Gewicht sind HEKU-Anhänger zugelassen?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Ungebremste Anhänger sind bis 750 kg zugelassen und durch das Kraftfahrt-Bundesamt typgeprüft. Gebremste Anhänger erhalten eine TÜV EG-Typgenehmigung und sind bis 3.500 kg zulässiges Gesamtgewicht verfügbar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Wie bestelle ich einen HEKU-Bootsanhänger?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Nutzen Sie unseren HEKU Engineer Konfigurator: Geben Sie Bootstyp, Maße und Gewicht ein und Sie erhalten eine unverbindliche Preisrange. Bei konkretem Interesse füllen Sie das Kontaktformular aus — wir erstellen Ihnen ein individuelles Angebot direkt ab Werk in Bielefeld.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Wie pflege ich meinen HEKU-Anhänger richtig?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Nach jedem Einsatz im Salzwasser empfehlen wir ein Abspülen mit Frischwasser. Das feuerverzinkte Fahrgestell (DIN 1461) ist weitgehend wartungsfrei. Bewegliche Teile wie Gewindespindeln und Bremsseile aus Edelstahl sollten jährlich auf Leichtgängigkeit geprüft und bei Bedarf mit säurefreiem Fett behandelt werden.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Gibt es Ersatzteile und Zubehör zu kaufen?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Ja — in unserem Online-Shop finden Sie Kielrollen, Stützräder, Seitenstützrollen, Gewindespindeln und weiteres Zubehör. Da der verstellbare Rahmen so konstruiert ist, dass jedes Bauteil einzeln austauschbar ist, sind Ersatzteile direkt bei uns erhältlich.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Kann ich den Anhänger auch über einen Händler kaufen?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Ja. HEKU verfügt über ein etabliertes Händlernetz aus deutschen Bootshändlern. Auf unserer Händlerseite finden Sie den nächstgelegenen Partner. Alternativ können Sie auch direkt ab Werk in Bielefeld kaufen.</div></div>
+      </div>
+    </div>
+    <a href="faq.html" class="faq-more-link reveal">Alle Fragen ansehen →</a>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="ft">
@@ -380,6 +484,13 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
     function toggleMenu() {
       const c = document.querySelector('.nav-center');
       const open = c.style.display === 'flex';
