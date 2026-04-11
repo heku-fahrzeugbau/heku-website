@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kontakt zu HEKU Fahrzeugbau GmbH in Bielefeld. Anfragen zu Bootsanhängern, Ersatzteilen und Zubehör. Tel: 0521 200066.">
+  <title>Kontakt | HEKU Fahrzeugbau GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
+      --text: #2C2C2C; --muted: #6B6B6B; --border: #E8E8E8;
+      --bg: #FFFFFF; --bg2: #F7F7F7; --bg3: #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    input, select, textarea { font-family: var(--font-body); }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover, .nav-center a.active { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* PAGE HEADER */
+    .page-header { margin-top: 64px; background: var(--schwarz); padding: 72px 80px; position: relative; overflow: hidden; }
+    .page-header::before { content: 'KONTAKT'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: var(--font-head); font-size: 160px; color: rgba(255,255,255,0.025); pointer-events: none; white-space: nowrap; }
+    .page-header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
+    .page-header-title { font-family: var(--font-head); font-size: clamp(36px, 4vw, 56px); color: #fff; line-height: 1.05; margin-bottom: 14px; }
+    .page-header-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.45); max-width: 480px; line-height: 1.65; }
+
+    /* MAIN GRID */
+    .contact-layout { display: grid; grid-template-columns: 1fr 420px; gap: 0; min-height: 600px; }
+
+    /* FORMULAR */
+    .contact-form-wrap { padding: 64px 80px; border-right: 1px solid var(--border); }
+    .form-title { font-family: var(--font-head); font-size: 28px; color: var(--schwarz); margin-bottom: 6px; }
+    .form-sub { font-size: 14px; font-weight: 300; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .form-grid.full { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .form-label span { color: var(--rot); }
+    .form-input { height: 48px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+    .form-input:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .form-select { height: 48px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+    .form-select:focus { border-color: var(--rot); }
+    .form-textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; }
+    .form-textarea:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .consent-row { display: flex; align-items: flex-start; gap: 12px; margin: 18px 0 24px; }
+    .consent-check { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border); flex-shrink: 0; margin-top: 2px; cursor: pointer; appearance: none; transition: all 0.2s; }
+    .consent-check:checked { background: var(--rot); border-color: var(--rot); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .consent-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .consent-text a { color: var(--rot); }
+    .form-error { font-size: 13px; color: #E24B4A; margin-bottom: 14px; display: none; }
+    .form-error.show { display: block; }
+    .btn-submit { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; background: var(--rot); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.22s var(--ease); }
+    .btn-submit:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,0,14,0.28); }
+    .btn-submit:disabled { background: var(--bg3); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* SUCCESS */
+    .success-msg { display: none; text-align: center; padding: 48px 24px; }
+    .success-msg.show { display: block; }
+    .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(34,197,94,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-icon svg { width: 28px; height: 28px; }
+    .success-title { font-family: var(--font-head); font-size: 26px; color: var(--schwarz); margin-bottom: 10px; }
+    .success-text { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* SIDEBAR INFO */
+    .contact-info { background: var(--bg2); padding: 64px 48px; }
+    .info-section { margin-bottom: 40px; }
+    .info-section:last-child { margin-bottom: 0; }
+    .info-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 14px; }
+    .info-title { font-family: var(--font-head); font-size: 18px; color: var(--schwarz); margin-bottom: 12px; }
+
+    .contact-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .contact-item-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-item-icon svg { width: 16px; height: 16px; }
+    .contact-item-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .contact-item-value { font-size: 15px; font-weight: 500; color: var(--text); }
+    .contact-item-value a { color: var(--rot); transition: opacity 0.2s; }
+    .contact-item-value a:hover { opacity: 0.75; }
+
+    /* ÖFFNUNGSZEITEN */
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr td { padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .hours-table td:first-child { color: var(--muted); font-weight: 400; }
+    .hours-table td:last-child { text-align: right; font-weight: 500; color: var(--text); }
+    .hours-today td { color: var(--schwarz) !important; font-weight: 600 !important; }
+    .hours-today td:last-child { color: var(--rot) !important; }
+
+    /* KARTE PLACEHOLDER */
+    .map-placeholder { margin-top: 40px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .map-placeholder iframe { width: 100%; height: 220px; border: none; display: block; }
+
+    /* CTA BANNER */
+    .cta-banner { background: var(--schwarz); padding: 56px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .cta-title { font-family: var(--font-head); font-size: 28px; color: #fff; margin-bottom: 8px; }
+    .cta-sub { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.4); }
+    .btn-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 14px; font-weight: 600; padding: 14px 28px; border-radius: 8px; white-space: nowrap; transition: all 0.2s; }
+    .btn-cta:hover { background: var(--rot-dark); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--schwarz); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
+    .ft-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .nav-burger { display: flex; }
+      .page-header { padding: 52px 24px; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-form-wrap { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-info { padding: 48px 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .cta-banner { grid-template-columns: 1fr; padding: 48px 24px; gap: 24px; }
+      footer { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html" class="active">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-eyebrow">Wir sind für Sie da</div>
+    <h1 class="page-header-title">Kontakt &amp;<br>Anfragen</h1>
+    <p class="page-header-sub">Direkt vom Hersteller — persönlich beraten, individuell angeboten. Melden Sie sich, wir antworten schnell.</p>
+  </div>
+
+  <!-- CONTACT LAYOUT -->
+  <div class="contact-layout">
+
+    <!-- FORMULAR -->
+    <div class="contact-form-wrap">
+      <div id="formWrap">
+        <div class="form-title">Schreiben Sie uns</div>
+        <p class="form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder. Wir antworten in der Regel innerhalb von 1–2 Werktagen.</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Anrede <span>*</span></label>
+            <select class="form-select form-input" id="anrede">
+              <option value="">— Bitte wählen —</option>
+              <option>Herr</option>
+              <option>Frau</option>
+              <option>Familie</option>
+              <option>Firma</option>
+            </select>
+          </div>
+          <div></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Vorname <span>*</span></label>
+            <input type="text" class="form-input" id="vorname" placeholder="Max">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nachname <span>*</span></label>
+            <input type="text" class="form-input" id="nachname" placeholder="Mustermann">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">E-Mail <span>*</span></label>
+            <input type="email" class="form-input" id="email" placeholder="max@beispiel.de">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-input" id="telefon" placeholder="+49 521 ...">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">PLZ <span>*</span></label>
+            <input type="text" class="form-input" id="plz" placeholder="12345" maxlength="10">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ort <span>*</span></label>
+            <input type="text" class="form-input" id="ort" placeholder="Musterstadt">
+          </div>
+        </div>
+        <div class="form-grid full" style="margin-bottom:18px">
+          <div class="form-group">
+            <label class="form-label">Betreff <span>*</span></label>
+            <select class="form-select form-input" id="betreff">
+              <option value="">— Bitte wählen —</option>
+              <option>Anfrage Bootsanhänger</option>
+              <option>Anfrage Zubehör / Ersatzteile</option>
+              <option>Frage zur Bestellung</option>
+              <option>Reklamation / Service</option>
+              <option>Händleranfrage</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid full" style="margin-bottom:0">
+          <div class="form-group">
+            <label class="form-label">Nachricht <span>*</span></label>
+            <textarea class="form-textarea" id="nachricht" placeholder="Wie können wir Ihnen helfen?"></textarea>
+          </div>
+        </div>
+
+        <div class="consent-row">
+          <input type="checkbox" class="consent-check" id="consent">
+          <label class="consent-text" for="consent">
+            Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert werden. Die <a href="#">Datenschutzerklärung</a> habe ich zur Kenntnis genommen.
+          </label>
+        </div>
+
+        <div class="form-error" id="formErr"></div>
+        <button class="btn-submit" id="submitBtn" onclick="submitKontakt()">
+          Nachricht senden →
+        </button>
+      </div>
+
+      <div class="success-msg" id="successMsg">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div class="success-title">Nachricht gesendet!</div>
+        <p class="success-text">Vielen Dank für Ihre Anfrage. Wir melden uns in der Regel innerhalb von 1–2 Werktagen bei Ihnen.</p>
+      </div>
+    </div>
+
+    <!-- KONTAKT INFO -->
+    <div class="contact-info">
+
+      <div class="info-section">
+        <div class="info-label">Direkt erreichen</div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Telefon</div>
+            <div class="contact-item-value"><a href="tel:+4952120066">0521 200066</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">E-Mail</div>
+            <div class="contact-item-value"><a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Adresse</div>
+            <div class="contact-item-value">Bunzlauer Str. 6<br>33719 Bielefeld</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="info-label">Öffnungszeiten</div>
+        <table class="hours-table" id="hoursTable">
+          <tr><td>Montag</td><td>08:00 – 16:30 Uhr</td></tr>
+          <tr><td>Dienstag</td><td>08:00 – 16:30 Uhr</td></tr>
+          <tr><td>Mittwoch</td><td>08:00 – 16:30 Uhr</td></tr>
+          <tr><td>Donnerstag</td><td>08:00 – 16:30 Uhr</td></tr>
+          <tr><td>Freitag</td><td>08:00 – 16:30 Uhr</td></tr>
+          <tr><td>Samstag</td><td>Geschlossen</td></tr>
+          <tr><td>Sonntag</td><td>Geschlossen</td></tr>
+        </table>
+      </div>
+
+      <div class="map-placeholder">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2471.123!2d8.5897!3d52.0167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ba3b9b9b9b9b9b%3A0x0!2sBunzlauer+Str.+6%2C+33719+Bielefeld!5e0!3m2!1sde!2sde!4v1"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="HEKU Fahrzeugbau GmbH Standort">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div>
+      <div class="cta-title">Lieber direkt konfigurieren?</div>
+      <div class="cta-sub">Mit dem HEKU Engineer erhalten Sie in 3 Schritten eine unverbindliche Preisrange für Ihren Anhänger.</div>
+    </div>
+    <a href="konfigurator.html" class="btn-cta">HEKU Engineer starten →</a>
+  </div>
+
+  <footer>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld</span>
+      <div class="ft-legal"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Heutigen Tag hervorheben
+    const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+    const today = days[new Date().getDay()];
+    document.querySelectorAll('#hoursTable tr').forEach(tr => {
+      if (tr.cells[0]?.textContent === today) tr.classList.add('hours-today');
+    });
+
+    // Formular absenden
+    async function submitKontakt() {
+      const anrede   = document.getElementById('anrede').value;
+      const vorname  = document.getElementById('vorname').value.trim();
+      const nachname = document.getElementById('nachname').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const telefon  = document.getElementById('telefon').value.trim();
+      const plz      = document.getElementById('plz').value.trim();
+      const ort      = document.getElementById('ort').value.trim();
+      const betreff  = document.getElementById('betreff').value;
+      const nachricht = document.getElementById('nachricht').value.trim();
+      const consent  = document.getElementById('consent').checked;
+      const errEl    = document.getElementById('formErr');
+
+      if (!anrede || !vorname || !nachname || !email || !plz || !ort || !betreff || !nachricht) {
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+        errEl.classList.add('show'); return;
+      }
+      if (!email.includes('@')) {
+        errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        errEl.classList.add('show'); return;
+      }
+      if (!consent) {
+        errEl.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
+        errEl.classList.add('show'); return;
+      }
+      errEl.classList.remove('show');
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet...';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xgopgpye', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `Kontaktanfrage: ${betreff} – ${anrede} ${vorname} ${nachname}`,
+            anrede, vorname, nachname, email, telefon,
+            plz, ort, betreff, nachricht,
+            _replyto: email
+          })
+        });
+        if (res.ok) {
+          document.getElementById('formWrap').style.display = 'none';
+          document.getElementById('successMsg').classList.add('show');
+          window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
+        } else throw new Error();
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Nachricht senden →';
+        errEl.textContent = 'Fehler beim Senden. Bitte schreiben Sie uns direkt an info@heku-fahrzeugbau.de.';
+        errEl.classList.add('show');
+      }
+    }
+
+    function toggleMenu() {
+      const c = document.querySelector('.nav-center');
+      const open = c.style.display === 'flex';
+      c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
+    }
+  </script>
+</body>
+</html>
