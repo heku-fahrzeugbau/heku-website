@@ -99,11 +99,11 @@
     .produkte-header h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); line-height: 0.95; color: var(--schwarz); }
     .produkte-header p { font-size: 15px; font-weight: 300; color: #6B6B6B; max-width: 320px; text-align: right; line-height: 1.7; }
     .produkte-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .produkt-card { position: relative; aspect-ratio: 3/2; background: var(--schwarz); border-radius: 14px; border: 1px solid #ddd; overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
+    .produkt-card { position: relative; aspect-ratio: 3/2; background: linear-gradient(135deg, #1a1a1a 0%, #2d0003 100%); border-radius: 14px; border: 1px solid rgba(232,0,14,0.2); overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
     .produkt-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,10,0.9) 0%, transparent 60%); }
     .produkt-card-icon { position: absolute; top: 32px; right: 32px; width: 48px; height: 48px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
     .produkt-card:hover .produkt-card-icon { border-color: var(--rot); background: var(--rot); }
-    .produkt-card:hover { background: rgba(232,0,14,0.05); border-color: rgba(232,0,14,0.2); }
+    .produkt-card:hover { background: linear-gradient(135deg, #1a1a1a 0%, #3d0004 100%); border-color: rgba(232,0,14,0.4); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(232,0,14,0.15); }
     .produkt-card-content { position: relative; z-index: 1; }
     .produkt-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rot); margin-bottom: 8px; }
     .produkt-name { font-family: var(--font-display); font-size: 28px; color: #fff; margin-bottom: 8px; line-height: 1; }
@@ -113,9 +113,9 @@
     /* ── KONDITIONEN ── */
     .konditionen { padding: 120px 80px; }
     .konditionen-inner { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-    .konditionen-head { background: var(--schwarz); padding: 56px 64px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .konditionen-head { background: var(--rot); padding: 56px 64px; border-bottom: none; display: flex; justify-content: space-between; align-items: center; }
     .konditionen-head h2 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); color: #fff; line-height: 1; }
-    .konditionen-head p { font-family: var(--font-serif); font-size: 18px; font-style: italic; color: var(--muted); max-width: 320px; text-align: right; line-height: 1.6; }
+    .konditionen-head p { font-family: var(--font-serif); font-size: 18px; font-style: italic; color: rgba(255,255,255,0.75); max-width: 320px; text-align: right; line-height: 1.6; }
     .konditionen-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
     .kondition-item { padding: 40px 48px; border-right: 1px solid var(--border); transition: background 0.3s; background: #fff; }
     .kondition-item:last-child { border-right: none; }
