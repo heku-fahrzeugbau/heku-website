@@ -625,6 +625,26 @@
         })
       });
       if (res.ok) {
+        // Bestätigungsmail an Kunden via EmailJS
+        const vorname = document.getElementById('co-vorname').value.trim();
+        const nachname = document.getElementById('co-nachname').value.trim();
+        const anrede = document.getElementById('co-anrede').value;
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: 'service_gbfg9bk',
+            template_id: 'template_6jm794t',
+            user_id: 'uxnGyFrCsW9OCTzcw',
+            template_params: {
+              email: document.getElementById('co-email').value.trim(),
+              anrede: anrede,
+              vorname: vorname,
+              nachname: nachname,
+              modell: 'Shop-Bestellung ' + ref
+            }
+          })
+        }).catch(() => {});
         cart = [];
         updateCartUI();
         document.getElementById('checkoutForm').style.display = 'none';
