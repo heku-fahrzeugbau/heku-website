@@ -7,7 +7,7 @@
   <title>HEKU Fahrzeugbau – Bootsanhänger seit 1959</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     :root {
       --rot:       #E8000E;
@@ -212,6 +212,13 @@
     .faq-item.open .faq-answer { max-height: 300px; }
     .faq-more-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 36px; font-size: 14px; font-weight: 600; color: var(--rot); transition: gap 0.2s; }
     .faq-more-link:hover { gap: 12px; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -263,6 +270,26 @@
   </div>
 
   <!-- CERTS -->
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
   <div class="certs">
     <span class="certs-lbl">Zertifiziert</span>
     <div class="certs-items">

@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     :root {
       --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
@@ -39,7 +39,7 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
     /* PAGE */
-    .page { margin-top: 64px; min-height: calc(100vh - 64px); display: grid; grid-template-columns: 380px 1fr; }
+    .page { margin-top: 0; min-height: calc(100vh - 64px); display: grid; grid-template-columns: 380px 1fr; }
 
     /* SIDEBAR */
     .sidebar { background: var(--schwarz); padding: 48px 40px; position: sticky; top: 64px; height: calc(100vh - 64px); display: flex; flex-direction: column; overflow-y: auto; }
@@ -204,6 +204,20 @@
       .nav-center { display: none; }
       .nav-burger { display: flex; }
     }
+
+    /* MARQUEE */
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* MARQUEE */
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -224,6 +238,25 @@
     </div>
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
 
   <div class="page">
 
