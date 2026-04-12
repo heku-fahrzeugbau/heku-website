@@ -629,19 +629,24 @@
         const vorname = document.getElementById('co-vorname').value.trim();
         const nachname = document.getElementById('co-nachname').value.trim();
         const anrede = document.getElementById('co-anrede').value;
+        // Bestellübersicht für die Mail aufbauen
+        const bestellungText = cart.map(i => i.name + ' x' + i.qty + ' = ' + fmt(i.preis * i.qty)).join(', ');
+        const gesamtbetrag = fmt(cart.reduce((s, i) => s + i.preis * i.qty, 0));
         fetch('https://api.emailjs.com/api/v1.0/email/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             service_id: 'service_gbfg9bk',
-            template_id: 'template_6jm794t',
+            template_id: 'template_mu4smvf',
             user_id: 'uxnGyFrCsW9OCTzcw',
             template_params: {
               email: document.getElementById('co-email').value.trim(),
               anrede: anrede,
               vorname: vorname,
               nachname: nachname,
-              modell: 'Shop-Bestellung ' + ref
+              bestellnummer: ref,
+              bestellung: bestellungText,
+              gesamtbetrag: gesamtbetrag
             }
           })
         }).catch(() => {});
