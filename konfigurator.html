@@ -833,7 +833,15 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
         document.getElementById('successPage').classList.add('show');
         document.getElementById('successName').textContent = vorname;
         window.scrollTo({top:0, behavior:'smooth'});
-        createHubSpotContact({ vorname, nachname, email, telefon, plz: document.getElementById('plz').value.trim(), ort: document.getElementById('ort').value.trim(), notiz: document.getElementById('nachricht').value.trim() });
+        createHubSpotContact({
+          vorname: vorname,
+          nachname: nachname,
+          email: email,
+          telefon: telefon,
+          plz: plz,
+          ort: ort,
+          notiz: nachricht
+        });
       } else {
         throw new Error('Netzwerkfehler');
       }
