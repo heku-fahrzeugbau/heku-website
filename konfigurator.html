@@ -839,7 +839,8 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
           telefon: telefon,
           plz: plz,
           ort: ort,
-          notiz: nachricht
+          quelle: 'Konfigurator-Anfrage',
+          notiz: 'Modell: ' + (modell ? modell.name : '–') + ' | Boot: ' + (state.bootsbezeichnung || '–') + ' | Gewicht: ' + (state.gewicht || '–') + ' kg | Nachricht: ' + (nachricht || '–')
         });
       } else {
         throw new Error('Netzwerkfehler');
@@ -867,7 +868,8 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
               { name: 'phone', value: data.telefon || '' },
               { name: 'zip', value: data.plz || '' },
               { name: 'city', value: data.ort || '' },
-              { name: 'message', value: data.notiz || '' }
+              { name: 'message', value: data.notiz || '' },
+              { name: 'anfragequelle', value: data.quelle || '' }
             ],
             context: { pageUri: window.location.href, pageName: document.title },
             legalConsentOptions: {

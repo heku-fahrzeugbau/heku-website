@@ -404,7 +404,7 @@
               }
             })
           }).catch(() => {});
-          createHubSpotContact({ vorname, nachname, email, telefon, plz, ort, notiz: nachricht });
+          createHubSpotContact({ vorname, nachname, email, telefon, plz, ort, quelle: 'Kontaktformular', notiz: 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
           document.getElementById('formWrap').style.display = 'none';
           document.getElementById('successMsg').classList.add('show');
           window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
@@ -431,7 +431,8 @@
               { name: 'phone', value: data.telefon || '' },
               { name: 'zip', value: data.plz || '' },
               { name: 'city', value: data.ort || '' },
-              { name: 'message', value: data.notiz || '' }
+              { name: 'message', value: data.notiz || '' },
+              { name: 'anfragequelle', value: data.quelle || '' }
             ],
             context: { pageUri: window.location.href, pageName: document.title }
           })

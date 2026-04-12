@@ -652,7 +652,7 @@
         }).catch(() => {});
         cart = [];
         updateCartUI();
-        createHubSpotContact({ vorname, nachname, email: document.getElementById('co-email').value.trim(), telefon: document.getElementById('co-telefon').value.trim(), plz: document.getElementById('co-plz').value.trim(), ort: document.getElementById('co-ort').value.trim(), notiz: 'Shop-Bestellung ' + ref });
+        createHubSpotContact({ vorname, nachname, email: document.getElementById('co-email').value.trim(), telefon: document.getElementById('co-telefon').value.trim(), plz: document.getElementById('co-plz').value.trim(), ort: document.getElementById('co-ort').value.trim(), quelle: 'Shop-Bestellung', notiz: 'Bestellnummer: ' + ref + ' | Artikel: ' + bestellungText + ' | Gesamt: ' + gesamtbetrag });
         document.getElementById('checkoutForm').style.display = 'none';
         document.getElementById('orderRef').textContent = 'Bestellnummer: ' + ref;
         document.getElementById('orderSuccess').classList.add('show');
@@ -682,7 +682,8 @@
               { name: 'phone', value: data.telefon || '' },
               { name: 'zip', value: data.plz || '' },
               { name: 'city', value: data.ort || '' },
-              { name: 'message', value: data.notiz || '' }
+              { name: 'message', value: data.notiz || '' },
+              { name: 'anfragequelle', value: data.quelle || '' }
             ],
             context: { pageUri: window.location.href, pageName: document.title }
           })
