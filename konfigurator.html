@@ -826,7 +826,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
               modell: modell ? 'HEKU ' + modell.name : '–'
             }
           })
-        }).catch(() => {});
+        }).then(r => r.text().then(t => console.log('EmailJS Response:', r.status, t))).catch(e => console.log('EmailJS Error:', e));
         // Erfolg anzeigen
         document.getElementById('step4').classList.remove('active');
         document.getElementById('si-4').classList.add('done');
