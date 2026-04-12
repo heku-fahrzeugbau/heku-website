@@ -162,17 +162,40 @@
     .btn-red { background: var(--rot); color: #fff; }
     .btn-red:hover { background: var(--rot-dark); }
 
-    /* PAGE HEADER */
+    /* PAGE HEADER - DARK */
     .page-header {
       margin-top: 64px; padding: 72px 80px 56px;
-      background: var(--bg2); border-bottom: 1px solid var(--border);
+      background: var(--schwarz);
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .breadcrumb { font-size: 12px; color: var(--muted); margin-bottom: 16px; display: flex; gap: 8px; align-items: center; }
-    .breadcrumb a { color: var(--muted); transition: color 0.2s; }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(232,0,14,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(232,0,14,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .page-header::after {
+      content: ''; position: absolute; top: -30%; right: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(232,0,14,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-header-bg-text {
+      position: absolute; right: -20px; bottom: -20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(100px, 15vw, 180px);
+      color: rgba(255,255,255,0.04);
+      line-height: 1; pointer-events: none; user-select: none;
+      white-space: nowrap;
+    }
+    .page-header-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 16px; display: flex; gap: 8px; align-items: center; }
+    .breadcrumb a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
     .breadcrumb a:hover { color: var(--rot); }
-    .breadcrumb span { color: var(--border); }
-    .page-title { font-family: var(--font-head); font-size: clamp(36px, 4vw, 56px); font-weight: 400; letter-spacing: -0.01em; color: var(--schwarz); margin-bottom: 14px; }
-    .page-sub { font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.65; max-width: 540px; }
+    .breadcrumb span { color: rgba(255,255,255,0.15); }
+    .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 6vw, 88px); font-weight: 400; letter-spacing: 0.02em; color: #fff; margin-bottom: 14px; line-height: 0.95; }
+    .page-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 540px; }
 
     /* FAQ KATEGORIEN */
     .faq-page { padding: 64px 80px 96px; max-width: 860px; }
@@ -256,6 +279,9 @@
       <span>›</span>
       <span>FAQ</span>
     </div>
+    <h1 class="page-title">Häufige Fragen</h1>
+    <p class="page-sub">Antworten zu Technik, Bestellung, Lieferung und Pflege unserer Bootsanhänger.</p>
+  </div>
 
   <div class="marquee-wrap">
     <div class="marquee-track">
@@ -274,9 +300,6 @@
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
       <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
     </div>
-  </div>
-    <h1 class="page-title">Häufige Fragen</h1>
-    <p class="page-sub">Antworten zu Technik, Bestellung, Lieferung und Pflege unserer Bootsanhänger.</p>
   </div>
 
   <div class="faq-page">
