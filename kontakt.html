@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kontakt zu HEKU Fahrzeugbau GmbH in Bielefeld. Anfragen zu Bootsanhängern, Ersatzteilen und Zubehör. Tel: 0521 200066.">
   <title>Kontakt | HEKU Fahrzeugbau GmbH</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init("uxnGyFrCsW9OCTzcw");</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -386,6 +388,14 @@
           })
         });
         if (res.ok) {
+          // Bestätigungsmail an Kunden via EmailJS
+          emailjs.send('service_gbfg9bk', '5ghsz1g', {
+            email: email,
+            anrede: anrede,
+            vorname: vorname,
+            nachname: nachname,
+            modell: 'Kontaktanfrage: ' + betreff
+          }).catch(() => {});
           document.getElementById('formWrap').style.display = 'none';
           document.getElementById('successMsg').classList.add('show');
           window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
