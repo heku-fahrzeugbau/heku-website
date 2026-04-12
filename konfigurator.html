@@ -855,7 +855,6 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
   // ─── MOBILE NAV ────────────────────────────────────────────────────────────
 
     async function createHubSpotContact(data) {
-      console.log('HubSpot wird aufgerufen mit:', data.email);
       try {
         const hsRes = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
           method: 'POST',
@@ -884,8 +883,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
             }
           })
         });
-        console.log('HubSpot Response:', hsRes.status, await hsRes.text());
-      } catch(e) { console.log('HubSpot Fehler:', e); }
+      } catch(e) {}
     }
 
   function toggleMenu() {
