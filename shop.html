@@ -652,6 +652,7 @@
         }).catch(() => {});
         cart = [];
         updateCartUI();
+        createHubSpotContact({ vorname, nachname, email: document.getElementById('co-email').value.trim(), telefon: document.getElementById('co-telefon').value.trim(), plz: document.getElementById('co-plz').value.trim(), ort: document.getElementById('co-ort').value.trim(), notiz: 'Shop-Bestellung ' + ref });
         document.getElementById('checkoutForm').style.display = 'none';
         document.getElementById('orderRef').textContent = 'Bestellnummer: ' + ref;
         document.getElementById('orderSuccess').classList.add('show');
@@ -666,6 +667,28 @@
   // ─── INIT ────────────────────────────────────────────────────────────────────
   renderProducts('alle');
   updateCartUI();
+
+
+    async function createHubSpotContact(data) {
+      try {
+        await fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields: [
+              { name: 'firstname', value: data.vorname || '' },
+              { name: 'lastname', value: data.nachname || '' },
+              { name: 'email', value: data.email || '' },
+              { name: 'phone', value: data.telefon || '' },
+              { name: 'zip', value: data.plz || '' },
+              { name: 'city', value: data.ort || '' },
+              { name: 'message', value: data.notiz || '' }
+            ],
+            context: { pageUri: window.location.href, pageName: document.title }
+          })
+        });
+      } catch(e) { console.log('HubSpot:', e); }
+    }
 
   function toggleMenu() {
     const c = document.querySelector('.nav-center');

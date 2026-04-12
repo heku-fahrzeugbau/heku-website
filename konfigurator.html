@@ -833,6 +833,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
         document.getElementById('successPage').classList.add('show');
         document.getElementById('successName').textContent = vorname;
         window.scrollTo({top:0, behavior:'smooth'});
+        createHubSpotContact({ vorname, nachname, email, telefon, plz: document.getElementById('plz').value.trim(), ort: document.getElementById('ort').value.trim(), notiz: document.getElementById('nachricht').value.trim() });
       } else {
         throw new Error('Netzwerkfehler');
       }
@@ -845,6 +846,28 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
   }
 
   // ─── MOBILE NAV ────────────────────────────────────────────────────────────
+
+    async function createHubSpotContact(data) {
+      try {
+        await fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields: [
+              { name: 'firstname', value: data.vorname || '' },
+              { name: 'lastname', value: data.nachname || '' },
+              { name: 'email', value: data.email || '' },
+              { name: 'phone', value: data.telefon || '' },
+              { name: 'zip', value: data.plz || '' },
+              { name: 'city', value: data.ort || '' },
+              { name: 'message', value: data.notiz || '' }
+            ],
+            context: { pageUri: window.location.href, pageName: document.title }
+          })
+        });
+      } catch(e) { console.log('HubSpot:', e); }
+    }
+
   function toggleMenu() {
     const c = document.querySelector('.nav-center');
     const open = c.style.display === 'flex';
