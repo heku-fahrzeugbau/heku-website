@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="HEKU Engineer – Finden Sie in 3 Schritten den passenden Bootsanhänger. Kostenlos, unverbindlich, direkt vom Hersteller.">
   <title>HEKU Engineer – Konfigurator | HEKU Fahrzeugbau GmbH</title>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>emailjs.init("uxnGyFrCsW9OCTzcw");</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -810,15 +809,24 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
       });
 
       if (res.ok) {
-        // Bestätigungsmail an Kunden via EmailJS
+        // Bestätigungsmail an Kunden via EmailJS REST API
         const modell = state.empfohlenesModell;
-        emailjs.send('service_gbfg9bk', '5ghsz1g', {
-          email: email,
-          anrede: anrede,
-          vorname: vorname,
-          nachname: nachname,
-          modell: modell ? 'HEKU ' + modell.name : '–'
-        }).catch(() => {}); // Stille Fehlerbehandlung
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: 'service_gbfg9bk',
+            template_id: '5ghsz1g',
+            user_id: 'uxnGyFrCsW9OCTzcw',
+            template_params: {
+              email: email,
+              anrede: anrede,
+              vorname: vorname,
+              nachname: nachname,
+              modell: modell ? 'HEKU ' + modell.name : '–'
+            }
+          })
+        }).catch(() => {});
         // Erfolg anzeigen
         document.getElementById('step4').classList.remove('active');
         document.getElementById('si-4').classList.add('done');
