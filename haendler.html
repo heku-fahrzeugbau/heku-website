@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Händler werden | HEKU Fahrzeugbau GmbH</title>
+  <meta name="description" content="Werden Sie HEKU Vertragshändler. Exklusive Bootsanhänger made in Germany, TÜV-geprüft, patentierte Radnabe. Jetzt Partnerschaft anfragen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot: #E8000E;
+      --rot-dark: #B8000B;
+      --gold: #C9A84C;
+      --schwarz: #0A0A0A;
+      --dunkel: #111111;
+      --text: #E8E8E8;
+      --muted: rgba(232,232,232,0.45);
+      --border: rgba(255,255,255,0.08);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif: 'Crimson Pro', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--schwarz); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(10,10,10,0.85); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+    .nav-logo img { height: 28px; filter: brightness(10); }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover, .nav-center a.active { color: var(--text); }
+    .nav-right { display: flex; gap: 12px; align-items: center; }
+    .btn-nav-outline { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: rgba(255,255,255,0.3); }
+    .btn-nav-red { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; background: var(--rot); color: #fff; transition: all 0.2s; }
+    .btn-nav-red:hover { background: var(--rot-dark); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* ── HERO ── */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0A0A0A 0%, #1a0a0a 40%, #0f0f0f 100%); }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,0,14,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,0,14,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-glow { position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(232,0,14,0.12) 0%, transparent 65%); pointer-events: none; }
+    .hero-glow2 { position: absolute; bottom: -20%; left: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; padding: 120px 80px 80px; max-width: 900px; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .hero-line { width: 40px; height: 1px; background: var(--rot); }
+    .hero-eyebrow-text { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rot); }
+    .hero-title { font-family: var(--font-display); font-size: clamp(72px, 10vw, 140px); line-height: 0.92; color: #fff; margin-bottom: 32px; }
+    .hero-title span { color: var(--rot); display: block; }
+    .hero-subtitle { font-family: var(--font-serif); font-size: clamp(18px, 2.5vw, 24px); font-weight: 300; font-style: italic; color: var(--muted); line-height: 1.6; max-width: 560px; margin-bottom: 48px; }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 14px; font-weight: 600; padding: 16px 32px; border-radius: 4px; transition: all 0.25s; letter-spacing: 0.04em; }
+    .btn-primary:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(232,0,14,0.3); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.2); color: var(--text); font-size: 14px; font-weight: 500; padding: 16px 32px; border-radius: 4px; transition: all 0.25s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+    .hero-stats { position: absolute; bottom: 0; right: 0; display: flex; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+    .hero-stat { padding: 28px 40px; border-right: 1px solid var(--border); text-align: center; }
+    .hero-stat:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 48px; color: #fff; line-height: 1; }
+    .stat-num span { color: var(--rot); }
+    .stat-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { background: var(--rot); padding: 14px 0; overflow: hidden; }
+    .marquee-track { display: flex; gap: 0; animation: marquee 20s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.08em; color: #fff; padding: 0 32px; display: flex; align-items: center; gap: 32px; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── WHY SECTION ── */
+    .why { padding: 120px 80px; position: relative; }
+    .why::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+    .sec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rot); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .sec-label::before { content: ''; width: 32px; height: 1px; background: var(--rot); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .why-left h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); line-height: 0.95; color: #fff; margin-bottom: 28px; }
+    .why-left h2 em { font-family: var(--font-serif); font-style: italic; color: var(--gold); font-size: 0.85em; }
+    .why-left p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 16px; max-width: 480px; }
+    .why-cards { display: flex; flex-direction: column; gap: 2px; }
+    .why-card { border: 1px solid var(--border); border-radius: 8px; padding: 28px 32px; background: rgba(255,255,255,0.02); transition: all 0.3s; position: relative; overflow: hidden; }
+    .why-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--rot); transform: scaleY(0); transition: transform 0.3s; }
+    .why-card:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15); transform: translateX(4px); }
+    .why-card:hover::before { transform: scaleY(1); }
+    .why-card-num { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.15em; color: var(--rot); margin-bottom: 10px; }
+    .why-card-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .why-card-text { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── PRODUKTE ── */
+    .produkte { padding: 120px 80px; background: var(--dunkel); position: relative; }
+    .produkte-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
+    .produkte-header h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); line-height: 0.95; color: #fff; }
+    .produkte-header p { font-size: 15px; font-weight: 300; color: var(--muted); max-width: 320px; text-align: right; line-height: 1.7; }
+    .produkte-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .produkt-card { position: relative; aspect-ratio: 4/5; background: rgba(255,255,255,0.03); border: 1px solid var(--border); overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
+    .produkt-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,10,0.9) 0%, transparent 60%); }
+    .produkt-card-icon { position: absolute; top: 32px; right: 32px; width: 48px; height: 48px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .produkt-card:hover .produkt-card-icon { border-color: var(--rot); background: var(--rot); }
+    .produkt-card:hover { background: rgba(232,0,14,0.05); border-color: rgba(232,0,14,0.2); }
+    .produkt-card-content { position: relative; z-index: 1; }
+    .produkt-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rot); margin-bottom: 8px; }
+    .produkt-name { font-family: var(--font-display); font-size: 28px; color: #fff; margin-bottom: 8px; line-height: 1; }
+    .produkt-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+    .produkt-range { font-size: 13px; font-weight: 600; color: var(--gold); margin-top: 12px; }
+
+    /* ── KONDITIONEN ── */
+    .konditionen { padding: 120px 80px; }
+    .konditionen-inner { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .konditionen-head { background: linear-gradient(135deg, rgba(232,0,14,0.15), rgba(232,0,14,0.05)); padding: 56px 64px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .konditionen-head h2 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); color: #fff; line-height: 1; }
+    .konditionen-head p { font-family: var(--font-serif); font-size: 18px; font-style: italic; color: var(--muted); max-width: 320px; text-align: right; line-height: 1.6; }
+    .konditionen-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .kondition-item { padding: 40px 48px; border-right: 1px solid var(--border); transition: background 0.3s; }
+    .kondition-item:last-child { border-right: none; }
+    .kondition-item:hover { background: rgba(255,255,255,0.02); }
+    .kondition-icon { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .kondition-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .kondition-text { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial { padding: 120px 80px; background: var(--dunkel); position: relative; overflow: hidden; }
+    .testimonial::before { content: '"'; position: absolute; top: -40px; left: 60px; font-family: var(--font-serif); font-size: 400px; color: rgba(232,0,14,0.06); line-height: 1; pointer-events: none; }
+    .testimonial-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; text-align: center; }
+    .testimonial-text { font-family: var(--font-serif); font-size: clamp(22px, 3vw, 34px); font-style: italic; font-weight: 300; color: var(--text); line-height: 1.5; margin-bottom: 40px; }
+    .testimonial-divider { width: 60px; height: 1px; background: var(--rot); margin: 0 auto 24px; }
+    .testimonial-author { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── STEPS ── */
+    .steps { padding: 120px 80px; }
+    .steps-header { text-align: center; margin-bottom: 80px; }
+    .steps-header h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); color: #fff; line-height: 0.95; }
+    .steps-header p { font-size: 16px; font-weight: 300; color: var(--muted); margin-top: 20px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; position: relative; }
+    .steps-grid::before { content: ''; position: absolute; top: 36px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), var(--border), var(--border), transparent); z-index: 0; }
+    .step { text-align: center; padding: 0 24px; position: relative; z-index: 1; }
+    .step-num { width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--border); background: var(--schwarz); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-family: var(--font-display); font-size: 28px; color: var(--rot); transition: all 0.3s; }
+    .step:hover .step-num { border-color: var(--rot); background: rgba(232,0,14,0.1); }
+    .step-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .step-text { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── KONTAKT ── */
+    .kontakt { padding: 120px 80px; background: var(--dunkel); }
+    .kontakt-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .kontakt-left h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); color: #fff; line-height: 0.95; margin-bottom: 28px; }
+    .kontakt-left h2 span { color: var(--rot); }
+    .kontakt-left p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 40px; }
+    .kontakt-info { display: flex; flex-direction: column; gap: 16px; }
+    .kontakt-info-item { display: flex; align-items: center; gap: 16px; font-size: 14px; color: var(--muted); }
+    .kontakt-info-icon { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .form-wrap { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 40px; }
+    .form-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .form-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 13px 16px; font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; font-family: var(--font-body); }
+    .form-input:focus { border-color: rgba(232,0,14,0.5); background: rgba(255,255,255,0.07); }
+    .form-input::placeholder { color: rgba(255,255,255,0.2); }
+    .form-select { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 13px 16px; font-size: 14px; color: var(--text); outline: none; font-family: var(--font-body); appearance: none; }
+    .form-select option { background: #1a1a1a; }
+    textarea.form-input { resize: vertical; min-height: 100px; }
+    .form-consent { display: flex; gap: 12px; margin: 20px 0; }
+    .form-check { width: 16px; height: 16px; border: 1px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 2px; cursor: pointer; appearance: none; transition: all 0.2s; }
+    .form-check:checked { background: var(--rot); border-color: var(--rot); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .form-consent-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .form-consent-text a { color: var(--rot); }
+    .btn-submit { width: 100%; height: 52px; background: var(--rot); color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; transition: all 0.25s; font-family: var(--font-body); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-submit:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,0,14,0.25); }
+    .btn-submit:disabled { background: rgba(255,255,255,0.1); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+    .form-error { font-size: 13px; color: #ff6b6b; margin-bottom: 14px; display: none; }
+    .form-error.show { display: block; }
+    .form-success { display: none; text-align: center; padding: 40px 20px; }
+    .form-success.show { display: block; }
+    .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-title { font-family: var(--font-display); font-size: 32px; color: #fff; margin-bottom: 12px; }
+    .success-text { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    footer { background: #050505; padding: 36px 80px; border-top: 1px solid var(--border); }
+    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.15); }
+    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.15); transition: color 0.2s; }
+    .ft-legal a:hover { color: rgba(255,255,255,0.4); }
+
+    /* ── ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    @media (max-width: 1024px) {
+      nav { padding: 0 24px; }
+      .nav-center { display: none; }
+      .nav-burger { display: flex; }
+      .hero-content { padding: 100px 24px 120px; }
+      .hero-stats { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); border: none; border-top: 1px solid var(--border); margin-top: 40px; }
+      .hero-stat { border-right: 1px solid var(--border); }
+      .why, .produkte, .konditionen, .steps, .kontakt, .testimonial { padding: 80px 24px; }
+      .why-grid, .kontakt-inner { grid-template-columns: 1fr; gap: 48px; }
+      .produkte-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .produkte-header p { text-align: left; }
+      .produkte-grid { grid-template-columns: 1fr; }
+      .konditionen-head { flex-direction: column; gap: 20px; }
+      .konditionen-head p { text-align: left; }
+      .konditionen-grid { grid-template-columns: 1fr; }
+      .kondition-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .steps-grid::before { display: none; }
+      footer { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU"></a>
+    <div class="nav-center">
+      <a href="produkte.html">Produkte</a>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html" class="active">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-line"></div>
+        <div class="hero-eyebrow-text">Partnerschaft · Seit 1959</div>
+      </div>
+      <h1 class="hero-title">
+        PARTNER
+        <span>WERDEN.</span>
+      </h1>
+      <p class="hero-subtitle">Verkaufen Sie das Original. HEKU Bootsanhänger — seit über 65 Jahren Made in Bielefeld. Patentiert. TÜV-geprüft. Unübertroffen.</p>
+      <div class="hero-ctas">
+        <a href="#kontakt" class="btn-primary">
+          Jetzt Händler werden
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#konditionen" class="btn-secondary">
+          Konditionen ansehen
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-num">65<span>+</span></div>
+        <div class="stat-label">Jahre Erfahrung</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">5<span>J</span></div>
+        <div class="stat-label">Garantie Radnabe</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">25<span>+</span></div>
+        <div class="stat-label">Modelle</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- WHY HEKU -->
+  <section class="why" id="warum">
+    <div class="sec-label reveal">Warum HEKU</div>
+    <div class="why-grid">
+      <div class="why-left reveal">
+        <h2>Das stärkste<br>Argument<br><em>im Markt.</em></h2>
+        <p>HEKU Bootsanhänger verkaufen sich, weil sie besser sind. Nicht billiger — besser. Das spüren Ihre Kunden. Und das macht Ihren Verkauf einfacher.</p>
+        <p>Als HEKU-Händler bieten Sie ein Produkt das sich selbst erklärt: eine patentierte wasserdichte Radnabe, die seit über 40 Jahren unübertroffen ist — gerichtlich bestätigt.</p>
+      </div>
+      <div class="why-cards">
+        <div class="why-card reveal reveal-delay-1">
+          <div class="why-card-num">01</div>
+          <div class="why-card-title">Einzigartiges Patent</div>
+          <div class="why-card-text">Die wasserdichte Radnabe ist Eigenentwicklung und Patent der Familie Kollmeier. Kein Wettbewerber kann dieses Merkmal bieten — ein echtes Alleinstellungsmerkmal für Ihren Verkauf.</div>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <div class="why-card-num">02</div>
+          <div class="why-card-title">Qualität die Kunden empfehlen</div>
+          <div class="why-card-text">Tauchbad feuerverzinktes Fahrgestell nach DIN 1461, Edelstahlbremsseile, TÜV-Typgenehmigung bis 3.500 kg. Kunden die HEKU kaufen, kommen wieder.</div>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <div class="why-card-num">03</div>
+          <div class="why-card-title">Einzelfertigung nach Maß</div>
+          <div class="why-card-text">Kein Standardprodukt von der Stange. Jeder HEKU-Anhänger wird individuell auf das Boot des Kunden gefertigt. Das schafft Bindung — und rechtfertigt den Preis.</div>
+        </div>
+        <div class="why-card reveal reveal-delay-4">
+          <div class="why-card-num">04</div>
+          <div class="why-card-title">Direkter Draht zum Hersteller</div>
+          <div class="why-card-text">Kein Zwischenhändler, kein Callcenter. Sie sprechen direkt mit der Familie Kollmeier in Bielefeld — kurze Wege, schnelle Antworten, persönliche Betreuung.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUKTE -->
+  <section class="produkte" id="produkte">
+    <div class="produkte-header reveal">
+      <h2>DAS<br>SORTIMENT</h2>
+      <p>25 Bootsanhänger-Modelle der B-Serie 2026, Motorradanhänger und ein umfangreiches Zubehörprogramm.</p>
+    </div>
+    <div class="produkte-grid">
+      <div class="produkt-card reveal">
+        <div class="produkt-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l2-7h14l2 7H3z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+        </div>
+        <div class="produkt-card-content">
+          <div class="produkt-tag">B-Serie 2026</div>
+          <div class="produkt-name">BOOTSANHÄNGER</div>
+          <div class="produkt-desc">25 Modelle von B750 bis B3500. Einzelfertigung nach Maß, TÜV-geprüft, feuerverzinkt.</div>
+          <div class="produkt-range">750 kg – 3.500 kg zGG</div>
+        </div>
+      </div>
+      <div class="produkt-card reveal reveal-delay-1">
+        <div class="produkt-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="produkt-card-content">
+          <div class="produkt-tag">Motorrad</div>
+          <div class="produkt-name">MOTORRAD-ANHÄNGER</div>
+          <div class="produkt-desc">1er und 2er Kipprahmen-Anhänger. Beladung durch eine Person — ohne Auffahrschiene.</div>
+          <div class="produkt-range">Ungebremst & gebremst</div>
+        </div>
+      </div>
+      <div class="produkt-card reveal reveal-delay-2">
+        <div class="produkt-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        </div>
+        <div class="produkt-card-content">
+          <div class="produkt-tag">Zubehör & Ersatzteile</div>
+          <div class="produkt-name">ZUBEHÖR</div>
+          <div class="produkt-desc">Über 50 Zubehörartikel — Kielrollen, Stützräder, Windenständer, Reserveräder und mehr.</div>
+          <div class="produkt-range">Direkt ab Lager Bielefeld</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONDITIONEN -->
+  <section class="konditionen" id="konditionen">
+    <div class="konditionen-inner">
+      <div class="konditionen-head reveal">
+        <h2>HÄNDLER-<br>KONDITIONEN</h2>
+        <p>Faire Partnerschaft auf Augenhöhe. Individuelle Konditionen nach Absprache — sprechen Sie uns an.</p>
+      </div>
+      <div class="konditionen-grid">
+        <div class="kondition-item reveal">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="kondition-title">Händlerrabatt</div>
+          <div class="kondition-text">Attraktive Einkaufskonditionen auf das gesamte Sortiment. Staffelpreise bei höheren Abnahmemengen. Details auf Anfrage.</div>
+        </div>
+        <div class="kondition-item reveal reveal-delay-1">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="kondition-title">Exklusivgebiet</div>
+          <div class="kondition-text">Auf Wunsch regionale Exklusivität. Kein direkter Wettbewerb durch andere HEKU-Händler in Ihrem Kerngebiet.</div>
+        </div>
+        <div class="kondition-item reveal reveal-delay-2">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="kondition-title">Persönliche Betreuung</div>
+          <div class="kondition-text">Direkter Kontakt zur Geschäftsführung. Technische Beratung, Schulungen und Unterstützung beim Verkauf auf Anfrage.</div>
+        </div>
+        <div class="kondition-item reveal">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="kondition-title">Schnelle Lieferung</div>
+          <div class="kondition-text">Zubehör ab Lager sofort verfügbar. Bootsanhänger in individueller Einzelfertigung — Lieferzeit nach Auftragseingang.</div>
+        </div>
+        <div class="kondition-item reveal reveal-delay-1">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="kondition-title">Verkaufsunterlagen</div>
+          <div class="kondition-text">Aktuelle Preislisten, technische Datenblätter und Marketingmaterial für Ihre Beratungsgespräche.</div>
+        </div>
+        <div class="kondition-item reveal reveal-delay-2">
+          <div class="kondition-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kondition-title">Garantieabwicklung</div>
+          <div class="kondition-text">Unkomplizierte Garantieabwicklung über uns. 5 Jahre auf die patentierte Radnabe — ein Argument das Vertrauen schafft.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="testimonial">
+    <div class="testimonial-content reveal">
+      <p class="testimonial-text">„Ein Produkt das sich selbst verkauft — wenn ein Kunde die Verarbeitungsqualität und die patentierte Radnabe einmal gesehen hat, gibt es keine Diskussion mehr."</p>
+      <div class="testimonial-divider"></div>
+      <div class="testimonial-author">HEKU Vertragshändler · Deutschland</div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="steps">
+    <div class="steps-header reveal">
+      <h2>IN 4 SCHRITTEN<br>ZUM HÄNDLER</h2>
+      <p>Unkompliziert. Persönlich. Schnell.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Anfrage stellen</div>
+        <div class="step-text">Füllen Sie das Formular aus oder rufen Sie uns direkt an. Wir melden uns innerhalb von 1–2 Werktagen.</div>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-title">Kennenlernen</div>
+        <div class="step-text">Persönliches Gespräch mit der Geschäftsführung — telefonisch oder bei uns in Bielefeld.</div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-title">Konditionen vereinbaren</div>
+        <div class="step-text">Individuelle Händlerkonditionen, Gebietsvereinbarung und Onboarding — alles auf Augenhöhe.</div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <div class="step-title">Loslegen</div>
+        <div class="step-text">Erste Bestellung, Verkaufsunterlagen und direkter Draht zu Ihrem Ansprechpartner bei HEKU.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="kontakt" id="kontakt">
+    <div class="kontakt-inner">
+      <div class="kontakt-left reveal">
+        <div class="sec-label" style="margin-bottom:20px">Händler-Anfrage</div>
+        <h2>JETZT<br><span>PARTNER</span><br>WERDEN.</h2>
+        <p>Schreiben Sie uns — wir melden uns persönlich innerhalb von 1–2 Werktagen bei Ihnen.</p>
+        <div class="kontakt-info">
+          <div class="kontakt-info-item">
+            <div class="kontakt-info-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            </div>
+            <span>0521 200066 · Mo–Fr, 08:00–16:30 Uhr</span>
+          </div>
+          <div class="kontakt-info-item">
+            <div class="kontakt-info-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <span>info@heku-fahrzeugbau.de</span>
+          </div>
+          <div class="kontakt-info-item">
+            <div class="kontakt-info-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Bunzlauer Str. 6, 33719 Bielefeld</span>
+          </div>
+        </div>
+      </div>
+      <div class="kontakt-right reveal reveal-delay-1">
+        <div class="form-wrap" id="formWrap">
+          <div class="form-title">Händler-Partnerschaftsanfrage</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Anrede *</label>
+              <select class="form-select form-input" id="h-anrede">
+                <option value="">— Bitte wählen —</option>
+                <option>Herr</option><option>Frau</option><option>Firma</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Firmenname *</label>
+              <input type="text" class="form-input" id="h-firma" placeholder="Bootscenter Muster GmbH">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Vorname *</label>
+              <input type="text" class="form-input" id="h-vorname" placeholder="Max">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nachname *</label>
+              <input type="text" class="form-input" id="h-nachname" placeholder="Mustermann">
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-Mail *</label>
+              <input type="email" class="form-input" id="h-email" placeholder="max@bootscenter.de">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefon</label>
+              <input type="tel" class="form-input" id="h-telefon" placeholder="+49 521 ...">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Standort / Region *</label>
+              <input type="text" class="form-input" id="h-region" placeholder="z.B. Hamburg, Schleswig-Holstein">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Ihr Geschäft</label>
+              <select class="form-select form-input" id="h-typ">
+                <option value="">— Art des Unternehmens —</option>
+                <option>Bootshändler / Bootshaus</option>
+                <option>Wassersport-Fachhandel</option>
+                <option>KFZ / Anhänger-Handel</option>
+                <option>Marina / Yachthafen</option>
+                <option>Sonstiges</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Ihre Nachricht</label>
+              <textarea class="form-input" id="h-nachricht" placeholder="Erzählen Sie uns von Ihrem Unternehmen und Ihren Vorstellungen..."></textarea>
+            </div>
+          </div>
+          <div class="form-consent">
+            <input type="checkbox" class="form-check" id="h-consent">
+            <label class="form-consent-text" for="h-consent">
+              Ich akzeptiere die <a href="agb.html">AGB</a> und habe die <a href="datenschutz.html">Datenschutzerklärung</a> zur Kenntnis genommen.
+            </label>
+          </div>
+          <div class="form-error" id="h-error"></div>
+          <button class="btn-submit" id="h-btn" onclick="submitHaendler()">
+            Partnerschaftsanfrage absenden
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="success-title">Anfrage eingegangen!</div>
+          <p class="success-text">Vielen Dank für Ihre Händleranfrage. Wir melden uns persönlich innerhalb von 1–2 Werktagen bei Ihnen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld</span>
+      <div class="ft-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Form Submit
+    async function submitHaendler() {
+      const anrede   = document.getElementById('h-anrede').value;
+      const firma    = document.getElementById('h-firma').value.trim();
+      const vorname  = document.getElementById('h-vorname').value.trim();
+      const nachname = document.getElementById('h-nachname').value.trim();
+      const email    = document.getElementById('h-email').value.trim();
+      const telefon  = document.getElementById('h-telefon').value.trim();
+      const region   = document.getElementById('h-region').value.trim();
+      const typ      = document.getElementById('h-typ').value;
+      const nachricht = document.getElementById('h-nachricht').value.trim();
+      const consent  = document.getElementById('h-consent').checked;
+      const errEl    = document.getElementById('h-error');
+
+      if (!anrede || !firma || !vorname || !nachname || !email || !region) {
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+        errEl.classList.add('show'); return;
+      }
+      if (!email.includes('@')) {
+        errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        errEl.classList.add('show'); return;
+      }
+      if (!consent) {
+        errEl.textContent = 'Bitte akzeptieren Sie die AGB und Datenschutzerklärung.';
+        errEl.classList.add('show'); return;
+      }
+      errEl.classList.remove('show');
+
+      const btn = document.getElementById('h-btn');
+      btn.disabled = true;
+      btn.innerHTML = 'Wird gesendet...';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xgopgpye', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `Händleranfrage – ${firma} (${region})`,
+            anrede, firma, vorname, nachname, email, telefon, region,
+            unternehmenstyp: typ, nachricht,
+            _replyto: email
+          })
+        });
+
+        if (res.ok) {
+          // EmailJS Bestätigung
+          fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: 'service_gbfg9bk',
+              template_id: 'template_6jm794t',
+              user_id: 'uxnGyFrCsW9OCTzcw',
+              template_params: {
+                email, anrede, vorname, nachname,
+                modell: 'Händler-Partnerschaftsanfrage – ' + firma
+              }
+            })
+          }).catch(() => {});
+
+          // HubSpot
+          fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fields: [
+                { name: 'firstname', value: vorname },
+                { name: 'lastname', value: nachname },
+                { name: 'email', value: email },
+                { name: 'phone', value: telefon },
+                { name: 'company', value: firma },
+                { name: 'city', value: region },
+                { name: 'anfragequelle', value: 'Händleranfrage' },
+                { name: 'message', value: `Firma: ${firma} | Typ: ${typ} | Region: ${region} | Nachricht: ${nachricht}` }
+              ],
+              context: { pageUri: window.location.href, pageName: document.title },
+              legalConsentOptions: { consent: { consentToProcess: true, text: 'Einwilligung erteilt.' } }
+            })
+          }).catch(() => {});
+
+          document.getElementById('formWrap').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+        } else throw new Error();
+      } catch {
+        btn.disabled = false;
+        btn.innerHTML = 'Partnerschaftsanfrage absenden <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        errEl.textContent = 'Fehler beim Senden. Bitte schreiben Sie uns direkt an info@heku-fahrzeugbau.de.';
+        errEl.classList.add('show');
+      }
+    }
+
+    function toggleMenu() {
+      const c = document.querySelector('.nav-center');
+      const open = c.style.display === 'flex';
+      c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#0a0a0a;padding:20px 24px;gap:16px;border-bottom:1px solid rgba(255,255,255,0.08);z-index:199;';
+    }
+  </script>
+</body>
+</html>
