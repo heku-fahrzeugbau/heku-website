@@ -870,7 +870,18 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
               { name: 'city', value: data.ort || '' },
               { name: 'message', value: data.notiz || '' }
             ],
-            context: { pageUri: window.location.href, pageName: document.title }
+            context: { pageUri: window.location.href, pageName: document.title },
+            legalConsentOptions: {
+              consent: {
+                consentToProcess: true,
+                text: "Ich stimme der Verarbeitung meiner Daten zu.",
+                communications: [{
+                  value: true,
+                  subscriptionTypeId: 999,
+                  text: "Ich möchte Informationen von HEKU erhalten."
+                }]
+              }
+            }
           })
         });
         console.log('HubSpot Response:', hsRes.status, await hsRes.text());
