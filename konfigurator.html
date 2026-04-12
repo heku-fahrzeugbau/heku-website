@@ -810,7 +810,6 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
 
       if (res.ok) {
         // Bestätigungsmail an Kunden via EmailJS REST API
-        const modell = state.empfohlenesModell;
         fetch('https://api.emailjs.com/api/v1.0/email/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
