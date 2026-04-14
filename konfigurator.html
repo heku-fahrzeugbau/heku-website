@@ -207,17 +207,12 @@
 
     /* MARQUEE */
     .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
+    .main .marquee-wrap { margin: -52px -64px 40px; }
     .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
     .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
     .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* MARQUEE */
-    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
-    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
-    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
-    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -239,24 +234,6 @@
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
 
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-    </div>
-  </div>
 
   <div class="page">
 
@@ -307,8 +284,26 @@
 
     <!-- MAIN -->
     <div class="main">
+    <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
 
-      <!-- SCHRITT 1: Boot -->
+    <!-- SCHRITT 1: Boot -->
       <div class="step-page active" id="step1">
         <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
         <div class="step-header">
@@ -454,13 +449,13 @@
               </div>
               <div class="check-price">+ ca. 95 €</div>
             </div>
-            <div class="check-item" data-value="kielverlaengerung" data-price="180" onclick="toggleCheck(this)">
+            <div class="check-item" data-value="kielverlaengerung" data-price="395" onclick="toggleCheck(this)">
               <div class="check-box"></div>
               <div class="check-text">
-                <div class="check-title">Kielverlängerung (70 cm)</div>
-                <div class="check-desc">Für Kielboote mit tiefem Kiel</div>
+                <div class="check-title">Kielvertiefung (ab 70 cm)</div>
+                <div class="check-desc">Einachsig 395 € · Tandem 595 €</div>
               </div>
-              <div class="check-price">+ ca. 180 €</div>
+              <div class="check-price">+ ab 395 €</div>
             </div>
             <div class="check-item" data-value="100kmh" data-price="180" onclick="toggleCheck(this)">
               <div class="check-box"></div>
@@ -689,7 +684,7 @@
     const minZGG = state.gewicht * SICHERHEITSFAKTOR;
     let modell = MODELLE.find(m => m.maxGewicht >= minZGG) || MODELLE[MODELLE.length-1];
 
-    // Kielverlängerung: tiefer Kiel > 0.7m → anderes Modell ggf.
+    // Kielvertiefung: tiefer Kiel > 0.7m → automatisch hinzugefügt
     if (state.tiefgang > 0.7 && !state.zubehoer.includes('kielverlaengerung')) {
       state.zubehoer.push('kielverlaengerung');
       document.querySelector('[data-value="kielverlaengerung"]')?.classList.add('checked');
