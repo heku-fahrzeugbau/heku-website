@@ -441,13 +441,13 @@
               </div>
               <div class="check-price">+ ca. 120 €</div>
             </div>
-            <div class="check-item" data-value="seitenstuetzrolle" data-price="95" onclick="toggleCheck(this)">
+            <div class="check-item" data-value="seitenstuetzrolle" data-price="150" onclick="toggleCheck(this)">
               <div class="check-box"></div>
               <div class="check-text">
                 <div class="check-title">Seitenstützrollen (Paar)</div>
                 <div class="check-desc">Für breite Rümpfe</div>
               </div>
-              <div class="check-price">+ ca. 95 €</div>
+              <div class="check-price">+ 150 € (Paar)</div>
             </div>
             <div class="check-item" data-value="kielverlaengerung" data-price="395" onclick="toggleCheck(this)">
               <div class="check-box"></div>
@@ -457,21 +457,21 @@
               </div>
               <div class="check-price">+ ab 395 €</div>
             </div>
-            <div class="check-item" data-value="100kmh" data-price="180" onclick="toggleCheck(this)">
+            <div class="check-item" data-value="100kmh" data-price="140" onclick="toggleCheck(this)">
               <div class="check-box"></div>
               <div class="check-text">
                 <div class="check-title">100 km/h Zulassung</div>
-                <div class="check-desc">Eingetragen im Fahrzeugschein</div>
+                <div class="check-desc">Einachsig 140 € · Tandem 280 €</div>
               </div>
-              <div class="check-price">+ ca. 180 €</div>
+              <div class="check-price">+ 140 € / Achse</div>
             </div>
-            <div class="check-item" data-value="gewindespindel" data-price="65" onclick="toggleCheck(this)">
+            <div class="check-item" data-value="gewindespindel" data-price="110" onclick="toggleCheck(this)">
               <div class="check-box"></div>
               <div class="check-text">
                 <div class="check-title">Gewindespindel (zusätzlich)</div>
                 <div class="check-desc">Für Höhenverstellung</div>
               </div>
-              <div class="check-price">+ ca. 65 €</div>
+              <div class="check-price">+ 110 €</div>
             </div>
           </div>
         </div>
@@ -692,9 +692,14 @@
 
     // Zubehör-Aufpreis berechnen
     let zubehoerAufpreis = 0;
+    const isTandem = modell && modell.achse === 'Tandem';
     state.zubehoer.forEach(z => {
       const el = document.querySelector(`[data-value="${z}"]`);
-      if (el) zubehoerAufpreis += parseInt(el.dataset.price || 0);
+      if (!el) return;
+      let preis = parseInt(el.dataset.price || 0);
+      // 100km/h: Tandem = 2 Achsen = 280€, Einachsig = 140€
+      if (z === '100kmh' && isTandem) preis = 280;
+      zubehoerAufpreis += preis;
     });
 
     state.empfohlenesModell = modell;
