@@ -213,6 +213,12 @@
     .faq-more-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 36px; font-size: 14px; font-weight: 600; color: var(--rot); transition: gap 0.2s; }
     .faq-more-link:hover { gap: 12px; }
 
+    /* SEO KEYWORD BLOCK */
+    .seo-kw { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 80px; }
+    .seo-kw-inner { max-width: 780px; margin: 0 auto; text-align: center; font-size: 15px; line-height: 1.9; color: var(--muted); }
+    .seo-kw-inner strong { color: var(--text); font-weight: 500; }
+    @media (max-width: 1024px) { .seo-kw { padding: 32px 24px; } }
+
     /* ── MARQUEE ── */
     .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
     .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
@@ -251,7 +257,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">Familienunternehmen · 3. Generation · Made in Germany</div>
-      <h1 class="hero-title">Der Anhänger,<br>der zu Ihrem<br><span>Boot passt.</span></h1>
+      <h1 class="hero-title">Bootsanhänger &amp; Bootstrailer<br>nach Maß –<br><span>HEKU seit 1959</span></h1>
       <p class="hero-body">Eigenentwickelte wasserdichte Radnabe. Einzelfertigung nach Maß. TÜV-geprüft bis 3.500 kg. Feuerverzinktes Fahrgestell nach DIN 1461.</p>
       <div class="hero-actions">
         <a href="konfigurator.html" class="btn-lg red">Anhänger konfigurieren <span class="btn-arr">→</span></a>
@@ -348,6 +354,13 @@
           <div class="prod-lnk">Zum Shop →</div>
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- SEO KEYWORD BLOCK -->
+  <section class="sec seo-kw">
+    <div class="seo-kw-inner reveal">
+      <p>HEKU fertigt <strong>Bootsanhänger</strong> und <strong>Bootstrailer</strong> für jeden Bootstyp – vom leichten Jollenanhänger bis zum Tandem-Bootstrailer für schwere Motorboote. Ob <strong>Motorbootanhänger</strong>, <strong>Segelbootanhänger</strong> oder Anhänger für Kielboote: Jeder Boots-Transportanhänger wird individuell nach Ihren Bootsdaten konfiguriert. Unser Händlernetz erstreckt sich von <strong>NRW</strong> bis Bayern – oder Sie kaufen Ihren <strong>Bootsanhänger direkt ab Werk</strong> in Bielefeld.</p>
     </div>
   </section>
 
@@ -459,6 +472,34 @@
         <div class="faq-answer"><div class="faq-answer-inner">Ja. HEKU verfügt über ein etabliertes Händlernetz aus deutschen Bootshändlern. Auf unserer Händlerseite finden Sie den nächstgelegenen Partner. Alternativ können Sie auch direkt ab Werk in Bielefeld kaufen.</div></div>
       </div>
     </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Was kostet ein Bootsanhänger von HEKU?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">HEKU-Bootsanhänger starten ab <strong>1.675 € (inkl. MwSt.)</strong> für ungebremste Modelle und reichen bis ca. 6.795 € für Tandem-Bootstrailer der Klasse B 3500. Der Endpreis hängt von Bootstyp, Länge, Gewicht und gewähltem Zubehör ab. Nutzen Sie den <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> für eine kostenlose, unverbindliche Preisrange.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Bootsanhänger mit oder ohne TÜV – was gilt für HEKU?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Alle HEKU-Anhänger bis 750 kg erhalten eine <strong>KBA-Typprüfung</strong> (Kraftfahrt-Bundesamt). Gebremste Anhänger und Tandem-Bootstrailer bis 3.500 kg erhalten eine <strong>TÜV EG-Typgenehmigung</strong>. Eine optionale Einzel-TÜV-Abnahme ist für 160 € erhältlich.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Wie schwer darf ein Bootsanhänger sein?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Ungebremste HEKU-Bootsanhänger sind bis <strong>750 kg Gesamtgewicht</strong> zugelassen. Einachsig gebremste Modelle bis 2.000 kg, Tandem-Bootstrailer bis <strong>3.500 kg</strong>. Entscheidend ist immer das zulässige Gesamtgewicht (zGG), nicht das reine Bootsgewicht.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Welcher Bootsanhänger passt zu meinem Boot?
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Entscheidend sind <strong>Bootslänge, Bootsbreite, Tiefgang, Gewicht und Antriebsart</strong>. HEKU fertigt jeden Anhänger individuell nach diesen Maßen. Der <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> berechnet in 3 Schritten das passende Modell – kostenlos und unverbindlich.</div></div>
+      </div>
     <a href="faq.html" class="faq-more-link reveal">Alle Fragen ansehen →</a>
   </section>
 
