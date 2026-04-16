@@ -51,10 +51,10 @@
 
     /* ── HERO ── */
     .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0A0A0A 0%, #1a0a0a 40%, #0f0f0f 100%); }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1e1e1e 0%, #2d1a1a 40%, #222222 100%); }
     .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(232,0,14,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,0,14,0.04) 1px, transparent 1px); background-size: 60px 60px; }
-    .hero-glow { position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(232,0,14,0.12) 0%, transparent 65%); pointer-events: none; }
-    .hero-glow2 { position: absolute; bottom: -20%; left: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%); pointer-events: none; }
+    .hero-glow { position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(232,0,14,0.08) 0%, transparent 65%); pointer-events: none; }
+    .hero-glow2 { position: absolute; bottom: -20%; left: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 65%); pointer-events: none; }
     .hero-content { position: relative; z-index: 2; padding: 120px 80px 80px; max-width: 900px; }
     .hero-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
     .hero-line { width: 40px; height: 1px; background: var(--rot); }
@@ -65,8 +65,8 @@
     .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
     .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 14px; font-weight: 600; padding: 16px 32px; border-radius: 4px; transition: all 0.25s; letter-spacing: 0.04em; }
     .btn-primary:hover { background: var(--rot-dark); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(232,0,14,0.3); }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid #ddd; color: var(--schwarz); font-size: 14px; font-weight: 500; padding: 16px 32px; border-radius: 4px; transition: all 0.25s; }
-    .btn-secondary:hover { border-color: var(--schwarz); background: rgba(0,0,0,0.02); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid rgba(255,255,255,0.4); color: #fff; font-size: 14px; font-weight: 500; padding: 16px 32px; border-radius: 4px; transition: all 0.25s; }
+    .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
     .hero-stats { position: absolute; bottom: 0; right: 0; display: flex; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
     .hero-stat { padding: 28px 40px; border-right: 1px solid var(--border); text-align: center; }
     .hero-stat:last-child { border-right: none; }
