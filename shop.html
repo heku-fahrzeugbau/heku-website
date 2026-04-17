@@ -308,10 +308,14 @@
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-foot">
       <div class="cart-total">
-        <span class="cart-total-label">Gesamtbetrag</span>
+        <span class="cart-total-label">Warenwert</span>
         <span class="cart-total-value" id="cartTotal">0,00 €</span>
       </div>
-      <div class="cart-mwst">Inkl. 19% MwSt. · zzgl. Versandkosten</div>
+      <div class="cart-total" style="margin-top:6px">
+        <span class="cart-total-label">Versandkosten</span>
+        <span style="font-size:15px;font-weight:600;color:var(--schwarz)" id="cartVersand">–</span>
+      </div>
+      <div class="cart-mwst">Inkl. 19% MwSt. · Versand nach Deutschland</div>
       <button class="btn-checkout" id="checkoutBtn" onclick="openCheckout()" disabled>Zur Bestellung →</button>
     </div>
   </div>
@@ -531,6 +535,63 @@
 
   function fmt(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
 
+  // ─── VERSANDKOSTEN ───────────────────────────────────────────────────────────
+  // Kategorien: winden=30€, raeder=30€, stuetzraeder=20€, rollen=20€, rest=15€
+  // Mengenregeln: 2 Reifen=30€, 4 Reifen=60€, 1 Windenstand=30€, 2 Winden=30€
+  //               1 Stützrad=20€, 2 Kiel/Stützrollen=20€, Rest ab 3 Stück → x2
+  function calcVersand(cartItems) {
+    if (cartItems.length === 0) return 0;
+
+    let versand = 0;
+
+    cartItems.forEach(item => {
+      const cat = item.cat;
+      const qty = item.qty;
+      const name = item.name.toLowerCase();
+
+      if (cat === 'winden') {
+        // Windenstand: 30€ pro Stück
+        // Winde (ohne Stand): 2 Stück = 30€, sonst pro Stück 30€
+        if (name.includes('windenstand')) {
+          versand += 30 * qty;
+        } else if (name.includes('winde')) {
+          // 2 Winden = 30€, jede weitere 2er-Gruppe auch 30€
+          versand += Math.ceil(qty / 2) * 30;
+        } else {
+          // Restliches Winden-Zubehör (Seile etc.) → 15€, ab 3 → 30€
+          versand += qty >= 3 ? 30 : 15;
+        }
+      } else if (cat === 'raeder') {
+        // Räder/Reifen: 2=30€, 4=60€, pro 2er-Gruppe 30€
+        // Nicht-Reifen (Halter, Stoßdämpfer) → 30€
+        if (name.includes('reserverad')) {
+          versand += Math.ceil(qty / 2) * 30;
+        } else {
+          versand += qty >= 3 ? 60 : 30;
+        }
+      } else if (cat === 'stuetzraeder') {
+        // 1 Stützrad = 20€, ab 3 → 40€
+        versand += qty >= 3 ? 40 : 20;
+      } else if (cat === 'rollen') {
+        // 2 Kiel/Stützrollen = 20€, ab 3 → 40€
+        if (qty >= 3) {
+          versand += 40;
+        } else {
+          versand += Math.ceil(qty / 2) * 20;
+        }
+      } else {
+        // Sonstiges & Auflagen: 15€, ab 3 Stück → 30€
+        versand += qty >= 3 ? 30 : 15;
+      }
+    });
+
+    return versand;
+  }
+
+  function versandText(v) {
+    return v === 0 ? 'wird berechnet' : fmt(v);
+  }
+
   // ─── FILTER ──────────────────────────────────────────────────────────────────
   function filterCat(el) {
     document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
@@ -566,10 +627,12 @@
   function updateCartUI() {
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
     const count = cart.reduce((s, i) => s + i.qty, 0);
+    const versand = calcVersand(cart);
     const countEl = document.getElementById('cartCount');
     countEl.textContent = count;
     countEl.classList.toggle('hidden', count === 0);
     document.getElementById('cartTotal').textContent = fmt(total);
+    document.getElementById('cartVersand').textContent = cart.length === 0 ? '–' : fmt(versand);
     document.getElementById('checkoutBtn').disabled = cart.length === 0;
 
     const itemsEl = document.getElementById('cartItems');
@@ -604,12 +667,16 @@
   // ─── CHECKOUT ────────────────────────────────────────────────────────────────
   function openCheckout() {
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
+    const versand = calcVersand(cart);
+    const gesamtMitVersand = total + versand;
     const lines = cart.map(i => `<div class="order-line"><span>${i.name} ×${i.qty}</span><span>${fmt(i.preis * i.qty)}</span></div>`).join('');
     document.getElementById('orderSummary').innerHTML = `
       <div class="order-summary-title">Ihre Bestellung</div>
       ${lines}
-      <div class="order-line total"><span>Gesamtbetrag</span><span>${fmt(total)}</span></div>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">Inkl. 19% MwSt. · zzgl. Versandkosten nach Absprache</div>`;
+      <div class="order-line"><span>Warenwert</span><span>${fmt(total)}</span></div>
+      <div class="order-line"><span>Versandkosten</span><span>${fmt(versand)}</span></div>
+      <div class="order-line total"><span>Gesamtbetrag inkl. Versand</span><span>${fmt(gesamtMitVersand)}</span></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">Inkl. 19% MwSt. · Versand nach Deutschland</div>`;
     document.getElementById('modalOverlay').classList.add('open');
     document.getElementById('checkoutForm').style.display = '';
     document.getElementById('orderSuccess').classList.remove('show');
@@ -649,6 +716,8 @@
 
     const ref = 'HK-' + Date.now().toString(36).toUpperCase();
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
+    const versand = calcVersand(cart);
+    const gesamtMitVersand = total + versand;
     const bestellungText = cart.map(i => `${i.name} ×${i.qty} = ${fmt(i.preis * i.qty)}`).join('\n');
 
     try {
@@ -661,7 +730,8 @@
           anrede, vorname, nachname, email, telefon,
           strasse, plz, ort,
           bestellung: bestellungText,
-          gesamtbetrag: fmt(total),
+          versandkosten: fmt(versand),
+          gesamtbetrag: fmt(gesamtMitVersand),
           notiz,
           _replyto: email
         })
