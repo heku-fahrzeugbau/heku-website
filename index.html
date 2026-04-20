@@ -121,6 +121,14 @@
     .nav-center { display: flex; gap: 32px; }
     .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
     .nav-center a:hover { color: var(--text); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; cursor: pointer; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color: var(--text); }
+    .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: -16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 8px; min-width: 210px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { display: flex; flex-direction: column; }
+    .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
+    .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
     .nav-right { display: flex; gap: 12px; }
     .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
     .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
@@ -349,7 +357,15 @@
   <nav id="nav">
     <a href="/" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
     <div class="nav-center">
-      <a href="produkte.html">Produkte</a>
+      <div class="nav-dropdown">
+        <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="produkte.html">Alle Modelle</a>
+          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
+          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+        </div>
+      </div>
       <a href="shop.html">Shop</a>
       <a href="ueber-uns.html">Über uns</a>
       <a href="haendler.html">Händler</a>
@@ -369,7 +385,7 @@
       <video autoplay muted loop playsinline poster="hero.jpg" id="hero-video">
         <source src="hero-video.mp4" type="video/mp4">
       </video>
-      <img src="hero.jpg" alt="HEKU Bootsanhänger" id="hero-fallback">
+      <img src="hero.jpg" alt="HEKU Bootsanhänger und Bootstrailer – Einzelfertigung aus Bielefeld seit 1959" id="hero-fallback">
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -448,7 +464,7 @@
     </div>
     <div class="prod-grid">
       <a href="produkte.html" class="prod-card reveal">
-        <div class="prod-img"><img src="bootsanhaenger.jpg" alt="Bootsanhänger"></div>
+        <div class="prod-img"><img src="bootsanhaenger.jpg" alt="HEKU Bootsanhänger B-Serie 2026 – TÜV-geprüft und feuerverzinkt"></div>
         <div class="prod-body">
           <div class="prod-tag">B-Serie 2026 · 25 Modelle</div>
           <div class="prod-name">Bootsanhänger</div>
@@ -474,7 +490,7 @@
   <!-- SEO KEYWORD BLOCK -->
   <section class="sec seo-kw">
     <div class="seo-kw-inner reveal">
-      <p>HEKU fertigt <strong>Bootsanhänger</strong> und <strong>Bootstrailer</strong> für jeden Bootstyp – vom leichten Jollenanhänger bis zum Tandem-Bootstrailer für schwere Motorboote. Ob <strong>Motorbootanhänger</strong>, <strong>Segelbootanhänger</strong> oder Anhänger für Kielboote: Jeder Boots-Transportanhänger wird individuell nach Ihren Bootsdaten konfiguriert. Unser Händlernetz erstreckt sich von <strong>NRW</strong> bis Bayern – oder Sie kaufen Ihren <strong>Bootsanhänger direkt ab Werk</strong> in Bielefeld.</p>
+      <p>HEKU fertigt <strong>Bootsanhänger</strong> und <a href="bootstrailer.html" style="color:var(--rot);font-weight:500;">Bootstrailer</a> für jeden Bootstyp – vom leichten Jollenanhänger bis zum Tandem-Bootstrailer für schwere Motorboote. Ob <a href="motorbootanhaenger.html" style="color:var(--rot);font-weight:500;">Motorbootanhänger</a>, <a href="segelbootanhaenger.html" style="color:var(--rot);font-weight:500;">Segelbootanhänger</a> oder Anhänger für Kielboote mit individueller Kielvertiefung: Jeder HEKU Boots-Transportanhänger wird nach Ihren Bootsdaten – Länge, Breite, Tiefgang und Gewicht – in Einzelfertigung ab Werk Bielefeld in <strong>NRW</strong> produziert. Direkt vom Hersteller, <strong>TÜV-geprüft</strong> und <strong>feuerverzinkt</strong> nach DIN 1461.</p>
     </div>
   </section>
 
@@ -491,7 +507,7 @@
   <!-- ÜBER UNS -->
   <section class="sec">
     <div class="about-grid">
-      <div class="about-img reveal"><img src="werk.jpg" alt="HEKU Werk Bielefeld"></div>
+      <div class="about-img reveal"><img src="werk.jpg" alt="HEKU Fahrzeugbau Werk Bielefeld – Produktion Made in Germany"></div>
       <div class="reveal">
         <div class="about-since">Familienunternehmen · 3. Generation</div>
         <h2 class="h2">Bootsanhänger-Hersteller seit 1959 –<br>HEKU aus Bielefeld, NRW</h2>
@@ -640,6 +656,9 @@
         <div class="ft-head">Produkte</div>
         <div class="ft-links">
           <a href="produkte.html">Bootsanhänger</a>
+          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
+          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>
         </div>
