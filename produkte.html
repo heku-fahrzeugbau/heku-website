@@ -166,6 +166,16 @@
     .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
     .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* Produkte Dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; cursor: pointer; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color: var(--text); }
+    .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: -16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 0 8px 8px; min-width: 210px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { display: flex; flex-direction: column; }
+    .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
+    .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -173,7 +183,15 @@
   <nav>
     <a href="index.html" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
     <div class="nav-center">
-      <a href="produkte.html" class="active">Produkte</a>
+            <div class="nav-dropdown">
+        <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="produkte.html">Alle Modelle</a>
+          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
+          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+        </div>
+      </div>
       <a href="shop.html">Shop</a>
       <a href="ueber-uns.html">Über uns</a>
       <a href="haendler.html">Händler</a>
