@@ -1,9 +1,4 @@
-<!DOC
-        <div class="social-links">
-          <a href="https://www.instagram.com/hekutrailer/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          <a href="https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-          <a href="https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        </div>TYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -65,10 +60,12 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
     /* PAGE */
-    .page { margin-top: 0; min-height: calc(100vh - 64px); display: grid; grid-template-columns: 380px 1fr; }
+    .page { margin-top: 0; min-height: calc(100vh - 64px - 43px); display: grid; grid-template-columns: 380px 1fr; }
 
     /* SIDEBAR */
-    .sidebar { background: var(--schwarz); padding: 48px 40px; position: sticky; top: 64px; height: calc(100vh - 64px); display: flex; flex-direction: column; overflow-y: auto; }
+    .sidebar { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 48px 40px; position: sticky; top: 107px; height: calc(100vh - 107px); display: flex; flex-direction: column; overflow-y: auto; position: relative; }
+    .sidebar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.65) 100%); pointer-events: none; z-index: 0; }
+    .sidebar > * { position: relative; z-index: 1; }
     .sidebar-logo { margin-bottom: 40px; }
     .sidebar-logo img { height: 24px; filter: brightness(0) invert(1); opacity: 0.8; }
     .sidebar-title { font-family: var(--font-head); font-size: 28px; font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 12px; }
@@ -232,12 +229,8 @@
     }
 
     /* MARQUEE */
-    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
-    .main .marquee-wrap { margin: -52px -64px 40px; }
-    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
-    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
-    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    .main 100% { transform: translateX(-50%); } }
 
 
     /* Produkte Dropdown */
@@ -249,25 +242,25 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
-    footer{background:var(--schwarz);padding:68px 80px 32px;}
-    .ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px;}
-    .ft-logo img{height:26px;margin-bottom:18px;}
-    .ft-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.3);margin-bottom:20px;}
-    .ft-contact{font-size:13px;color:rgba(255,255,255,0.35);line-height:2.1;}
-    .ft-head{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:18px;}
-    .ft-links{display:flex;flex-direction:column;gap:10px;}
-    .ft-links a{font-size:13px;color:rgba(255,255,255,0.45);transition:color 0.2s;}
-    .ft-links a:hover{color:#fff;}
-    .ft-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-    .ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
-    .ft-legal{display:flex;gap:20px;}
-    .ft-legal a{font-size:12px;color:rgba(255,255,255,0.18);transition:color 0.2s;}
-    .ft-legal a:hover{color:rgba(255,255,255,0.45);}
-    .social-links{display:flex;gap:12px;margin-top:20px;}
-    .social-link{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,background 0.2s;}
-    .social-link:hover{border-color:var(--rot);background:rgba(232,0,14,0.1);}
-    .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
-    .social-link:hover svg{fill:var(--rot);}
+
+    .heku-ft{background:var(--schwarz);padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+    .heku-ft-left{display:flex;flex-direction:column;gap:8px;}
+    .heku-ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
+    .heku-ft-contact{font-size:12px;color:rgba(255,255,255,0.3);}
+    .heku-ft-legal{display:flex;gap:20px;}
+    .heku-ft-legal a{font-size:12px;color:rgba(255,255,255,0.18);transition:color 0.2s;}
+    .heku-ft-legal a:hover{color:rgba(255,255,255,0.45);}
+    .heku-social{display:flex;gap:10px;}
+    .heku-social-link{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,background 0.2s;}
+    .heku-social-link:hover{border-color:var(--rot);background:rgba(232,0,14,0.1);}
+    .heku-social-link svg{width:15px;height:15px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
+    .heku-social-link:hover svg{fill:var(--rot);} 100% { transform: translateX(-50%); } }
+
+    .marquee-wrap { position: relative; left: 0; right: 0; width: 100vw; margin-top: 64px; background: var(--rot); padding: 13px 0; overflow: hidden; z-index: 100; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -298,6 +291,25 @@
     </div>
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
 
 
   <div class="page">
@@ -348,24 +360,7 @@
 
     <!-- MAIN -->
     <div class="main">
-    <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-    </div>
-  </div>
+    
 
     <!-- SCHRITT 1: Boot -->
       <div class="step-page active" id="step1">
@@ -991,5 +986,20 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
     c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
   }
   </script>
+  <footer class="heku-ft">
+    <div class="heku-ft-left">
+      <span class="heku-ft-copy">© 2026 HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld · 0521 200066</span>
+      <div class="heku-ft-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+    <div class="heku-social">
+      <a href="https://www.instagram.com/hekutrailer/" class="heku-social-link" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/" class="heku-social-link" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      <a href="https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/" class="heku-social-link" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    </div>
+  </footer>
 </body>
 </html>
