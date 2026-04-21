@@ -20,7 +20,7 @@
     <changefreq>monthly</changefreq>
   </url>
 
-  <!-- Neue SEO-Landingpages -->
+  <!-- SEO-Landingpages -->
   <url>
     <loc>https://heku-fahrzeugbau.de/bootstrailer.html</loc>
     <priority>0.9</priority>
@@ -33,6 +33,11 @@
   </url>
   <url>
     <loc>https://heku-fahrzeugbau.de/segelbootanhaenger.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/jollenanhaenger.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
