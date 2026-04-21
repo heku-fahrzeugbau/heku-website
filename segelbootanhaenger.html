@@ -29,7 +29,7 @@
   }
   </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "LocalBusiness", "name": "HEKU Fahrzeugbau GmbH", "url": "https://heku-fahrzeugbau.de", "logo": "https://heku-fahrzeugbau.de/logo.png", "telephone": "+49-521-200066", "email": "info@heku-fahrzeugbau.de", "foundingDate": "1959", "address": {"@type": "PostalAddress", "streetAddress": "Bunzlauer Straße 6", "addressLocality": "Bielefeld", "postalCode": "33719", "addressRegion": "Nordrhein-Westfalen", "addressCountry": "DE"}, "geo": {"@type": "GeoCoordinates", "latitude": 52.0302, "longitude": 8.5825}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "16:30"}], "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.4", "reviewCount": "41", "bestRating": "5"}, "sameAs": ["https://www.instagram.com/hekutrailer/", "https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/", "https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/"]}
+  {"@context": "https://schema.org", "@type": "LocalBusiness", "name": "HEKU Fahrzeugbau GmbH", "url": "https://heku-fahrzeugbau.de", "logo": "https://heku-fahrzeugbau.de/logo.png", "telephone": "+49-521-200066", "email": "info@heku-fahrzeugbau.de", "foundingDate": "1959", "address": {"@type": "PostalAddress", "streetAddress": "Bunzlauer Straße 6", "addressLocality": "Bielefeld", "postalCode": "33719", "addressRegion": "Nordrhein-Westfalen", "addressCountry": "DE"}, "geo": {"@type": "GeoCoordinates", "latitude": 52.0302, "longitude": 8.5825}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "16:30"}], "sameAs": ["https://www.instagram.com/hekutrailer/", "https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/", "https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/"]}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"}, {"@type": "ListItem", "position": 2, "name": "Produkte", "item": "https://heku-fahrzeugbau.de/produkte.html"}, {"@type": "ListItem", "position": 3, "name": "Segelbootanhänger", "item": "https://heku-fahrzeugbau.de/segelbootanhaenger.html"}]}
@@ -166,6 +166,12 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; width: 100%; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -222,6 +228,26 @@
       </div>
     </div>
   </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
 
   <div class="content-wrap">
 
@@ -372,7 +398,6 @@
           <a href="bootstrailer.html">Bootstrailer</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>
         </div>

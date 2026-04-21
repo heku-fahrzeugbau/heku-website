@@ -186,6 +186,12 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; width: 100%; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -200,7 +206,6 @@
           <a href="bootstrailer.html">Bootstrailer</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
           <a href="ratgeber-bootsanhaenger.html">Ratgeber Kaufberatung</a>
         </div>
       </div>
@@ -228,6 +233,26 @@
       <p class="page-sub">Welcher Bootsanhänger passt zu Ihrem Boot? Bootstrailer oder Einachser? Gebremst oder ungebremst? Dieser Ratgeber beantwortet alle Fragen – von erfahrenen Bootsanhänger-Spezialisten aus Bielefeld.</p>
     </div>
   </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
 
   <div class="article-wrap">
 
@@ -489,7 +514,6 @@
           <a href="bootstrailer.html">Bootstrailer</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>
         </div>
