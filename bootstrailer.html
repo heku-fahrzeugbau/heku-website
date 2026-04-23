@@ -58,7 +58,9 @@
           "@type": "Answer",
           "text": "HEKU Tandem-Bootstrailer beginnen ab 4.495 € (inkl. MwSt.) für das Modell B 2000 in 6,60 m Länge. Der B 3500 in 8,60 m kostet ab 6.795 €. Der Endpreis hängt von Länge, Zuladung und Zubehör ab. Der HEKU Engineer Konfigurator berechnet kostenlos die passende Preisrange."
         }
-      }
+      },
+      {"@type": "Question", "name": "Was ist der Unterschied zwischen Bootstrailer und Bootsanhänger?", "acceptedAnswer": {"@type": "Answer", "text": "Bootstrailer und Bootsanhänger bezeichnen dasselbe Produkt. Bootstrailer wird im deutschen Sprachgebrauch oft für Tandem-Modelle ab ca. 1.500 kg zGG verwendet. HEKU bietet beide — von Jollenanhängern bis zu Tandem-Bootstrailern bis 3.500 kg."}},
+      {"@type": "Question", "name": "Kann ich einen Bootstrailer ins Salzwasser fahren?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. HEKU-Bootstrailer sind für Salzwassereinsatz konstruiert. Patentierte wasserdichte Radnabe, Tauchbad-Feuerverzinkung DIN 1461. Nach dem Slippen mit Süßwasser abspülen — kein Lagertausch nötig."}}
     ]
   }
   </script>
@@ -85,6 +87,7 @@
     },
     "geo": {"@type": "GeoCoordinates", "latitude": 52.0302, "longitude": 8.5825},
     "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "16:30"}],
+    "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.4", "reviewCount": "41", "bestRating": "5"},
     "sameAs": ["https://www.instagram.com/hekutrailer/", "https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/", "https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/"]
   }
   </script>
@@ -191,7 +194,9 @@
     .group-label td { padding: 8px 16px; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
 
     /* CTA BANNER */
-    .cta-banner { background: var(--schwarz); border-radius: 16px; padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; margin: 56px 0; }
+    .cta-banner { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; border-radius: 16px; padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; margin: 56px 0; position: relative; overflow: hidden; }
+    .cta-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.65) 100%); border-radius: 16px; pointer-events: none; z-index: 0; }
+    .cta-banner > * { position: relative; z-index: 1; }
     .cta-title { font-family: var(--font-head); font-size: clamp(24px, 2.5vw, 32px); color: #fff; margin-bottom: 8px; }
     .cta-sub { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.6; max-width: 420px; }
     .btn-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 8px; white-space: nowrap; transition: all 0.22s; }
@@ -290,6 +295,7 @@
           <a href="bootstrailer.html">Bootstrailer</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+          <a href="jollenanhaenger.html">Jollenanhänger</a>
           <a href="ratgeber-bootsanhaenger.html">Ratgeber Kaufberatung</a>
         </div>
       </div>
@@ -469,6 +475,116 @@
       </div>
     </div>
 
+    <!-- SEO: Einachser vs Tandem Vergleich -->
+    <div class="reveal">
+      <div class="sec-eyebrow">Entscheidungshilfe</div>
+      <h2 class="sec-title">Einachser oder Tandem-Bootstrailer — was passt zu Ihrem Boot?</h2>
+      <p class="sec-text">Die Wahl zwischen einachsigem Bootsanhänger und Tandem-Bootstrailer hängt primär vom Gesamtgewicht Ihres Bootes ab — nicht von der Länge. Als Faustregel gilt: <strong>Ab 1.500 kg Gesamtgewicht empfehlen wir den Tandem-Bootstrailer.</strong></p>
+    </div>
+
+    <div class="bootstyp-grid reveal">
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">⚓</div>
+        <div class="bootstyp-name">Einachsiger Bootsanhänger</div>
+        <div class="bootstyp-model">HEKU B 900 – B 1800</div>
+        <div class="bootstyp-desc">Für Boote bis ca. 1.450 kg Zuladung. Kompakter, leichter rangierbar, günstiger. Ideal für Motorboote und Segelboote bis 6,60 m. Ab 3.390 €.</div>
+      </div>
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">🚢</div>
+        <div class="bootstyp-name">Tandem-Bootstrailer</div>
+        <div class="bootstyp-model">HEKU B 2000 – B 3500</div>
+        <div class="bootstyp-desc">Für Boote ab 1.500 kg bis 2.850 kg Zuladung. Zwei Achsen, maximale Stabilität, TÜV EG-Typgenehmigung. Für schwere Motor- und Segelboote bis 8,60 m. Ab 4.495 €.</div>
+      </div>
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">⚡</div>
+        <div class="bootstyp-name">100 km/h Zulassung</div>
+        <div class="bootstyp-model">Option für alle Tandem-Modelle</div>
+        <div class="bootstyp-desc">Standardmäßig sind Bootstrailer auf 80 km/h begrenzt. Mit optionaler 100 km/h-Zulassung (+ 280 €) schneller und stressfreier auf der Autobahn unterwegs.</div>
+      </div>
+    </div>
+
+    <!-- SEO: Bootstrailer kaufen - Kaufberatung -->
+    <div class="reveal">
+      <div class="sec-eyebrow">Kaufberatung</div>
+      <h2 class="sec-title">Bootstrailer kaufen — worauf Sie achten sollten</h2>
+      <p class="sec-text">Beim Kauf eines Bootstrailers entscheiden vier technische Merkmale über Langlebigkeit, Sicherheit und Wartungsaufwand. HEKU hat diese Punkte seit Jahrzehnten konsequent umgesetzt:</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table class="model-table">
+        <thead>
+          <tr><th>Merkmal</th><th>HEKU Bootstrailer</th><th>Günstige Alternativen</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="model-name">Radnabe</div></td>
+            <td style="color:#16a34a;font-weight:500">Patentierte wasserdichte Radnabe · 5 Jahre Garantie · kein Lagertausch nach Salzwasser</td>
+            <td style="color:var(--muted)">Standard-Radlager · rosten nach Salzwassereinsatz · regelmäßiger Lagertausch nötig</td>
+          </tr>
+          <tr>
+            <td><div class="model-name">Korrosionsschutz</div></td>
+            <td style="color:#16a34a;font-weight:500">Tauchbad-Feuerverzinkung nach DIN 1461 — innen und außen</td>
+            <td style="color:var(--muted)">Oft nur Pulverbeschichtung — Rost nach wenigen Jahren</td>
+          </tr>
+          <tr>
+            <td><div class="model-name">Fertigung</div></td>
+            <td style="color:#16a34a;font-weight:500">Einzelfertigung nach Maß — 100% passend für Ihr Boot</td>
+            <td style="color:var(--muted)">Serienproduktion — Kompromisse bei Passgenauigkeit</td>
+          </tr>
+          <tr>
+            <td><div class="model-name">Zulassung</div></td>
+            <td style="color:#16a34a;font-weight:500">TÜV EG-Typgenehmigung · KBA-Typprüfung je nach Modell</td>
+            <td style="color:var(--muted)">Variiert — teils nur nationale Zulassung</td>
+          </tr>
+          <tr>
+            <td><div class="model-name">Herkunft</div></td>
+            <td style="color:#16a34a;font-weight:500">Made in Germany · Werk Bielefeld · seit 1959</td>
+            <td style="color:var(--muted)">Oft Osteuropa oder Asien — längere Lieferzeiten</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SEO: Slippen mit Bootstrailer -->
+    <div class="reveal">
+      <div class="sec-eyebrow">Praxistipps</div>
+      <h2 class="sec-title">Bootstrailer slippen — so geht es richtig</h2>
+      <p class="sec-text">Das Einfahren ins Wasser (Slippen) ist die größte Belastung für jeden Bootstrailer. HEKU-Bootstrailer sind speziell für diesen Einsatz konstruiert:</p>
+    </div>
+
+    <div class="bootstyp-grid reveal">
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">💧</div>
+        <div class="bootstyp-name">Vor dem Slippen</div>
+        <div class="bootstyp-desc">Bremsanlage prüfen, Sicherheitswinde kontrollieren, Lichtleiste abnehmen. HEKU-Lichtleiste ist dafür ausziehbar und abnehmbar konstruiert.</div>
+      </div>
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">⛵</div>
+        <div class="bootstyp-name">Beim Slippen</div>
+        <div class="bootstyp-desc">Langsam und gerade einfahren. HEKU-Radnabe ist wasserdicht — kein Lagerschaden auch bei vollständigem Eintauchen im Salzwasser.</div>
+      </div>
+      <div class="bootstyp-card">
+        <div class="bootstyp-icon">✅</div>
+        <div class="bootstyp-name">Nach dem Slippen</div>
+        <div class="bootstyp-desc">Anhänger mit Süßwasser abspülen. Bremsanlage kurz testen. Dank wasserdichter Radnabe kein Lagertausch erforderlich — auch nach Salzwassereinsatz.</div>
+      </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Was ist der Unterschied zwischen Bootstrailer und Bootsanhänger?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Bootstrailer und Bootsanhänger bezeichnen dasselbe Produkt — Bootstrailer ist die englische Bezeichnung. Im deutschen Sprachgebrauch wird "Bootstrailer" oft speziell für schwere Tandem-Modelle ab ca. 1.500 kg zGG verwendet. HEKU bietet beide — von ungebremsten Jollenanhängern bis zu Tandem-Bootstrailern bis 3.500 kg.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Kann ich einen Bootstrailer ins Salzwasser fahren?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Ja — HEKU-Bootstrailer sind speziell für den Salzwassereinsatz konstruiert. Die patentierte wasserdichte Radnabe schützt Lager und Bremsanlage dauerhaft. Das Fahrgestell ist Tauchbad-feuerverzinkt nach DIN 1461 — innen und außen. Nach dem Slippen einfach mit Süßwasser abspülen — kein Lagertausch nötig.</div></div>
+        </div>
+
+    </div>
+
     <!-- SEO: Interne Verlinkung zu verwandten Seiten -->
     <div class="internal-links reveal">
       <div class="internal-links-title">Weitere Produkte & Informationen</div>
@@ -476,6 +592,7 @@
         <a href="produkte.html" class="link-pill">← Alle Bootsanhänger-Modelle</a>
         <a href="motorbootanhaenger.html" class="link-pill">Motorbootanhänger →</a>
         <a href="segelbootanhaenger.html" class="link-pill">Segelbootanhänger →</a>
+        <a href="jollenanhaenger.html" class="link-pill">Jollenanhänger →</a>
         <a href="ratgeber-bootsanhaenger.html" class="link-pill">Ratgeber: Welcher Anhänger passt? →</a>
         <a href="faq.html" class="link-pill">Alle FAQ →</a>
       </div>
