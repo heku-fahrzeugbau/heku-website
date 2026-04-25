@@ -125,7 +125,9 @@
     .info-box p{margin-bottom:0;font-size:15px;}
 
     /* CTA BANNER */
-    .cta-banner{background:var(--schwarz);border-radius:16px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin:56px 0;}
+    .cta-banner{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;border-radius:16px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin:56px 0;position:relative;overflow:hidden;}
+    .cta-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.82) 0%,rgba(10,10,10,0.65) 100%);pointer-events:none;z-index:0;border-radius:16px;}
+    .cta-banner>*{position:relative;z-index:1;}
     .cta-title{font-family:var(--font-head);font-size:clamp(24px,2.5vw,32px);color:#fff;margin-bottom:8px;}
     .cta-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.6;max-width:420px;}
     .btn-cta{display:inline-flex;align-items:center;gap:10px;background:var(--rot);color:#fff;font-size:15px;font-weight:600;padding:16px 32px;border-radius:8px;white-space:nowrap;transition:all 0.22s;}
