@@ -140,15 +140,7 @@
     .social-btn svg { fill: var(--muted); transition: fill 0.22s; }
     @media (max-width: 768px) { .social-section { padding: 52px 24px; } .social-inner { flex-direction: column; align-items: flex-start; } .social-buttons { flex-wrap: wrap; } }
 
-    /* FOOTER */
-    footer { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; position: relative; }
-    footer::before { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.90); pointer-events: none; z-index: 0; }
-    footer > * { position: relative; z-index: 1; } padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); }
-    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
-    .ft-legal { display: flex; gap: 20px; }
-    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
-    .ft-legal a:hover { color: rgba(255,255,255,0.5); }
+    /* FOOTER */ padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); }
 
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
@@ -166,7 +158,6 @@
       .team-grid { grid-template-columns: 1fr; }
       .standort-grid { grid-template-columns: 1fr; }
       .cta-banner { grid-template-columns: 1fr; padding: 48px 24px; gap: 24px; }
-      footer { padding: 32px 24px; }
     }
     @media (max-width: 640px) {
       .values-grid { grid-template-columns: 1fr; }
@@ -189,6 +180,7 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+
     footer { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 68px 80px 32px; position: relative; }
     footer::before { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.90); pointer-events: none; z-index: 0; }
     footer > * { position: relative; z-index: 1; }
@@ -205,6 +197,13 @@
     .ft-legal { display: flex; gap: 20px; }
     .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.18); transition: color 0.2s; }
     .ft-legal a:hover { color: rgba(255,255,255,0.45); }
+    .social-links { display: flex; gap: 12px; margin-top: 20px; }
+    .social-link { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .social-link:hover { border-color: #E8000E; background: rgba(232,0,14,0.1); }
+    .social-link svg { width: 16px; height: 16px; fill: rgba(255,255,255,0.45); }
+    .social-link:hover svg { fill: #E8000E; }
+    @media(max-width:1024px) { .ft { grid-template-columns: 1fr 1fr; } footer { padding: 52px 24px 28px; } }
+    @media(max-width:600px) { .ft { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
