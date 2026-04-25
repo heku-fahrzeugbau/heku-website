@@ -243,7 +243,9 @@
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
 
-    .heku-ft{background:var(--schwarz);padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+    .heku-ft{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;position:relative;}
+    .heku-ft::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.90);pointer-events:none;z-index:0;}
+    .heku-ft>*{position:relative;z-index:1;}padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
     .heku-ft-left{display:flex;flex-direction:column;gap:8px;}
     .heku-ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
     .heku-ft-contact{font-size:12px;color:rgba(255,255,255,0.3);}
