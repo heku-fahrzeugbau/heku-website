@@ -58,7 +58,7 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
     /* HERO */
-    .hero { margin-top: 64px; background: var(--schwarz); padding: 96px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; overflow: hidden; }
+    .hero { margin-top: 64px; background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 96px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; overflow: hidden; }
     .hero::before { content: '1959'; position: absolute; right: -20px; bottom: -20px; font-family: var(--font-head); font-size: 220px; color: rgba(255,255,255,0.03); pointer-events: none; line-height: 1; }
     .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 16px; }
     .hero-title { font-family: var(--font-head); font-size: clamp(38px, 4.5vw, 62px); color: #fff; line-height: 1.05; margin-bottom: 24px; }
@@ -118,7 +118,9 @@
     .standort-map iframe { width: 100%; height: 280px; border: none; display: block; }
 
     /* CTA */
-    .cta-banner { background: var(--schwarz); padding: 72px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .cta-banner { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 72px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; position: relative; overflow: hidden; }
+    .cta-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.65) 100%); pointer-events: none; z-index: 0; border-radius: 16px; }
+    .cta-banner > * { position: relative; z-index: 1; }
     .cta-title { font-family: var(--font-head); font-size: clamp(28px, 3vw, 42px); color: #fff; margin-bottom: 10px; }
     .cta-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.4); max-width: 480px; line-height: 1.65; }
     .btn-rot { display: inline-flex; align-items: center; gap: 10px; background: var(--rot); color: #fff; font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 8px; white-space: nowrap; transition: all 0.22s; }
