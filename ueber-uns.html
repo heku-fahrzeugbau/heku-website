@@ -59,14 +59,14 @@
 
     /* HERO */
     .hero { margin-top: 64px; background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 96px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; overflow: hidden; }
-    .hero::before { content: '1959'; position: absolute; right: -20px; bottom: -20px; font-family: var(--font-head); font-size: 220px; color: rgba(255,255,255,0.03); pointer-events: none; line-height: 1; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.65) 100%); z-index: 0; pointer-events: none; }
     .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 16px; }
     .hero-title { font-family: var(--font-head); font-size: clamp(38px, 4.5vw, 62px); color: #fff; line-height: 1.05; margin-bottom: 24px; }
     .hero-body { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 36px; }
     .hero-stats { display: flex; gap: 40px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); }
     .hero-stat-num { font-family: var(--font-head); font-size: 36px; color: #fff; }
     .hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px; }
-    .hero-img { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; }
+    .hero-img { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
     .hero-img-placeholder { text-align: center; }
     .hero-img-placeholder svg { opacity: 0.15; margin-bottom: 12px; }
     .hero-img-placeholder span { font-size: 13px; color: rgba(255,255,255,0.2); display: block; }
@@ -223,7 +223,7 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div>
+    <div style="position:relative;z-index:1;">
       <div class="hero-eyebrow">Familienunternehmen · Seit 1959</div>
       <h1 class="hero-title">Bootsanhänger-Hersteller<br>seit 1959 –<br><span>Made in Bielefeld.</span></h1>
       <p class="hero-body">HEKU Fahrzeugbau steht für über 65 Jahre Erfahrung im Bootsanhängerbau. Was Helmut Kollmeier 1959 gründete, wird heute von Sohn Heiko und Enkel Robin in zweiter und dritter Generation weitergeführt — mit denselben Werten wie am ersten Tag.</p>
@@ -234,10 +234,11 @@
       </div>
     </div>
     <div class="hero-img">
-      <div class="hero-img-placeholder">
+      <img src="team-kollmeier.jpg" alt="Helmut, Heiko und Robin Kollmeier — Geschäftsführung HEKU Fahrzeugbau GmbH" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="hero-img-placeholder" style="display:none">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Foto folgt</span>
-        <span style="margin-top:4px;font-size:11px">Helmut, Heiko und Robin Kollmeier, Geschäftsführung</span>
+        <span>Helmut, Heiko und Robin Kollmeier</span>
+        <span style="margin-top:4px;font-size:11px">Geschäftsführung HEKU Fahrzeugbau GmbH</span>
       </div>
     </div>
   </div>
