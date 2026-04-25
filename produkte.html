@@ -58,11 +58,13 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
     /* PAGE HEADER */
-    .page-header { margin-top: 64px; background: var(--schwarz); padding: 72px 80px; position: relative; overflow: hidden; }
-    .page-header::before { content: 'B-SERIE'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: var(--font-head); font-size: 180px; color: rgba(255,255,255,0.025); pointer-events: none; white-space: nowrap; }
+    .page-header { margin-top: 64px; background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 72px 80px; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.72) 100%); z-index: 0; }
+    .page-header-inner { position: relative; z-index: 2; }
+    .page-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 14px; }
     .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
     .page-title { font-family: var(--font-head); font-size: clamp(36px, 4vw, 56px); color: #fff; line-height: 1.05; margin-bottom: 14px; }
-    .page-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.45); max-width: 560px; line-height: 1.65; }
+    .page-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.55); max-width: 560px; line-height: 1.65; }
 
     /* FILTER TABS */
     .filter-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 80px; display: flex; gap: 0; overflow-x: auto; }
@@ -130,7 +132,7 @@
     .btn-white:hover { background: var(--bg2); transform: translateY(-2px); }
 
     /* FOOTER */
-    footer { background: var(--schwarz); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); }
+
     .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
     .ft-legal { display: flex; gap: 20px; }
@@ -231,12 +233,11 @@
 
   <!-- HEADER -->
   <div class="page-header">
-    <div class="page-header-bg-text">PRODUKTE</div>
     <div class="page-header-inner">
-    <div class="eyebrow">B-Serie 2026</div>
-  </div>
-    <h1 class="page-title">Bootsanhänger<br>für jeden Typ</h1>
-    <p class="page-sub">Vom kleinen Jollenanhänger bis zum Tandem-Trailer für schwere Motorboote — alle Modelle feuerverzinkt, alle mit wasserdichter Radnabe. Alle Preise sind Grundpreise ab Werk Bielefeld, inkl. 19% MwSt. Endpreis je nach Zubehör und individueller Konfiguration.</p>
+      <div class="page-eyebrow">B-Serie 2026 · Alle Modelle · Ab Werk Bielefeld</div>
+      <h1 class="page-title">Bootsanhänger<br>für jeden Typ</h1>
+      <p class="page-sub">Vom kleinen Jollenanhänger bis zum Tandem-Trailer für schwere Motorboote — alle Modelle feuerverzinkt, alle mit wasserdichter Radnabe. Grundpreise ab Werk Bielefeld inkl. 19% MwSt.</p>
+    </div>
   </div>
 
   <div class="marquee-wrap">
