@@ -70,7 +70,7 @@
     .nav-dropdown-menu a:hover{background:var(--bg2);color:var(--rot);}
     .nav-dropdown-menu a.active{color:var(--rot);font-weight:600;}
     .nav-dropdown-menu a:first-child{font-weight:600;border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:10px;}
-    .page-header{margin-top:64px;background:var(--schwarz);padding:72px 80px 56px;position:relative;overflow:hidden;}
+    .page-header{margin-top:0;background:var(--schwarz);padding:72px 80px 56px;position:relative;overflow:hidden;}
     .page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(232,0,14,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,0,14,0.04) 1px,transparent 1px);background-size:50px 50px;}
     .page-header::after{content:'';position:absolute;top:-30%;right:-10%;width:50vw;height:50vw;background:radial-gradient(circle,rgba(232,0,14,0.08) 0%,transparent 65%);pointer-events:none;}
     .page-header-inner{position:relative;z-index:2;}
@@ -98,8 +98,8 @@
     .jollentyp-name{font-size:15px;font-weight:600;color:var(--schwarz);margin-bottom:6px;}
     .jollentyp-model{font-size:13px;font-weight:600;color:var(--rot);margin-bottom:6px;}
     .jollentyp-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;}
-    .feature-box{background:var(--schwarz);border-radius:14px;padding:36px 40px;margin:40px 0 48px;position:relative;overflow:hidden;}
-    .feature-box::before{content:'';position:absolute;top:-20%;right:-5%;width:40vw;height:40vw;background:radial-gradient(circle,rgba(232,0,14,0.1) 0%,transparent 65%);pointer-events:none;}
+    .feature-box{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;border-radius:14px;padding:36px 40px;margin:40px 0 48px;position:relative;overflow:hidden;}
+    .feature-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.82) 0%,rgba(10,10,10,0.65) 100%);pointer-events:none;z-index:0;border-radius:14px;}
     .feature-box-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--rot);margin-bottom:10px;position:relative;z-index:1;}
     .feature-box-title{font-family:var(--font-head);font-size:clamp(22px,2.5vw,30px);color:#fff;margin-bottom:12px;position:relative;z-index:1;}
     .feature-box-text{font-size:15px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:28px;max-width:540px;position:relative;z-index:1;}
@@ -120,7 +120,9 @@
     .model-sub{font-size:12px;color:var(--muted);margin-top:2px;}
     .model-price{font-weight:600;color:var(--rot);white-space:nowrap;}
     .tag-ung{display:inline-block;background:rgba(107,107,107,0.1);color:var(--muted);font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;}
-    .cta-banner{background:var(--schwarz);border-radius:16px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin:56px 0;}
+    .cta-banner{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;border-radius:16px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin:56px 0;position:relative;overflow:hidden;}
+    .cta-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.82) 0%,rgba(10,10,10,0.65) 100%);pointer-events:none;z-index:0;border-radius:16px;}
+    .cta-banner>*{position:relative;z-index:1;}
     .cta-title{font-family:var(--font-head);font-size:clamp(24px,2.5vw,32px);color:#fff;margin-bottom:8px;}
     .cta-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.6;max-width:420px;}
     .btn-cta{display:inline-flex;align-items:center;gap:10px;background:var(--rot);color:#fff;font-size:15px;font-weight:600;padding:16px 32px;border-radius:8px;white-space:nowrap;transition:all 0.22s;}
@@ -164,6 +166,11 @@
     .reveal.visible{opacity:1;transform:translateY(0);}
     @media(max-width:1024px){nav{padding:0 20px;}.nav-center{display:none;}.nav-burger{display:flex;}.page-header{padding:56px 24px 40px;}.content-wrap{padding:48px 24px;}.jollentyp-grid{grid-template-columns:1fr 1fr;}.feature-box{padding:28px 24px;}.feature-list{grid-template-columns:1fr;}.ft{grid-template-columns:1fr 1fr;}footer{padding:52px 24px 28px;}}
     @media(max-width:600px){.jollentyp-grid{grid-template-columns:1fr;}.ft{grid-template-columns:1fr;}.cta-banner{padding:32px 24px;}.page-header-stats{gap:28px;}}
+    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; width: 100%; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
 </head>
 <body>
@@ -213,6 +220,26 @@
       </div>
     </div>
   </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">WASSERDICHTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
+      <div class="marquee-item">WASSERDICHTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
+      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
 
   <div class="content-wrap">
 
