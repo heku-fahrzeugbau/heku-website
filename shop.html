@@ -62,7 +62,9 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
 
     /* PAGE HEADER */
-    .page-header { margin-top: 64px; background: var(--schwarz); padding: 56px 80px; }
+    .page-header { margin-top: 64px; background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 56px 80px; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.72) 100%); z-index: 0; }
+    .page-header > * { position: relative; z-index: 1; }
     .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
     .page-title { font-family: var(--font-head); font-size: clamp(32px, 4vw, 50px); color: #fff; line-height: 1.05; margin-bottom: 12px; }
     .page-sub { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.65; max-width: 500px; }
