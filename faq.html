@@ -70,7 +70,7 @@
         "name": "Was ist die wasserdichte Radnabe von HEKU?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Die wasserdichte Radnabe ist eine Eigenentwicklung von HEKU Fahrzeugbau. Sie schützt Lager und Bremsanlage beim Einfahren ins Wasser zuverlässig vor Wassereintritt — auch bei Salzwasser. Vom TH Hannover geprüft und für wasserdicht erklärt. HEKU gewährt 5 Jahre Garantie auf die Radnabe."
+          "text": "Die wasserdichte Radnabe ist eine patentierte Eigenentwicklung von HEKU-Gründer Helmut Kollmeier — einzigartig in der Bootsanhänger-Branche. Beim Slipvorgang taucht die Radnabe vollständig ins Wasser ein. Bei herkömmlichen Anhängern zieht die heiße Nabe durch den Temperaturunterschied Wasser in das Lager — das führt zu Korrosion und Lagerschäden. Die HEKU-Radnabe ist so konstruiert, dass kein Wasser eindringen kann, auch bei wiederholtem Einsatz im Salzwasser. Geprüft von Prof. Dr.-Ing. Kieper an der Technischen Hochschule Hannover — alle Testnaben wurden für vollständig wasserdicht erklärt. HEKU gewährt 5 Jahre Garantie. Kein anderer Bootsanhänger-Hersteller in Deutschland verbaut diese Technologie serienmäßig."
         }
       },
       {
@@ -275,7 +275,38 @@
     .faq-item.open .faq-icon::before { color: #fff; transform: rotate(45deg); }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .faq-answer-inner { padding: 4px 0 22px; font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--muted); }
-    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-item.open .faq-answer { max-height: 800px; }
+
+    /* GEO: Zweistufiges System */
+    .faq-short { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--muted); }
+    .faq-geo-toggle {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; font-size: 12px; font-weight: 600;
+      color: var(--rot); letter-spacing: 0.04em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer; padding: 0;
+      font-family: var(--font-body); transition: opacity 0.2s;
+    }
+    .faq-geo-toggle:hover { opacity: 0.7; }
+    .faq-geo-toggle .geo-arrow { display: inline-block; transition: transform 0.25s var(--ease); font-style: normal; }
+    .faq-geo-toggle.open .geo-arrow { transform: rotate(180deg); }
+    .faq-geo-block {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s var(--ease), opacity 0.3s;
+      opacity: 0;
+    }
+    .faq-geo-block.open { max-height: 600px; opacity: 1; }
+    .faq-geo-inner {
+      margin-top: 14px; padding: 16px 20px;
+      background: var(--bg2); border-left: 2px solid var(--rot);
+      border-radius: 0 8px 8px 0;
+      font-size: 13.5px; font-weight: 300; line-height: 1.8; color: var(--muted);
+    }
+    .faq-geo-inner p { margin-bottom: 10px; }
+    .faq-geo-inner p:last-child { margin-bottom: 0; }
+    .faq-geo-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--rot); margin-bottom: 10px; display: block;
+    }
 
     /* CTA */
     .faq-cta { margin-top: 64px; background: var(--schwarz); border-radius: 16px; padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
@@ -408,49 +439,126 @@
             Was ist die wasserdichte Radnabe von HEKU?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Die wasserdichte Radnabe ist eine Eigenentwicklung von HEKU Fahrzeugbau — einzigartig in der Branche. Sie schützt Lager und Bremsanlage beim Einfahren ins Wasser zuverlässig vor Wassereintritt, auch bei Salzwasser. Vom TH Hannover geprüft: alle Testnaben für wasserdicht erklärt. HEKU gewährt 5 Jahre Garantie auf die Radnabe.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Die wasserdichte Radnabe ist eine Eigenentwicklung von HEKU Fahrzeugbau — einzigartig in der Branche. Sie schützt Lager und Bremsanlage beim Einfahren ins Wasser zuverlässig vor Wassereintritt, auch bei Salzwasser. Vom TH Hannover geprüft: alle Testnaben für wasserdicht erklärt. HEKU gewährt 5 Jahre Garantie auf die Radnabe.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Technischer Hintergrund</span>
+                <p>Das Problem das sie löst: Beim Slipvorgang taucht die Radnabe vollständig ins Wasser ein. Bei herkömmlichen Anhängern zieht die heiße Nabe nach der Fahrt durch den Temperaturunterschied Wasser in das Lager — ein physikalischer Effekt, der Korrosion und Lagerschäden verursacht. Im schlimmsten Fall versagt die Bremse auf der Autobahn.</p>
+                <p>Die HEKU-Radnabe ist so konstruiert, dass kein Wasser eindringen kann — weder beim Slipvorgang noch bei wiederholtem Einsatz im Salzwasser. Die Abdichtung sitzt an der richtigen Stelle und hält auch bei starkem Temperaturgefälle zwischen Fahrt und Wassereintritt.</p>
+                <p>Geprüft von Prof. Dr.-Ing. Kieper an der Technischen Hochschule Hannover — alle Testnaben wurden für vollständig wasserdicht erklärt. Kein anderer Bootsanhänger-Hersteller in Deutschland verbaut diese Technologie serienmäßig. HEKU gewährt 5 Jahre Garantie — ohne Aufpreis.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Bis zu welchem Gewicht sind HEKU-Anhänger zugelassen?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ungebremste Anhänger sind bis 750 kg zulässiges Gesamtgewicht zugelassen (Typprüfung durch das Kraftfahrt-Bundesamt). Gebremste Anhänger erhalten eine TÜV EG-Typgenehmigung und sind bis 3.500 kg verfügbar.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ungebremste Anhänger sind bis 750 kg zulässiges Gesamtgewicht zugelassen (Typprüfung durch das Kraftfahrt-Bundesamt). Gebremste Anhänger erhalten eine TÜV EG-Typgenehmigung und sind bis 3.500 kg verfügbar.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Zulassungsklassen im Überblick</span>
+                <p><strong>Bis 750 kg:</strong> Ungebremste HEKU-Anhänger mit KBA-Typprüfung (Kraftfahrt-Bundesamt). Geeignet für leichte Jollen, Schlauchboote und kleine Motorboote.</p>
+                <p><strong>750 kg bis 2.000 kg:</strong> Einachsig gebremste Modelle mit TÜV EG-Typgenehmigung. Für mittelgroße Segel- und Motorboote.</p>
+                <p><strong>2.000 kg bis 3.500 kg:</strong> Tandem-Bootstrailer mit zwei Achsen, TÜV EG-Typgenehmigung. Für große Kielboote und schwere Sportboote. Entscheidend ist immer das zulässige Gesamtgewicht (zGG) — nicht das reine Bootsgewicht. Das zGG umfasst Boot, Außenborder, Kraftstoff und Ausrüstung. HEKU berät individuell welches Modell das richtige ist.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Bootsanhänger mit oder ohne TÜV – was gilt für HEKU?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Alle HEKU-Anhänger bis 750 kg erhalten eine <strong>KBA-Typprüfung</strong> (Kraftfahrt-Bundesamt). Gebremste Anhänger und Tandem-Bootstrailer bis 3.500 kg erhalten eine <strong>TÜV EG-Typgenehmigung</strong>. Eine optionale Einzel-TÜV-Abnahme ist für 160 € erhältlich.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Alle HEKU-Anhänger bis 750 kg erhalten eine <strong>KBA-Typprüfung</strong> (Kraftfahrt-Bundesamt). Gebremste Anhänger und Tandem-Bootstrailer bis 3.500 kg erhalten eine <strong>TÜV EG-Typgenehmigung</strong>. Eine optionale Einzel-TÜV-Abnahme ist für 160 € erhältlich.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Was bedeutet das konkret?</span>
+                <p>Die KBA-Typprüfung (Kraftfahrt-Bundesamt) ist die nationale Zulassung für ungebremste Anhänger bis 750 kg. Sie bestätigt, dass der Anhänger den deutschen Zulassungsstandards entspricht und im Straßenverkehr betrieben werden darf.</p>
+                <p>Die TÜV EG-Typgenehmigung ist die europäische Zulassung für gebremste Anhänger. Sie gilt in allen EU-Mitgliedstaaten und ist Voraussetzung für den legalen Betrieb gebremster Anhänger ab 750 kg. HEKU-Anhänger mit dieser Genehmigung können also problemlos auch in Frankreich, den Niederlanden oder anderen EU-Ländern betrieben werden.</p>
+                <p>Die optionale Einzel-TÜV-Abnahme (160 €) ist sinnvoll wenn Sie den Anhänger außerhalb Deutschlands zulassen oder einen zusätzlichen offiziellen Prüfnachweis benötigen.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Wie schwer darf ein Bootsanhänger sein?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ungebremste HEKU-Bootsanhänger sind bis <strong>750 kg Gesamtgewicht</strong> zugelassen. Einachsig gebremste Modelle bis 2.000 kg, Tandem-Bootstrailer bis <strong>3.500 kg</strong>. Entscheidend ist immer das zulässige Gesamtgewicht (zGG), nicht das reine Bootsgewicht.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ungebremste HEKU-Bootsanhänger sind bis <strong>750 kg Gesamtgewicht</strong> zugelassen. Einachsig gebremste Modelle bis 2.000 kg, Tandem-Bootstrailer bis <strong>3.500 kg</strong>. Entscheidend ist immer das zulässige Gesamtgewicht (zGG), nicht das reine Bootsgewicht.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">So berechnen Sie das richtige Gewicht</span>
+                <p>Das zulässige Gesamtgewicht (zGG) des Anhängers muss das Gesamtgewicht von Boot inklusive aller Ausrüstung abdecken: Boot selbst + Außenborder + Kraftstofftank (voll) + Anker, Leinen, Ausrüstung an Bord. Faustregel: 15–20 % Sicherheitspuffer einkalkulieren.</p>
+                <p>Wichtig: Das Zugfahrzeug entscheidet mit. Die zulässige Anhängelast des Pkw darf nicht überschritten werden — auch wenn der Anhänger mehr tragen könnte. HEKU berät Sie bei der Auswahl des richtigen Modells, wenn Sie uns die Bootsdaten mitteilen.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Was bedeutet feuerverzinktes Fahrgestell nach DIN 1461?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Das Fahrgestell wird in einem Tauchbad feuerverzinkt — ein Verfahren nach DIN 1461, das maximalen und dauerhaften Korrosionsschutz bietet. Der Zinküberzug schützt den Stahl auch bei regelmäßigem Einsatz im Salzwasser zuverlässig vor Rost.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Das Fahrgestell wird in einem Tauchbad feuerverzinkt — ein Verfahren nach DIN 1461, das maximalen und dauerhaften Korrosionsschutz bietet. Der Zinküberzug schützt den Stahl auch bei regelmäßigem Einsatz im Salzwasser zuverlässig vor Rost.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Feuerverzinkung vs. Lackierung</span>
+                <p>Viele günstigere Anhänger werden lediglich lackiert. Lack schützt — solange er intakt ist. Bei Kratzern, Steinschlag oder mechanischer Beanspruchung beginnt der Stahl darunter zu rosten, oft unsichtbar von innen.</p>
+                <p>Beim Feuerverzinken nach DIN 1461 wird das Stahlteil vollständig in flüssiges Zink (ca. 450 °C) getaucht. Es entsteht keine Beschichtung, sondern eine metallurgische Verbindung — der Zink legiert sich mit dem Stahl. Diese Schutzschicht ist deutlich widerstandsfähiger als jede Lackierung und schützt auch an Schnittkanten, Schweißnähten und schwer zugänglichen Stellen.</p>
+                <p>Bei regelmäßigem Einsatz im Salzwasser — beim Slipvorgang oder in Küstenrevieren — ist Feuerverzinkung nach DIN 1461 der einzig sinnvolle Korrosionsschutz. Alle HEKU-Anhänger werden standardmäßig feuerverzinkt. Ohne Aufpreis.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Kann ich den Rahmen meines HEKU-Anhängers verstellen?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ja. Der patentierte verstellbare Rahmen mit Stahlbriedenverschraubung und gelbchromatierter Oberfläche lässt sich an verschiedene Bootsbreiten anpassen. Jedes Bauteil ist einzeln austauschbar — ein großer Vorteil gegenüber Schweißkonstruktionen.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ja. Der patentierte verstellbare Rahmen mit Stahlbriedenverschraubung und gelbchromatierter Oberfläche lässt sich an verschiedene Bootsbreiten anpassen. Jedes Bauteil ist einzeln austauschbar — ein großer Vorteil gegenüber Schweißkonstruktionen.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Modularität als Qualitätsmerkmal</span>
+                <p>Der verstellbare Rahmen ist ein entscheidender Vorteil der HEKU-Konstruktion: Wenn ein Boot gewechselt wird oder der Anhänger für ein anderes Boot genutzt werden soll, lässt sich der Rahmen anpassen — ohne Schweißarbeiten, ohne Neuanschaffung.</p>
+                <p>Die Stahlbriedenverschraubung mit gelbchromatierter Oberfläche ist korrosionsresistent und langlebig. Jedes Einzelbauteil — Kielrolle, Seitenstützrolle, Gewindespindel, Querträger — ist separat als Ersatzteil erhältlich. Das senkt die Folgekosten über die gesamte Lebensdauer erheblich und macht den HEKU-Anhänger zu einer langfristigen Investition.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Für welche Bootstypen sind HEKU-Anhänger geeignet?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">HEKU fertigt Anhänger für alle gängigen Bootstypen: Segelboote, Motorboote, Sportboote, Jollen und Kielboote. Da jeder Anhänger individuell gefertigt wird, kann er präzise auf Länge, Breite, Tiefgang und Gewicht Ihres Bootes abgestimmt werden.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">HEKU fertigt Anhänger für alle gängigen Bootstypen: Segelboote, Motorboote, Sportboote, Jollen und Kielboote. Da jeder Anhänger individuell gefertigt wird, kann er präzise auf Länge, Breite, Tiefgang und Gewicht Ihres Bootes abgestimmt werden.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Bootstypen und passende HEKU-Modelle</span>
+                <p><strong>Jollen &amp; Schlauchboote:</strong> Leichte ungebremste Modelle bis 750 kg. Kompakt, einfach zu handhaben, ideal für Binnengewässer.</p>
+                <p><strong>Motorboote &amp; Sportboote:</strong> Einachsige gebremste Modelle oder Tandemanhänger je nach Gewicht. Breite Rollenunterstützung für tiefe Rümpfe.</p>
+                <p><strong>Segelboote ohne Kiel (Jollenkreuzer):</strong> Angepasste Stützpunkte für empfindliche GFK-Rümpfe, verstellbarer Rahmen für verschiedene Rumpfformen.</p>
+                <p><strong>Kielboote:</strong> Spezielle Kielwanne oder Kielstütze erforderlich — HEKU fertigt diese als Sonderausstattung. Tandemfahrwerk für schwere Kielboote.</p>
+                <p><strong>Sonderanfertigungen:</strong> Für ungewöhnliche Bootstypen wie Klinkerboote, historische Fahrzeuge oder überlange Rümpfe fertigt HEKU auf Maß — inklusive Beratung zur besten Abstützlösung.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -464,49 +572,130 @@
             Was kostet ein Bootsanhänger von HEKU?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">HEKU-Bootsanhänger starten ab <strong>1.675 € (inkl. MwSt.)</strong> für ungebremste Modelle und reichen bis ca. 6.795 € für Tandem-Bootstrailer der Klasse B 3500. Der Endpreis hängt von Bootstyp, Länge, Gewicht und gewähltem Zubehör ab. Nutzen Sie den <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> für eine kostenlose, unverbindliche Preisrange.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">HEKU-Bootsanhänger starten ab <strong>1.675 € (inkl. MwSt.)</strong> für ungebremste Modelle und reichen bis ca. 6.795 € für Tandem-Bootstrailer der Klasse B 3500. Der Endpreis hängt von Bootstyp, Länge, Gewicht und gewähltem Zubehör ab. Nutzen Sie den <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> für eine kostenlose, unverbindliche Preisrange.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Preisübersicht nach Modellklasse</span>
+                <p><strong>Ungebremste Modelle (bis 750 kg):</strong> ab 1.675 € inkl. MwSt. — für leichte Jollen, Schlauchboote, kleine Motorboote.</p>
+                <p><strong>B 1500 (Einachser, gebremst):</strong> ab 3.850 € inkl. MwSt. — für mittelgroße Segel- und Motorboote.</p>
+                <p><strong>B 2500 (Einachser, gebremst):</strong> 4.950–5.350 € inkl. MwSt. — für größere Motorboote und Jollenkreuzer.</p>
+                <p><strong>B 3500 (Tandem):</strong> 6.395–6.795 € inkl. MwSt. — für schwere Kielboote und große Sportboote bis 3.500 kg.</p>
+                <p>Im Vergleich zu Wettbewerbern liegt HEKU bei gleichwertiger Ausstattung deutlich günstiger — bei gleichzeitig überlegener Technik durch die serienmäßige wasserdichte Radnabe, die bei anderen Herstellern gar nicht verfügbar ist. Direkt ab Werk, kein Händleraufschlag beim Direktkauf.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Welcher Bootsanhänger passt zu meinem Boot?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Entscheidend sind <strong>Bootslänge, Bootsbreite, Tiefgang, Gewicht und Antriebsart</strong>. HEKU fertigt jeden Anhänger individuell nach diesen Maßen. Der <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> berechnet in 3 Schritten das passende Modell – kostenlos und unverbindlich.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Entscheidend sind <strong>Bootslänge, Bootsbreite, Tiefgang, Gewicht und Antriebsart</strong>. HEKU fertigt jeden Anhänger individuell nach diesen Maßen. Der <a href="konfigurator.html" style="color:var(--rot);">HEKU Engineer Konfigurator</a> berechnet in 3 Schritten das passende Modell – kostenlos und unverbindlich.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Diese Maße brauchen Sie</span>
+                <p><strong>Länge:</strong> Rumpflänge ohne Außenborder in Metern. Bestimmt die Länge des Anhängerrahmens und die Anzahl der Stützpunkte.</p>
+                <p><strong>Breite:</strong> Maximale Rumpfbreite. Bestimmt den Rollenabstand und ob ein verstellbarer Rahmen ausreicht oder eine Sonderbreite nötig ist.</p>
+                <p><strong>Tiefgang:</strong> Tiefster Punkt des Rumpfes unter der Wasserlinie. Bestimmt die Konfiguration der Achsrohrhöhe und Fahrwerksausführung.</p>
+                <p><strong>Gewicht:</strong> Tatsächliches Bootsgewicht plus Außenborder, Kraftstoff und Bordausrüstung. Bestimmt die Achslastklasse und ob Bremsen erforderlich sind.</p>
+                <p><strong>Antriebsart:</strong> Außenborder, Innenborder oder Segelboot ohne Motor — beeinflusst die Heckauflage und Zugpunktposition. Der HEKU Engineer Konfigurator führt Sie durch alle Schritte.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Wie bestelle ich einen HEKU-Bootsanhänger?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Nutzen Sie unseren HEKU Engineer Konfigurator: Geben Sie Bootstyp, Maße und Gewicht ein und erhalten Sie eine unverbindliche Preisrange. Bei konkretem Interesse füllen Sie das Kontaktformular aus — wir erstellen Ihnen ein individuelles Angebot direkt ab Werk Bielefeld.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Nutzen Sie unseren HEKU Engineer Konfigurator: Geben Sie Bootstyp, Maße und Gewicht ein und erhalten Sie eine unverbindliche Preisrange. Bei konkretem Interesse füllen Sie das Kontaktformular aus — wir erstellen Ihnen ein individuelles Angebot direkt ab Werk Bielefeld.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Der HEKU-Bestellprozess im Detail</span>
+                <p><strong>Schritt 1 – Konfigurator:</strong> Bootsdaten eingeben, Preisrange erhalten. Kein Konto erforderlich, keine Verpflichtung.</p>
+                <p><strong>Schritt 2 – Angebotsanfrage:</strong> Kontaktformular ausfüllen oder direkt anrufen (0521 200066). HEKU erstellt ein individuelles Angebot auf Basis Ihrer genauen Bootsdaten.</p>
+                <p><strong>Schritt 3 – Auftragsbestätigung:</strong> Nach Annahme des Angebots erhalten Sie eine Auftragsbestätigung mit Liefertermin. Die Fertigung beginnt nach Anzahlung.</p>
+                <p><strong>Schritt 4 – Abholung oder Lieferung:</strong> Direkte Abholung ab Werk Bielefeld möglich. Lieferung auf Anfrage. Bei Abholung persönliche Einweisung in Pflege und Handhabung inklusive.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Wie lange ist die Lieferzeit?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Da jeder HEKU-Anhänger eine Einzelfertigung ist, variiert die Lieferzeit je nach Modell und aktueller Auslastung. Nach Auftragsbestätigung informieren wir Sie über den konkreten Liefertermin. Kontaktieren Sie uns für eine aktuelle Auskunft.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Da jeder HEKU-Anhänger eine Einzelfertigung ist, variiert die Lieferzeit je nach Modell und aktueller Auslastung. Nach Auftragsbestätigung informieren wir Sie über den konkreten Liefertermin. Kontaktieren Sie uns für eine aktuelle Auskunft.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Warum Einzelfertigung Zeit braucht</span>
+                <p>HEKU produziert keinen Lagerbestand. Jeder Anhänger wird erst nach Auftragseingang nach Ihren exakten Bootsdaten gefertigt. Das bedeutet: kein Kompromiss bei Maßen, kein "passt schon" — aber auch keine Möglichkeit, einen fertigen Anhänger vom Regal zu nehmen.</p>
+                <p>Die Lieferzeit hängt von Modell und Auslastung ab. Planen Sie Ihre Bestellung idealerweise außerhalb der Hauptsaison (Frühjahr), um kürzere Wartezeiten zu erhalten. Für saisonkritische Termine empfehlen wir frühzeitige Anfrage — wir informieren Sie transparent über den aktuellen Stand.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Gibt es HEKU-Händler in meiner Nähe?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ja. HEKU verfügt über ein etabliertes deutschlandweites Händlernetz aus Bootshändlern. Auf unserer Händlerseite finden Sie den nächstgelegenen Partner. Alternativ können Sie direkt ab Werk in Bielefeld kaufen.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ja. HEKU verfügt über ein etabliertes deutschlandweites Händlernetz aus Bootshändlern. Auf unserer Händlerseite finden Sie den nächstgelegenen Partner. Alternativ können Sie direkt ab Werk in Bielefeld kaufen.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Händler oder Direktkauf — was ist besser?</span>
+                <p><strong>HEKU-Händler:</strong> Bootshändler in Ihrer Region mit HEKU im Sortiment. Vorteil: lokale Beratung, Möglichkeit Anhänger vor Ort zu sehen, ggf. Service und Wartung direkt beim Händler. Das HEKU-Händlernetz deckt alle Regionen Deutschlands ab.</p>
+                <p><strong>Direktkauf ab Werk Bielefeld:</strong> Persönliche Beratung durch HEKU, Werksbesichtigung möglich, Einweisung bei Abholung inklusive. Direkter Kontakt zum Hersteller für Sonderanfertigungen oder spezifische Anfragen. Kein Händleraufschlag.</p>
+                <p>Für Sonderanfertigungen und komplexe Anfragen empfehlen wir immer den direkten Kontakt mit HEKU ab Werk.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Kann ich einen Anhänger auf Probe bestellen?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Da HEKU-Anhänger Einzelfertigungen sind, ist eine Bestellung auf Probe nicht möglich. Sie können jedoch unsere Ausstellung in Bielefeld besuchen oder sich von einem Händler in Ihrer Nähe beraten lassen. Der HEKU Engineer Konfigurator gibt Ihnen vorab eine genaue Preisrange.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Da HEKU-Anhänger Einzelfertigungen sind, ist eine Bestellung auf Probe nicht möglich. Sie können jedoch unsere Ausstellung in Bielefeld besuchen oder sich von einem Händler in Ihrer Nähe beraten lassen. Der HEKU Engineer Konfigurator gibt Ihnen vorab eine genaue Preisrange.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">So können Sie sich vorab überzeugen</span>
+                <p>Besuchen Sie uns direkt in Bielefeld: Wir zeigen Ihnen aktuelle Modelle, erklären die Konstruktion und beraten Sie persönlich. Keine Verpflichtung, kein Termin nötig — einfach anrufen und vorbeikommen.</p>
+                <p>Alternativ: Viele HEKU-Händler haben Ausstellungsanhänger vor Ort. Auf der Händlerseite finden Sie den nächsten Partner in Ihrer Region.</p>
+                <p>Der HEKU Engineer Konfigurator gibt Ihnen eine verbindliche Preisrange — so wissen Sie vor dem Gespräch was ein individueller Anhänger für Ihr Boot kosten würde.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Was ist der HEKU Engineer Konfigurator?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Der HEKU Engineer ist unser Online-Konfigurator. Sie geben Angaben zu Ihrem Boot ein (Typ, Länge, Breite, Tiefgang, Gewicht, Antriebsart, Zubehör) und erhalten sofort eine unverbindliche Preisrange für den passenden Anhänger. Bei Interesse können Sie direkt eine Angebotsanfrage stellen.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Der HEKU Engineer ist unser Online-Konfigurator. Sie geben Angaben zu Ihrem Boot ein (Typ, Länge, Breite, Tiefgang, Gewicht, Antriebsart, Zubehör) und erhalten sofort eine unverbindliche Preisrange für den passenden Anhänger. Bei Interesse können Sie direkt eine Angebotsanfrage stellen.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Was der Konfigurator leistet</span>
+                <p>Der HEKU Engineer ist kein generischer Produktfinder — er ist auf die spezifischen Konstruktionsparameter der HEKU B-Serie ausgelegt. Auf Basis Ihrer Bootsdaten berechnet er welches Modell technisch passt und gibt eine realistische Preisrange aus.</p>
+                <p>Das Ergebnis ist keine verbindliche Preiszusage, aber eine verlässliche Orientierung. Für ein verbindliches Angebot ist ein kurzes Gespräch mit HEKU nötig — dann können auch Sonderausstattungen, Zubehör und Lieferoptionen besprochen werden.</p>
+                <p>Der Konfigurator ist kostenlos, ohne Registrierung nutzbar und liefert in ca. 3 Minuten ein Ergebnis.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -520,28 +709,76 @@
             Wie pflege ich meinen HEKU-Anhänger nach dem Einsatz im Salzwasser?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Nach jedem Einsatz im Salzwasser empfehlen wir ein gründliches Abspülen mit Frischwasser — insbesondere Fahrgestell, Achsen und Radnaben. Das feuerverzinkte Fahrgestell ist weitgehend wartungsfrei, profitiert aber von regelmäßiger Reinigung.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Nach jedem Einsatz im Salzwasser empfehlen wir ein gründliches Abspülen mit Frischwasser — insbesondere Fahrgestell, Achsen und Radnaben. Das feuerverzinkte Fahrgestell ist weitgehend wartungsfrei, profitiert aber von regelmäßiger Reinigung.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Pflegeanleitung Salzwasser</span>
+                <p><strong>Nach jedem Slipvorgang:</strong> Radnaben, Achsen und Fahrgestell mit Frischwasser abspülen. Salzkristalle, die beim Trocknen entstehen, sind aggressiver als flüssiges Salzwasser — daher sofort nach dem Einsatz spülen, nicht erst zuhause.</p>
+                <p><strong>Beleuchtung:</strong> Stecker und Buchsen nach Salzwassereinsatz mit Kontaktspray behandeln. Korrosion an den Kontakten ist die häufigste Ursache für Lichtausfälle.</p>
+                <p><strong>Radnaben:</strong> Dank der wasserdichten HEKU-Konstruktion ist kein Fetten der Naben nach jedem Slipvorgang nötig — ein entscheidender Wartungsvorteil gegenüber herkömmlichen Anhängern.</p>
+                <p><strong>Bremsseile aus Edelstahl:</strong> Jährlich auf Leichtgängigkeit prüfen und mit säurefreiem Fett behandeln. Bei Segelbootanhängern mit langer Standzeit zusätzlich die Bremsbacken auf Festfressen prüfen.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Welche Wartung ist jährlich empfohlen?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Jährlich empfehlen wir: Gewindespindeln und Bremsseile aus Edelstahl auf Leichtgängigkeit prüfen und mit säurefreiem Fett behandeln. Beleuchtungsanlage auf Funktion testen. Reifendruck und Reifenzustand prüfen. Schraubenverbindungen am verstellbaren Rahmen auf festen Sitz kontrollieren.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Jährlich empfehlen wir: Gewindespindeln und Bremsseile aus Edelstahl auf Leichtgängigkeit prüfen und mit säurefreiem Fett behandeln. Beleuchtungsanlage auf Funktion testen. Reifendruck und Reifenzustand prüfen. Schraubenverbindungen am verstellbaren Rahmen auf festen Sitz kontrollieren.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Vollständige Jahrescheckliste</span>
+                <p><strong>Fahrwerk:</strong> Reifendruck prüfen (oft zu niedrig nach Winterlagerung). Reifenzustand auf Risse und Alterung kontrollieren — Gummi altert auch ohne Fahrleistung. Lagerluft an den Achsen prüfen.</p>
+                <p><strong>Bremsen:</strong> Bremsseile aus Edelstahl auf Leichtgängigkeit testen. Bremshebel und Rückfahrautomatik auf Funktion prüfen. Bremsbacken auf Verschleiß kontrollieren.</p>
+                <p><strong>Rahmen:</strong> Gewindespindeln leicht ölen. Schraubenverbindungen am verstellbaren Rahmen auf festen Sitz prüfen. Auf Beschädigungen der Feuerverzinkung achten — kleine Stellen mit Zinkspray nachbehandeln.</p>
+                <p><strong>Beleuchtung:</strong> Alle Leuchten auf Funktion testen. Stecker reinigen und mit Kontaktspray behandeln. Kabel auf Scheuerstellen prüfen.</p>
+                <p><strong>Empfehlung:</strong> Idealer Zeitpunkt ist die Saisonvorbereitung im März/April — bevor der Anhänger intensiv genutzt wird.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Wo bekomme ich Ersatzteile für meinen HEKU-Anhänger?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ersatzteile und Zubehör wie Kielrollen, Stützräder, Seitenstützrollen und Gewindespindeln sind in unserem Online-Shop erhältlich. Da der Rahmen modular aufgebaut ist, ist jedes Bauteil einzeln bestellbar. Bei speziellen Ersatzteilen kontaktieren Sie uns direkt.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ersatzteile und Zubehör wie Kielrollen, Stützräder, Seitenstützrollen und Gewindespindeln sind in unserem Online-Shop erhältlich. Da der Rahmen modular aufgebaut ist, ist jedes Bauteil einzeln bestellbar. Bei speziellen Ersatzteilen kontaktieren Sie uns direkt.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Verfügbare Ersatzteile</span>
+                <p>Das HEKU-Konstruktionsprinzip — modularer verstellbarer Rahmen statt Schweißkonstruktion — macht jeden Anhänger langfristig reparierbar. Kein Teil muss zwingend ausgetauscht werden weil ein anderes defekt ist.</p>
+                <p><strong>Im Online-Shop verfügbar:</strong> Kielrollen, Seitenstützrollen, Stützräder, Gewindespindeln, Edelstahlbremsseile, Beleuchtungskomponenten, Kupplungsköpfe, Stützräder.</p>
+                <p><strong>Auf Anfrage:</strong> Rahmenteile, Achskomponenten, Radnaben (inkl. wasserdichter Ausführung), Sonderbauteile für ältere Modelle. HEKU pflegt seine Ersatzteilversorgung auch für ältere Anhängergenerationen — ein konkreter Vorteil eines familiengeführten Herstellers.</p>
+                <p>Artikelnummer und Modell aus dem Fahrzeugschein bereithalten — so können wir das exakt passende Ersatzteil identifizieren.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Wie lange hält ein HEKU-Anhänger?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Bei regelmäßiger Pflege und Wartung sind HEKU-Anhänger auf eine sehr lange Lebensdauer ausgelegt. Das feuerverzinkte Fahrgestell, die Edelstahlbremsseile und die eigenentwickelte wasserdichte Radnabe (5 Jahre Garantie) sind bewusst auf Langlebigkeit konstruiert.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Bei regelmäßiger Pflege und Wartung sind HEKU-Anhänger auf eine sehr lange Lebensdauer ausgelegt. Das feuerverzinkte Fahrgestell, die Edelstahlbremsseile und die eigenentwickelte wasserdichte Radnabe (5 Jahre Garantie) sind bewusst auf Langlebigkeit konstruiert.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Warum HEKU-Anhänger so lange halten</span>
+                <p>HEKU-Anhänger aus den 1980er und 1990er Jahren sind heute noch aktiv im Einsatz. Das ist kein Zufall — es ist das Ergebnis bewusster Konstruktionsentscheidungen: Feuerverzinkung statt Lack, Edelstahlbremsseile statt verzinkte Stahlseile, modulare Schraubenverbindungen statt Schweißnähte.</p>
+                <p>Die feuerverzinkte Oberfläche schützt typischerweise 25–40 Jahre vor Korrosion — je nach Einsatzintensität und Pflege. Das Fahrgestell ist damit in der Regel nicht das erste Teil das ersetzt werden muss.</p>
+                <p>Bei regelmäßiger Wartung (jährliche Inspektion, Pflege nach Salzwassereinsatz) und rechtzeitigem Ersatz von Verschleißteilen (Reifen, Bremsbeläge) ist eine Nutzungsdauer von 20–30 Jahren realistisch. Für Käufer bedeutet das: Ein HEKU-Anhänger ist keine laufende Ausgabe, sondern eine einmalige Investition.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -556,35 +793,92 @@
             Warum zahlt kein Bootsanhänger in Deutschland Steuern — und was hat HEKU damit zu tun?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Das ist tatsächlich ein Stück HEKU-Geschichte: Firmengründer Helmut Kollmeier hat in den 1970er Jahren erfolgreich vor Gericht eingeklagt, dass Bootsanhänger von der Kfz-Steuer befreit werden. Dieses Urteil gilt bis heute — weshalb Bootsanhänger in Deutschland generell steuerfrei sind. Ein grünes Kennzeichen (Saisonkennzeichen oder dauerhaftes grünes Kennzeichen) ist bei land- und forstwirtschaftlichen Fahrzeugen üblich, für Bootsanhänger gilt die Steuerbefreiung jedoch direkt durch die Fahrzeugklasse.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Das ist tatsächlich ein Stück HEKU-Geschichte: Firmengründer Helmut Kollmeier hat in den 1970er Jahren erfolgreich vor Gericht eingeklagt, dass Bootsanhänger von der Kfz-Steuer befreit werden. Dieses Urteil gilt bis heute — weshalb Bootsanhänger in Deutschland generell steuerfrei sind.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Die Geschichte hinter der Steuerbefreiung</span>
+                <p>In den 1970er Jahren wurden Bootsanhänger in Deutschland wie normale Fahrzeuganhänger behandelt und entsprechend besteuert. Helmut Kollmeier, Gründer von HEKU Fahrzeugbau, hielt das für sachlich nicht gerechtfertigt: Bootsanhänger sind Saisonfahrzeuge mit geringer Jahreskilometerleistung und belasten die Infrastruktur kaum.</p>
+                <p>Er klagte durch die Instanzen und bekam recht. Das Urteil begründete die Steuerbefreiung für Bootsanhänger — eine Regelung die bis heute gilt und von der heute hunderttausende Bootsbesitzer in Deutschland profitieren.</p>
+                <p>Es ist eines der wenigen Beispiele, in dem ein einzelner mittelständischer Unternehmer eine bundesweit gültige Steuerregelung für eine gesamte Fahrzeugklasse erwirkt hat. Für HEKU steht diese Geschichte für das Selbstverständnis des Unternehmens: unbequeme Fragen stellen, technische und rechtliche Standards hinterfragen und wenn nötig verändern.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Muss ich für meinen Bootsanhänger Kfz-Steuer zahlen?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Nein. Bootsanhänger sind in Deutschland von der Kfz-Steuer befreit — das gilt für alle zugelassenen Bootsanhänger. Sie erhalten ein reguläres Kennzeichen, zahlen aber keine jährliche Kraftfahrzeugsteuer. Diese Regelung geht auf ein Gerichtsurteil zurück, das Helmut Kollmeier, Gründer von HEKU, seinerzeit erstritten hat.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Nein. Bootsanhänger sind in Deutschland von der Kfz-Steuer befreit — das gilt für alle zugelassenen Bootsanhänger. Sie erhalten ein reguläres Kennzeichen, zahlen aber keine jährliche Kraftfahrzeugsteuer.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Was das praktisch bedeutet</span>
+                <p>Bei der Zulassung beim Straßenverkehrsamt erhalten Sie automatisch eine Steuerbefreiungsbescheinigung — kein gesonderter Antrag nötig. Die Befreiung gilt automatisch für alle zugelassenen Bootsanhänger in Deutschland.</p>
+                <p>Die jährliche Ersparnis beträgt je nach Gewichtsklasse zwischen 50 und 150 € — über 20–30 Jahre Nutzungsdauer ein relevanter Kostenvorteil gegenüber steuerpflichtigen Anhängertypen.</p>
+                <p>Diese Regelung geht auf ein Gerichtsurteil zurück, das Helmut Kollmeier, Gründer von HEKU Fahrzeugbau, in den 1970er Jahren erfolgreich erstritten hat — und von dem seitdem alle Bootsbesitzer in Deutschland profitieren.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Darf ich mit einem Bootsanhänger 100 km/h fahren?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Ja — unter bestimmten Voraussetzungen. Für 100 km/h mit Anhänger benötigen Sie: (1) Eine 100-km/h-Zulassung für den Anhänger (eingetragen im Fahrzeugschein). (2) Das Zugfahrzeug muss ebenfalls für 100 km/h mit Anhänger freigegeben sein. (3) Die tatsächliche Zuladung darf die zulässige Anhängelast des Zugfahrzeugs nicht überschreiten. (4) Der Anhänger muss mit einem Sicherheitsseil oder einem gleichwertigen Abreißseil gesichert sein. Alle HEKU-Anhänger, die die technischen Voraussetzungen erfüllen, können auf Wunsch mit einer 100-km/h-Zulassung ausgestattet werden — bitte bei der Bestellung angeben.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Ja — unter bestimmten Voraussetzungen. Der Anhänger benötigt eine 100-km/h-Zulassung im Fahrzeugschein, das Zugfahrzeug muss ebenfalls freigegeben sein, und die zulässige Anhängelast darf nicht überschritten werden. HEKU-Anhänger können auf Wunsch mit dieser Zulassung ausgestattet werden.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Alle Voraussetzungen im Überblick</span>
+                <p><strong>1. Anhänger:</strong> 100-km/h-Zulassung muss im Fahrzeugschein eingetragen sein (Feld "Höchstgeschwindigkeit: 100 km/h"). Bei HEKU bei der Bestellung angeben.</p>
+                <p><strong>2. Zugfahrzeug:</strong> Muss ebenfalls für 100 km/h mit Anhänger freigegeben sein — steht in der Fahrzeugzulassung oder im Handbuch. Nicht jedes Fahrzeug hat diese Freigabe.</p>
+                <p><strong>3. Gewicht:</strong> Die tatsächliche Beladung (Boot + Ausrüstung) darf die zulässige Anhängelast des Zugfahrzeugs nicht überschreiten.</p>
+                <p><strong>4. Sicherung:</strong> Ein zugelassenes Abreißseil ist Pflicht. Kontrolle ob es korrekt eingehängt ist vor jeder Fahrt empfohlen.</p>
+                <p>Werden diese Voraussetzungen nicht alle erfüllt, gilt die allgemeine Anhänger-Höchstgeschwindigkeit von 80 km/h — unabhängig davon was im Fahrzeugschein steht.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Was bedeutet die 100-km/h-Zulassung konkret beim Kauf?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Die 100-km/h-Zulassung wird bei der Typgenehmigung des Anhängers eingetragen und ist im Fahrzeugschein vermerkt (Feld: "Höchstgeschwindigkeit"). Beim Kauf eines HEKU-Anhängers können Sie diese Option direkt angeben — wir fertigen den Anhänger entsprechend aus und stellen alle nötigen Papiere für die Zulassungsstelle bereit.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Die 100-km/h-Zulassung wird bei der Typgenehmigung eingetragen und ist im Fahrzeugschein vermerkt. Beim Kauf eines HEKU-Anhängers können Sie diese Option direkt angeben — wir fertigen entsprechend aus und stellen alle Unterlagen für die Zulassungsstelle bereit.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Was sich technisch ändert</span>
+                <p>Die 100-km/h-Zulassung ist nicht nur ein Papier-Eintrag — sie erfordert dass der Anhänger bestimmte technische Voraussetzungen erfüllt: ausreichende Achslastverteilung, geprüfte Bremswirkung und entsprechende Reifenspezifikation.</p>
+                <p>HEKU fertigt die Anhänger bei entsprechender Bestellung von Anfang an auf diese Anforderungen hin aus. Es ist kein nachträglicher Umbau nötig. Die vollständigen Unterlagen für die Zulassungsstelle (Typgenehmigung, Übereinstimmungsbescheinigung) werden mitgeliefert.</p>
+                <p>Empfehlung: Die 100-km/h-Option bei der Bestellung angeben — nachträgliche Änderungen sind aufwendiger und teurer.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Welches Kennzeichen bekommt mein Bootsanhänger?
             <span class="faq-icon"></span>
           </button>
-          <div class="faq-answer"><div class="faq-answer-inner">Bootsanhänger erhalten ein normales Kfz-Kennzeichen (schwarze Schrift auf weißem Grund) und werden regulär beim Straßenverkehrsamt zugelassen. Da Bootsanhänger steuerfrei sind, erhalten Sie von der Zulassungsstelle automatisch eine Steuerbefreiungsbescheinigung. Ein "grünes Kennzeichen" ist für Bootsanhänger nicht erforderlich — die Steuerbefreiung gilt unabhängig davon.</div></div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <div class="faq-short">Bootsanhänger erhalten ein normales Kfz-Kennzeichen (schwarze Schrift auf weißem Grund) und werden regulär beim Straßenverkehrsamt zugelassen. Da Bootsanhänger steuerfrei sind, erhalten Sie von der Zulassungsstelle automatisch eine Steuerbefreiungsbescheinigung.</div>
+            <button class="faq-geo-toggle" onclick="toggleGeo(this)"><span class="geo-label-text">Mehr erfahren</span> <span class="geo-arrow">↓</span></button>
+            <div class="faq-geo-block">
+              <div class="faq-geo-inner">
+                <span class="faq-geo-label">Zulassung Schritt für Schritt</span>
+                <p>Ein grünes Kennzeichen ist für Bootsanhänger nicht erforderlich und nicht vorgesehen. Grüne Kennzeichen sind land- und forstwirtschaftlichen Fahrzeugen vorbehalten — Bootsanhänger sind davon getrennt zu betrachten, obwohl auch sie steuerfrei sind.</p>
+                <p><strong>Benötigte Unterlagen bei der Zulassungsstelle:</strong> Personalausweis, Fahrzeugbrief (CoC/Typgenehmigung von HEKU), Hauptuntersuchungsbescheinigung falls erforderlich, SEPA-Lastschriftmandat für eventuelle Gebühren.</p>
+                <p>HEKU liefert alle notwendigen Fahrzeugpapiere mit dem Anhänger. Bei Direktkauf ab Werk informieren wir Sie welche Dokumente Sie für Ihre Zulassungsstelle benötigen — je nach Bundesland gibt es kleine Unterschiede.</p>
+              </div>
+            </div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -654,6 +948,13 @@
       const isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
       if (!isOpen) item.classList.add('open');
+    }
+    function toggleGeo(btn) {
+      const block = btn.nextElementSibling;
+      const isOpen = block.classList.contains('open');
+      block.classList.toggle('open');
+      btn.classList.toggle('open');
+      btn.querySelector('.geo-label-text').textContent = isOpen ? 'Mehr erfahren' : 'Weniger anzeigen';
     }
   </script>
 </body>
