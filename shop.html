@@ -823,12 +823,8 @@
       });
       if (res.ok) {
         // Bestätigungsmail an Kunden via EmailJS
-        const vorname = document.getElementById('co-vorname').value.trim();
-        const nachname = document.getElementById('co-nachname').value.trim();
-        const anrede = document.getElementById('co-anrede').value;
         // Bestellübersicht für die Mail aufbauen
-        const bestellungText = cart.map(i => '[Art.' + i.artnr + '] ' + i.name + ' x' + i.qty + ' = ' + fmt(i.preis * i.qty)).join(', ');
-        const gesamtbetrag = fmt(cart.reduce((s, i) => s + i.preis * i.qty, 0));
+        const bestellungTextMail = cart.map(i => '[Art.' + i.artnr + '] ' + i.name + ' x' + i.qty + ' = ' + fmt(i.preis * i.qty)).join(', ');
         fetch('https://api.emailjs.com/api/v1.0/email/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -837,19 +833,20 @@
             template_id: 'template_mu4smvf',
             user_id: 'uxnGyFrCsW9OCTzcw',
             template_params: {
-              email: document.getElementById('co-email').value.trim(),
+              email: email,
               anrede: anrede,
               vorname: vorname,
               nachname: nachname,
               bestellnummer: ref,
-              bestellung: bestellungText,
-              gesamtbetrag: gesamtbetrag
+              bestellung: bestellungTextMail,
+              versandkosten: fmt(versand),
+              gesamtbetrag: fmt(gesamtMitVersand)
             }
           })
         }).catch(() => {});
         cart = [];
         updateCartUI();
-        createHubSpotContact({ vorname, nachname, email: document.getElementById('co-email').value.trim(), telefon: document.getElementById('co-telefon').value.trim(), plz: document.getElementById('co-plz').value.trim(), ort: document.getElementById('co-ort').value.trim(), quelle: 'Shop-Bestellung', notiz: 'Bestellnummer: ' + ref + ' | Artikel: ' + bestellungText + ' | Gesamt: ' + gesamtbetrag });
+        createHubSpotContact({ vorname, nachname, email: email, telefon: telefon, plz: plz, ort: ort, quelle: 'Shop-Bestellung', notiz: 'Bestellnummer: ' + ref + ' | Artikel: ' + bestellungTextMail + ' | Versand: ' + fmt(versand) + ' | Gesamt: ' + fmt(gesamtMitVersand) });
         document.getElementById('checkoutForm').style.display = 'none';
         document.getElementById('orderRef').textContent = 'Bestellnummer: ' + ref;
         document.getElementById('orderSuccess').classList.add('show');
