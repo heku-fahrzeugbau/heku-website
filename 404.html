@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Seite nicht gefunden – HEKU Fahrzeugbau</title>
+  <meta name="robots" content="noindex">
+  <script>
+    const redirects = {
+      "/bootsanhaenger/":                                              "/bootstrailer.html",
+      "/anhaenger/":                                                   "/produkte.html",
+      "/ueber-uns/":                                                   "/ueber-uns.html",
+      "/technik/":                                                     "/wasserdichte-radnabe.html",
+      "/steckerbelegung/":                                             "/ratgeber-bootsanhaenger.html",
+      "/vor-der-fahrt/":                                               "/ratgeber-bootsanhaenger.html",
+      "/geschwindigkeitsbegrenzung/":                                  "/ratgeber-bootsanhaenger.html",
+      "/download/":                                                    "/produkte.html",
+      "/datenschutz/":                                                 "/datenschutz.html",
+      "/impressum/":                                                   "/impressum.html",
+      "/wp-content/uploads/2017/01/Motorrad-Anhaenger-Preis-2017.pdf":         "/produkte.html",
+      "/wp-content/uploads/2017/09/Preisliste-komfortserie-25-2016.pdf":       "/produkte.html",
+      "/wp-content/uploads/2021/03/Preisliste-B-Serie-2021-Neu.pdf":           "/bootstrailer.html",
+      "/wp-content/uploads/2018/01/B-Serie.pdf":                               "/bootstrailer.html"
+    };
+
+    const path = window.location.pathname;
+    const target = redirects[path];
+
+    if (target) {
+      window.location.replace(target);
+    }
+  </script>
+</head>
+<body>
+  <h1>Seite nicht gefunden</h1>
+  <p>Diese Seite existiert nicht mehr. Du wirst weitergeleitet – oder klicke hier: <a href="/produkte.html">Zur Produktübersicht</a></p>
+</body>
+</html>
