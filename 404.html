@@ -11,20 +11,48 @@
   <meta name="robots" content="noindex">
   <script>
     const redirects = {
-      "/bootsanhaenger/":                                              "/bootstrailer.html",
-      "/anhaenger/":                                                   "/produkte.html",
-      "/ueber-uns/":                                                   "/ueber-uns.html",
-      "/technik/":                                                     "/wasserdichte-radnabe.html",
-      "/steckerbelegung/":                                             "/ratgeber-bootsanhaenger.html",
-      "/vor-der-fahrt/":                                               "/ratgeber-bootsanhaenger.html",
-      "/geschwindigkeitsbegrenzung/":                                  "/ratgeber-bootsanhaenger.html",
-      "/download/":                                                    "/produkte.html",
-      "/datenschutz/":                                                 "/datenschutz.html",
-      "/impressum/":                                                   "/impressum.html",
-      "/wp-content/uploads/2017/01/Motorrad-Anhaenger-Preis-2017.pdf":         "/produkte.html",
-      "/wp-content/uploads/2017/09/Preisliste-komfortserie-25-2016.pdf":       "/produkte.html",
+
+      // --- Seiten (ehem. WordPress-URLs → neue .html-Struktur) ---
+      "/bootsanhaenger/":              "/bootstrailer.html",
+      "/bootsanhaenger-basis/":        "/bootstrailer.html",
+      "/anhaenger/":                   "/produkte.html",
+      "/zubehoer/":                    "/shop.html",
+      "/download/":                    "/produkte.html",
+      "/galerie/":                     "/ueber-uns.html",
+      "/technik/":                     "/wasserdichte-radnabe.html",
+      "/steckerbelegung/":             "/ratgeber-bootsanhaenger.html",
+      "/vor-der-fahrt/":               "/ratgeber-bootsanhaenger.html",
+      "/geschwindigkeitsbegrenzung/":  "/ratgeber-bootsanhaenger.html",
+      "/motorradanhaenger-2/":         "/produkte.html",
+      "/wohnmobile/":                  "/produkte.html",
+
+      // --- Pflichtseiten (Trailing-Slash → .html) ---
+      "/ueber-uns/":                   "/ueber-uns.html",
+      "/haendler/":                    "/haendler.html",
+      "/kontakt/":                     "/kontakt.html",
+      "/datenschutz/":                 "/datenschutz.html",
+      "/impressum/":                   "/impressum.html",
+
+      // --- PDFs: Bootsanhänger-Preislisten → bootstrailer.html ---
+      "/wp-content/uploads/2018/01/B-Serie.pdf":                               "/bootstrailer.html",
       "/wp-content/uploads/2021/03/Preisliste-B-Serie-2021-Neu.pdf":           "/bootstrailer.html",
-      "/wp-content/uploads/2018/01/B-Serie.pdf":                               "/bootstrailer.html"
+      "/wp-content/uploads/2019/01/Preisliste-B-Serie-2019-1.pdf":             "/bootstrailer.html",
+      "/wp-content/uploads/2016/09/Boot-Flyer-2016.pdf":                       "/bootstrailer.html",
+
+      // --- PDFs: Komfort/SP-Serie → produkte.html ---
+      "/wp-content/uploads/2017/09/Preisliste-komfortserie-25-2016.pdf":       "/produkte.html",
+      "/wp-content/uploads/2016/10/Komfort-Preisliste_2016_2.pdf":             "/produkte.html",
+      "/wp-content/uploads/2019/01/PRL_SP-Serie_2019-1-converted.pdf":         "/produkte.html",
+      "/wp-content/uploads/2018/06/PRL_SP-Serie_2018.pdf":                     "/produkte.html",
+      "/wp-content/uploads/2021/02/HB-Preisliste-2021.pdf":                    "/produkte.html",
+
+      // --- PDFs: Zubehör → shop.html ---
+      "/wp-content/uploads/2021/02/Preise-fuer-Zubehoer-2021-konvertiert.pdf": "/shop.html",
+
+      // --- PDFs: Motorrad-Anhänger (eingestellt) → produkte.html ---
+      "/wp-content/uploads/2017/01/Motorrad-Anhaenger-Preis-2017.pdf":         "/produkte.html",
+      "/wp-content/uploads/2018/02/HEKU_Motorrad-Anhaenger-18.pdf":            "/produkte.html"
+
     };
 
     const path = window.location.pathname;
