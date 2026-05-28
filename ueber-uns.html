@@ -165,7 +165,7 @@
       .nav-center { display: none; }
       .nav-burger { display: flex; }
       .hero { grid-template-columns: 1fr; padding: 56px 24px; gap: 40px; }
-      .hero::before { display: none; }
+      .hero::before { background: linear-gradient(135deg, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.70) 100%); }
       .timeline-section, .values-section, .team-section, .standort-section { padding: 56px 24px; }
       .values-grid { grid-template-columns: 1fr 1fr; }
       .team-grid { grid-template-columns: 1fr; }
@@ -217,6 +217,8 @@
     .social-link:hover svg { fill: #E8000E; }
     @media(max-width:1024px) { .ft { grid-template-columns: 1fr 1fr; } footer { padding: 52px 24px 28px; } }
     @media(max-width:600px) { .ft { grid-template-columns: 1fr; } }
+  
+    @media (max-width: 900px) { a[href="karriere.html"].btn-nav { display: none; } }
   </style>
 </head>
 <body>
@@ -241,8 +243,6 @@
       <a href="haendler.html">Händler</a>
       <a href="kontakt.html">Kontakt</a>
       <a href="faq.html">FAQ</a>
-      <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;"><span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>Jobs</a>
-
     </div>
     <div class="nav-right">
       <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
