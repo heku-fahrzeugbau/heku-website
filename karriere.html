@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karriere bei HEKU – Jobs & Stellenangebote | HEKU Fahrzeugbau GmbH</title>
+  <meta name="description" content="Arbeiten bei HEKU Fahrzeugbau GmbH in Bielefeld. Offene Stellen: Montagehilfe, Werkstudent. Familienunternehmen seit 1959 – Made in Germany.">
+  <link rel="canonical" href="https://heku-fahrzeugbau.de/karriere.html">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rot:       #E8000E;
+      --rot-dark:  #B8000B;
+      --schwarz:   #0A0A0A;
+      --text:      #2C2C2C;
+      --muted:     #6B6B6B;
+      --border:    #E8E8E8;
+      --bg:        #FFFFFF;
+      --bg2:       #F7F7F7;
+      --bg3:       #EFEFEF;
+      --font-head: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease:      cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.07); }
+    .nav-logo img { height: 30px; }
+    .nav-center { display: flex; gap: 32px; }
+    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-center a:hover { color: var(--text); }
+    .nav-center a.active { color: var(--rot); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; cursor: pointer; }
+    .nav-dropdown:hover .nav-dropdown-toggle { color: var(--text); }
+    .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: -16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 0 8px 8px; min-width: 210px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { display: flex; flex-direction: column; }
+    .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
+    .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+    .nav-right { display: flex; gap: 12px; }
+    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--text); }
+    .btn-red { background: var(--rot); color: #fff; }
+    .btn-red:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,0,14,0.28); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+    /* MOBILE NAV */
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 24px 24px; z-index: 190; flex-direction: column; gap: 4px; }
+    .nav-mobile a { font-size: 15px; font-weight: 500; padding: 10px 4px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .nav-mobile a:last-child { border-bottom: none; }
+
+    /* PAGE HEADER */
+    .page-header {
+      margin-top: 64px;
+      background: var(--schwarz);
+      background-image: url('engineer-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 48px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.65) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-header .lbl {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); margin-bottom: 20px;
+    }
+    .page-header .lbl::before { content: ''; width: 28px; height: 1.5px; background: var(--rot); }
+    .page-header h1 {
+      font-family: var(--font-head);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .page-header h1 span { color: var(--rot); }
+    .page-header p {
+      font-size: 16px; font-weight: 300; line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+    }
+
+    /* MAIN CONTENT */
+    .main { max-width: 1200px; margin: 0 auto; padding: 80px 48px 120px; }
+
+    /* INTRO STRIP */
+    .intro-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 72px;
+    }
+    .intro-item {
+      background: var(--bg);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .intro-item-num {
+      font-family: var(--font-head);
+      font-size: 36px;
+      color: var(--rot);
+      line-height: 1;
+    }
+    .intro-item-lbl {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .intro-item-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* SECTION LABEL */
+    .sec-lbl {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .sec-lbl::before { content: ''; width: 28px; height: 1.5px; background: var(--rot); }
+    .sec-h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 400;
+      color: var(--schwarz);
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+    .sec-p {
+      font-size: 16px; font-weight: 300; line-height: 1.7;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    /* JOB CARDS */
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 72px;
+    }
+
+    .job-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--bg);
+      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+      cursor: pointer;
+    }
+    .job-card:hover {
+      border-color: rgba(232,0,14,0.35);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+    .job-card.open {
+      border-color: var(--rot);
+      box-shadow: 0 6px 32px rgba(232,0,14,0.10);
+    }
+
+    .job-header {
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+    }
+    .job-header-left { flex: 1; }
+    .job-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--rot);
+      background: rgba(232,0,14,0.08);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+    }
+    .job-title {
+      font-family: var(--font-head);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--schwarz);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .job-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .job-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .job-meta-item svg { flex-shrink: 0; opacity: 0.7; }
+
+    .job-toggle {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s var(--ease);
+      background: var(--bg);
+    }
+    .job-card.open .job-toggle {
+      background: var(--rot);
+      border-color: var(--rot);
+    }
+    .job-toggle-icon {
+      width: 12px; height: 12px;
+      position: relative;
+      transition: transform 0.3s var(--ease);
+    }
+    .job-toggle-icon::before,
+    .job-toggle-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--text);
+      border-radius: 2px;
+      transition: background 0.25s;
+    }
+    .job-toggle-icon::before { width: 12px; height: 1.5px; top: 50%; left: 0; transform: translateY(-50%); }
+    .job-toggle-icon::after  { width: 1.5px; height: 12px; left: 50%; top: 0; transform: translateX(-50%); transition: opacity 0.3s, background 0.25s; }
+    .job-card.open .job-toggle-icon::before,
+    .job-card.open .job-toggle-icon::after { background: #fff; }
+    .job-card.open .job-toggle-icon::after { opacity: 0; }
+
+    .job-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s var(--ease), opacity 0.35s;
+      opacity: 0;
+    }
+    .job-card.open .job-body {
+      max-height: 800px;
+      opacity: 1;
+    }
+    .job-body-inner {
+      padding: 0 32px 32px;
+      border-top: 1px solid var(--border);
+    }
+    .job-body-inner > * + * { margin-top: 24px; }
+
+    .job-section-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      margin-top: 24px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .job-section-title::before { content: ''; width: 16px; height: 1.5px; background: var(--rot); }
+
+    .job-desc {
+      font-size: 14px; line-height: 1.75; color: var(--text); font-weight: 300;
+    }
+
+    .job-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .job-list li {
+      font-size: 14px; line-height: 1.6; color: var(--text); font-weight: 300;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .job-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--rot);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .job-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--rot);
+      color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 7px;
+      transition: all 0.2s;
+      margin-top: 28px;
+    }
+    .job-cta:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,0,14,0.28); }
+
+    /* VALUES SECTION */
+    .values-section {
+      background: var(--bg2);
+      border-radius: 16px;
+      padding: 56px 48px;
+      margin-bottom: 72px;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .value-item {}
+    .value-icon {
+      width: 40px; height: 40px;
+      background: rgba(232,0,14,0.08);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .value-icon svg { color: var(--rot); }
+    .value-title {
+      font-size: 15px; font-weight: 600; color: var(--schwarz);
+      margin-bottom: 6px;
+    }
+    .value-desc {
+      font-size: 13px; line-height: 1.65; color: var(--muted); font-weight: 300;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .cta-section h3 {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--schwarz);
+      margin-bottom: 8px;
+    }
+    .cta-section p {
+      font-size: 14px; line-height: 1.65; color: var(--muted); font-weight: 300;
+      max-width: 440px;
+    }
+    .cta-section-actions { display: flex; gap: 12px; flex-shrink: 0; }
+    .btn-cta-red {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--rot); color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 11px 22px; border-radius: 7px;
+      transition: all 0.2s;
+    }
+    .btn-cta-red:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,0,14,0.28); }
+    .btn-cta-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid var(--border); color: var(--text);
+      font-size: 13px; font-weight: 600;
+      padding: 11px 22px; border-radius: 7px;
+      transition: all 0.2s;
+    }
+    .btn-cta-outline:hover { border-color: var(--text); }
+
+    /* FOOTER */
+    footer {
+      background: var(--schwarz); color: rgba(255,255,255,0.55);
+      padding: 56px 48px 32px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+    .footer-logo img { height: 28px; margin-bottom: 14px; filter: brightness(0) invert(1); }
+    .footer-brand-desc { font-size: 13px; line-height: 1.65; max-width: 260px; }
+    .footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 8px; transition: color 0.2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.3); flex-wrap: wrap; gap: 8px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-center, .nav-right { display: none; }
+      .nav-burger { display: flex; }
+      .page-header { padding: 56px 20px 48px; }
+      .main { padding: 48px 20px 80px; }
+      .intro-strip { grid-template-columns: 1fr; }
+      .jobs-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .cta-section { flex-direction: column; }
+      .cta-section-actions { flex-wrap: wrap; }
+      .values-section { padding: 36px 24px; }
+      .cta-section { padding: 36px 24px; }
+      footer { padding: 40px 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .job-header { padding: 20px 20px; }
+      .job-body-inner { padding: 0 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="/" class="nav-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></a>
+    <div class="nav-center">
+      <div class="nav-dropdown">
+        <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="produkte.html">Alle Modelle</a>
+          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
+          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+          <a href="jollenanhaenger.html">Jollenanhänger</a>
+          <a href="ratgeber-bootsanhaenger.html">Ratgeber Kaufberatung</a>
+          <a href="wasserdichte-radnabe.html">Wasserdichte Radnabe</a>
+        </div>
+      </div>
+      <a href="shop.html">Shop</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="haendler.html">Händler</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="faq.html">FAQ</a>
+      <a href="karriere.html" class="active">Jobs</a>
+    </div>
+    <div class="nav-right">
+      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
+    </div>
+    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="produkte.html">Produkte</a>
+    <a href="shop.html">Shop</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="haendler.html">Händler</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="faq.html">FAQ</a>
+    <a href="karriere.html">Jobs</a>
+    <a href="kontakt.html" style="color:var(--rot); font-weight:600;">Anfrage stellen →</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="lbl">Karriere bei HEKU</div>
+      <h1>Werde Teil unseres<br><span>Teams in Bielefeld</span></h1>
+      <p>Wir sind ein Familienunternehmen in der 3. Generation — bodenständig, direkt, handwerklich geprägt. Wenn du anpacken willst und Qualität ernst nimmst, bist du bei uns richtig.</p>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- INTRO STRIP -->
+    <div class="intro-strip">
+      <div class="intro-item">
+        <div class="intro-item-num">65+</div>
+        <div class="intro-item-lbl">Jahre Erfahrung</div>
+        <div class="intro-item-sub">Familienunternehmen seit 1959</div>
+      </div>
+      <div class="intro-item">
+        <div class="intro-item-num">3.</div>
+        <div class="intro-item-lbl">Generation</div>
+        <div class="intro-item-sub">Persönlich geführt, kurze Wege</div>
+      </div>
+      <div class="intro-item">
+        <div class="intro-item-num">2</div>
+        <div class="intro-item-lbl">Offene Stellen</div>
+        <div class="intro-item-sub">Bielefeld · Sofortiger Einstieg möglich</div>
+      </div>
+    </div>
+
+    <!-- JOBS -->
+    <div class="sec-lbl">Offene Stellen</div>
+    <h2 class="sec-h2">Aktuelle Stellenangebote</h2>
+    <p class="sec-p">Klick auf eine Stelle, um alle Details zu sehen.</p>
+
+    <div class="jobs-grid">
+
+      <!-- JOB 1: Montagehilfe -->
+      <div class="job-card" onclick="toggleJob(this)">
+        <div class="job-header">
+          <div class="job-header-left">
+            <div class="job-tag">Festanstellung</div>
+            <div class="job-title">Montagehilfe (m/w/d)</div>
+            <div class="job-meta">
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Bielefeld
+              </span>
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Ab sofort
+              </span>
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Vollzeit & Teilzeit
+              </span>
+            </div>
+          </div>
+          <div class="job-toggle">
+            <div class="job-toggle-icon"></div>
+          </div>
+        </div>
+        <div class="job-body">
+          <div class="job-body-inner">
+            <div class="job-section-title">Deine Aufgaben</div>
+            <ul class="job-list">
+              <li>Montage und Vormontage von Bootsanhänger-Baugruppen (Achsen, Rahmen, Rollen, Beleuchtung)</li>
+              <li>Unterstützung bei der Einzelfertigung nach Kundenspezifikation</li>
+              <li>Qualitätskontrolle und einfache Endabnahme</li>
+              <li>Umgang mit Werkzeug, Schraubern und Hebezeugen</li>
+              <li>Mithilfe beim Wareneingang und der Lagerhaltung</li>
+            </ul>
+            <div class="job-section-title">Was du mitbringst</div>
+            <ul class="job-list">
+              <li>Handwerkliches Geschick — Erfahrung in Metall, KFZ oder Schlosser von Vorteil</li>
+              <li>Zuverlässigkeit, Pünktlichkeit, sorgfältige Arbeitsweise</li>
+              <li>Körperliche Belastbarkeit (Heben, Stehen)</li>
+              <li>Deutschkenntnisse für die Kommunikation im Team</li>
+              <li>Kein Anhänger-Vorwissen nötig — wir zeigen dir alles</li>
+            </ul>
+            <div class="job-section-title">Was wir bieten</div>
+            <ul class="job-list">
+              <li>Direkte Zusammenarbeit mit der Geschäftsführung — kurze Entscheidungswege</li>
+              <li>Sicherer Arbeitsplatz in einem etablierten Familienunternehmen</li>
+              <li>Faire Vergütung, pünktliche Zahlung</li>
+              <li>Abwechslungsreiche Arbeit — kein Fließband, jeder Anhänger ist ein Unikat</li>
+              <li>Kostenloser Parkplatz, zentral in Bielefeld-Stieghorst</li>
+            </ul>
+            <a href="mailto:bewerbungen@heku-fahrzeugbau.de?subject=Bewerbung%3A%20Montagehilfe" class="job-cta">
+              Jetzt bewerben →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 2: Werkstudent -->
+      <div class="job-card" onclick="toggleJob(this)">
+        <div class="job-header">
+          <div class="job-header-left">
+            <div class="job-tag">Werkstudent</div>
+            <div class="job-title">Werkstudent (m/w/d)<br>Digitalisierung & Vertrieb</div>
+            <div class="job-meta">
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Bielefeld
+              </span>
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Ab sofort
+              </span>
+              <span class="job-meta-item">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                15–20 Std./Woche
+              </span>
+            </div>
+          </div>
+          <div class="job-toggle">
+            <div class="job-toggle-icon"></div>
+          </div>
+        </div>
+        <div class="job-body">
+          <div class="job-body-inner">
+            <div class="job-section-title">Was dich erwartet</div>
+            <p class="job-desc">Du arbeitest direkt mit der Geschäftsleitung an der Modernisierung eines Traditionsunternehmens — kein anonymes Konzern-Praktikum, sondern echte Verantwortung in einem kleinen Team.</p>
+            <div class="job-section-title">Deine Aufgaben</div>
+            <ul class="job-list">
+              <li>Unterstützung bei der Pflege und dem Ausbau unserer Website (HTML/CSS, SEO)</li>
+              <li>Mitarbeit im Online-Marketing: Content, Social Media, Google Business</li>
+              <li>CRM-Datenpflege und Unterstützung im Vertriebsprozess (HubSpot)</li>
+              <li>Recherche zu Produktentwicklung und Markttrends</li>
+              <li>Projektarbeit: Du kannst eigene Themen einbringen</li>
+            </ul>
+            <div class="job-section-title">Was du mitbringst</div>
+            <ul class="job-list">
+              <li>Immatrikulation an einer Hochschule (Wirtschaft, Marketing, Informatik o.ä.)</li>
+              <li>Interesse an Digitalisierung, Handwerk und mittelständischen Unternehmen</li>
+              <li>Selbstständige Arbeitsweise — du wartest nicht auf Aufgaben, du schlägst vor</li>
+              <li>Grundkenntnisse in mindestens einem Bereich: Web, Marketing oder CRM</li>
+              <li>Sehr gutes Deutsch in Wort und Schrift</li>
+            </ul>
+            <div class="job-section-title">Was wir bieten</div>
+            <ul class="job-list">
+              <li>Direkte Mitarbeit an realen Projekten mit Wirkung — kein Copy-Paste-Praktikum</li>
+              <li>Einblick in alle Bereiche: Produktion, Vertrieb, Digitalisierung, Produktentwicklung</li>
+              <li>Flexible Stundenplanung, auch teilweise remote möglich</li>
+              <li>Faire Vergütung nach Vereinbarung</li>
+              <li>Möglichkeit zur Weiterführung / Bachelorarbeit im Betrieb</li>
+            </ul>
+            <a href="mailto:bewerbungen@heku-fahrzeugbau.de?subject=Bewerbung%3A%20Werkstudent%20Digitalisierung" class="job-cta">
+              Jetzt bewerben →
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VALUES -->
+    <div class="values-section">
+      <div class="sec-lbl">Warum HEKU</div>
+      <h2 class="sec-h2">Arbeiten bei HEKU</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="value-title">Kleines Team</div>
+          <div class="value-desc">Kein Konzern. Direkte Kommunikation, flache Hierarchien, echte Verantwortung vom ersten Tag an.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="value-title">Wachstum & Wandel</div>
+          <div class="value-desc">HEKU modernisiert sich aktiv — Digitalisierung, neue Produkte, neue Märkte. Du wächst mit.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="value-title">Handwerk mit Qualität</div>
+          <div class="value-desc">Jeder Anhänger ist ein Unikat. Präzision und Sorgfalt sind bei uns keine Worthülsen.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="value-title">Made in Bielefeld</div>
+          <div class="value-desc">Produktion, Lager und Büro an einem Standort. Kurze Wege, keine Schnittstellen-Hölle.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPONTAN-BEWERBUNG CTA -->
+    <div class="cta-section">
+      <div>
+        <h3>Keine passende Stelle dabei?</h3>
+        <p>Wir freuen uns über Initiativbewerbungen. Schreib uns kurz, was du kannst und was du dir vorstellst — wir melden uns.</p>
+      </div>
+      <div class="cta-section-actions">
+        <a href="mailto:bewerbungen@heku-fahrzeugbau.de?subject=Initiativbewerbung" class="btn-cta-red">Initiativ bewerben →</a>
+        <a href="ueber-uns.html" class="btn-cta-outline">Über HEKU</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="logo.png" alt="HEKU Fahrzeugbau"></div>
+          <p class="footer-brand-desc">Bootsanhänger &amp; Bootstrailer nach Maß. Familienunternehmen in Bielefeld seit 1959.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produkte</h4>
+          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
+          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+          <a href="jollenanhaenger.html">Jollenanhänger</a>
+        </div>
+        <div class="footer-col">
+          <h4>Unternehmen</h4>
+          <a href="ueber-uns.html">Über uns</a>
+          <a href="karriere.html">Jobs</a>
+          <a href="haendler.html">Händler</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h4>Rechtliches</h4>
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="agb.html">AGB</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld</span>
+        <span>+49 521 200066 · info@heku-fahrzeugbau.de</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NAV scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      const m = document.getElementById('nav-mobile');
+      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Job card toggle
+    function toggleJob(card) {
+      const isOpen = card.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.job-card').forEach(c => c.classList.remove('open'));
+      // Open clicked if it wasn't open
+      if (!isOpen) card.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

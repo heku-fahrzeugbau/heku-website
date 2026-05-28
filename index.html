@@ -397,6 +397,7 @@
     .btn-red:hover { background: var(--rot-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,0,14,0.28); }
     .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
     /* HERO */
     .hero { position: relative; margin-top: 64px; height: calc(100vh - 64px); min-height: 600px; overflow: hidden; background: var(--schwarz); }
@@ -638,6 +639,10 @@
       <a href="faq.html">FAQ</a>
     </div>
     <div class="nav-right">
+      <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>
+        Jobs
+      </a>
       <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
       <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
     </div>
