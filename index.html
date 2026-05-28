@@ -399,6 +399,7 @@
     .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
     .btn-jobs { border: 1.5px solid var(--rot); color: var(--rot); display: flex; align-items: center; gap: 6px; }
     .jobs-dot { width: 7px; height: 7px; background: var(--rot); border-radius: 50%; display: inline-block; animation: pulse-dot 1.8s infinite; flex-shrink: 0; }
+    .nav-jobs-mobile { display: none !important; }
     @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
     /* HERO */
@@ -616,7 +617,7 @@
     @media (max-width: 600px) { .popup-header { padding: 24px 24px 20px; } .popup-body { padding: 20px 24px 24px; } }
 
   
-    @media (max-width: 1024px) { .btn-jobs { display: none; } }
+    @media (max-width: 1024px) { .btn-jobs { display: none; } .nav-jobs-mobile { display: block !important; color: var(--rot) !important; font-weight: 600 !important; } }
   </style>
 </head>
 <body>
@@ -641,6 +642,7 @@
       <a href="haendler.html">Händler</a>
       <a href="kontakt.html">Kontakt</a>
       <a href="faq.html">FAQ</a>
+      <a href="karriere.html" class="nav-jobs-mobile">● Jobs</a>
     </div>
     <div class="nav-right">
       <a href="karriere.html" class="btn-nav btn-jobs">
