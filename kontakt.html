@@ -350,6 +350,17 @@
           </div>
         </div>
 
+        <div class="form-grid full" style="margin-top:18px;margin-bottom:0">
+          <div class="form-group">
+            <label class="form-label">Fotos / Anhänge <span style="color:var(--muted);font-weight:400">(optional, max. 10 MB)</span></label>
+            <label id="uploadLabel" style="display:flex;align-items:center;gap:12px;height:48px;padding:0 16px;border:1.5px dashed var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.2s;background:var(--bg2);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="uploadText" style="font-size:14px;color:var(--muted);">Datei auswählen oder hierher ziehen</span>
+              <input type="file" id="dateianhang" accept="image/*,.pdf" multiple style="display:none" onchange="updateUploadLabel(this)">
+            </label>
+          </div>
+        </div>
+
         <div class="consent-row">
           <input type="checkbox" class="consent-check" id="consent">
           <label class="consent-text" for="consent">
@@ -487,6 +498,18 @@
   </footer>
 
   <script>
+    function updateUploadLabel(input) {
+      const label = document.getElementById('uploadText');
+      if (input.files.length === 1) {
+        label.textContent = input.files[0].name;
+        label.style.color = 'var(--text)';
+      } else if (input.files.length > 1) {
+        label.textContent = input.files.length + ' Dateien ausgewählt';
+        label.style.color = 'var(--text)';
+      }
+      document.getElementById('uploadLabel').style.borderColor = 'var(--rot)';
+    }
+
     // Heutigen Tag hervorheben
     const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
     const today = days[new Date().getDay()];
@@ -527,15 +550,26 @@
       btn.textContent = 'Wird gesendet...';
 
       try {
-        const res = await fetch('https://formspree.io/f/xgopgpye', {
+        const formData = new FormData();
+        formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
+        formData.append('subject', `Kontaktanfrage: ${betreff} – ${anrede} ${vorname} ${nachname}`);
+        formData.append('anrede', anrede);
+        formData.append('vorname', vorname);
+        formData.append('nachname', nachname);
+        formData.append('email', email);
+        formData.append('telefon', telefon);
+        formData.append('plz', plz);
+        formData.append('ort', ort);
+        formData.append('betreff', betreff);
+        formData.append('nachricht', nachricht);
+        formData.append('replyto', email);
+        const fileInput = document.getElementById('dateianhang');
+        if (fileInput.files.length > 0) {
+          Array.from(fileInput.files).forEach(f => formData.append('attachment', f));
+        }
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            _subject: `Kontaktanfrage: ${betreff} – ${anrede} ${vorname} ${nachname}`,
-            anrede, vorname, nachname, email, telefon,
-            plz, ort, betreff, nachricht,
-            _replyto: email
-          })
+          body: formData
         });
         if (res.ok) {
           // Bestätigungsmail an Kunden via EmailJS REST API
