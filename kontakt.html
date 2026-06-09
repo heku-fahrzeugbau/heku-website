@@ -215,14 +215,9 @@
     .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
     .social-link:hover svg{fill:var(--rot);}
   </style>
-  <script type="module">
-    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/lr-file-uploader-regular.min.js";
-    LR.defineComponents(LR);
-  </script>
-  <style>
-    lr-file-uploader-regular { --cfg-pubkey: "0d2323b7a1fca5d707bd"; }
-    lr-file-uploader-regular::part(button) { background: var(--rot); }
-  </style>
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
+  <script>UPLOADCARE_PUBLIC_KEY = "0d2323b7a1fca5d707bd";</script>
+  <script>UPLOADCARE_LOCALE = "de";</script>
 </head>
 <body>
 
@@ -361,12 +356,13 @@
         <div class="form-grid full" style="margin-top:18px;margin-bottom:0">
           <div class="form-group">
             <label class="form-label">Fotos / Anhänge <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-            <lr-file-uploader-regular
-              id="uploaderWidget"
-              css-src="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/lr-file-uploader-regular.min.css"
-              style="--cfg-pubkey:'0d2323b7a1fca5d707bd';--cfg-multiple:1;--cfg-accept:'image/*,.pdf';">
-            </lr-file-uploader-regular>
-            <input type="hidden" id="uploadedFileUrl" value="">
+            <input type="hidden"
+              role="uploadcare-uploader"
+              id="uploadedFileUrl"
+              data-multiple="true"
+              data-preview-step="true"
+              style="display:none">
+            <div id="uploadPlaceholder" style="padding:12px 16px;border:1.5px dashed var(--border);border-radius:8px;background:var(--bg2);font-size:13px;color:var(--muted);">Widget wird geladen…</div>
           </div>
         </div>
 
@@ -507,15 +503,10 @@
   </footer>
 
   <script>
-    // Uploadcare: URL nach Upload speichern
+    // Uploadcare: Widget initialisieren
     document.addEventListener('DOMContentLoaded', () => {
-      const uploader = document.getElementById('uploaderWidget');
-      if (uploader) {
-        uploader.addEventListener('file-upload-success', (e) => {
-          const url = e.detail?.file?.cdnUrl || '';
-          document.getElementById('uploadedFileUrl').value = url;
-        });
-      }
+      const placeholder = document.getElementById('uploadPlaceholder');
+      if (placeholder) placeholder.style.display = 'none';
     });
 
     // Heutigen Tag hervorheben
