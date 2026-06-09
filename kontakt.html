@@ -215,6 +215,14 @@
     .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
     .social-link:hover svg{fill:var(--rot);}
   </style>
+  <script type="module">
+    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/lr-file-uploader-regular.min.js";
+    LR.defineComponents(LR);
+  </script>
+  <style>
+    lr-file-uploader-regular { --cfg-pubkey: "0d2323b7a1fca5d707bd"; }
+    lr-file-uploader-regular::part(button) { background: var(--rot); }
+  </style>
 </head>
 <body>
 
@@ -353,10 +361,12 @@
         <div class="form-grid full" style="margin-top:18px;margin-bottom:0">
           <div class="form-group">
             <label class="form-label">Fotos / Anhänge <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px dashed var(--border);border-radius:8px;background:var(--bg2);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span style="font-size:13px;color:var(--muted);line-height:1.55;">Fotos bitte über <a href="https://wetransfer.com" target="_blank" rel="noopener" style="color:var(--rot);font-weight:500;">WeTransfer</a> an <a href="mailto:info@heku-fahrzeugbau.de" style="color:var(--rot);font-weight:500;">info@heku-fahrzeugbau.de</a> senden und den Link oder Dateinamen in der Nachricht erwähnen.</span>
-            </div>
+            <lr-file-uploader-regular
+              id="uploaderWidget"
+              css-src="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/lr-file-uploader-regular.min.css"
+              style="--cfg-pubkey:'0d2323b7a1fca5d707bd';--cfg-multiple:1;--cfg-accept:'image/*,.pdf';">
+            </lr-file-uploader-regular>
+            <input type="hidden" id="uploadedFileUrl" value="">
           </div>
         </div>
 
@@ -497,6 +507,17 @@
   </footer>
 
   <script>
+    // Uploadcare: URL nach Upload speichern
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploader = document.getElementById('uploaderWidget');
+      if (uploader) {
+        uploader.addEventListener('file-upload-success', (e) => {
+          const url = e.detail?.file?.cdnUrl || '';
+          document.getElementById('uploadedFileUrl').value = url;
+        });
+      }
+    });
+
     // Heutigen Tag hervorheben
     const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
     const today = days[new Date().getDay()];
@@ -550,6 +571,8 @@
         formData.append('betreff', betreff);
         formData.append('nachricht', nachricht);
         formData.append('replyto', email);
+        const fileUrl = document.getElementById('uploadedFileUrl').value;
+        if (fileUrl) formData.append('anhang', fileUrl);
         const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: formData
