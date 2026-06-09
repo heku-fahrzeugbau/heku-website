@@ -593,6 +593,9 @@
     { id:50, artnr:50250, cat:'sonstiges', name:'2 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:410 },
     { id:51, artnr:50251, cat:'sonstiges', name:'4 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:475 },
     { id:52, artnr:50252, cat:'sonstiges', name:'6 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:595 },
+
+    // Auflagen & Kissen (Einzelkissen)
+    { id:53, artnr:83011, cat:'auflagen', name:'Polsterkissen', desc:'', preis:35 },
   ];
 
   // ─── STATE ──────────────────────────────────────────────────────────────────
@@ -649,6 +652,12 @@
       const cat = item.cat;
       const qty = item.qty;
       const name = item.name.toLowerCase();
+
+      // Sonderregel: Polsterkissen Art. 83011 → 4 Stück = 10 €, je weitere 4 = 10 €
+      if (item.artnr === 83011) {
+        versand += Math.ceil(qty / 4) * 10;
+        return;
+      }
 
       if (cat === 'winden') {
         // Windenstand: 30€ pro Stück
