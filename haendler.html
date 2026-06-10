@@ -364,14 +364,14 @@
   <div class="marquee-wrap">
     <div class="marquee-track">
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EIGENENTWICKELTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
       <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EIGENENTWICKELTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
@@ -733,15 +733,22 @@
       btn.innerHTML = 'Wird gesendet...';
 
       try {
-        const res = await fetch('https://formspree.io/f/xgopgpye', {
+        const formData = new FormData();
+        formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
+        formData.append('subject', `Händleranfrage – ${firma} (${region})`);
+        formData.append('anrede', anrede);
+        formData.append('firma', firma);
+        formData.append('vorname', vorname);
+        formData.append('nachname', nachname);
+        formData.append('email', email);
+        formData.append('telefon', telefon);
+        formData.append('region', region);
+        formData.append('unternehmenstyp', typ);
+        formData.append('nachricht', nachricht);
+        formData.append('replyto', email);
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            _subject: `Händleranfrage – ${firma} (${region})`,
-            anrede, firma, vorname, nachname, email, telefon, region,
-            unternehmenstyp: typ, nachricht,
-            _replyto: email
-          })
+          body: formData
         });
 
         if (res.ok) {

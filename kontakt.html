@@ -264,14 +264,14 @@
   <div class="marquee-wrap">
     <div class="marquee-track">
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EIGENENTWICKELTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
       <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">PATENTIERTE RADNABE <div class="marquee-dot"></div></div>
+      <div class="marquee-item">EIGENENTWICKELTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
@@ -330,6 +330,12 @@
           <div class="form-group">
             <label class="form-label">Ort <span>*</span></label>
             <input type="text" class="form-input" id="ort" placeholder="Musterstadt">
+          </div>
+        </div>
+        <div class="form-grid full" style="margin-bottom:18px">
+          <div class="form-group">
+            <label class="form-label">Straße &amp; Hausnummer</label>
+            <input type="text" class="form-input" id="strasse" placeholder="Musterstraße 1">
           </div>
         </div>
         <div class="form-grid full" style="margin-bottom:18px">
@@ -525,6 +531,7 @@
       const telefon  = document.getElementById('telefon').value.trim();
       const plz      = document.getElementById('plz').value.trim();
       const ort      = document.getElementById('ort').value.trim();
+      const strasse  = document.getElementById('strasse').value.trim();
       const betreff  = document.getElementById('betreff').value;
       const nachricht = document.getElementById('nachricht').value.trim();
       const consent  = document.getElementById('consent').checked;
@@ -559,6 +566,7 @@
         formData.append('telefon', telefon);
         formData.append('plz', plz);
         formData.append('ort', ort);
+        if (strasse) formData.append('strasse', strasse);
         formData.append('betreff', betreff);
         formData.append('nachricht', nachricht);
         formData.append('replyto', email);
@@ -586,7 +594,7 @@
               }
             })
           }).catch(() => {});
-          createHubSpotContact({ vorname, nachname, email, telefon, plz, ort, quelle: 'Kontaktformular', notiz: 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
+          createHubSpotContact({ vorname, nachname, email, telefon, strasse, plz, ort, quelle: 'Kontaktformular', notiz: 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
           document.getElementById('formWrap').style.display = 'none';
           document.getElementById('successMsg').classList.add('show');
           window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
@@ -611,6 +619,7 @@
               { name: 'lastname', value: data.nachname || '' },
               { name: 'email', value: data.email || '' },
               { name: 'phone', value: data.telefon || '' },
+              { name: 'address', value: data.strasse || '' },
               { name: 'zip', value: data.plz || '' },
               { name: 'city', value: data.ort || '' },
               { name: 'message', value: data.notiz || '' },
