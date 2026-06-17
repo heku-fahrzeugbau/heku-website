@@ -26,7 +26,7 @@
   <!-- SEO-Landingpages Bootsanhänger -->
   <url>
     <loc>https://heku-fahrzeugbau.de/bootstrailer.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-17</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -45,6 +45,12 @@
   <url>
     <loc>https://heku-fahrzeugbau.de/jollenanhaenger.html</loc>
     <lastmod>2026-06-01</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/bootsanhaenger-nach-mass.html</loc>
+    <lastmod>2026-06-17</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
