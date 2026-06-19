@@ -344,6 +344,7 @@
         <div class="filter-item" data-cat="auflagen" onclick="filterCat(this)">Auflagen & Kissen</div>
         <div class="filter-item" data-cat="raeder" onclick="filterCat(this)">Räder & Reifen</div>
         <div class="filter-item" data-cat="sonstiges" onclick="filterCat(this)">Sonstiges</div>
+        <div class="filter-item" data-cat="beleuchtung" onclick="filterCat(this)">Beleuchtung</div>
       </div>
     </div>
 
@@ -597,6 +598,9 @@
 
     // Auflagen & Kissen (Einzelkissen)
     { id:53, artnr:83011, cat:'auflagen', name:'Polsterkissen', desc:'', preis:35 },
+
+    // Beleuchtung
+    { id:54, artnr:85027, cat:'beleuchtung', name:'Seitenmarkierungsleuchte LED', desc:'', preis:20.25 },
   ];
 
   // ─── STATE ──────────────────────────────────────────────────────────────────
@@ -690,6 +694,10 @@
         } else {
           versand += Math.ceil(qty / 2) * 20;
         }
+      } else if (cat === 'beleuchtung') {
+        // Art. 85027: 1-4 Stück = 10€, 5-8 Stück = 20€
+        if (qty <= 4) { versand += 10; }
+        else { versand += 20; }
       } else {
         // Sonstiges & Auflagen: 15€, ab 3 Stück → 30€
         versand += qty >= 3 ? 30 : 15;
