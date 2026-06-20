@@ -974,21 +974,38 @@
     const zeitpunkt = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
 
     try {
-      // Interne Mail an HEKU + Auto-Reply an Kunden via Formsubmit.co
-      const formData = new FormData();
-      formData.append('bestellnummer', bestellnr);
-      formData.append('kunde_email', email);
-      formData.append('zeitpunkt', zeitpunkt);
-      formData.append('_subject', `Widerruf eingegangen – Bestellnummer ${bestellnr}`);
-      formData.append('_replyto', email);
-      formData.append('_autoresponse', `Sehr geehrte Damen und Herren,\n\nwir bestätigen den Eingang Ihrer Widerrufserklärung für Bestellnummer ${bestellnr} vom ${zeitpunkt}.\n\nWir melden uns zeitnah bei Ihnen.\n\nMit freundlichen Grüßen\nHEKU Fahrzeugbau GmbH\nBunzlauer Str. 6 · 33719 Bielefeld\nTel.: 0521 200066\ninfo@heku-fahrzeugbau.de`);
-      formData.append('_template', 'table');
-
-      const res = await fetch('https://formsubmit.co/r.kollmeier@heku-fahrzeugbau.de', {
+      // 1) Interne Mail an HEKU via Web3Forms
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '324e7405-8550-47b8-a9c8-bd4aac27bcc7',
+          subject: `Widerruf eingegangen – Bestellnummer ${bestellnr}`,
+          from_name: 'HEKU Shop Widerruf',
+          bestellnummer: bestellnr,
+          kunde_email: email,
+          zeitpunkt: zeitpunkt
+        })
       });
       if (!res.ok) throw new Error();
+
+      // 2) Bestätigungsmail an Kunden via EmailJS template_6jm794t
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: 'service_gbfg9bk',
+          template_id: 'template_6jm794t',
+          user_id: 'uxnGyFrCsW9OCTzcw',
+          template_params: {
+            email: email,
+            anrede: '',
+            vorname: 'Damen und Herren',
+            nachname: '',
+            modell: `Wir bestätigen den Eingang Ihrer Widerrufserklärung für Bestellnummer ${bestellnr} vom ${zeitpunkt}. Wir melden uns zeitnah bei Ihnen.`
+          }
+        })
+      }).catch(() => {});
 
       document.getElementById('widerrufsForm').style.display = 'none';
       sucEl.innerHTML = `Ihr Widerruf für Bestellnummer <strong>${bestellnr}</strong> wurde erfolgreich übermittelt.<br><br>Sie erhalten in Kürze eine Bestätigung an <strong>${email}</strong>.`;
