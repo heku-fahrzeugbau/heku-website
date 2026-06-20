@@ -202,7 +202,7 @@
     footer { background: var(--schwarz); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 80px; }
     .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
-    .ft-legal { display: flex; gap: 20px; }
+    .ft-legal { display: flex; gap: 20px; flex-wrap: wrap; }
     .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
     .ft-legal a:hover { color: rgba(255,255,255,0.5); }
 
@@ -253,7 +253,7 @@
     .ft-links a:hover{color:#fff;}
     .ft-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
     .ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
-    .ft-legal{display:flex;gap:20px;}
+    .ft-legal{display:flex;gap:20px;flex-wrap:wrap;}
     .ft-legal a{font-size:12px;color:rgba(255,255,255,0.18);transition:color 0.2s;}
     .ft-legal a:hover{color:rgba(255,255,255,0.45);}
     .social-links{display:flex;gap:12px;margin-top:20px;}
@@ -526,7 +526,7 @@
     </div>
     <div class="ft-bottom">
       <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a><a href="#" onclick="document.getElementById('widerrufsModal').classList.add('show');return false;" style="color:var(--rot);font-weight:600;">Widerruf einlegen</a></div>
+      <div class="ft-legal" style="flex-wrap:wrap;gap:8px;"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a><a href="#" onclick="document.getElementById('widerrufsModal').classList.add('show');return false;" style="color:var(--rot);font-weight:600;">Widerruf einlegen</a></div>
     </div>
   </footer>
 
@@ -939,7 +939,7 @@
         <input id="wid_bestellnr" type="text" placeholder="z. B. HK-2026-0042" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
         <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;">Ihre E-Mail-Adresse *</label>
         <input id="wid_email" type="email" placeholder="ihre@email.de" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:24px;">
-        <button id="wid_btn" onclick="submitWiderruf()" style="width:100%;background:var(--rot);color:#fff;border:none;border-radius:6px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.3px;">Widerrufen</button>
+        <button id="wid_btn" onclick="submitWiderruf()" style="width:100%;background:var(--rot);color:#fff;border:none;border-radius:6px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.3px;">Jetzt widerrufen</button>
         <p style="color:#666;font-size:11px;margin-top:12px;line-height:1.5;">Mit dem Absenden erklären Sie verbindlich den Widerruf Ihres Kaufvertrags gemäß § 356a BGB. Sie erhalten eine Bestätigung per E-Mail.</p>
       </div>
     </div>
