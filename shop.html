@@ -261,6 +261,7 @@
     .social-link:hover{border-color:var(--rot);background:rgba(232,0,14,0.1);}
     .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
     .social-link:hover svg{fill:var(--rot);}
+    #widerrufsModal.show { display:flex !important; }
   </style>
 </head>
 <body>
@@ -525,7 +526,7 @@
     </div>
     <div class="ft-bottom">
       <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a></div>
+      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a><a href="#" onclick="document.getElementById('widerrufsModal').classList.add('show');return false;" style="color:var(--rot);font-weight:600;">Widerruf einlegen</a></div>
     </div>
   </footer>
 
@@ -925,5 +926,81 @@
     c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
   }
   </script>
+  <!-- ═══ WIDERRUFS-MODAL ═══════════════════════════════════════════════════ -->
+  <div id="widerrufsModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,10,10,0.85);align-items:center;justify-content:center;">
+    <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:40px;max-width:480px;width:90%;position:relative;">
+      <button onclick="document.getElementById('widerrufsModal').classList.remove('show');" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;">✕</button>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin:0 0 8px;">Widerruf einlegen</h2>
+      <p style="color:#aaa;font-size:14px;margin:0 0 24px;">Geben Sie Ihre Bestellnummer und E-Mail-Adresse an. Wir bestätigen Ihren Widerruf umgehend.</p>
+      <div id="widerrufsError" style="display:none;background:rgba(232,0,14,0.15);border:1px solid var(--rot);color:var(--rot);padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:16px;"></div>
+      <div id="widerrufsSuccess" style="display:none;background:rgba(0,180,80,0.12);border:1px solid #00b450;color:#00b450;padding:16px;border-radius:8px;text-align:center;font-size:14px;line-height:1.6;"></div>
+      <div id="widerrufsForm">
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;">Bestellnummer *</label>
+        <input id="wid_bestellnr" type="text" placeholder="z. B. HK-2026-0042" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;">Ihre E-Mail-Adresse *</label>
+        <input id="wid_email" type="email" placeholder="ihre@email.de" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:24px;">
+        <button id="wid_btn" onclick="submitWiderruf()" style="width:100%;background:var(--rot);color:#fff;border:none;border-radius:6px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.3px;">Widerrufen</button>
+        <p style="color:#666;font-size:11px;margin-top:12px;line-height:1.5;">Mit dem Absenden erklären Sie verbindlich den Widerruf Ihres Kaufvertrags gemäß § 356a BGB. Sie erhalten eine Bestätigung per E-Mail.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  document.getElementById('widerrufsModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+  document.getElementById('widerrufsModal').style.display = 'flex';
+  document.getElementById('widerrufsModal').style.display = 'none';
+
+  async function submitWiderruf() {
+    const bestellnr = document.getElementById('wid_bestellnr').value.trim();
+    const email     = document.getElementById('wid_email').value.trim();
+    const errEl     = document.getElementById('widerrufsError');
+    const sucEl     = document.getElementById('widerrufsSuccess');
+    const btn       = document.getElementById('wid_btn');
+    errEl.style.display = 'none';
+    sucEl.style.display  = 'none';
+
+    if (!bestellnr || !email) {
+      errEl.textContent = 'Bitte füllen Sie alle Felder aus.';
+      errEl.style.display = 'block'; return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      errEl.style.display = 'block'; return;
+    }
+
+    btn.disabled = true; btn.textContent = 'Wird übermittelt …';
+    const zeitpunkt = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
+
+    try {
+      // Interne Mail an HEKU + Auto-Reply an Kunden via Formsubmit.co
+      const formData = new FormData();
+      formData.append('bestellnummer', bestellnr);
+      formData.append('kunde_email', email);
+      formData.append('zeitpunkt', zeitpunkt);
+      formData.append('_subject', `Widerruf eingegangen – Bestellnummer ${bestellnr}`);
+      formData.append('_replyto', email);
+      formData.append('_autoresponse', `Sehr geehrte Damen und Herren,\n\nwir bestätigen den Eingang Ihrer Widerrufserklärung für Bestellnummer ${bestellnr} vom ${zeitpunkt}.\n\nWir melden uns zeitnah bei Ihnen.\n\nMit freundlichen Grüßen\nHEKU Fahrzeugbau GmbH\nBunzlauer Str. 6 · 33719 Bielefeld\nTel.: 0521 200066\ninfo@heku-fahrzeugbau.de`);
+      formData.append('_template', 'table');
+
+      const res = await fetch('https://formsubmit.co/r.kollmeier@heku-fahrzeugbau.de', {
+        method: 'POST',
+        body: formData
+      });
+      if (!res.ok) throw new Error();
+
+      document.getElementById('widerrufsForm').style.display = 'none';
+      sucEl.innerHTML = `Ihr Widerruf für Bestellnummer <strong>${bestellnr}</strong> wurde erfolgreich übermittelt.<br><br>Sie erhalten in Kürze eine Bestätigung an <strong>${email}</strong>.`;
+      sucEl.style.display = 'block';
+
+    } catch {
+      btn.disabled = false; btn.textContent = 'Widerrufen';
+      errEl.textContent = 'Fehler beim Übermitteln. Bitte schreiben Sie uns direkt an info@heku-fahrzeugbau.de.';
+      errEl.style.display = 'block';
+    }
+  }
+  </script>
+
 </body>
 </html>
