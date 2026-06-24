@@ -110,7 +110,7 @@
     .model-table tbody tr:hover { background: rgba(232,0,14,0.03); }
     .model-table tbody td { padding: 16px 20px; font-size: 14px; color: var(--text); vertical-align: middle; }
     .model-table tbody td:last-child { text-align: right; }
-    .model-name { font-weight: 600; font-size: 15px; color: var(--schwarz); }
+    .model-name { font-weight: 600; font-size: 15px; color: var(--schwarz); white-space: nowrap; }
     .model-price { font-size: 17px; font-weight: 600; color: var(--rot); }
     .model-length { font-family: 'DM Sans', monospace; font-size: 13px; color: var(--muted); }
     .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
@@ -323,7 +323,7 @@
           <td><span class="model-length">+ 0,70 m</span></td>
           <td>275 kg</td>
           <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.675,– €</div></td>
+          <td><div class="model-price">ab 1.375,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 350</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Jolle / kleines Segelboot</div></td>
@@ -331,7 +331,7 @@
           <td><span class="model-length">+ 0,70 m</span></td>
           <td>265 kg</td>
           <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.775,– €</div></td>
+          <td><div class="model-price">ab 1.475,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 500</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- / Segelboot</div></td>
@@ -339,7 +339,7 @@
           <td><span class="model-length">+ 1,00 m</span></td>
           <td>450 kg</td>
           <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.875,– €</div></td>
+          <td><div class="model-price">ab 1.575,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 500</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- / Segelboot</div></td>
@@ -347,7 +347,7 @@
           <td><span class="model-length">+ 1,00 m</span></td>
           <td>445 kg</td>
           <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.950,– €</div></td>
+          <td><div class="model-price">ab 1.650,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 750</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- oder Segelboot</div></td>
@@ -355,7 +355,7 @@
           <td><span class="model-length">+ 1,00 m</span></td>
           <td>620 kg</td>
           <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 2.150,– €</div></td>
+          <td><div class="model-price">ab 1.995,– €</div></td>
         </tr>
       </tbody>
     </table>
@@ -394,7 +394,7 @@
           <td><span class="model-length">+ 1,55 m</span></td>
           <td>660 kg</td>
           <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.390,– €</div></td>
+          <td><div class="model-price">ab 3.190,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 1100</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
@@ -402,7 +402,7 @@
           <td><span class="model-length">+ 1,55 m</span></td>
           <td>815 kg</td>
           <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.490,– €</div></td>
+          <td><div class="model-price">ab 3.390,– €</div></td>
         </tr>
         <tr onclick="openKonfigurator()">
           <td><div class="model-name">B 1300</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
@@ -455,25 +455,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.610 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.495,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2000</div></td><td><span class="model-length">7,10 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.600 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.695,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2000</div></td><td><span class="model-length">7,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.590 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.895,– €</div></td></tr>
+        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.610 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.655,– €</div></td></tr>
 
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.000 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.950,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2500</div></td><td><span class="model-length">7,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.985 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.150,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2500</div></td><td><span class="model-length">8,10 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.970 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.350,– €</div></td></tr>
+        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.000 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.110,– €</div></td></tr>
 
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2700</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.150 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.150,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2700</div></td><td><span class="model-length">7,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.135 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.295,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2700</div></td><td><span class="model-length">8,10 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.120 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.450,– €</div></td></tr>
+        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2700</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.150 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.310,– €</div></td></tr>
 
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.400 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.695,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3000</div></td><td><span class="model-length">7,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.380 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.895,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3000</div></td><td><span class="model-length">8,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.360 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.995,– €</div></td></tr>
+        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.400 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.855,– €</div></td></tr>
 
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.850 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 6.395,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3500</div></td><td><span class="model-length">7,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.830 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 6.585,– €</div></td></tr>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3500</div></td><td><span class="model-length">8,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.810 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 6.795,– €</div></td></tr>
+        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.850 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 6.555,– €</div></td></tr>
       </tbody>
     </table>
     <div style="margin-top:20px;">
