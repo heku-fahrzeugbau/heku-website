@@ -512,7 +512,7 @@
             <div class="check-item" data-value="kielverlaengerung" data-price="395" onclick="toggleCheck(this)">
               <div class="check-box"></div>
               <div class="check-text">
-                <div class="check-title">Kielvertiefung (ab 70 cm)</div>
+                <div class="check-title">Kielvertiefung</div>
                 <div class="check-desc">Einachsig 395 € · Tandem 595 €</div>
               </div>
               <div class="check-price">+ ab 395 €</div>
@@ -697,15 +697,24 @@
   // ─── DATENBASIS ────────────────────────────────────────────────────────────
   // B-Serie 2026 — Modelle mit Gewichtsgrenzen und Preisranges
   const MODELLE = [
-    { id:'B750',  name:'B 750',   maxGewicht:750,  gebremst:false, preisMin:1650,  preisMax:2050  },
-    { id:'B1000', name:'B 1000',  maxGewicht:1000, gebremst:true,  preisMin:2200,  preisMax:2700  },
-    { id:'B1300', name:'B 1300',  maxGewicht:1300, gebremst:true,  preisMin:2600,  preisMax:3100  },
-    { id:'B1500', name:'B 1500',  maxGewicht:1500, gebremst:true,  preisMin:2900,  preisMax:3500  },
-    { id:'B1800', name:'B 1800',  maxGewicht:1800, gebremst:true,  preisMin:3300,  preisMax:4000  },
-    { id:'B2000', name:'B 2000',  maxGewicht:2000, gebremst:true,  preisMin:3700,  preisMax:4500  },
-    { id:'B2500', name:'B 2500',  maxGewicht:2500, gebremst:true,  preisMin:4400,  preisMax:5300  },
-    { id:'B3000', name:'B 3000',  maxGewicht:3000, gebremst:true,  preisMin:5100,  preisMax:6200  },
-    { id:'B3500', name:'B 3500',  maxGewicht:3500, gebremst:true,  preisMin:5800,  preisMax:7000  },
+    // UNGEBREMST – Fixlängen
+    { id:'B350',  name:'B 350',   maxZuladung:275,  gebremst:false, achse:'–',        preisMin:1375, preisMax:1475  },
+    { id:'B500',  name:'B 500',   maxZuladung:450,  gebremst:false, achse:'–',        preisMin:1575, preisMax:1650  },
+    { id:'B750',  name:'B 750',   maxZuladung:620,  gebremst:false, achse:'–',        preisMin:1995, preisMax:1995  },
+    
+    // GEBREMST EINACHSER – Längenvariabel (Basispreis)
+    { id:'B900',  name:'B 900',   maxZuladung:660,  gebremst:true,  achse:'Einachser', preisMin:3190, preisMax:3190  },
+    { id:'B1100', name:'B 1100',  maxZuladung:815,  gebremst:true,  achse:'Einachser', preisMin:3390, preisMax:3390  },
+    { id:'B1300', name:'B 1300',  maxZuladung:1000, gebremst:true,  achse:'Einachser', preisMin:3590, preisMax:3590  },
+    { id:'B1500', name:'B 1500',  maxZuladung:1175, gebremst:true,  achse:'Einachser', preisMin:3850, preisMax:3850  },
+    { id:'B1800', name:'B 1800',  maxZuladung:1450, gebremst:true,  achse:'Einachser', preisMin:3995, preisMax:3995  },
+    
+    // GEBREMST TANDEM – Längenvariabel (Basispreis)
+    { id:'B2000', name:'B 2000',  maxZuladung:1610, gebremst:true,  achse:'Tandem',    preisMin:4655, preisMax:4655  },
+    { id:'B2500', name:'B 2500',  maxZuladung:2000, gebremst:true,  achse:'Tandem',    preisMin:5110, preisMax:5110  },
+    { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:5310, preisMax:5310  },
+    { id:'B3000', name:'B 3000',  maxZuladung:2400, gebremst:true,  achse:'Tandem',    preisMin:5855, preisMax:5855  },
+    { id:'B3500', name:'B 3500',  maxZuladung:2850, gebremst:true,  achse:'Tandem',    preisMin:6555, preisMax:6555  },
   ];
 
   const SICHERHEITSFAKTOR = 1.25; // Bootsgewicht × 1.25 = Mindest-zGG
@@ -762,7 +771,12 @@
   // ─── MODELL-EMPFEHLUNG ─────────────────────────────────────────────────────
   function berechneErgebnis() {
     const minZGG = state.gewicht * SICHERHEITSFAKTOR;
-    let modell = MODELLE.find(m => m.maxGewicht >= minZGG) || MODELLE[MODELLE.length-1];
+    let modell = MODELLE.find(m => m.maxZuladung >= minZGG) || MODELLE[MODELLE.length-1];
+    
+    // Längenkontrolle: Boote > 6,5m sollten nicht auf ungebremste (B350-B750)
+    if (state.laenge && state.laenge > 6.5 && !modell.gebremst) {
+      modell = MODELLE.find(m => m.gebremst) || modell;
+    }
 
     // Kielvertiefung: tiefer Kiel > 0.7m → automatisch hinzugefügt
     if (state.tiefgang > 0.7 && !state.zubehoer.includes('kielverlaengerung')) {
@@ -773,14 +787,26 @@
     // Zubehör-Aufpreis berechnen
     let zubehoerAufpreis = 0;
     const isTandem = modell && modell.achse === 'Tandem';
+    const isEinachser = modell && modell.achse === 'Einachser';
     state.zubehoer.forEach(z => {
       const el = document.querySelector(`[data-value="${z}"]`);
       if (!el) return;
       let preis = parseInt(el.dataset.price || 0);
-      // 100km/h: Tandem = 2 Achsen = 280€, Einachsig = 140€
-      if (z === '100kmh' && isTandem) preis = 280;
+      // Kielvertiefung: Einachser 395€, Tandem 595€
+      if (z === 'kielverlaengerung') {
+        preis = isTandem ? 595 : (isEinachser ? 395 : 0);
+      }
+      // 100km/h: Tandem 280€, Einachser 140€
+      if (z === '100kmh') {
+        preis = isTandem ? 280 : 140;
+      }
       zubehoerAufpreis += preis;
     });
+    
+    // Tiefgang > 0.7m = +180€ (längere Stützen)
+    if (state.tiefgang > 0.7) {
+      zubehoerAufpreis += 180;
+    }
 
     state.empfohlenesModell = modell;
     const pMin = modell.preisMin + zubehoerAufpreis;
@@ -806,8 +832,8 @@
     const specsEl = document.getElementById('resultSpecs');
     specsEl.innerHTML = `
       <div class="spec-card">
-        <div class="spec-label">Max. Gesamtgewicht</div>
-        <div class="spec-value">${modell.maxGewicht.toLocaleString('de-DE')} kg</div>
+        <div class="spec-label">Max. Zuladung</div>
+        <div class="spec-value">${modell.maxZuladung.toLocaleString('de-DE')} kg</div>
       </div>
       <div class="spec-card">
         <div class="spec-label">Bremssystem</div>
@@ -815,8 +841,19 @@
       </div>
       <div class="spec-card">
         <div class="spec-label">Zulassung</div>
-        <div class="spec-value">${modell.maxGewicht <= 2000 ? 'KBA-Typprüfung' : 'TÜV EG-Typgen.'}</div>
+        <div class="spec-value">${modell.achse === 'Tandem' ? 'TÜV EG-Typgen.' : 'KBA-Typprüfung'}</div>
       </div>`;
+    
+    // 100km/h Checkbox: Bei B350-B750 ausblenden (serienmäßig)
+    const km100Checkbox = document.querySelector('[data-value="100kmh"]');
+    if (km100Checkbox) {
+      if (!modell.gebremst) {
+        // Ungebremst = B350-B750 = 100km/h serienmäßig
+        km100Checkbox.style.display = 'none';
+      } else {
+        km100Checkbox.style.display = 'flex';
+      }
+    }
   }
 
   // ─── KARTEN & CHECKBOXEN ───────────────────────────────────────────────────
