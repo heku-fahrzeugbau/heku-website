@@ -1,0 +1,89 @@
+<!-- ============================================================
+     HEKU CONVERSION + GA4 TRACKING BLOCK
+     Vor </body> auf JEDER Seite einfügen (einmal pro Seite).
+     Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
+     Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
+     echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.
+     ============================================================ -->
+
+<!-- Mobile Sticky-CTA (nur < 768px sichtbar) -->
+<div class="heku-sticky-cta" role="navigation" aria-label="Schnellkontakt">
+  <a href="tel:+49521200066" class="hsc-btn hsc-call" aria-label="HEKU anrufen">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.56 3.5a1 1 0 01-.24 1z"/></svg>
+    <span>Anrufen</span>
+  </a>
+  <a href="/kontakt.html" class="hsc-btn hsc-inquiry">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1zm8 7L4.5 6.3 4 7l8 5 8-5-.5-.7z"/></svg>
+    <span>Anfrage</span>
+  </a>
+  <a href="/konfigurator.html" class="hsc-btn hsc-config">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2 1.7.3 2.6-2.5.6-1 2.4L13 20l-1 .1L11 20l-1.8-1.1-2.5-.6L4 15.7 6 14v-.1L4 12l2-1.7L5.7 7l2.5-.6 1-2.4L13 4l1-.1L15 4l1.8 1.1 2.5.6.3 2.6L21 12z"/></svg>
+    <span>Konfigurator</span>
+  </a>
+</div>
+
+<style>
+  .heku-sticky-cta{display:none;}
+  @media(max-width:768px){
+    .heku-sticky-cta{
+      display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+      position:fixed;left:0;right:0;bottom:0;z-index:300;
+      background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 -6px 20px rgba(0,0,0,0.25);
+      padding-bottom:env(safe-area-inset-bottom);
+    }
+    .hsc-btn{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+      padding:9px 4px 8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
+      letter-spacing:.02em;color:#fff;text-decoration:none;line-height:1;
+      border-right:1px solid rgba(255,255,255,0.08);
+    }
+    .hsc-btn:last-child{border-right:none;}
+    .hsc-btn svg{opacity:.9;}
+    .hsc-call{color:#fff;}
+    .hsc-config{background:#E8000E;}
+    .hsc-inquiry{color:#fff;}
+    .hsc-btn:active{opacity:.75;}
+    /* Platz schaffen, damit Footer nicht verdeckt wird */
+    body{padding-bottom:60px;}
+  }
+</style>
+
+<script>
+/* HEKU Lead- & Event-Tracking ------------------------------------------------
+   Robust: bricht nie, auch wenn GA4 blockiert/geladen wird nicht.            */
+(function () {
+  "use strict";
+
+  // Sicherer gtag-Wrapper: schluckt Fehler, wenn gtag fehlt/geblockt ist.
+  function hekuTrack(eventName, params) {
+    try {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, params || {});
+      }
+    } catch (e) { /* absichtlich still */ }
+  }
+  // Global verfuegbar machen (fuer Formular-Erfolg in kontakt/konfigurator/shop)
+  window.hekuTrack = hekuTrack;
+
+  var path = (location && location.pathname) ? location.pathname : "";
+
+  // Ein Klick-Delegate fuer die ganze Seite -> keine doppelten Listener.
+  document.addEventListener("click", function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+
+    // Telefonklicks (auch aus der Sticky-Bar)
+    if (href.indexOf("tel:") === 0) {
+      hekuTrack("qualify_lead", { lead_type: "phone_click", page_path: path });
+      return;
+    }
+    // E-Mail-Klicks
+    if (href.indexOf("mailto:") === 0) {
+      hekuTrack("qualify_lead", { lead_type: "email_click", page_path: path });
+      return;
+    }
+  }, true);
+})();
+</script>
