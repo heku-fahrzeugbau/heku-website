@@ -787,11 +787,7 @@
       modell = MODELLE.find(m => m.gebremst) || modell;
     }
 
-    // Kielvertiefung: tiefer Kiel > 0.7m → automatisch hinzugefügt
-    if (state.tiefgang > 0.7 && !state.zubehoer.includes('kielverlaengerung')) {
-      state.zubehoer.push('kielverlaengerung');
-      document.querySelector('[data-value="kielverlaengerung"]')?.classList.add('checked');
-    }
+    // Kielvertiefung ist eine manuelle Option und wird NICHT automatisch gesetzt.
 
     // Zubehör-Aufpreis berechnen
     let zubehoerAufpreis = 0;
@@ -812,10 +808,24 @@
       zubehoerAufpreis += preis;
     });
     
-    // Tiefgang > 0.7m = +180€ (längere Stützen)
-    if (state.tiefgang > 0.7) {
+    // Kielbootanhänger-Aufpreis: NUR Segelboot mit Tiefgang > 0,7 m = +180 €
+    if (state.bootstyp === 'segelboot' && state.tiefgang > 0.7) {
       zubehoerAufpreis += 180;
     }
+
+    // Längenzuschlag: nur gebremste Modelle, Basislänge 6,6 m, 0,5-m-Schritte.
+    // Regel: Rahmen muss mind. 0,5 m länger als das Boot sein, aufgerundet aufs 0,5-m-Raster ab 6,6 m.
+    const BASISLAENGE = 6.6;
+    let laengenSchritte = 0;
+    let laengenAufpreis = 0;
+    if (modell.gebremst && state.laenge > BASISLAENGE) {
+      laengenSchritte = Math.max(0, Math.ceil((state.laenge + 0.5 - BASISLAENGE) / 0.5 - 1e-9));
+      const laengenRate = isTandem ? 209 : 155; // UVP je 0,5 m Rahmenlänge
+      laengenAufpreis = laengenSchritte * laengenRate;
+      zubehoerAufpreis += laengenAufpreis;
+    }
+    state.laengenSchritte = laengenSchritte;
+    state.laengenAufpreis = laengenAufpreis;
 
     state.empfohlenesModell = modell;
     const pMin = modell.preisMin + zubehoerAufpreis;
@@ -835,7 +845,7 @@
     // Ergebnis-Seite füllen
     document.getElementById('resultModel').textContent = 'HEKU ' + modell.name;
     document.getElementById('resultPrice').textContent =
-      `ab ca. ${pMin.toLocaleString('de-DE')} € – ${pMax.toLocaleString('de-DE')} €`;
+      `ab ca. ${pMin.toLocaleString('de-DE')} €`;
 
     // Specs
     const specsEl = document.getElementById('resultSpecs');
@@ -936,7 +946,7 @@ Antrieb:      ${state.antrieb}
 Zubehör:      ${zubehoerText}
 
 Empfohlenes Modell: HEKU ${modell?.name || '–'}
-
+${state.laengenSchritte ? `Rahmenverlängerung: +${(state.laengenSchritte * 0.5).toLocaleString('de-DE')} m (${state.laengenSchritte} x 0,5 m) = +${state.laengenAufpreis.toLocaleString('de-DE')} €\n` : ''}${(state.bootstyp === 'segelboot' && state.tiefgang > 0.7) ? `Kielbootanhänger-Aufpreis (Tiefgang > 0,7 m): +180 €\n` : ''}
 Kundendaten:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${anrede} ${vorname} ${nachname}
