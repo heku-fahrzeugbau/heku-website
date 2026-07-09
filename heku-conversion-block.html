@@ -74,14 +74,24 @@
     if (!a) return;
     var href = a.getAttribute("href") || "";
 
-    // Telefonklicks (auch aus der Sticky-Bar)
+    // Telefonklicks (auch aus der Sticky-Bar) -> eigenes Event, KEIN qualify_lead
     if (href.indexOf("tel:") === 0) {
-      hekuTrack("qualify_lead", { lead_type: "phone_click", page_path: path });
+      hekuTrack("phone_click", {
+        link_url: href,
+        link_text: (a.textContent || "").trim().slice(0, 100),
+        page_location: (location && location.href) ? location.href : "",
+        page_path: path
+      });
       return;
     }
-    // E-Mail-Klicks
+    // E-Mail-Klicks -> eigenes Event, KEIN qualify_lead
     if (href.indexOf("mailto:") === 0) {
-      hekuTrack("qualify_lead", { lead_type: "email_click", page_path: path });
+      hekuTrack("email_click", {
+        link_url: href,
+        link_text: (a.textContent || "").trim().slice(0, 100),
+        page_location: (location && location.href) ? location.href : "",
+        page_path: path
+      });
       return;
     }
   }, true);
