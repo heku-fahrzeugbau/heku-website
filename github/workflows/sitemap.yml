@@ -1,0 +1,77 @@
+name: Sitemap generieren
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sitemap
+  cancel-in-progress: false
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo auschecken (volle Historie fuer lastmod)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: sitemap.xml aus Git-Historie erzeugen
+        run: |
+          BASE="https://heku-fahrzeugbau.de"
+          EXCLUDE="404.html"
+
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+
+            for f in $(ls *.html | sort); do
+              skip=0
+              for e in $EXCLUDE; do [ "$f" = "$e" ] && skip=1; done
+              [ $skip -eq 1 ] && continue
+
+              # Seiten mit noindex automatisch ueberspringen (z. B. widerruf.html)
+              if grep -qiE 'name="robots"[^>]*noindex' "$f"; then
+                echo "uebersprungen (noindex): $f" >&2
+                continue
+              fi
+
+              LASTMOD=$(git log -1 --format=%cs -- "$f")
+              [ -z "$LASTMOD" ] && LASTMOD=$(date +%F)
+
+              if [ "$f" = "index.html" ]; then
+                LOC="$BASE/"
+              else
+                LOC="$BASE/$f"
+              fi
+
+              echo "  <url>"
+              echo "    <loc>$LOC</loc>"
+              echo "    <lastmod>$LASTMOD</lastmod>"
+              echo "  </url>"
+            done
+
+            echo '</urlset>'
+          } > sitemap.xml
+
+          echo "--- erzeugte sitemap.xml ---"
+          cat sitemap.xml
+
+      - name: Committen, falls veraendert
+        run: |
+          if git diff --quiet -- sitemap.xml; then
+            echo "sitemap.xml unveraendert, kein Commit noetig."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          git commit -m "chore: sitemap.xml mit lastmod aktualisiert [skip ci]"
+          git push
