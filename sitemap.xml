@@ -1,32 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- HEKU sitemap.xml – alle indexierbaren Seiten. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url><loc>https://heku-fahrzeugbau.de/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-
-  <!-- Produkt- / Kauf-Cluster (kaufnahe Keywords, hoechste Prioritaet) -->
-  <url><loc>https://heku-fahrzeugbau.de/produkte.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/bootstrailer.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/motorbootanhaenger.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/segelbootanhaenger.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/jollenanhaenger.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-
-  <!-- Conversion / Beratung -->
-  <url><loc>https://heku-fahrzeugbau.de/konfigurator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/kontakt.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/haendler.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-
-  <!-- Content / Trust / GEO -->
-  <url><loc>https://heku-fahrzeugbau.de/wasserdichte-radnabe.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/bootsanhaenger-nach-mass.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/erfahrungen.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/ratgeber-bootsanhaenger.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/ueber-uns.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/shop.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://heku-fahrzeugbau.de/karriere.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
-
-  <!-- Info-Seite eingestelltes Produkt (faengt HEKU Wohnmobil / HEKU Car Camp Suchen ab) -->
-  <url><loc>https://heku-fahrzeugbau.de/wohnmobile.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-
+  <url>
+    <loc>https://heku-fahrzeugbau.de/bootsanhaenger-nach-mass.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/bootstrailer.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/erfahrungen.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/faq.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/google01302b5f976ee5dc.html</loc>
+    <lastmod>2026-04-16</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/google16d7d28f72100acd.html</loc>
+    <lastmod>2026-04-16</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/haendler.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/heku-conversion-block.html</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/jollenanhaenger.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/karriere.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/konfigurator.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/kontakt.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/motorbootanhaenger.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/produkte.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/ratgeber-bootsanhaenger.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/segelbootanhaenger.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/shop.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/ueber-uns.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/wasserdichte-radnabe.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/wohnmobile.html</loc>
+    <lastmod>2026-07-13</lastmod>
+  </url>
 </urlset>
