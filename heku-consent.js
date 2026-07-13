@@ -95,15 +95,17 @@
     + '@media(max-width:640px){.heku-cc{padding:16px 18px 20px;}'
     + '.heku-cc-in{gap:14px;}.heku-cc-btns{width:100%;}.heku-cc-btn{flex:1;padding:12px 10px;}}';
 
+  /* Umlaute als Unicode-Escapes: funktioniert unabhaengig von der
+     Zeichenkodierung, mit der der Server diese Datei ausliefert. */
   var HTML = ''
     + '<div class="heku-cc-in">'
     + '  <div class="heku-cc-txt">'
-    + '    <strong>Ihre Entscheidung ueber Cookies</strong>'
+    + '    <strong>Ihre Entscheidung \u00fcber Cookies</strong>'
     + '    Wir nutzen Google Analytics, um zu verstehen, wie unsere Website genutzt wird, '
-    + '    und Google Maps zur Anzeige unseres Standorts. Beides setzt Cookies und uebertraegt '
+    + '    und Google Maps zur Anzeige unseres Standorts. Beides setzt Cookies und \u00fcbertr\u00e4gt '
     + '    Daten an Google. Das geschieht nur mit Ihrer Einwilligung. '
-    + '    Ohne Einwilligung funktioniert die Website vollstaendig. '
-    + '    Mehr dazu in der <a href="/datenschutz.html">Datenschutzerklaerung</a>.'
+    + '    Ohne Einwilligung funktioniert die Website vollst\u00e4ndig. '
+    + '    Mehr dazu in der <a href="/datenschutz.html">Datenschutzerkl\u00e4rung</a>.'
     + '  </div>'
     + '  <div class="heku-cc-btns">'
     + '    <button type="button" class="heku-cc-btn" data-cc="deny">Ablehnen</button>'
