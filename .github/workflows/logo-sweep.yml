@@ -1,0 +1,48 @@
+name: Logo-Sweep (einmalig)
+
+# Ersetzt logo.png durch logo.svg in allen <img>-Tags.
+# Die JSON-LD-Eintraege ("logo": "https://.../logo.png") bleiben bewusst unveraendert,
+# weil Google im Organization-Schema kein SVG akzeptiert.
+#
+# Manuell starten: Actions -> "Logo-Sweep (einmalig)" -> Run workflow
+# Danach diese Datei loeschen.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pruefen, ob logo.svg existiert
+        run: |
+          if [ ! -f logo.svg ]; then
+            echo "FEHLER: logo.svg liegt nicht im Repo-Root. Abbruch."
+            exit 1
+          fi
+
+      - name: Vorher
+        run: grep -rn 'src="logo\.png"' *.html || echo "keine Treffer"
+
+      - name: Ersetzen
+        run: |
+          sed -i 's|src="logo\.png"|src="logo.svg"|g' *.html
+          echo "--- Nachher: verbleibende logo.png-Referenzen ---"
+          grep -rn 'logo\.png' *.html || echo "keine mehr"
+
+      - name: Committen
+        run: |
+          if git diff --quiet; then
+            echo "Nichts zu aendern."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: Logo in allen <img>-Tags auf logo.svg umgestellt"
+          git push
