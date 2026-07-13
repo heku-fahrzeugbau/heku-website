@@ -195,6 +195,12 @@
     /* KARTE PLACEHOLDER */
     .map-placeholder { margin-top: 40px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
     .map-placeholder iframe { width: 100%; height: 220px; border: none; display: block; }
+    .map-consent { height: 220px; background: var(--bg2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; }
+    .map-consent-txt { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 420px; margin: 0; }
+    .map-consent-txt a { color: var(--rot); text-decoration: underline; }
+    .map-consent-btn { font: inherit; font-size: 13px; font-weight: 600; color: #fff; background: var(--rot); border: none; border-radius: 6px; padding: 10px 22px; cursor: pointer; transition: background .18s; }
+    .map-consent-btn:hover { background: #c40009; }
+    .map-consent-alt { font-size: 12px; color: var(--muted); text-decoration: underline; }
 
     /* CTA BANNER */
     .cta-banner { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 56px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; position: relative; overflow: hidden; }
@@ -494,10 +500,21 @@
       </div>
 
       <div class="map-placeholder">
+        <div class="map-consent" data-consent-placeholder="heku-map">
+          <p class="map-consent-txt">
+            Hier wird eine Karte von Google Maps angezeigt. Dabei werden Daten an Google
+            uebertragen und Cookies gesetzt. Details in der
+            <a href="datenschutz.html">Datenschutzerklaerung</a>.
+          </p>
+          <button type="button" class="map-consent-btn" onclick="hekuAllowMap()">Karte laden</button>
+          <a class="map-consent-alt" href="https://maps.app.goo.gl/PUWT9g3SxmCnEfsR7" target="_blank" rel="noopener">Stattdessen in Google Maps oeffnen</a>
+        </div>
         <iframe
-          src="https://maps.google.com/maps?q=HEKU%20Fahrzeugbau%20GmbH%2C%20Bunzlauer%20Str.%206%2C%2033719%20Bielefeld&amp;z=16&amp;hl=de&amp;output=embed"
+          id="heku-map"
+          style="display:none"
+          data-consent-src="https://maps.google.com/maps?q=HEKU%20Fahrzeugbau%20GmbH%2C%20Bunzlauer%20Str.%206%2C%2033719%20Bielefeld&amp;z=16&amp;hl=de&amp;output=embed"
           allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          title="Standort HEKU Fahrzeugbau GmbH, Bunzlauer Str. 6, 33719 Bielefeld">
+          title="Standort HEKU Fahrzeugbau GmbH, Bunzlauer Straße 6, 33719 Bielefeld">
         </iframe>
       </div>
     </div>
@@ -697,7 +714,19 @@
 
 <!-- ============================================================
      HEKU CONVERSION + GA4 TRACKING BLOCK
-     Vor </body> auf JEDER Seite einfügen (einmal pro Seite).
+     Vor <script>
+  // Laedt ausschliesslich die Karte. Analytics bleibt davon unberuehrt.
+  function hekuAllowMap() {
+    var f = document.getElementById('heku-map');
+    if (!f) return;
+    var src = f.getAttribute('data-consent-src');
+    if (src) { f.setAttribute('src', src); f.removeAttribute('data-consent-src'); }
+    f.style.display = 'block';
+    var ph = document.querySelector('[data-consent-placeholder="heku-map"]');
+    if (ph) ph.style.display = 'none';
+  }
+</script>
+</body> auf JEDER Seite einfügen (einmal pro Seite).
      Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
      Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
      echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.
