@@ -21,21 +21,19 @@
   Bewertung erscheint ausschliesslich als sichtbarer Text mit Datum.
 -->
 
-<!-- LocalBusiness synchron mit index.html und kontakt.html (gleiche @id, identische NAP-Daten). -->
+<!-- image absichtlich weggelassen: reale Logo-URL nicht verifiziert. TODO: echte Bild-URL eintragen (z.B. https://heku-fahrzeugbau.de/<pfad>/logo.png). -->
+<!-- priceRange "ab 1.375 EUR" verifiziert gegen Haendler-Preisliste 2026 (B350) und Startseite heku-fahrzeugbau.de. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://heku-fahrzeugbau.de/#organization",
   "name": "HEKU Fahrzeugbau GmbH",
-  "url": "https://heku-fahrzeugbau.de",
-  "logo": "https://heku-fahrzeugbau.de/logo.png",
-  "image": "https://heku-fahrzeugbau.de/hero.jpg",
+  "url": "https://heku-fahrzeugbau.de/",
   "description": "Hersteller von Bootsanhängern und Bootstrailern in Einzelfertigung nach Maß. Feuerverzinkt nach DIN 1461, Zulassung bis 3.500 kg, mit eigenentwickelter wasserdichter Radnabe.",
-  "telephone": "+49-521-200066",
+  "telephone": "+49 521 200066",
   "email": "info@heku-fahrzeugbau.de",
   "foundingDate": "1959",
-  "priceRange": "€€",
+  "priceRange": "ab 1.375 EUR",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Bunzlauer Straße 6",
@@ -44,30 +42,15 @@
     "addressRegion": "Nordrhein-Westfalen",
     "addressCountry": "DE"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 52.01016,
-    "longitude": 8.59779
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens": "08:00",
-      "closes": "16:30"
-    }
-  ],
-  "areaServed": {"@type": "Country", "name": "Deutschland"},
+  "areaServed": "DE",
   "sameAs": [
     "https://www.instagram.com/hekutrailer/",
     "https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/",
-    "https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/",
-    "https://www.nauticexpo.com/prod/heku-fahrzeugbau-gmbh/",
-    "https://www.wlw.de/de/firma/heku-fahrzeugbau-gmbh",
-    "https://maps.app.goo.gl/PUWT9g3SxmCnEfsR7"
+    "https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/"
   ]
 }
 </script>
+<!-- TODO sameAs optional ergaenzen, sobald verfuegbar: URL des Google Business Profils. -->
 
 <script type="application/ld+json">
 {
@@ -249,9 +232,9 @@
     Bootsanhänger und Bootstrailer in Einzelfertigung, heute in dritter Generation der Familie Kollmeier.
   </p>
 
-  <!-- Bewertungsschnitt und Anzahl am 13.07.2026 gegen das Google Business Profil verifiziert: 4,6 Sterne, 43 Rezensionen. -->
+  <!-- TODO: Bewertungsschnitt und Anzahl gegen das Google Business Profil pruefen, bevor deployt wird. -->
   <div class="badge-row">
-    <div class="badge"><a href="https://maps.app.goo.gl/PUWT9g3SxmCnEfsR7" target="_blank" rel="noopener"><strong>4,6 von 5 Sternen</strong> aus 43 öffentlichen Google-Rezensionen</a>, Stand 13. Juli 2026</div>
+    <div class="badge">Über 40 öffentliche Google-Rezensionen mit einem Durchschnitt von rund <strong>4,6 von 5 Sternen</strong>, Stand Juli 2026</div>
     <div class="badge">Familienbetrieb seit <strong>1959</strong></div>
     <div class="badge">Eigenentwickelte wasserdichte Radnabe, <strong>5 Jahre Garantie auf die Radnabe</strong></div>
   </div>
