@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <script src="/heku-consent-v2.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
   <script>
@@ -343,14 +344,14 @@
 
     <!-- FORMULAR -->
     <div class="contact-form-wrap">
-      <div id="formWrap">
+      <form id="formWrap" onsubmit="submitKontakt(event)" novalidate>
         <div class="form-title">Schreiben Sie uns</div>
         <p class="form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder. Wir antworten in der Regel innerhalb von 1–2 Werktagen.</p>
 
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Anrede <span>*</span></label>
-            <select class="form-select form-input" id="anrede">
+            <label class="form-label" for="anrede">Anrede <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <select class="form-select form-input" id="anrede" name="anrede">
               <option value="">— Bitte wählen —</option>
               <option>Herr</option>
               <option>Frau</option>
@@ -362,44 +363,44 @@
         </div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Vorname <span>*</span></label>
-            <input type="text" class="form-input" id="vorname" placeholder="Max">
+            <label class="form-label" for="vorname">Vorname <span>*</span></label>
+            <input type="text" class="form-input" id="vorname" name="vorname" placeholder="Max" autocomplete="given-name" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Nachname <span>*</span></label>
-            <input type="text" class="form-input" id="nachname" placeholder="Mustermann">
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">E-Mail <span>*</span></label>
-            <input type="email" class="form-input" id="email" placeholder="max@beispiel.de">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Telefon</label>
-            <input type="tel" class="form-input" id="telefon" placeholder="+49 521 ...">
+            <label class="form-label" for="nachname">Nachname <span>*</span></label>
+            <input type="text" class="form-input" id="nachname" name="nachname" placeholder="Mustermann" autocomplete="family-name" required>
           </div>
         </div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">PLZ <span>*</span></label>
-            <input type="text" class="form-input" id="plz" placeholder="12345" maxlength="10">
+            <label class="form-label" for="email">E-Mail <span>*</span></label>
+            <input type="email" class="form-input" id="email" name="email" placeholder="max@beispiel.de" autocomplete="email" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Ort <span>*</span></label>
-            <input type="text" class="form-input" id="ort" placeholder="Musterstadt">
+            <label class="form-label" for="telefon">Telefon</label>
+            <input type="tel" class="form-input" id="telefon" name="telefon" placeholder="+49 521 ..." autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="plz">PLZ <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <input type="text" class="form-input" id="plz" name="plz" placeholder="12345" maxlength="10" autocomplete="postal-code" inputmode="numeric">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ort">Ort <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <input type="text" class="form-input" id="ort" name="ort" placeholder="Musterstadt" autocomplete="address-level2">
           </div>
         </div>
         <div class="form-grid full" style="margin-bottom:18px">
           <div class="form-group">
-            <label class="form-label">Straße &amp; Hausnummer</label>
-            <input type="text" class="form-input" id="strasse" placeholder="Musterstraße 1">
+            <label class="form-label" for="strasse">Straße &amp; Hausnummer</label>
+            <input type="text" class="form-input" id="strasse" name="strasse" placeholder="Musterstraße 1" autocomplete="street-address">
           </div>
         </div>
         <div class="form-grid full" style="margin-bottom:18px">
           <div class="form-group">
-            <label class="form-label">Betreff <span>*</span></label>
-            <select class="form-select form-input" id="betreff">
+            <label class="form-label" for="betreff">Betreff <span>*</span></label>
+            <select class="form-select form-input" id="betreff" name="betreff" required>
               <option value="">— Bitte wählen —</option>
               <option>Anfrage Bootsanhänger</option>
               <option>Anfrage Zubehör / Ersatzteile</option>
@@ -412,8 +413,8 @@
         </div>
         <div class="form-grid full" style="margin-bottom:0">
           <div class="form-group">
-            <label class="form-label">Nachricht <span>*</span></label>
-            <textarea class="form-textarea" id="nachricht" placeholder="Wie können wir Ihnen helfen?"></textarea>
+            <label class="form-label" for="nachricht">Nachricht <span>*</span></label>
+            <textarea class="form-textarea" id="nachricht" name="nachricht" placeholder="Wie können wir Ihnen helfen?" required></textarea>
           </div>
         </div>
 
@@ -431,17 +432,17 @@
         </div>
 
         <div class="consent-row">
-          <input type="checkbox" class="consent-check" id="consent">
+          <input type="checkbox" class="consent-check" id="consent" required>
           <label class="consent-text" for="consent">
             Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert werden. Die <a href="datenschutz.html">Datenschutzerklärung</a> habe ich zur Kenntnis genommen.
           </label>
         </div>
 
         <div class="form-error" id="formErr"></div>
-        <button class="btn-submit" id="submitBtn" onclick="submitKontakt()">
+        <button type="submit" class="btn-submit" id="submitBtn">
           Nachricht senden →
         </button>
-      </div>
+      </form>
 
       <div class="success-msg" id="successMsg">
         <div class="success-icon">
@@ -592,7 +593,8 @@
     });
 
     // Formular absenden
-    async function submitKontakt() {
+    async function submitKontakt(event) {
+      if (event) event.preventDefault();
       const anrede   = document.getElementById('anrede').value;
       const vorname  = document.getElementById('vorname').value.trim();
       const nachname = document.getElementById('nachname').value.trim();
@@ -606,7 +608,7 @@
       const consent  = document.getElementById('consent').checked;
       const errEl    = document.getElementById('formErr');
 
-      if (!anrede || !vorname || !nachname || !email || !plz || !ort || !betreff || !nachricht) {
+      if (!vorname || !nachname || !email || !betreff || !nachricht) {
         errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
         errEl.classList.add('show'); return;
       }
@@ -645,7 +647,8 @@
           method: 'POST',
           body: formData
         });
-        if (res.ok) {
+        const result = await res.json().catch(() => null);
+        if (res.ok && result && result.success === true) {
           // GA4: qualify_lead nur bei erfolgreichem Submit
           if (window.hekuTrack) {
             window.hekuTrack('qualify_lead', { lead_type: 'contact_form', form_name: 'kontaktformular', page_location: location.href });
@@ -672,7 +675,9 @@
           document.getElementById('formWrap').style.display = 'none';
           document.getElementById('successMsg').classList.add('show');
           window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
-        } else throw new Error();
+        } else {
+          throw new Error(result && result.message ? result.message : 'Web3Forms hat die Anfrage nicht bestätigt.');
+        }
       } catch {
         btn.disabled = false;
         btn.textContent = 'Nachricht senden →';
