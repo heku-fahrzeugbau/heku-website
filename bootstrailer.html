@@ -199,7 +199,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -414,6 +414,50 @@
       .cta-banner { padding: 32px 24px; }
       .page-header-stats { gap: 28px; }
     }
+  
+    /* ===== PREISLISTEN-BLOECKE / Design: HEKU Preisliste 2026 ===== */
+    :root { --pl-ink:#1C1C1E; --pl-ink2:#26282B; --pl-grau:#6B6E73; --pl-grau2:#8A8D92; --pl-rot:#D62E2D; --pl-line:#E5E5E7;
+            --pl-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,monospace; --pl-serif:'Spectral',Georgia,serif; }
+    .pl-sec { margin: 56px 0; }
+    .pl-sec + .pl-sec { margin-top: 48px; }
+    .pl-eyebrow { font-family:var(--pl-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pl-rot); margin-bottom:14px; }
+    .pl-head { display:flex; align-items:baseline; gap:16px; }
+    .pl-num { font-family:var(--pl-mono); font-size:13px; color:var(--pl-rot); letter-spacing:.06em; }
+    .pl-title { font-family:var(--pl-serif); font-weight:500; font-size:clamp(21px,2.4vw,28px); color:var(--pl-ink); line-height:1.15; }
+    .pl-rule { flex:1; height:1px; background:var(--pl-ink); align-self:center; min-width:24px; }
+    .pl-range { font-family:var(--pl-mono); font-size:12px; color:var(--pl-grau2); letter-spacing:.04em; white-space:nowrap; }
+    .pl-lead { font-size:14px; line-height:1.75; color:var(--pl-grau); margin:14px 0 0; max-width:780px; }
+    .pl-lead b, .pl-lead strong { color:var(--pl-ink); font-weight:600; }
+    .pl-serie { border-top:1px solid var(--pl-line); padding-top:18px; margin:26px 0 0; }
+    .pl-row { font-size:14px; line-height:1.8; color:var(--pl-grau); margin-bottom:10px; max-width:820px; }
+    .pl-row:last-child { margin-bottom:0; }
+    .pl-row b { color:var(--pl-ink); font-weight:600; }
+    .pl-group { display:flex; align-items:baseline; gap:12px; margin:40px 0 0; }
+    .pl-group-name { font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--pl-ink); white-space:nowrap; }
+    .pl-group-sub { font-family:var(--pl-serif); font-style:italic; font-size:13px; color:var(--pl-grau2); white-space:nowrap; }
+    .pl-diamond { color:var(--pl-rot); font-size:10px; }
+    .pl-tablewrap { overflow-x:auto; margin-top:8px; }
+    .pl-table { width:100%; border-collapse:collapse; }
+    .pl-table th { font-family:var(--pl-mono); font-size:10px; font-weight:400; letter-spacing:.1em; text-transform:uppercase;
+                   color:var(--pl-grau2); padding:10px 12px 8px; text-align:left; border-bottom:1px solid var(--pl-ink); white-space:nowrap; }
+    .pl-table th.pl-r, .pl-table td.pl-r { text-align:right; }
+    .pl-table td { padding:11px 12px; font-size:14px; color:var(--pl-ink2); line-height:1.5; border-bottom:1px solid var(--pl-line); vertical-align:top; }
+    .pl-table tbody tr:last-child td { border-bottom:none; }
+    .pl-table td.pl-art { font-family:var(--pl-mono); font-size:11px; color:var(--pl-grau2); white-space:nowrap; }
+    .pl-table td.pl-netto { font-family:var(--pl-mono); font-size:12px; color:var(--pl-grau); white-space:nowrap; }
+    .pl-table td.pl-brutto { font-family:var(--pl-serif); font-weight:600; font-size:15px; color:var(--pl-rot); white-space:nowrap; }
+    .pl-note { font-family:var(--pl-mono); font-size:11px; letter-spacing:.03em; color:var(--pl-grau2); line-height:1.8;
+               margin-top:24px; padding-top:14px; border-top:1px solid var(--pl-line); }
+    .pl-ask { font-size:14px; line-height:1.7; color:var(--pl-grau); margin-top:22px; }
+    .pl-ask b { color:var(--pl-ink); font-weight:600; }
+    .pl-ask a { color:var(--pl-rot); font-weight:500; }
+    @media (max-width:640px) {
+      .pl-head { flex-wrap:wrap; gap:8px; }
+      .pl-rule { display:none; }
+      .pl-group { flex-wrap:wrap; gap:8px; }
+      .pl-table th:first-child, .pl-table td:first-child { display:none; }
+      .pl-table td { font-size:13px; padding:10px 8px; }
+    }
   </style>
 </head>
 <body>
@@ -591,6 +635,45 @@
       <p class="sec-text">Alle Preise inkl. 19% MwSt., ab Werk Bielefeld. Irrtümer und Änderungen vorbehalten. Modelle anklicken für Detailseite oder Konfigurator.</p>
     </div>
 
+    <div class="pl-sec reveal" id="serienausstattung">
+      <div class="pl-eyebrow">Serienausstattung &middot; Preisliste 2026</div>
+      <div class="pl-head">
+        <span class="pl-num">01</span>
+        <span class="pl-title">Ungebremste Anh&auml;nger</span>
+        <span class="pl-rule"></span>
+        <span class="pl-range">B 350 &ndash; B 750</span>
+      </div>
+      <div class="pl-serie">
+        <div class="pl-row"><b>Serienausstattung:</b> Kielauflage vorne &middot; Langauflage / Polsterkissen hinten &middot; ausziehbare Beleuchtung &middot; eigenentwickelte wasserdichte Radnabe &middot; 5 Jahre Garantie &middot; feuerverzinkt &middot; inkl. Betriebserlaubnis (CoC).</div>
+      </div>
+      <div style="height:34px"></div>
+      <div class="pl-head">
+        <span class="pl-num">02</span>
+        <span class="pl-title">Gebremste Einachser</span>
+        <span class="pl-rule"></span>
+        <span class="pl-range">B 900 &ndash; B 1800</span>
+      </div>
+      <div class="pl-serie">
+        <div class="pl-row"><b>Motorboot-Ausf&uuml;hrung:</b> R&uuml;ckfahrautomatik, Kielrollen, Langauflagen mit Gewindespindeln, St&uuml;tzrad, Windenstand mit Sicherheitswinde (horizontal &amp; vertikal verstellbar), Einzelradfederung, 4 Verzurr&ouml;sen.</div>
+        <div class="pl-row"><b>Segelboot-Ausf&uuml;hrung:</b> R&uuml;ckfahrautomatik, St&uuml;tzrad, vordere Bugst&uuml;tze verstellbar, 4 Rumpfst&uuml;tzen verstellbar, Kielauflage in Achsh&ouml;he (tiefster Schwerpunkt), 4 Verzurr&ouml;sen.</div>
+        <div class="pl-row"><b>Zulassung:</b> inkl. Betriebserlaubnis (CoC).</div>
+        <div class="pl-row"><b>L&auml;ngenzuschlag:</b> je +0,5&nbsp;m Rahmenl&auml;nge (+0,5&nbsp;m &Uuml;berstand): 130,25&nbsp;&euro; netto / <b>155,00&nbsp;&euro;</b> inkl. MwSt.</div>
+      </div>
+      <div style="height:34px"></div>
+      <div class="pl-head">
+        <span class="pl-num">03</span>
+        <span class="pl-title">Gebremste Tandem-Anh&auml;nger</span>
+        <span class="pl-rule"></span>
+        <span class="pl-range">B 2000 &ndash; B 3500</span>
+      </div>
+      <div class="pl-serie">
+        <div class="pl-row"><b>Serienausstattung:</b> Motorboot- &amp; Segelboot-Ausf&uuml;hrung wie Einachser. R&uuml;ckfahrautomatik, Sicherheitswinde, Einzelradfederung, 4 Verzurr&ouml;sen serienm&auml;&szlig;ig.</div>
+        <div class="pl-row"><b>Zulassung:</b> inkl. T&Uuml;V-Einzelabnahme.</div>
+        <div class="pl-row"><b>L&auml;ngenzuschlag:</b> je +0,5&nbsp;m Rahmenl&auml;nge (+0,5&nbsp;m &Uuml;berstand): 175,63&nbsp;&euro; netto / <b>209,00&nbsp;&euro;</b> inkl. MwSt.</div>
+      </div>
+      <div class="pl-note">Brutto = Endpreis inkl. 19% MwSt. &middot; Netto = Preis ohne MwSt. &middot; Preise ab Werk Bielefeld &middot; Stand Juni 2026 &middot; Irrt&uuml;mer und &Auml;nderungen vorbehalten.</div>
+    </div>
+
     <div class="table-wrap reveal">
       <table class="model-table" style="margin-bottom:12px;">
         <thead>
@@ -651,6 +734,93 @@
     </div>
 
     <p style="margin:24px 0 0;font-size:14px;"><a href="/erfahrungen.html" style="color:var(--rot);font-weight:500;">Kundenstimmen zu HEKU Bootstrailern</a> <span aria-hidden="true" style="color:var(--rot);">&#8594;</span></p>
+
+    <div class="pl-sec reveal" id="zubehoer">
+      <div class="pl-eyebrow">Zubeh&ouml;r zum Bootstrailer</div>
+      <div class="pl-head">
+        <span class="pl-num">&#9670;</span>
+        <span class="pl-title">Zubeh&ouml;r &amp; Aufpreise</span>
+        <span class="pl-rule"></span>
+        <span class="pl-range">AUSZUG PREISLISTE 2026</span>
+      </div>
+      <p class="pl-lead">Alle Preise als Aufpreis zum Grundmodell. <b>Netto</b> = Preis ohne MwSt. &middot; <b>Brutto</b> = Endpreis inkl. 19% MwSt., ab Werk Bielefeld.</p>
+      <div class="pl-group">
+        <span class="pl-diamond">&#9670;</span>
+        <span class="pl-group-name">SLIPHILFEN &amp; SEILWINDEN</span>
+        <span class="pl-group-sub">Winden, Sliprollen &amp; Stahlseile</span>
+        <span class="pl-rule"></span>
+      </div>
+      <div class="pl-tablewrap">
+        <table class="pl-table">
+          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
+          <tbody>
+            <tr><td class="pl-art">50200</td><td>Windenstand mit Winde 1:2, f&uuml;r Boote bis 500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">247,90 &euro;</td><td class="pl-r pl-brutto">295,00 &euro;</td></tr>
+            <tr><td class="pl-art">50201</td><td>Windenstand mit Winde 1:3, f&uuml;r Boote bis 1.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">323,52 &euro;</td><td class="pl-r pl-brutto">384,99 &euro;</td></tr>
+            <tr><td class="pl-art">50202</td><td>Windenstand mit Winde 1:8, f&uuml;r Boote bis 2.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">415,97 &euro;</td><td class="pl-r pl-brutto">495,00 &euro;</td></tr>
+            <tr><td class="pl-art">90005</td><td>Elektrische Seilwinde, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">ab 500,00 &euro;</td><td class="pl-r pl-brutto">ab 595,00 &euro;</td></tr>
+            <tr><td class="pl-art">50251</td><td>4 Luftsliprollen mit vorderer Gewindespindel</td><td class="pl-r pl-netto">399,16 &euro;</td><td class="pl-r pl-brutto">475,00 &euro;</td></tr>
+            <tr><td class="pl-art">50224</td><td>3 Hecksliprollen mit V-Einf&uuml;hrung h&ouml;henverstellbar</td><td class="pl-r pl-netto">247,90 &euro;</td><td class="pl-r pl-brutto">295,00 &euro;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pl-group">
+        <span class="pl-diamond">&#9670;</span>
+        <span class="pl-group-name">SICHERHEIT</span>
+        <span class="pl-group-sub">100&nbsp;km/h, Reserverad &amp; Adapter</span>
+        <span class="pl-rule"></span>
+      </div>
+      <div class="pl-tablewrap">
+        <table class="pl-table">
+          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
+          <tbody>
+            <tr><td class="pl-art">50248</td><td>Radsto&szlig;d&auml;mpfer 1-achsig (erforderlich bei 100&nbsp;km/h Zulassung)</td><td class="pl-r pl-netto">117,65 &euro;</td><td class="pl-r pl-brutto">140,00 &euro;</td></tr>
+            <tr><td class="pl-art">50249</td><td>Radsto&szlig;d&auml;mpfer Tandem (erforderlich bei 100&nbsp;km/h Zulassung)</td><td class="pl-r pl-netto">235,30 &euro;</td><td class="pl-r pl-brutto">280,01 &euro;</td></tr>
+            <tr><td class="pl-art">50238</td><td>Adapterstecker 7- bis 13-polig</td><td class="pl-r pl-netto">32,77 &euro;</td><td class="pl-r pl-brutto">39,00 &euro;</td></tr>
+            <tr><td class="pl-art">50240</td><td>Reserverad 155 R-13</td><td class="pl-r pl-netto">100,84 &euro;</td><td class="pl-r pl-brutto">120,00 &euro;</td></tr>
+            <tr><td class="pl-art">50243</td><td>Reserveradhalter</td><td class="pl-r pl-netto">41,18 &euro;</td><td class="pl-r pl-brutto">49,00 &euro;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pl-group">
+        <span class="pl-diamond">&#9670;</span>
+        <span class="pl-group-name">COMFORT &amp; DESIGN</span>
+        <span class="pl-group-sub">Laufsteg, Staubox &amp; Sonderlackierung</span>
+        <span class="pl-rule"></span>
+      </div>
+      <div class="pl-tablewrap">
+        <table class="pl-table">
+          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
+          <tbody>
+            <tr><td class="pl-art">50234</td><td>Laufsteg (Gangway), bis 6,50&nbsp;m Fahrgestelll&auml;nge</td><td class="pl-r pl-netto">293,28 &euro;</td><td class="pl-r pl-brutto">349,00 &euro;</td></tr>
+            <tr><td class="pl-art">50244</td><td>Kunststoff Staubox, abschlie&szlig;bar mit B&uuml;gelbefestigung</td><td class="pl-r pl-netto">125,21 &euro;</td><td class="pl-r pl-brutto">149,00 &euro;</td></tr>
+            <tr><td class="pl-art">50235</td><td>Kasten-Sicherungsschloss</td><td class="pl-r pl-netto">33,61 &euro;</td><td class="pl-r pl-brutto">40,00 &euro;</td></tr>
+            <tr><td class="pl-art">90011</td><td>Sonderlackierung Einheitsfarbe nach Wunsch, Typ B 900 bis B 1800, bis 7&nbsp;m</td><td class="pl-r pl-netto">1.134,45 &euro;</td><td class="pl-r pl-brutto">1.350,00 &euro;</td></tr>
+            <tr><td class="pl-art">90014</td><td>LED-Beleuchtungssatz, bis B 3500</td><td class="pl-r pl-netto">ab 378,15 &euro;</td><td class="pl-r pl-brutto">ab 450,00 &euro;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pl-group">
+        <span class="pl-diamond">&#9670;</span>
+        <span class="pl-group-name">KIEL &amp; AUFLAGEN</span>
+        <span class="pl-group-sub">Kielvertiefung, Auflagen &amp; St&uuml;tzen</span>
+        <span class="pl-rule"></span>
+      </div>
+      <div class="pl-tablewrap">
+        <table class="pl-table">
+          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
+          <tbody>
+            <tr><td class="pl-art">90001</td><td>Kielvertiefung, einachsig (Aufpreis)</td><td class="pl-r pl-netto">331,94 &euro;</td><td class="pl-r pl-brutto">395,01 &euro;</td></tr>
+            <tr><td class="pl-art">90002</td><td>Kielvertiefung, Tandem (Aufpreis)</td><td class="pl-r pl-netto">500,00 &euro;</td><td class="pl-r pl-brutto">595,00 &euro;</td></tr>
+            <tr><td class="pl-art">90003</td><td>Aufpreis Kielbootanh&auml;nger ab Tiefgang 70&nbsp;cm</td><td class="pl-r pl-netto">151,26 &euro;</td><td class="pl-r pl-brutto">180,00 &euro;</td></tr>
+            <tr><td class="pl-art">50229</td><td>Kielauflage, klappbar mit Halter</td><td class="pl-r pl-netto">92,44 &euro;</td><td class="pl-r pl-brutto">110,00 &euro;</td></tr>
+            <tr><td class="pl-art">50227</td><td>Langauflage mit U-Halter 90&nbsp;cm</td><td class="pl-r pl-netto">57,99 &euro;</td><td class="pl-r pl-brutto">69,01 &euro;</td></tr>
+            <tr><td class="pl-art">50232</td><td>Vordere Rumpfst&uuml;tze mit Gewindespindel und Polsterkissen</td><td class="pl-r pl-netto">132,77 &euro;</td><td class="pl-r pl-brutto">158,00 &euro;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pl-ask"><b>Sie vermissen ein Zubeh&ouml;rteil?</b> Sprechen Sie uns einfach an. Wir versuchen, alle Ihre W&uuml;nsche zu erf&uuml;llen. <a href="kontakt.html">Zubeh&ouml;r anfragen &rarr;</a> &middot; <a href="produkte.html#sec-aufpreise">Komplette Zubeh&ouml;rliste &rarr;</a></div>
+      <div class="pl-note">Brutto = Endpreis inkl. 19% MwSt. &middot; Netto = Preis ohne MwSt. &middot; Preise ab Werk Bielefeld &middot; Stand Juni 2026 &middot; Irrt&uuml;mer und &Auml;nderungen vorbehalten.</div>
+    </div>
 
     <!-- KAUFBERATUNG -->
     <div class="reveal">
