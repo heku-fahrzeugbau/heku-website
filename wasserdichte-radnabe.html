@@ -251,13 +251,17 @@
     .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
     .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-  </style>
+  
+  .nav-dropdown-menu a.active { color: var(--rot); }
+</style>
 </head>
 <body>
   <nav id="nav">
     <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
     <div class="nav-center">
-            <div class="nav-dropdown">
+
+      <!-- Produkte Dropdown -->
+      <div class="nav-dropdown">
         <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
         <div class="nav-dropdown-menu">
           <a href="produkte.html">Alle Modelle</a>
@@ -265,17 +269,32 @@
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
           <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="ratgeber-bootsanhaenger.html">Ratgeber Kaufberatung</a>
-          <a href="wasserdichte-radnabe.html" class="active">Wasserdichte Radnabe</a>
           <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
         </div>
       </div>
+
+      <!-- Ratgeber Dropdown -->
+      <div class="nav-dropdown">
+        <a href="ratgeber-bootsanhaenger.html" class="nav-dropdown-toggle active">Ratgeber ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="ratgeber-bootsanhaenger.html">Kaufberatung</a>
+          <a href="fuehrerschein.html">Führerschein</a>
+          <a href="zulassung.html">Zulassung</a>
+          <a href="ladungssicherung.html">Ladungssicherung</a>
+          <a href="100kmh-regelung.html">100 km/h Regelung</a>
+          <a href="faq.html">FAQ</a>
+          <a href="wasserdichte-radnabe.html" class="active">Wasserdichte Radnabe</a>
+        </div>
+      </div>
+
       <a href="shop.html">Shop</a>
       <a href="ueber-uns.html">Über uns</a>
       <a href="haendler.html">Händler</a>
       <a href="kontakt.html">Kontakt</a>
-      <a href="faq.html">FAQ</a>
-      <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;"><span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>Jobs</a>
+      <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>
+        Jobs
+      </a>
 
     </div>
     <div class="nav-right">
