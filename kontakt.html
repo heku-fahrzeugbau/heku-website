@@ -672,9 +672,7 @@
             })
           }).catch(() => {});
           createHubSpotContact({ vorname, nachname, email, telefon, strasse, plz, ort, quelle: 'Kontaktformular', notiz: 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
-          document.getElementById('formWrap').style.display = 'none';
-          document.getElementById('successMsg').classList.add('show');
-          window.scrollTo({top: document.querySelector('.contact-form-wrap').offsetTop - 80, behavior:'smooth'});
+          window.location.href = '/danke.html';
         } else {
           throw new Error(result && result.message ? result.message : 'Web3Forms hat die Anfrage nicht bestätigt.');
         }
