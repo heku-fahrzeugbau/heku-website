@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://heku-fahrzeugbau.de/100kmh-regelung.html</loc>
+    <lastmod>2026-08-18</lastmod>
+  </url>
+  <url>
     <loc>https://heku-fahrzeugbau.de/bootsanhaenger-nach-mass.html</loc>
     <lastmod>2026-08-18</lastmod>
   </url>
@@ -15,6 +19,10 @@
   <url>
     <loc>https://heku-fahrzeugbau.de/faq.html</loc>
     <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/fuehrerschein.html</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
   <url>
     <loc>https://heku-fahrzeugbau.de/google01302b5f976ee5dc.html</loc>
@@ -53,6 +61,10 @@
     <lastmod>2026-08-18</lastmod>
   </url>
   <url>
+    <loc>https://heku-fahrzeugbau.de/ladungssicherung.html</loc>
+    <lastmod>2026-08-18</lastmod>
+  </url>
+  <url>
     <loc>https://heku-fahrzeugbau.de/motorbootanhaenger.html</loc>
     <lastmod>2026-08-18</lastmod>
   </url>
@@ -83,5 +95,9 @@
   <url>
     <loc>https://heku-fahrzeugbau.de/wohnmobile.html</loc>
     <lastmod>2026-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://heku-fahrzeugbau.de/zulassung.html</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
 </urlset>
