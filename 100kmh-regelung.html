@@ -17,10 +17,10 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100 km/h mit Anhänger – Voraussetzungen & Aufkleber | HEKU</title>
-  <meta name="description" content="Darf ich mit Bootsanhänger 100 km/h fahren? Alle Voraussetzungen nach §18 StVZO, den 100-km/h-Aufkleber und was HEKU-Anhänger mitbringen.">
+  <meta name="description" content="Tempo 100 mit Bootsanhänger: Voraussetzungen nach der 9. Ausnahmeverordnung zur StVO, Gewichtsberechnung, Reifen, ABS, Plakette und Zulassung.">
   <link rel="canonical" href="https://heku-fahrzeugbau.de/100kmh-regelung.html">
   <meta property="og:title" content="100 km/h mit Anhänger – Voraussetzungen | HEKU Fahrzeugbau">
-  <meta property="og:description" content="Wann gilt 100 km/h für Gespanne mit Bootsanhänger? §18 StVZO erklärt – inklusive Aufkleber-Anforderungen.">
+  <meta property="og:description" content="Wann sind 100 km/h mit Bootsanhänger erlaubt? Voraussetzungen, Gewichtsformel und Zulassungsverfahren verständlich erklärt.">
   <meta property="og:image" content="https://heku-fahrzeugbau.de/hero.jpg">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://heku-fahrzeugbau.de/100kmh-regelung.html">
@@ -31,7 +31,8 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "100 km/h mit Anhänger – Voraussetzungen und Aufkleber",
-    "description": "§18 StVZO: Wann darf ein Gespann mit Bootsanhänger auf der Autobahn 100 km/h fahren?",
+    "description": "Wann darf ein Gespann mit Bootsanhänger nach der 9. Ausnahmeverordnung zur StVO 100 km/h fahren?",
+    "dateModified": "2026-08-19",
     "author": {"@type": "Organization", "name": "HEKU Fahrzeugbau GmbH"},
     "publisher": {"@type": "Organization", "name": "HEKU Fahrzeugbau GmbH", "logo": {"@type": "ImageObject", "url": "https://heku-fahrzeugbau.de/logo.png"}},
     "url": "https://heku-fahrzeugbau.de/100kmh-regelung.html"
@@ -45,12 +46,12 @@
       {
         "@type": "Question",
         "name": "Wie schnell darf ich mit einem Bootsanhänger fahren?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Ohne besondere Genehmigung gilt für Gespanne auf der Autobahn eine Höchstgeschwindigkeit von 80 km/h. Unter bestimmten Voraussetzungen nach §18 Abs. 5 StVZO darf das Gespann 100 km/h fahren, wenn Zugfahrzeug und Anhänger entsprechend zugelassen sind."}
+        "acceptedAnswer": {"@type": "Answer", "text": "Grundsätzlich gilt für Pkw mit Anhänger außerorts sowie auf Autobahnen Tempo 80. Bis zu 100 km/h sind auf Autobahnen und Kraftfahrstraßen erlaubt, wenn die Voraussetzungen der 9. Ausnahmeverordnung zur StVO erfüllt sind und der Anhänger die amtliche Tempo-100-Plakette trägt."}
       },
       {
         "@type": "Question",
         "name": "Was kostet der 100-km/h-Aufkleber für den Anhänger?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Die Prüfgebühren beim TÜV oder DEKRA für die 100-km/h-Abnahme liegen typischerweise zwischen 50 und 150 €. Die Bescheinigung für das Zugfahrzeug stellt der Fahrzeughersteller aus (häufig kostenlos oder als kostenpflichtige Händlerleistung)."}
+        "acceptedAnswer": {"@type": "Answer", "text": "Die Kosten hängen davon ab, ob bereits eine Herstellerbescheinigung für den Anhänger vorliegt oder eine technische Prüfung erforderlich ist. Hinzu kommen Gebühren der Zulassungsbehörde für Eintragung und Plakette. Verbindliche Preise nennen Prüforganisation und örtliche Zulassungsstelle."}
       }
     ]
   }
@@ -125,6 +126,14 @@
     .infobox-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rot); margin-bottom: 8px; }
     .infobox-green .infobox-title { color: #16a34a; }
     .infobox p, .infobox-green p { font-size: 14px; font-weight: 300; color: var(--text); line-height: 1.7; }
+    .source-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .source-list a, .text-link { color: var(--rot-dark); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .source-list a:hover, .text-link:hover { color: var(--rot); }
+    .legal-note { font-size: 12px; line-height: 1.65; color: var(--muted); margin-top: 20px; }
+    .check-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    .check-table th { padding: 12px 16px; text-align: left; background: var(--schwarz); color: #fff; }
+    .check-table td { padding: 12px 16px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+    .check-table tbody tr:nth-child(even) { background: #f9fafb; }
 
     /* SPEED DISPLAY */
     .speed-hero { display: flex; gap: 0; margin: 40px 0 56px; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); }
@@ -237,7 +246,7 @@
   <div class="page-header">
     <div class="page-header-eyebrow">Ratgeber · Rechtliches</div>
     <h1 class="page-header-title">100 km/h<br>mit Anhänger</h1>
-    <p class="page-header-sub">Wann darf das Gespann schneller als 80 km/h fahren? Was §18 StVZO fordert – und was HEKU-Anhänger bereits mitbringen.</p>
+    <p class="page-header-sub">Wann darf das Gespann schneller als 80 km/h fahren? Die Voraussetzungen der 9. Ausnahmeverordnung zur StVO verständlich erklärt.</p>
   </div>
 
   <div class="marquee-wrap">
@@ -258,153 +267,102 @@
   </div>
 
   <div class="content-wrap">
+    <p class="lead-text">Für Pkw mit Anhänger gilt grundsätzlich Tempo 80. Bis zu 100 km/h sind auf deutschen Autobahnen und Kraftfahrstraßen erlaubt, wenn Anhänger und Zugfahrzeug zusammen alle Voraussetzungen der 9. Ausnahmeverordnung zur StVO erfüllen und der Anhänger die amtliche Tempo-100-Plakette trägt.</p>
 
-    <p class="lead-text">Auf deutschen Autobahnen gilt für Gespanne mit Anhänger standardmäßig Tempo 80. Wer schneller fahren möchte, braucht eine besondere Zulassung nach §18 Abs. 5 StVZO – und den entsprechenden Aufkleber. Für viele moderne Fahrzeug-Anhänger-Kombinationen ist das problemlos möglich.</p>
-
-    <!-- ÜBERSICHT -->
     <div class="section-block">
-      <div class="section-title">Standard vs. 100 km/h</div>
-      <p class="section-text">Das deutsche Verkehrsrecht unterscheidet klar zwischen zwei Szenarien für Anhängergespanne auf der Autobahn:</p>
-
+      <div class="section-title">Wo gelten 100 km/h?</div>
+      <p class="section-text">Die Ausnahme gilt ausschließlich auf Autobahnen (Zeichen 330.1) und Kraftfahrstraßen (Zeichen 331.1). Auf anderen Straßen bleibt es für Pkw mit Anhänger grundsätzlich bei höchstens 80 km/h, sofern keine niedrigere Begrenzung angeordnet ist.</p>
       <div class="speed-hero">
         <div class="speed-block">
           <div class="speed-num">80</div>
-          <div class="speed-label">Standard-Gespann</div>
-          <div class="speed-sub">Gilt ohne besondere Genehmigung für alle Gespanne mit Anhänger auf Autobahnen und Schnellstraßen</div>
+          <div class="speed-label">Grundregel</div>
+          <div class="speed-sub">Für Pkw mit Anhänger außerorts und ohne erfüllte Tempo-100-Bedingungen</div>
         </div>
         <div class="speed-block">
           <div class="speed-num">100</div>
-          <div class="speed-label">Mit §18-Bescheinigung</div>
-          <div class="speed-sub">Zulässig wenn Zugfahrzeug und Anhänger die technischen Voraussetzungen erfüllen und die Bescheinigungen vorliegen</div>
+          <div class="speed-label">Ausnahme</div>
+          <div class="speed-sub">Nur auf Autobahnen und Kraftfahrstraßen bei vollständig geeigneter Kombination</div>
         </div>
       </div>
+      <p class="legal-note">Rechtsgrundlage: <a class="text-link" href="https://www.gesetze-im-internet.de/stvoausnv_9/BJNR317100998.html" target="_blank" rel="noopener noreferrer">9. Ausnahmeverordnung zur StVO</a> in Verbindung mit § 18 Abs. 5 StVO.</p>
     </div>
 
-    <!-- VORAUSSETZUNGEN -->
     <div class="section-block">
-      <div class="section-title">Voraussetzungen für 100 km/h</div>
-      <p class="section-text">§18 Abs. 5 StVZO legt fest, welche Bedingungen Zugfahrzeug und Anhänger gemeinsam erfüllen müssen. Alle Bedingungen müssen gleichzeitig erfüllt sein – eine allein reicht nicht.</p>
-
+      <div class="section-title">Die Voraussetzungen im Überblick</div>
+      <p class="section-text">Alle folgenden Bedingungen müssen bei jeder Fahrt erfüllt sein. Die Plakette am Anhänger allein berechtigt nicht automatisch zu Tempo 100.</p>
       <div class="req-list">
-        <div class="req-item">
-          <div class="req-icon">1</div>
-          <div class="req-text">
-            <div class="req-title">Zugfahrzeug mit §18-Bescheinigung</div>
-            <p class="req-desc">Das Zugfahrzeug benötigt eine Bescheinigung des Herstellers oder einer amtlich anerkannten Prüfstelle, dass es für 100 km/h mit Anhänger geeignet ist. Diese Bescheinigung wird von vielen Fahrzeugherstellern direkt ausgestellt und ist häufig Teil des Fahrzeugpakets oder günstig nachzurüsten.</p>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon">2</div>
-          <div class="req-text">
-            <div class="req-title">Anhänger mit 100-km/h-Zulassung</div>
-            <p class="req-desc">Der Anhänger muss technisch für 100 km/h ausgelegt sein. Das betrifft vor allem die Reifen (Reifenindex muss die Geschwindigkeit abdecken), die Achsen und die Bremsen. Diese Zulassung wird im Fahrzeugbrief des Anhängers eingetragen und durch einen Aufkleber am Anhänger gekennzeichnet.</p>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon">3</div>
-          <div class="req-text">
-            <div class="req-title">Zulässiges Anhängergewicht max. 3,5 t</div>
-            <p class="req-desc">Die 100-km/h-Regelung gilt nur für Anhänger bis 3.500 kg zulässigem Gesamtgewicht. Schwerere Anhänger dürfen auch mit entsprechender Zulassung nicht 100 km/h fahren.</p>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon">4</div>
-          <div class="req-text">
-            <div class="req-title">Anhänger-zGM max. Hälfte des Zugfahrzeug-zGM</div>
-            <p class="req-desc">Das zulässige Gesamtgewicht des Anhängers darf nicht mehr als die Hälfte des zulässigen Gesamtgewichts des Zugfahrzeugs betragen. Bei einem SUV mit 2.400 kg zGM wäre der Anhänger also auf max. 1.200 kg zGM begrenzt – für die 100-km/h-Zulassung.</p>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon">5</div>
-          <div class="req-text">
-            <div class="req-title">Bescheinigungen im Fahrzeug mitführen</div>
-            <p class="req-desc">Beide Bescheinigungen – für Zugfahrzeug und Anhänger – müssen bei der Fahrt mitgeführt werden und auf Verlangen der Polizei vorgezeigt werden können.</p>
-          </div>
-        </div>
+        <div class="req-item"><div class="req-icon">1</div><div class="req-text"><div class="req-title">Geeignetes Zugfahrzeug mit ABS</div><p class="req-desc">Das Zugfahrzeug muss mehrspurig und mit einem automatischen Blockierverhinderer (ABS/ABV) ausgestattet sein. Für andere mehrspurige Zugfahrzeuge als Pkw gilt eine zulässige Gesamtmasse von höchstens 3,5 t.</p></div></div>
+        <div class="req-item"><div class="req-icon">2</div><div class="req-text"><div class="req-title">Anhänger für mindestens 100 km/h geeignet</div><p class="req-desc">Der Anhänger muss entsprechend gebaut und ausgerüstet sein. Die Tempo-100-Zulassung wird in den Fahrzeugpapieren des Anhängers dokumentiert.</p></div></div>
+        <div class="req-item"><div class="req-icon">3</div><div class="req-text"><div class="req-title">Reifen: mindestens Index L und jünger als sechs Jahre</div><p class="req-desc">Die Anhängerreifen müssen bei der jeweiligen Fahrt mindestens die Geschwindigkeitskategorie L (120 km/h) tragen. Maßgeblich für das Alter ist das eingeprägte Herstellungsdatum; die Reifen müssen jünger als sechs Jahre sein.</p></div></div>
+        <div class="req-item"><div class="req-icon">4</div><div class="req-text"><div class="req-title">Zulässiges Masseverhältnis eingehalten</div><p class="req-desc">Die zulässige Gesamtmasse des Anhängers darf den aus Leermasse des Zugfahrzeugs und Faktor X berechneten Wert nicht überschreiten. Zusätzlich gelten Anhängelast, zulässige Gesamtmasse und gegebenenfalls Gesamtzugmasse aus den Fahrzeugpapieren.</p></div></div>
+        <div class="req-item"><div class="req-icon">5</div><div class="req-text"><div class="req-title">Stützlast richtig eingestellt</div><p class="req-desc">Die Stützlast ist an der größtmöglichen zulässigen Stützlast von Zugfahrzeug oder Anhänger zu orientieren. Überschritten werden darf nur keiner der beiden Werte; maßgeblich ist die kleinere Obergrenze.</p></div></div>
+        <div class="req-item"><div class="req-icon">6</div><div class="req-text"><div class="req-title">Amtliche, gesiegelte Plakette am Heck</div><p class="req-desc">Die von der Zulassungsbehörde ausgegebene und gesiegelte Tempo-100-Plakette muss an der Rückseite des Anhängers angebracht sein.</p></div></div>
       </div>
     </div>
 
-    <!-- GEWICHTSFAKTOR -->
     <div class="section-block">
-      <div class="section-title">Welchen Anhänger darf ich mit 100 km/h ziehen?</div>
-      <p class="section-text">Ob Ihr Gespann für 100 km/h zugelassen werden kann, hängt vom <strong>Leergewicht des Zugfahrzeugs</strong> ab – multipliziert mit einem Faktor je nach Anhängertyp:</p>
-
-      <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;">
-        <thead>
-          <tr style="background:var(--schwarz);color:#fff;">
-            <th style="padding:12px 16px;text-align:left;">Anhängertyp</th>
-            <th style="padding:12px 16px;text-align:center;">Faktor</th>
-            <th style="padding:12px 16px;text-align:left;">Beispiel (Zugfahrzeug 1.800 kg)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #e5e7eb;">
-            <td style="padding:12px 16px;">Ungebremster Anhänger</td>
-            <td style="padding:12px 16px;text-align:center;font-weight:700;">× 0,3</td>
-            <td style="padding:12px 16px;">1.800 × 0,3 = <strong>540 kg</strong></td>
-          </tr>
-          <tr style="border-bottom:1px solid #e5e7eb;background:#f9fafb;">
-            <td style="padding:12px 16px;">Gebremster Anhänger mit Stoßdämpfern</td>
-            <td style="padding:12px 16px;text-align:center;font-weight:700;">× 1,1</td>
-            <td style="padding:12px 16px;">1.800 × 1,1 = <strong>1.980 kg</strong></td>
-          </tr>
-          <tr>
-            <td style="padding:12px 16px;">Gebremster Anhänger + Antischlingerkupplung</td>
-            <td style="padding:12px 16px;text-align:center;font-weight:700;color:var(--rot);">× 1,2</td>
-            <td style="padding:12px 16px;">1.800 × 1,2 = <strong>2.160 kg</strong></td>
-          </tr>
-        </tbody>
-      </table>
-
+      <div class="section-title">Welches Anhängergewicht ist bei Tempo 100 zulässig?</div>
+      <p class="section-text">Ausgangspunkt ist die <strong>Leermasse des Zugfahrzeugs</strong>. Sie wird mit dem für die technische Ausstattung des Anhängers geltenden Faktor X multipliziert:</p>
+      <p class="section-text"><strong>Leermasse Zugfahrzeug × Faktor X = höchstens zulässige Anhänger-zGM für Tempo 100</strong></p>
+      <div style="overflow-x:auto;">
+        <table class="check-table">
+          <thead><tr><th>Bootsanhänger</th><th>Faktor X</th><th>Beispiel bei 1.800 kg Leermasse</th></tr></thead>
+          <tbody>
+            <tr><td>Ohne Bremse oder gebremst, aber ohne hydraulische Schwingungsdämpfer</td><td><strong>0,3</strong></td><td>maximal 540 kg</td></tr>
+            <tr><td>Gebremst, mit hydraulischen Schwingungsdämpfern</td><td><strong>1,1</strong></td><td>rechnerisch maximal 1.980 kg</td></tr>
+            <tr><td>Wie zuvor, zusätzlich mit anerkannter Stabilisierungseinrichtung am Anhänger oder geeignetem Stabilitätssystem</td><td><strong>1,2</strong></td><td>rechnerisch maximal 2.160 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="infobox">
-        <div class="infobox-title">Antischlingerkupplung lohnt sich</div>
-        <p>Eine Antischlingerkupplung erhöht nicht nur die Fahrsicherheit bei Spurwechseln und Wind, sondern erweitert auch das zulässige Anhängergewicht für die 100-km/h-Zulassung. Bei HEKU-Anhängern ab einem bestimmten Gewicht ist sie daher empfehlenswert.</p>
+        <div class="infobox-title">Der kleinste Grenzwert entscheidet</div>
+        <p>Der Rechenwert ist keine pauschale Freigabe. Bei anderen gebremsten Anhängern mit hydraulischen Schwingungsdämpfern darf die Anhänger-zGM außerdem weder die zulässige Gesamtmasse des Zugfahrzeugs noch dessen zulässige Anhängelast überschreiten. Auch alle weiteren Angaben in den Fahrzeugpapieren bleiben verbindlich.</p>
       </div>
-
-      <div class="infobox-warn" style="margin-top:16px;">
-        <div class="infobox-title">Nur in Deutschland gültig</div>
-        <p>Die 100-km/h-Zulassung nach §18 StVZO gilt ausschließlich auf deutschen Straßen. Im Ausland gelten die nationalen Vorschriften des jeweiligen Landes – informieren Sie sich vor jeder Auslandsfahrt.</p>
-      </div>
+      <p class="legal-note">Die erhöhten Faktoren setzen eine nach der Verordnung anerkannte Stabilisierungseinrichtung oder ein entsprechend nachgewiesenes fahrdynamisches Stabilitätssystem voraus. Eine beliebige als „Antischlingerkupplung“ angebotene Kupplung genügt nicht automatisch.</p>
     </div>
 
-    <!-- HEKU -->
     <div class="section-block">
-      <div class="section-title">HEKU-Anhänger und die 100-km/h-Zulassung</div>
-      <p class="section-text">Viele HEKU-Bootsanhänger können mit der 100-km/h-Zulassung ausgestattet werden. Die technischen Voraussetzungen – entsprechende Reifen, geprüfte Achsen und Bremsanlage – lassen sich bei der Bestellung oder Nachausrüstung realisieren. Die Prüfung und Eintragung erfolgt durch TÜV oder DEKRA.</p>
-
-      <div class="infobox-green">
-        <div class="infobox-title">Bei HEKU anfragen</div>
-        <p>Teilen Sie uns bei der Bestellung mit, dass Sie die 100-km/h-Zulassung benötigen. Wir klären, welche Ausstattung dafür nötig ist und was das konkret bedeutet. In vielen Fällen ist sie ohne großen Mehraufwand realisierbar.</p>
+      <div class="section-title">So erhalten Sie die Tempo-100-Zulassung</div>
+      <div class="req-list">
+        <div class="req-item"><div class="req-icon">1</div><div class="req-text"><div class="req-title">Unterlagen des Anhängers prüfen</div><p class="req-desc">Liegt bereits eine Herstellerbescheinigung vor, aus der die Tempo-100-Eignung hervorgeht, kann eine zusätzliche technische Prüfung entfallen.</p></div></div>
+        <div class="req-item"><div class="req-icon">2</div><div class="req-text"><div class="req-title">Falls nötig: technische Prüfung</div><p class="req-desc">Bei einer Nachrüstung oder fehlenden Herstellerbestätigung prüft eine anerkannte Prüforganisation, ob der Anhänger die Voraussetzungen erfüllt, und erstellt die erforderliche Bestätigung für die Änderung der Fahrzeugpapiere.</p></div></div>
+        <div class="req-item"><div class="req-icon">3</div><div class="req-text"><div class="req-title">Eintragung und Plakette bei der Zulassungsbehörde</div><p class="req-desc">Die zuständige Zulassungsbehörde bescheinigt Tempo 100 in den Fahrzeugpapieren des Anhängers und gibt die amtlich gesiegelte Plakette aus.</p></div></div>
       </div>
+      <p class="section-text">Ein Tempo-100-Anhänger ist grundsätzlich nicht an ein bestimmtes Zugfahrzeug gebunden. Die fahrzeugführende Person muss jedoch vor jeder Fahrt prüfen, ob das aktuell verwendete Zugfahrzeug zusammen mit dem Anhänger sämtliche Bedingungen erfüllt.</p>
     </div>
 
-    <!-- DER AUFKLEBER -->
     <div class="section-block">
-      <div class="section-title">Der 100-km/h-Aufkleber</div>
-      <p class="section-text">Der runde schwarze Aufkleber mit der weißen Zahl "100" am Anhänger signalisiert Polizei und anderen Verkehrsteilnehmern, dass das Fahrzeug für 100 km/h zugelassen ist. Er darf nur angebracht werden, wenn die Zulassung auch tatsächlich vorliegt und im Fahrzeugbrief eingetragen ist.</p>
-      <p class="section-text">Der Aufkleber allein genügt nicht – er ersetzt nicht die Bescheinigungen für Zugfahrzeug und Anhänger. Wer nur den Aufkleber anbringt, ohne die nötige Zulassung, riskiert Bußgelder und im Unfallfall erhebliche versicherungsrechtliche Probleme.</p>
-
-      <div class="infobox">
-        <div class="infobox-title">Bußgeld bei Verstoß</div>
-        <p>Mit einem nicht zugelassenen Gespann 100 km/h zu fahren gilt als Überschreitung der zulässigen Höchstgeschwindigkeit um 20 km/h – das sind 70 € Bußgeld und 1 Punkt in Flensburg. Bei Gefährdung anderer Verkehrsteilnehmer können deutlich höhere Strafen folgen.</p>
-      </div>
+      <div class="section-title">HEKU-Anhänger und Tempo 100</div>
+      <p class="section-text">Viele HEKU-Bootsanhänger können passend für die Tempo-100-Zulassung konfiguriert werden. Je nach Modell und gewünschtem Masseverhältnis kommen geeignete Reifen, Bremse, hydraulische Schwingungsdämpfer und eine anerkannte Stabilisierungseinrichtung in Betracht. Ob ein konkreter Anhänger die Voraussetzungen erfüllt, ergibt sich aus seiner Ausstattung und seinen Fahrzeugunterlagen.</p>
+      <div class="infobox-green"><div class="infobox-title">Am besten vor der Bestellung klären</div><p>Teilen Sie uns mit, welches Zugfahrzeug Sie einsetzen und dass Sie Tempo 100 fahren möchten. Wir prüfen die passende Anhängerkonfiguration. Die abschließende Eintragung und Plakette erfolgen über Prüforganisation beziehungsweise Zulassungsbehörde.</p></div>
     </div>
 
-    <!-- FAQ -->
+    <div class="section-block">
+      <div class="section-title">Wichtig während der Nutzung</div>
+      <p class="section-text">Werden die Bedingungen später nicht mehr erfüllt – beispielsweise weil die Reifen sechs Jahre alt geworden sind, ein ungeeignetes Zugfahrzeug verwendet wird oder das Masseverhältnis nicht passt –, gilt für die Kombination wieder die normale Geschwindigkeitsbegrenzung. Eine vorhandene Plakette ändert daran nichts.</p>
+      <div class="infobox"><div class="infobox-title">Verstoß gegen die Geschwindigkeitsbegrenzung</div><p>Ohne erfüllte Tempo-100-Voraussetzungen gilt in der Regel höchstens Tempo 80. Welche Sanktion folgt, hängt von der festgestellten Überschreitung und den Umständen ab. Der amtliche Bußgeldkatalog sieht für Kraftfahrzeuge mit Anhänger eigene, höhere Regelsätze vor. Aktuelle Werte finden Sie im <a class="text-link" href="https://www.gesetze-im-internet.de/bkatv_2013/anhang.html" target="_blank" rel="noopener noreferrer">Anhang zur Bußgeldkatalog-Verordnung</a>.</p></div>
+      <div class="infobox" style="margin-top:16px;"><div class="infobox-title">Fahrten ins Ausland</div><p>Die deutsche Tempo-100-Regelung schafft keine Erlaubnis für andere Staaten. Dort gelten die jeweiligen nationalen Vorschriften, Beschilderungen und möglicherweise weitere Bedingungen. Informieren Sie sich vor jeder Auslandsfahrt aktuell für Route und Fahrzeugkombination.</p></div>
+    </div>
+
     <div class="section-block">
       <div class="section-title">Häufige Fragen</div>
-      <div style="margin-bottom:24px;">
-        <p style="font-weight:600;margin-bottom:6px;">Wie bekomme ich die 100-km/h-Bescheinigung für mein Zugfahrzeug?</p>
-        <p class="section-text">Wenden Sie sich an Ihren Fahrzeughersteller oder Händler. Viele Hersteller stellen die Bescheinigung kostenlos oder gegen eine geringe Gebühr aus, wenn das Fahrzeug die technischen Voraussetzungen erfüllt. Alternativ kann eine amtlich anerkannte Prüfstelle (TÜV, DEKRA) die Abnahme durchführen.</p>
+      <div style="margin-bottom:24px;"><p style="font-weight:600;margin-bottom:6px;">Braucht mein Zugfahrzeug eine eigene Tempo-100-Bescheinigung?</p><p class="section-text">Im Regelfall nein. Die Tempo-100-Zulassung wird beim Anhänger dokumentiert. Das verwendete Zugfahrzeug muss aber bei jeder Fahrt die technischen und gewichtsmäßigen Voraussetzungen erfüllen. Nur bei bestimmten fahrdynamischen Stabilitätssystemen des Zugfahrzeugs kann eine Herstellerbestätigung und ein entsprechender Eintrag erforderlich sein.</p></div>
+      <div style="margin-bottom:24px;"><p style="font-weight:600;margin-bottom:6px;">Reicht die Tempo-100-Plakette am Anhänger?</p><p class="section-text">Nein. Plakette, Eintragung und sämtliche technischen Bedingungen müssen zusammenpassen. Insbesondere sind ABS, Reifenalter, Geschwindigkeitsindex, Masseverhältnis und Stützlast zu beachten.</p></div>
+      <div style="margin-bottom:24px;"><p style="font-weight:600;margin-bottom:6px;">Was passiert, wenn die Reifen sechs Jahre alt sind?</p><p class="section-text">Dann ist die Voraussetzung für Tempo 100 nicht mehr erfüllt. Maßgeblich ist das Herstellungsdatum der Reifen, nicht die Profiltiefe oder das Kaufdatum. Bis zum Reifenwechsel gilt für das Gespann wieder die normale Geschwindigkeitsbegrenzung.</p></div>
+      <div><p style="font-weight:600;margin-bottom:6px;">Was kostet die Zulassung?</p><p class="section-text">Das hängt davon ab, ob eine Herstellerbescheinigung für den Anhänger vorhanden ist oder eine technische Prüfung beziehungsweise Nachrüstung nötig wird. Hinzu kommen die Gebühren der örtlichen Zulassungsbehörde. Verbindliche Preise erhalten Sie bei der Prüforganisation und Ihrer Zulassungsstelle.</p></div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Quellen und weiterführende Informationen</div>
+      <p class="section-text">Für die rechtlichen Aussagen wurden die geltenden amtlichen Texte und ergänzende Informationen einer anerkannten Prüforganisation herangezogen:</p>
+      <div class="source-list">
+        <a href="https://www.gesetze-im-internet.de/stvoausnv_9/BJNR317100998.html" target="_blank" rel="noopener noreferrer">Bundesministerium der Justiz: 9. Ausnahmeverordnung zur StVO</a>
+        <a href="https://www.gesetze-im-internet.de/stvo_2013/__18.html" target="_blank" rel="noopener noreferrer">Bundesministerium der Justiz: § 18 StVO – Autobahnen und Kraftfahrstraßen</a>
+        <a href="https://www.gesetze-im-internet.de/stvo_2013/__3.html" target="_blank" rel="noopener noreferrer">Bundesministerium der Justiz: § 3 StVO – Geschwindigkeit</a>
+        <a href="https://www.gesetze-im-internet.de/bkatv_2013/anhang.html" target="_blank" rel="noopener noreferrer">Bundesministerium der Justiz: amtlicher Bußgeldkatalog</a>
+        <a href="https://www.tuev-nord.de/de/dienstleistungen/pruefung-und-gutachten/100-km-h-zulassung/" target="_blank" rel="noopener noreferrer">TÜV NORD: 100-km/h-Zulassung für Anhänger</a>
       </div>
-      <div style="margin-bottom:24px;">
-        <p style="font-weight:600;margin-bottom:6px;">Gilt die 100 km/h auch im Ausland?</p>
-        <p class="section-text">Nein – die deutsche §18-Regelung gilt nur in Deutschland. In anderen Ländern gelten eigene Geschwindigkeitsbeschränkungen für Gespanne, die häufig niedriger liegen (z. B. 80 km/h in Frankreich auf Autobahnen). Informieren Sie sich vor jeder Auslandsfahrt über die geltenden Regelungen.</p>
-      </div>
-      <div>
-        <p style="font-weight:600;margin-bottom:6px;">Muss ich bei jedem Transport die Bescheinigungen dabeihaben?</p>
-        <p class="section-text">Ja. Die Bescheinigungen für Zugfahrzeug und Anhänger müssen während der Fahrt mitgeführt werden und sind auf Anforderung vorzuzeigen. Empfehlung: Legen Sie Kopien in den Fahrzeugpapieren ab.</p>
-      </div>
+      <p class="legal-note">Stand der inhaltlichen Prüfung: 19. August 2026. Dieser Ratgeber bietet eine allgemeine Orientierung und ersetzt keine Prüfung der konkreten Fahrzeugkombination oder eine Rechtsberatung.</p>
     </div>
 
   </div>
