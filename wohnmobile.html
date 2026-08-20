@@ -33,9 +33,9 @@
   <meta name="twitter:image" content="https://heku-fahrzeugbau.de/bootsanhaenger.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
-    :root{--rot:#E8000E;--rot-dark:#B8000B;--schwarz:#0A0A0A;--text:#2C2C2C;--muted:#6B6B6B;--border:#E8E8E8;--bg:#FFFFFF;--bg2:#F7F7F7;--font-head:'DM Serif Display',serif;--font-body:'DM Sans',sans-serif;}
+    :root{--rot:#E8000E;--rot-dark:#B8000B;--schwarz:#0A0A0A;--text:#2C2C2C;--muted:#6B6B6B;--border:#E8E8E8;--bg:#FFFFFF;--bg2:#F7F7F7;--font-head:'DM Serif Display',serif;--font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:var(--font-body);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
     a{text-decoration:none;color:inherit;}
@@ -43,9 +43,9 @@
     .nav-logo img{height:30px;}
     .nav-back{font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;}
     .nav-back:hover{color:var(--text);}
-    .page-header{margin-top:64px;background:var(--schwarz);padding:72px 80px 60px;position:relative;overflow:hidden;}
-    .page-header::after{content:'';position:absolute;top:-40%;right:-5%;width:45vw;height:45vw;background:radial-gradient(circle,rgba(232,0,14,0.10) 0%,transparent 65%);pointer-events:none;}
-    .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--rot);margin-bottom:16px;position:relative;z-index:1;}
+    .page-header{margin-top:64px;background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;padding:72px 80px 60px;position:relative;overflow:hidden;}
+    .page-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.88) 0%,rgba(10,10,10,0.72) 100%);pointer-events:none;z-index:0;}
+    .eyebrow{font-size:12px;font-weight:600;color:var(--rot);margin-bottom:16px;position:relative;z-index:1;}
     .page-title{font-family:var(--font-head);font-size:clamp(32px,4vw,52px);color:#fff;line-height:1.05;margin-bottom:16px;position:relative;z-index:1;}
     .page-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,0.45);position:relative;z-index:1;}
     .content{max-width:800px;margin:0 auto;padding:72px 80px;}
@@ -55,7 +55,7 @@
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0;}
     .contact-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px 28px;transition:border-color 0.2s;}
     .contact-card:hover{border-color:#ccc;}
-    .contact-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+    .contact-label{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;}
     .contact-value{font-size:18px;font-weight:500;color:var(--schwarz);}
     .contact-value a{color:var(--rot);}
     .contact-value a:hover{text-decoration:underline;}
