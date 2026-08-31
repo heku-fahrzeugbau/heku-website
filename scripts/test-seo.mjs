@@ -7,6 +7,101 @@ import { ROOT, BASE, exclusionReason, pages, render, attributes } from './genera
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
 const shopCards = () => [...read('shop.html').matchAll(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g)];
+const categoryPages = {
+ 'windenstaende-winden.html':'winden', 'stuetzraeder-bootsanhaenger.html':'stuetzraeder',
+ 'kielrollen-stuetzrollen.html':'rollen', 'auflagen-polsterkissen.html':'auflagen',
+ 'raeder-reifen-bootsanhaenger.html':'raeder', 'beleuchtung-bootsanhaenger.html':'beleuchtung',
+ 'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
+};
+
+test('Seven category guides have unique metadata, self canonicals and one H1',()=>{
+ const titles=new Set(), descriptions=new Set();
+ for(const file of Object.keys(categoryPages)) {
+  const s=read(file), title=s.match(/<title>([^<]+)<\/title>/)?.[1];
+  const description=s.match(/<meta name="description" content="([^"]+)"/)?.[1];
+  assert.ok(title&&description); titles.add(title); descriptions.add(description);
+  assert.equal((s.match(/<h1\b/g)||[]).length,1);
+  assert.ok(s.includes(`<link rel="canonical" href="${BASE}/${file}">`));
+  assert.ok(s.includes(`<meta property="og:url" content="${BASE}/${file}">`));
+  assert.match(s,/<meta name="twitter:title"/);
+  assert.equal(exclusionReason(file,s),null);
+ }
+ assert.equal(titles.size,7); assert.equal(descriptions.size,7);
+});
+
+test('Category schema describes guides and breadcrumbs, never invented Product/Offer data',()=>{
+ for(const file of Object.keys(categoryPages)) {
+  const s=read(file), schema=JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(schema['@graph'][0]['@type'],'CollectionPage');
+  const crumb=schema['@graph'].find(x=>x['@type']==='BreadcrumbList');
+  assert.deepEqual(crumb.itemListElement.map(x=>x.position),[1,2,3]);
+  assert.equal(crumb.itemListElement[2].item,BASE+'/'+file);
+  assert.doesNotMatch(JSON.stringify(schema),/"(?:Product|Offer|AggregateRating)"/);
+  assert.doesNotMatch(s,/<article class="product-card"|<form\b|const PRODUKTE|\d+,\d{2}\s*€/);
+ }
+});
+
+test('Shop and guide navigation contains real links to all seven categories',()=>{
+ const shop=read('shop.html');
+ for(const [file,key] of Object.entries(categoryPages)) {
+  assert.ok(shop.includes(`<a href="${file}">`));
+  const s=read(file);
+  assert.ok(s.includes(`href="shop.html?kategorie=${key}#shopContent"`));
+  assert.ok(shop.includes(`data-cat="${key}"`));
+  for(const other of Object.keys(categoryPages).filter(x=>x!==file)) assert.ok(s.includes(`href="${other}"`));
+ }
+});
+
+test('All category links and images resolve locally; guide controls have no dangling handlers',()=>{
+ for(const file of Object.keys(categoryPages)) {
+  const s=read(file);
+  for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
+   const u=new URL(href,BASE+'/'+file); if(u.origin!==BASE) continue;
+   assert.ok(fs.existsSync(path.join(ROOT,u.pathname==='/'?'index.html':decodeURIComponent(u.pathname.slice(1)))),file+': '+href);
+  }
+  for(const tag of s.matchAll(/<img\b[^>]*>/g)) {
+   const {src,alt}=attributes(tag[0]); assert.ok(alt); if(!/^https?:/.test(src)) assert.ok(fs.existsSync(path.join(ROOT,src)));
+  }
+  const handlers=[...s.matchAll(/onclick="([^"]+)"/g)].map(m=>m[1]);
+  assert.deepEqual(handlers,['toggleMenu()']);
+  assert.match(s,/function toggleMenu\(\)/);
+ }
+});
+
+test('Category query selects only a known filter and otherwise shows the full catalog',()=>{
+ const s=read('shop.html');
+ const code=s.match(/  const requestedCategory = [\s\S]*?else renderProducts\('alle'\);/)[0];
+ for(const query of ['', '?kategorie=wrong','?kategorie=%3Cscript%3E', ...Object.values(categoryPages).map(k=>'?kategorie='+k)]) {
+  let selected=null;
+  vm.runInNewContext(code,{URLSearchParams,window:{location:{search:query}},document:{querySelectorAll:()=>Object.values(categoryPages).map(cat=>({dataset:{cat}}))},filterCat:el=>selected=el.dataset.cat,renderProducts:cat=>selected=cat});
+  const value=new URLSearchParams(query).get('kategorie');
+  assert.equal(selected,Object.values(categoryPages).includes(value)?value:'alle');
+ }
+});
+
+function cartRuntime(storage, savedCart=[]) {
+ const s=read('shop.html');
+ const code=s.match(/  const CART_SESSION_KEY = [\s\S]*?  let cart = restoreCart\(\);/)[0];
+ const product={id:54,preis:20.25,name:'Original',artnr:85027};
+ return vm.runInNewContext(code+';({getCart:()=>cart,save:(items)=>{cart=items;saveCart();}})',{sessionStorage:storage,PRODUKTE:[product]});
+}
+test('Cart restore validates IDs and quantities, ignores duplicates and trusts only current catalog prices',()=>{
+ const raw=[{id:54,qty:2,preis:0.01,name:'Injected'}, {id:54,qty:3}, {id:999,qty:1},null,{id:'54',qty:1},{id:54,qty:-1}];
+ const r=cartRuntime({getItem:()=>JSON.stringify(raw)}).getCart();
+ assert.equal(r.length,1); assert.equal(r[0].qty,2); assert.equal(r[0].preis,20.25); assert.equal(r[0].name,'Original');
+ for(const value of ['bad','null','{}',JSON.stringify([{id:54,qty:1.5}]),JSON.stringify([{id:54,qty:-2}])]) assert.equal(cartRuntime({getItem:()=>value}).getCart().length,0);
+ assert.equal(cartRuntime({getItem:()=>{throw new Error('Blocked');}}).getCart().length,0);
+});
+
+test('Session cart stores only IDs/quantities, removes empty cart and tolerates blocked storage',()=>{
+ let saved=null,removed=false;
+ const r=cartRuntime({getItem:()=>null,setItem:(k,v)=>{assert.equal(k,'heku-shop-cart-v1');saved=v;},removeItem:()=>removed=true});
+ r.save([{id:54,qty:2,name:'Original',preis:20.25}]);
+ assert.deepEqual(JSON.parse(saved),[{id:54,qty:2}]);
+ r.save([]); assert.ok(removed);
+ assert.doesNotThrow(()=>cartRuntime({getItem:()=>null,setItem:()=>{throw new Error('Blocked');},removeItem:()=>{throw new Error('Blocked');}}).save([{id:54,qty:1}]));
+ assert.match(read('shop.html'),/function updateCartUI\(\) \{\s*saveCart\(\);/);
+});
 
 test('Shop catalog is visible HTML, not a second JavaScript product array',()=>{
  const cards=shopCards(); assert.ok(cards.length>0);
