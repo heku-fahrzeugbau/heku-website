@@ -202,10 +202,14 @@ test('Wohnmobile: primary CTA before contact, existing help preserved',()=>{
  assert.match(s,/<a class="assortment-cta" href="\/bootstrailer.html">Aktuelle Bootsanhänger entdecken<\/a>/);
  assert.ok(s.indexOf('<a class="assortment-cta"')<s.indexOf('>So erreichen Sie uns<'));
  assert.match(s,/Wenn Sie Fragen zu einem früheren HEKU Wohnmobil/);
- assert.match(s,/tel:\+4952120066/);
+ assert.match(s,/tel:\+49521200066/);
 });
-test('Known incorrect phone href removed from all pages',()=>{
- for(const file of fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'))) assert.doesNotMatch(read(file),/href=["']tel:\+49521200066["']/i,file);
+test('HEKU phone matches Robin’s confirmation: 0521 200066',()=>{
+ for(const file of fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'))) {
+  assert.doesNotMatch(read(file),/href=["']tel:\+4952120066["']/i,file);
+  assert.doesNotMatch(read(file),/0521 20066(?!\d)/,file);
+ }
+ for(const file of ['shop.html','kontakt.html','impressum.html']) assert.ok(read(file).includes('tel:+49521200066'),file);
 });
 test('Konfigurator CSS regression guards',()=>{
  const s=read('konfigurator.html');
@@ -233,4 +237,76 @@ test('Reserverad article numbers are distinct and match Robin’s correction',()
   assert.ok(b.includes('Art. '+artnr+'</span>'));
   assert.ok(b.includes('Art. '+artnr+' in den Warenkorb'));
  }
+});
+
+// Checkout regressions: isolated mocks, no real requests.
+// Actual checkout functions tested with isolated mocks: never makes network calls.
+const source=fs.readFileSync(new URL('../shop.html',import.meta.url),'utf8');
+const submit=source.match(/  async function submitOrder\(\) \{[\s\S]*?\n  \}/)[0];
+const close=source.match(/  function closeCheckout\(\) \{[\s\S]*?\n  \}/)[0];
+function harness({order='ok',mail='ok'}={}) {
+ const nodes=new Map(),timers=new Map(),requests=[],pending=[];let n=0,clock=1000,syncCount=0;
+ const node=id=>{
+  if(!nodes.has(id)){
+   const classes=new Set(id==='modalOverlay'?['open']:[]);
+   nodes.set(id,{value:'Test',checked:true,disabled:false,textContent:'',style:{},scrollTop:100,focus(){this.focused=true;},checkValidity:()=>true,classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)}});
+  }return nodes.get(id);
+ };
+ node('co-email').value='qa@example.invalid';
+ const fetch=async(url,options)=>{
+  const isOrder=url.includes('formspree');const behavior=isOrder?order:mail;
+  requests.push({type:isOrder?'order':'mail',body:JSON.parse(options.body)});
+  if(behavior==='pending')return new Promise((resolve,reject)=>{pending.push({type:isOrder?'order':'mail',resolve});options.signal.addEventListener('abort',()=>reject(new Error('AbortError')),{once:true});});
+  return {ok:behavior==='ok',status:behavior==='ok'?200:503,text:async()=> 'Mock error'};
+ };
+ const ctx=vm.createContext({document:{getElementById:node,querySelector:node},fetch,AbortController,console:{error(){}},Date:{now:()=>++clock},setTimeout:(fn,ms)=>{timers.set(++n,{fn,ms});return n;},clearTimeout:id=>timers.delete(id),syncShopDialog:()=>syncCount++,updateCartUI:()=>{},createHubSpotContact:()=>{},calcVersand:()=>10,fmt:n=>n.toFixed(2)+' €'});
+ const api=vm.runInContext(`let cart=[{id:54,artnr:85027,name:'Testlampe',preis:20.25,qty:2}];let orderSubmitting=false;${submit}\n${close};({submitOrder,closeCheckout,state:()=>({cart,orderSubmitting}),setCart:x=>cart=x})`,ctx);
+ return {api,node,requests,pending,timers,synced:()=>syncCount,tick:ms=>{for(const t of [...timers.values()])if(t.ms===ms)t.fn();}};
+}
+test('Accepted order and accepted mail show success; return-to-shop is unlocked',async()=>{
+ const h=harness();await h.api.submitOrder();
+ assert.equal(h.api.state().cart.length,0);assert.equal(h.api.state().orderSubmitting,false);
+ assert.deepEqual(h.requests.map(x=>x.type),['order','mail']);
+ assert.equal(h.requests[1].body.template_params.email,'qa@example.invalid');
+ assert.match(h.node('orderMailStatus').textContent,/zum Versand angenommen/);
+ assert.equal(h.node('checkoutForm').style.display,'none');assert.ok(h.node('orderSuccessTitle').focused);
+ h.api.closeCheckout();assert.equal(h.node('modalOverlay').classList.contains('open'),false);assert.equal(h.synced(),1);assert.equal(h.timers.size,0);
+});
+test('Mail rejection does not undo accepted order or leave success dialog locked',async()=>{
+ const h=harness({mail:'error'});await h.api.submitOrder();
+ assert.equal(h.api.state().cart.length,0);assert.ok(h.node('orderSuccess').classList.contains('show'));
+ assert.match(h.node('orderMailStatus').textContent,/E-Mail-Versand konnte nicht bestätigt/);
+ h.api.closeCheckout();assert.equal(h.node('modalOverlay').classList.contains('open'),false);
+});
+test('Rejected order preserves cart, unlocks retry and never sends confirmation',async()=>{
+ const h=harness({order:'error'});await h.api.submitOrder();
+ assert.equal(h.api.state().cart.length,1);assert.equal(h.requests.length,1);assert.equal(h.node('orderBtn').disabled,false);
+ assert.match(h.node('co-error').textContent,/vor einem erneuten Absenden/);assert.equal(h.api.state().orderSubmitting,false);
+ h.api.closeCheckout();assert.equal(h.node('modalOverlay').classList.contains('open'),false);
+});
+test('Pending order blocks duplicate submit and closes only after timeout/failure',async()=>{
+ const h=harness({order:'pending'});const p=h.api.submitOrder();await h.api.submitOrder();h.api.closeCheckout();
+ assert.equal(h.requests.length,1);assert.equal(h.node('modalOverlay').classList.contains('open'),true);
+ h.tick(20000);await p;assert.equal(h.api.state().orderSubmitting,false);assert.equal(h.api.state().cart.length,1);
+ h.api.closeCheckout();assert.equal(h.node('modalOverlay').classList.contains('open'),false);assert.equal(h.timers.size,0);
+});
+test('Pending confirmation allows immediate exit; mail timeout shows honest warning',async()=>{
+ const h=harness({mail:'pending'});const p=h.api.submitOrder();await new Promise(setImmediate);
+ assert.equal(h.api.state().cart.length,0);h.api.closeCheckout();assert.equal(h.node('modalOverlay').classList.contains('open'),false);
+ h.tick(15000);await p;assert.match(h.node('orderMailStatus').textContent,/E-Mail-Versand konnte nicht bestätigt/);assert.equal(h.timers.size,0);
+});
+test('Validation and empty cart prevent network calls',async()=>{
+ for(const setting of ['missing','email','consent','empty']){
+  const h=harness();if(setting==='missing')h.node('co-vorname').value='';if(setting==='email')h.node('co-email').checkValidity=()=>false;
+  if(setting==='consent')h.node('co-consent').checked=false;if(setting==='empty')h.api.setCart([]);
+  await h.api.submitOrder();assert.equal(h.requests.length,0,setting);
+ }
+});
+test('Late mail response cannot overwrite status of a newer order',async()=>{
+ const h=harness({mail:'pending'});const p1=h.api.submitOrder();await new Promise(setImmediate);
+ h.api.setCart([{id:54,artnr:85027,name:'Test',preis:20.25,qty:1}]);const p2=h.api.submitOrder();await new Promise(setImmediate);
+ const ref=h.node('orderRef').textContent;
+ h.pending[1].resolve({ok:true,status:200});await p2;const status=h.node('orderMailStatus').textContent;
+ h.pending[0].resolve({ok:false,status:503,text:async()=> 'Late mock error'});await p1;
+ assert.equal(h.node('orderRef').textContent,ref);assert.equal(h.node('orderMailStatus').textContent,status);
 });
