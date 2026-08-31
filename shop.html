@@ -267,6 +267,10 @@
     [hidden] { display: none !important; }
     :focus-visible { outline: 3px solid var(--rot-dark); outline-offset: 3px; }
     ::selection { background: var(--rot-dark); color: white; }
+    .category-guides { margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .category-guides summary { cursor: pointer; min-height: 44px; padding: 12px 0; font-weight: 600; }
+    .category-guides ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4px 20px; }
+    .category-guides a { display: flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; }
     .shop-main, .shop-sidebar, .product-card, .cart-item-info { min-width: 0; }
     .shop-layout:has(.shop-sidebar[hidden]) { grid-template-columns: 1fr; }
     .product-card { scroll-margin-top: 84px; }
@@ -463,6 +467,13 @@
 
     <!-- PRODUKTE -->
     <div class="shop-main">
+      <details class="category-guides"><summary>Auswahlhilfen zu den Kategorien</summary><ul><li><a href="windenstaende-winden.html">Windenstände &amp; Winden</a></li>
+<li><a href="stuetzraeder-bootsanhaenger.html">Stützräder</a></li>
+<li><a href="kielrollen-stuetzrollen.html">Kiel- &amp; Stützrollen</a></li>
+<li><a href="auflagen-polsterkissen.html">Auflagen &amp; Kissen</a></li>
+<li><a href="raeder-reifen-bootsanhaenger.html">Räder &amp; Reifen</a></li>
+<li><a href="beleuchtung-bootsanhaenger.html">Beleuchtung</a></li>
+<li><a href="weiteres-bootsanhaenger-zubehoer.html">Weiteres Zubehör</a></li></ul></details>
       <div class="shop-header">
         <div class="shop-count" id="shopCount" role="status" aria-live="polite">56 Artikel</div>
         <div class="shop-search" data-shop-enhancement hidden>
@@ -1278,7 +1289,7 @@
       <div>
         <div class="ft-logo"><img src="logo.svg" alt="HEKU"></div>
         <p class="ft-desc">Familienunternehmen in der dritten Generation. Eigenentwickelte wasserdichte Radnabe. Einzelfertigung seit 1959.</p>
-        <div class="ft-contact">Bunzlauer Str. 6 · 33719 Bielefeld<br>0521 200066<br>info@heku-fahrzeugbau.de</div>
+        <div class="ft-contact">Bunzlauer Str. 6 · 33719 Bielefeld<br>0521 20066<br>info@heku-fahrzeugbau.de</div>
         <div class="social-links">
           <a href="https://www.instagram.com/hekutrailer/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
           <a href="https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
@@ -1333,7 +1344,30 @@
   }));
 
   // ─── STATE ──────────────────────────────────────────────────────────────────
-  let cart = [];
+  // Only article IDs and quantities persist for navigation in this tab.
+  // Prices and descriptions always come from the current HTML catalog.
+  const CART_SESSION_KEY = 'heku-shop-cart-v1';
+  function restoreCart() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(CART_SESSION_KEY) || '[]');
+      if (!Array.isArray(saved)) return [];
+      const seen = new Set();
+      return saved.flatMap(item => {
+        if (!item || !Number.isSafeInteger(item.id) || !Number.isSafeInteger(item.qty) || item.qty <= 0 || seen.has(item.id)) return [];
+        const product = PRODUKTE.find(p => p.id === item.id);
+        if (!product || !Number.isFinite(product.preis * item.qty)) return [];
+        seen.add(item.id);
+        return [{ ...product, qty: item.qty }];
+      });
+    } catch { return []; }
+  }
+  function saveCart() {
+    try {
+      if (cart.length) sessionStorage.setItem(CART_SESSION_KEY, JSON.stringify(cart.map(({id, qty}) => ({id, qty}))));
+      else sessionStorage.removeItem(CART_SESSION_KEY);
+    } catch { /* The shop remains usable when browser storage is unavailable. */ }
+  }
+  let cart = restoreCart();
   let currentCat = 'alle';
 
   // ─── RENDER PRODUKTE ────────────────────────────────────────────────────────
@@ -1460,6 +1494,7 @@
   }
 
   function updateCartUI() {
+    saveCart();
     const focusedControl = document.activeElement?.closest('#cartItems button')?.getAttribute('onclick');
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
     const count = cart.reduce((s, i) => s + i.qty, 0);
@@ -1643,7 +1678,10 @@
   // ─── INIT ────────────────────────────────────────────────────────────────────
   document.querySelectorAll('[data-shop-enhancement]').forEach(el => el.hidden = false);
   document.querySelectorAll('.btn-add').forEach(el => el.disabled = false);
-  renderProducts('alle');
+  // Links from category guides select an existing filter; canonical stays shop.html.
+  const requestedCategory = new URLSearchParams(window.location.search).get('kategorie');
+  const categoryButton = [...document.querySelectorAll('.filter-item')].find(el => el.dataset.cat === requestedCategory);
+  if (categoryButton) filterCat(categoryButton); else renderProducts('alle');
   updateCartUI();
 
 
