@@ -263,13 +263,95 @@
     .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
     .social-link:hover svg{fill:var(--rot);}
     #widerrufsModal.show { display:flex !important; }
+    /* Phase 2a: existing shop, mobile-first usability and static catalog. */
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid var(--rot-dark); outline-offset: 3px; }
+    ::selection { background: var(--rot-dark); color: white; }
+    .shop-main, .shop-sidebar, .product-card, .cart-item-info { min-width: 0; }
+    .shop-layout:has(.shop-sidebar[hidden]) { grid-template-columns: 1fr; }
+    .product-card { scroll-margin-top: 84px; }
+    .product-img { overflow: hidden; }
+    .product-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .product-artnr { color: var(--muted); font-weight: 400; font-size: 12px; display: block; margin-top: 6px; letter-spacing: normal; }
+    .product-name { font-size: 16px; }
+    .product-desc { font-size: 14px; min-height: 1.6em; }
+    .product-price, .cart-total-value { font-variant-numeric: tabular-nums; }
+    .product-footer { flex-wrap: wrap; }
+    .filter-item { font-family: inherit; border: 1px solid transparent; background: transparent; text-align: left; min-height: 44px; }
+    .filter-item.active { color: var(--rot-dark); }
+    .filter-list { margin-bottom: 0; }
+    .shop-header { align-items: end; }
+    .shop-search { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 360px; }
+    .shop-search label { font-size: 14px; font-weight: 600; }
+    .shop-search input { width: 100%; min-height: 48px; font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--muted); border-radius: 8px; }
+    input { caret-color: var(--rot-dark); }
+    .shop-noscript { padding: 24px; line-height: 1.6; }
+    .shop-noscript a { text-decoration: underline; }
+    #shopEmpty { line-height: 1.6; padding: 24px 0; }
+    .cart-btn, .btn-add, .cart-close, .modal-close, .qty-btn, .cart-item-del { min-height: 44px; min-width: 44px; }
+    .btn-add:disabled { opacity: .5; cursor: not-allowed; }
+    .cart-drawer { visibility: hidden; }
+    .cart-drawer.open { visibility: visible; }
+    .cart-items { min-height: 0; overscroll-behavior: contain; }
+    .cart-head, .cart-foot { flex-shrink: 0; }
+    .cart-foot { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+    .shop-dialog-open { overflow: hidden; }
+    .shop-dialog-open .heku-sticky-cta { visibility: hidden; }
+    .modal { max-height: 90dvh; overscroll-behavior: contain; }
+    .modal-overlay { padding: 12px; }
+    .modal-head { padding: 20px 20px 0; }
+    .modal-body { padding: 20px; }
+    .form-input, .form-select { font-size: 16px; }
+    .order-line { gap: 12px; }
+    .order-line > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+    .order-line > span:last-child { flex-shrink: 0; }
+    .nav-burger { background: transparent; border: 0; width: 44px; min-height: 44px; align-items: center; justify-content: center; flex-shrink: 0; }
+    .mobile-config, .mobile-filter { display: none; }
+    .mobile-filter label { font-size: 14px; font-weight: 600; }
+    .mobile-filter select { min-height: 48px; width: 100%; padding: 10px 12px; border: 1px solid var(--muted); border-radius: 8px; background: white; color: var(--text); font: inherit; font-size: 16px; }
+    .nav-dropdown:focus-within .nav-dropdown-menu { display: flex; flex-direction: column; }
+    .page-sub { color: rgba(255,255,255,.78); }
+    .ft-desc, .ft-contact, .ft-head, .ft-links a, .ft-copy, .ft-legal a { color: rgba(255,255,255,.72); }
+    @media (max-width: 1024px) {
+      .shop-sidebar { top: auto; }
+      .ft { grid-template-columns: 1fr 1fr; }
+      .nav-center a { min-height: 44px; display: flex; align-items: center; }
+      .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 8px; }
+      .mobile-config { display: flex; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 12px; gap: 8px; }
+      .nav-logo img { width: 82px; height: auto; }
+      .nav-right { margin-left: auto; gap: 0; }
+      .nav-right > .btn-nav { display: none; }
+      .cart-btn { padding: 8px 10px; gap: 6px; }
+      .page-header { padding: 32px 20px; }
+      .info-band { padding: 16px 20px; gap: 12px 20px; }
+      .shop-layout { padding: 24px 20px; }
+      .shop-sidebar { padding-bottom: 20px; }
+      .mobile-filter { display: flex; flex-direction: column; gap: 8px; }
+      .filter-list, .desktop-filter-title { display: none; }
+      .filter-list { gap: 4px; }
+      .filter-item { padding: 8px 10px; }
+      .product-body { padding: 18px; }
+      .cart-head, .cart-items, .cart-foot { padding-left: 16px; padding-right: 16px; }
+      .cart-item-img { width: 44px; height: 44px; }
+      .cart-item { gap: 10px; }
+      .cart-item-controls { gap: 6px; }
+      .ft { grid-template-columns: 1fr; gap: 32px; }
+      .ft-contact { overflow-wrap: anywhere; }
+      .ft-links a, .ft-legal a { display: inline-flex; align-items: center; min-height: 44px; }
+    }
+    @media (max-height: 500px) { .cart-head, .cart-foot { padding-top: 8px; padding-bottom: 8px; } .cart-mwst { margin-bottom: 8px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
 
   <nav>
     <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
-    <div class="nav-center">
+    <div class="nav-center" id="shopNav">
+      <a class="mobile-config" href="konfigurator.html">Konfigurator</a>
 
       <!-- Produkte Dropdown -->
       <div class="nav-dropdown">
@@ -309,14 +391,14 @@
 
     </div>
     <div class="nav-right">
-      <button class="cart-btn" onclick="toggleCart()">
+      <button type="button" class="cart-btn" onclick="toggleCart()" aria-controls="cartDrawer" aria-haspopup="dialog" data-shop-enhancement hidden>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
         Warenkorb
         <span class="cart-count hidden" id="cartCount">0</span>
       </button>
       <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
     </div>
-    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <button type="button" class="nav-burger" onclick="toggleMenu()" aria-label="Menü öffnen" aria-controls="shopNav" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 
   <div class="page-header">
@@ -351,37 +433,728 @@
     </div>
   </div>
 
-  <div class="shop-layout">
+  <noscript><p class="shop-noscript">Alle Artikel und Preise sind auch ohne JavaScript lesbar. Für Filter und Warenkorb bitte JavaScript aktivieren oder <a href="kontakt.html">HEKU kontaktieren</a>.</p></noscript>
+  <main class="shop-layout" id="shopContent">
     <!-- SIDEBAR -->
-    <div class="shop-sidebar">
-      <div class="filter-title">Kategorie</div>
-      <div class="filter-list" id="filterList">
-        <div class="filter-item active" data-cat="alle" onclick="filterCat(this)">Alle Produkte</div>
-        <div class="filter-item" data-cat="winden" onclick="filterCat(this)">Windenstände & Winden</div>
-        <div class="filter-item" data-cat="stuetzraeder" onclick="filterCat(this)">Stützräder</div>
-        <div class="filter-item" data-cat="rollen" onclick="filterCat(this)">Kiel- & Stützrollen</div>
-        <div class="filter-item" data-cat="auflagen" onclick="filterCat(this)">Auflagen & Kissen</div>
-        <div class="filter-item" data-cat="raeder" onclick="filterCat(this)">Räder & Reifen</div>
-        <div class="filter-item" data-cat="sonstiges" onclick="filterCat(this)">Sonstiges</div>
-        <div class="filter-item" data-cat="beleuchtung" onclick="filterCat(this)">Beleuchtung</div>
+    <div class="shop-sidebar" data-shop-enhancement hidden>
+      <div class="filter-title desktop-filter-title">Kategorie</div>
+      <div class="mobile-filter"><label for="shopCategory">Kategorie</label>
+      <select id="shopCategory" onchange="filterCat(document.querySelector('.filter-item[data-cat=&quot;' + this.value + '&quot;]'))">
+        <option value="alle">Alle Produkte</option>
+        <option value="winden">Windenstände & Winden</option>
+        <option value="stuetzraeder">Stützräder</option>
+        <option value="rollen">Kiel- & Stützrollen</option>
+        <option value="auflagen">Auflagen & Kissen</option>
+        <option value="raeder">Räder & Reifen</option>
+        <option value="sonstiges">Sonstiges</option>
+        <option value="beleuchtung">Beleuchtung</option>
+      </select></div>
+      <div class="filter-list" id="filterList" role="group" aria-label="Produktkategorie">
+        <button type="button" class="filter-item active" data-cat="alle" aria-pressed="true" onclick="filterCat(this)">Alle Produkte</button>
+        <button type="button" class="filter-item" data-cat="winden" aria-pressed="false" onclick="filterCat(this)">Windenstände & Winden</button>
+        <button type="button" class="filter-item" data-cat="stuetzraeder" aria-pressed="false" onclick="filterCat(this)">Stützräder</button>
+        <button type="button" class="filter-item" data-cat="rollen" aria-pressed="false" onclick="filterCat(this)">Kiel- & Stützrollen</button>
+        <button type="button" class="filter-item" data-cat="auflagen" aria-pressed="false" onclick="filterCat(this)">Auflagen & Kissen</button>
+        <button type="button" class="filter-item" data-cat="raeder" aria-pressed="false" onclick="filterCat(this)">Räder & Reifen</button>
+        <button type="button" class="filter-item" data-cat="sonstiges" aria-pressed="false" onclick="filterCat(this)">Sonstiges</button>
+        <button type="button" class="filter-item" data-cat="beleuchtung" aria-pressed="false" onclick="filterCat(this)">Beleuchtung</button>
       </div>
     </div>
 
     <!-- PRODUKTE -->
     <div class="shop-main">
       <div class="shop-header">
-        <div class="shop-count" id="shopCount"></div>
+        <div class="shop-count" id="shopCount" role="status" aria-live="polite">56 Artikel</div>
+        <div class="shop-search" data-shop-enhancement hidden>
+          <label for="shopSearch">Artikel suchen</label>
+          <input id="shopSearch" type="search" placeholder="Name oder Artikelnummer" oninput="renderProducts(currentCat)">
+        </div>
       </div>
-      <div class="product-grid" id="productGrid"></div>
+      <!-- Produktdaten werden ausschließlich in diesen HTML-Karten gepflegt. Kein zweiter JS-Katalog. -->
+      <div class="product-grid" id="productGrid">
+      <article class="product-card" id="artikel-1" data-id="1" data-artnr="50200" data-cat="winden">
+        <div class="product-img"><img src="produkt-1.jpg" alt="Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50200</span></p>
+          <h2 class="product-name">Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="295.00">295,00 €</data>
+            <button type="button" class="btn-add" id="btn-1" onclick="addToCart(1)" aria-label="Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband) – Art. 50200 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-2" data-id="2" data-artnr="50201" data-cat="winden">
+        <div class="product-img"><img src="produkt-2.jpg" alt="Windenstand mit Winde 1:3 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50201</span></p>
+          <h2 class="product-name">Windenstand mit Winde 1:3 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 1.500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="385.00">385,00 €</data>
+            <button type="button" class="btn-add" id="btn-2" onclick="addToCart(2)" aria-label="Windenstand mit Winde 1:3 (wahlweise Drahtseile oder Gurtband) – Art. 50201 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-3" data-id="3" data-artnr="50202" data-cat="winden">
+        <div class="product-img"><img src="produkt-3.jpg" alt="Windenstand mit Winde 1:8 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50202</span></p>
+          <h2 class="product-name">Windenstand mit Winde 1:8 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 2.500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="495.00">495,00 €</data>
+            <button type="button" class="btn-add" id="btn-3" onclick="addToCart(3)" aria-label="Windenstand mit Winde 1:8 (wahlweise Drahtseile oder Gurtband) – Art. 50202 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-4" data-id="4" data-artnr="50203" data-cat="winden">
+        <div class="product-img"><img src="produkt-4.jpg" alt="Windenstand mit Winde und Masthalter 1:2 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50203</span></p>
+          <h2 class="product-name">Windenstand mit Winde und Masthalter 1:2 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Mit Masthalter</p>
+          <div class="product-footer">
+            <data class="product-price" value="385.00">385,00 €</data>
+            <button type="button" class="btn-add" id="btn-4" onclick="addToCart(4)" aria-label="Windenstand mit Winde und Masthalter 1:2 (wahlweise Drahtseile oder Gurtband) – Art. 50203 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-5" data-id="5" data-artnr="50204" data-cat="winden">
+        <div class="product-img"><img src="produkt-5.jpg" alt="Windenstand mit Winde und Masthalter 1:3 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50204</span></p>
+          <h2 class="product-name">Windenstand mit Winde und Masthalter 1:3 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Mit Masthalter</p>
+          <div class="product-footer">
+            <data class="product-price" value="445.00">445,00 €</data>
+            <button type="button" class="btn-add" id="btn-5" onclick="addToCart(5)" aria-label="Windenstand mit Winde und Masthalter 1:3 (wahlweise Drahtseile oder Gurtband) – Art. 50204 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-6" data-id="6" data-artnr="50205" data-cat="winden">
+        <div class="product-img"><img src="produkt-6.jpg" alt="Bugstütze mit Masthalter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50205</span></p>
+          <h2 class="product-name">Bugstütze mit Masthalter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="135.00">135,00 €</data>
+            <button type="button" class="btn-add" id="btn-6" onclick="addToCart(6)" aria-label="Bugstütze mit Masthalter – Art. 50205 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-7" data-id="7" data-artnr="50206" data-cat="winden">
+        <div class="product-img"><img src="produkt-7.jpg" alt="Winde untersetzt 1:2 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50206</span></p>
+          <h2 class="product-name">Winde untersetzt 1:2 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="145.00">145,00 €</data>
+            <button type="button" class="btn-add" id="btn-7" onclick="addToCart(7)" aria-label="Winde untersetzt 1:2 (wahlweise Drahtseile oder Gurtband) – Art. 50206 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-8" data-id="8" data-artnr="50207" data-cat="winden">
+        <div class="product-img"><img src="produkt-8.jpg" alt="Winde untersetzt 1:3 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50207</span></p>
+          <h2 class="product-name">Winde untersetzt 1:3 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 1.500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="230.00">230,00 €</data>
+            <button type="button" class="btn-add" id="btn-8" onclick="addToCart(8)" aria-label="Winde untersetzt 1:3 (wahlweise Drahtseile oder Gurtband) – Art. 50207 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-9" data-id="9" data-artnr="50208" data-cat="winden">
+        <div class="product-img"><img src="produkt-9.jpg" alt="Winde untersetzt 1:8 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50208</span></p>
+          <h2 class="product-name">Winde untersetzt 1:8 (wahlweise Drahtseile oder Gurtband)</h2>
+          <p class="product-desc">Für Boote bis 2.500 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="295.00">295,00 €</data>
+            <button type="button" class="btn-add" id="btn-9" onclick="addToCart(9)" aria-label="Winde untersetzt 1:8 (wahlweise Drahtseile oder Gurtband) – Art. 50208 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-10" data-id="10" data-artnr="50209" data-cat="winden">
+        <div class="product-img"><img src="produkt-10.jpg" alt="Stahlseil verz. mit Haken" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50209</span></p>
+          <h2 class="product-name">Stahlseil verz. mit Haken</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="35.00">35,00 €</data>
+            <button type="button" class="btn-add" id="btn-10" onclick="addToCart(10)" aria-label="Stahlseil verz. mit Haken – Art. 50209 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-11" data-id="11" data-artnr="50210" data-cat="winden">
+        <div class="product-img"><img src="produkt-11.jpg" alt="Stahlseil verz. mit Haken und Umlenkrolle" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50210</span></p>
+          <h2 class="product-name">Stahlseil verz. mit Haken und Umlenkrolle</h2>
+          <p class="product-desc">Für Boote bis 2.850 kg</p>
+          <div class="product-footer">
+            <data class="product-price" value="95.00">95,00 €</data>
+            <button type="button" class="btn-add" id="btn-11" onclick="addToCart(11)" aria-label="Stahlseil verz. mit Haken und Umlenkrolle – Art. 50210 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-12" data-id="12" data-artnr="50211" data-cat="stuetzraeder">
+        <div class="product-img"><img src="produkt-12.jpg" alt="Stützrad, Vollgummi mit Klemmhalter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Stützräder <span class="product-artnr">Art. 50211</span></p>
+          <h2 class="product-name">Stützrad, Vollgummi mit Klemmhalter</h2>
+          <p class="product-desc">Standardausführung</p>
+          <div class="product-footer">
+            <data class="product-price" value="75.00">75,00 €</data>
+            <button type="button" class="btn-add" id="btn-12" onclick="addToCart(12)" aria-label="Stützrad, Vollgummi mit Klemmhalter – Art. 50211 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-13" data-id="13" data-artnr="50212" data-cat="stuetzraeder">
+        <div class="product-img"><img src="produkt-13.jpg" alt="Stützrad, Vollgummi mit Klemmhalter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Stützräder <span class="product-artnr">Art. 50212</span></p>
+          <h2 class="product-name">Stützrad, Vollgummi mit Klemmhalter</h2>
+          <p class="product-desc">Schwere Ausführung</p>
+          <div class="product-footer">
+            <data class="product-price" value="148.00">148,00 €</data>
+            <button type="button" class="btn-add" id="btn-13" onclick="addToCart(13)" aria-label="Stützrad, Vollgummi mit Klemmhalter – Art. 50212 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-14" data-id="14" data-artnr="50214" data-cat="rollen">
+        <div class="product-img"><img src="produkt-14.jpg" alt="Seitenstützrolle 120×250 höhenverstellbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50214</span></p>
+          <h2 class="product-name">Seitenstützrolle 120×250 höhenverstellbar</h2>
+          <p class="product-desc">Mit Klemmhalter</p>
+          <div class="product-footer">
+            <data class="product-price" value="85.00">85,00 €</data>
+            <button type="button" class="btn-add" id="btn-14" onclick="addToCart(14)" aria-label="Seitenstützrolle 120×250 höhenverstellbar – Art. 50214 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-15" data-id="15" data-artnr="50215" data-cat="rollen">
+        <div class="product-img"><img src="produkt-15.jpg" alt="Seitenstützrolle 120×250 mit Gewindespindel" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50215</span></p>
+          <h2 class="product-name">Seitenstützrolle 120×250 mit Gewindespindel</h2>
+          <p class="product-desc">Mit Klemmhalter</p>
+          <div class="product-footer">
+            <data class="product-price" value="156.00">156,00 €</data>
+            <button type="button" class="btn-add" id="btn-15" onclick="addToCart(15)" aria-label="Seitenstützrolle 120×250 mit Gewindespindel – Art. 50215 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-16" data-id="16" data-artnr="50216" data-cat="rollen">
+        <div class="product-img"><img src="produkt-16.jpg" alt="Seitenstützrolle 120×75" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50216</span></p>
+          <h2 class="product-name">Seitenstützrolle 120×75</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="23.00">23,00 €</data>
+            <button type="button" class="btn-add" id="btn-16" onclick="addToCart(16)" aria-label="Seitenstützrolle 120×75 – Art. 50216 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-17" data-id="17" data-artnr="50217" data-cat="rollen">
+        <div class="product-img"><img src="produkt-17.jpg" alt="Kielrolle mit Halter Ø 80×130" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50217</span></p>
+          <h2 class="product-name">Kielrolle mit Halter Ø 80×130</h2>
+          <p class="product-desc">Für Rohr 60, 70 □ u. Ø 60, 70</p>
+          <div class="product-footer">
+            <data class="product-price" value="55.00">55,00 €</data>
+            <button type="button" class="btn-add" id="btn-17" onclick="addToCart(17)" aria-label="Kielrolle mit Halter Ø 80×130 – Art. 50217 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-18" data-id="18" data-artnr="50218" data-cat="rollen">
+        <div class="product-img"><img src="produkt-18.jpg" alt="Kielrolle mit Halter Ø 80×130 höhenverstellbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50218</span></p>
+          <h2 class="product-name">Kielrolle mit Halter Ø 80×130 höhenverstellbar</h2>
+          <p class="product-desc">Für Rohr 60, 70 □ u. Ø 60+70</p>
+          <div class="product-footer">
+            <data class="product-price" value="72.00">72,00 €</data>
+            <button type="button" class="btn-add" id="btn-18" onclick="addToCart(18)" aria-label="Kielrolle mit Halter Ø 80×130 höhenverstellbar – Art. 50218 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-19" data-id="19" data-artnr="50219" data-cat="rollen">
+        <div class="product-img"><img src="produkt-19.jpg" alt="Kielrolle Ø 90×200 mit U-Halter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50219</span></p>
+          <h2 class="product-name">Kielrolle Ø 90×200 mit U-Halter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="55.00">55,00 €</data>
+            <button type="button" class="btn-add" id="btn-19" onclick="addToCart(19)" aria-label="Kielrolle Ø 90×200 mit U-Halter – Art. 50219 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-20" data-id="20" data-artnr="50220" data-cat="rollen">
+        <div class="product-img"><img src="produkt-20.jpg" alt="Kielrolle mit Halter Ø 90×200 höhenverstellbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50220</span></p>
+          <h2 class="product-name">Kielrolle mit Halter Ø 90×200 höhenverstellbar</h2>
+          <p class="product-desc">Für Rohr 60 □</p>
+          <div class="product-footer">
+            <data class="product-price" value="83.00">83,00 €</data>
+            <button type="button" class="btn-add" id="btn-20" onclick="addToCart(20)" aria-label="Kielrolle mit Halter Ø 90×200 höhenverstellbar – Art. 50220 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-21" data-id="21" data-artnr="50221" data-cat="rollen">
+        <div class="product-img"><img src="produkt-21.jpg" alt="Kielrolle Ø 80×130" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50221</span></p>
+          <h2 class="product-name">Kielrolle Ø 80×130</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="27.00">27,00 €</data>
+            <button type="button" class="btn-add" id="btn-21" onclick="addToCart(21)" aria-label="Kielrolle Ø 80×130 – Art. 50221 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-22" data-id="22" data-artnr="50222" data-cat="rollen">
+        <div class="product-img"><img src="produkt-22.jpg" alt="Kielrolle Ø 90×200" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50222</span></p>
+          <h2 class="product-name">Kielrolle Ø 90×200</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="30.00">30,00 €</data>
+            <button type="button" class="btn-add" id="btn-22" onclick="addToCart(22)" aria-label="Kielrolle Ø 90×200 – Art. 50222 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-23" data-id="23" data-artnr="50223" data-cat="rollen">
+        <div class="product-img"><img src="produkt-23.jpg" alt="POLY-Kielrolle Ø 90×200" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50223</span></p>
+          <h2 class="product-name">POLY-Kielrolle Ø 90×200</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="39.00">39,00 €</data>
+            <button type="button" class="btn-add" id="btn-23" onclick="addToCart(23)" aria-label="POLY-Kielrolle Ø 90×200 – Art. 50223 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-24" data-id="24" data-artnr="50224" data-cat="rollen">
+        <div class="product-img"><img src="produkt-24.jpg" alt="3 Hecksliprollen mit V-Einführung höhenverstellbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50224</span></p>
+          <h2 class="product-name">3 Hecksliprollen mit V-Einführung höhenverstellbar</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="295.00">295,00 €</data>
+            <button type="button" class="btn-add" id="btn-24" onclick="addToCart(24)" aria-label="3 Hecksliprollen mit V-Einführung höhenverstellbar – Art. 50224 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-25" data-id="25" data-artnr="50225" data-cat="rollen">
+        <div class="product-img"><img src="produkt-25.jpg" alt="Heck-V-Einführung 60 □" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50225</span></p>
+          <h2 class="product-name">Heck-V-Einführung 60 □</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="120.00">120,00 €</data>
+            <button type="button" class="btn-add" id="btn-25" onclick="addToCart(25)" aria-label="Heck-V-Einführung 60 □ – Art. 50225 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-26" data-id="26" data-artnr="50231" data-cat="rollen">
+        <div class="product-img"><img src="produkt-26.jpg" alt="Gewindespindel mit Befestigungshalter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50231</span></p>
+          <h2 class="product-name">Gewindespindel mit Befestigungshalter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="110.00">110,00 €</data>
+            <button type="button" class="btn-add" id="btn-26" onclick="addToCart(26)" aria-label="Gewindespindel mit Befestigungshalter – Art. 50231 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-27" data-id="27" data-artnr="50253" data-cat="rollen">
+        <div class="product-img"><img src="produkt-27.jpg" alt="Seitliche Führungsrollen steck- und abnehmbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Kiel- &amp; Stützrollen <span class="product-artnr">Art. 50253</span></p>
+          <h2 class="product-name">Seitliche Führungsrollen steck- und abnehmbar</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="240.00">240,00 €</data>
+            <button type="button" class="btn-add" id="btn-27" onclick="addToCart(27)" aria-label="Seitliche Führungsrollen steck- und abnehmbar – Art. 50253 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-28" data-id="28" data-artnr="50226" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-28.jpg" alt="Langauflage mit U-Halter 60 cm" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50226</span></p>
+          <h2 class="product-name">Langauflage mit U-Halter 60 cm</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="49.00">49,00 €</data>
+            <button type="button" class="btn-add" id="btn-28" onclick="addToCart(28)" aria-label="Langauflage mit U-Halter 60 cm – Art. 50226 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-29" data-id="29" data-artnr="50227" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-29.jpg" alt="Langauflage mit U-Halter 90 cm" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50227</span></p>
+          <h2 class="product-name">Langauflage mit U-Halter 90 cm</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="69.00">69,00 €</data>
+            <button type="button" class="btn-add" id="btn-29" onclick="addToCart(29)" aria-label="Langauflage mit U-Halter 90 cm – Art. 50227 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-30" data-id="30" data-artnr="50228" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-30.jpg" alt="Polsterkissen mit U-Halter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50228</span></p>
+          <h2 class="product-name">Polsterkissen mit U-Halter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="48.00">48,00 €</data>
+            <button type="button" class="btn-add" id="btn-30" onclick="addToCart(30)" aria-label="Polsterkissen mit U-Halter – Art. 50228 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-53" data-id="53" data-artnr="83011" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-53.jpg" alt="Polsterkissen" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 83011</span></p>
+          <h2 class="product-name">Polsterkissen</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="35.00">35,00 €</data>
+            <button type="button" class="btn-add" id="btn-53" onclick="addToCart(53)" aria-label="Polsterkissen – Art. 83011 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-31" data-id="31" data-artnr="50229" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-31.jpg" alt="Kielauflage, klappbar mit Halter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50229</span></p>
+          <h2 class="product-name">Kielauflage, klappbar mit Halter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="110.00">110,00 €</data>
+            <button type="button" class="btn-add" id="btn-31" onclick="addToCart(31)" aria-label="Kielauflage, klappbar mit Halter – Art. 50229 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-32" data-id="32" data-artnr="50230" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-32.jpg" alt="Kielauflage mit Polsterkissen für Schlauchboot" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50230</span></p>
+          <h2 class="product-name">Kielauflage mit Polsterkissen für Schlauchboot</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="135.00">135,00 €</data>
+            <button type="button" class="btn-add" id="btn-32" onclick="addToCart(32)" aria-label="Kielauflage mit Polsterkissen für Schlauchboot – Art. 50230 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-33" data-id="33" data-artnr="50232" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-33.jpg" alt="Vordere Rumpfstütze mit Gewindespindel und Polsterkissen" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50232</span></p>
+          <h2 class="product-name">Vordere Rumpfstütze mit Gewindespindel und Polsterkissen</h2>
+          <p class="product-desc">Stück</p>
+          <div class="product-footer">
+            <data class="product-price" value="145.00">145,00 €</data>
+            <button type="button" class="btn-add" id="btn-33" onclick="addToCart(33)" aria-label="Vordere Rumpfstütze mit Gewindespindel und Polsterkissen – Art. 50232 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-34" data-id="34" data-artnr="50233" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-34.jpg" alt="Heckstütze höhenverstellbar" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50233</span></p>
+          <h2 class="product-name">Heckstütze höhenverstellbar</h2>
+          <p class="product-desc">Stück</p>
+          <div class="product-footer">
+            <data class="product-price" value="60.00">60,00 €</data>
+            <button type="button" class="btn-add" id="btn-34" onclick="addToCart(34)" aria-label="Heckstütze höhenverstellbar – Art. 50233 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-35" data-id="35" data-artnr="50234" data-cat="auflagen">
+        <div class="product-img"><img src="produkt-35.jpg" alt="Laufsteg (Gangway)" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Auflagen &amp; Kissen <span class="product-artnr">Art. 50234</span></p>
+          <h2 class="product-name">Laufsteg (Gangway)</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="295.00">295,00 €</data>
+            <button type="button" class="btn-add" id="btn-35" onclick="addToCart(35)" aria-label="Laufsteg (Gangway) – Art. 50234 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-36" data-id="36" data-artnr="50239" data-cat="raeder">
+        <div class="product-img"><img src="produkt-36.jpg" alt="Reserverad 145 R 10" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50239</span></p>
+          <h2 class="product-name">Reserverad 145 R 10</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="90.00">90,00 €</data>
+            <button type="button" class="btn-add" id="btn-36" onclick="addToCart(36)" aria-label="Reserverad 145 R 10 – Art. 50239 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-37" data-id="37" data-artnr="50240" data-cat="raeder">
+        <div class="product-img"><img src="produkt-37.jpg" alt="Reserverad 155 R-13" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50240</span></p>
+          <h2 class="product-name">Reserverad 155 R-13</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="120.00">120,00 €</data>
+            <button type="button" class="btn-add" id="btn-37" onclick="addToCart(37)" aria-label="Reserverad 155 R-13 – Art. 50240 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-38" data-id="38" data-artnr="50241" data-cat="raeder">
+        <div class="product-img"><img src="produkt-38.jpg" alt="Reserverad 185 R-14C 8 PR" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50241</span></p>
+          <h2 class="product-name">Reserverad 185 R-14C 8 PR</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="172.00">172,00 €</data>
+            <button type="button" class="btn-add" id="btn-38" onclick="addToCart(38)" aria-label="Reserverad 185 R-14C 8 PR – Art. 50241 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-55" data-id="55" data-artnr="50242" data-cat="raeder">
+        <div class="product-img"><img src="produkt-55.jpg" alt="Reserverad 195 R-14C 8 PR" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50242</span></p>
+          <h2 class="product-name">Reserverad 195 R-14C 8 PR</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="192.00">192,00 €</data>
+            <button type="button" class="btn-add" id="btn-55" onclick="addToCart(55)" aria-label="Reserverad 195 R-14C 8 PR – Art. 50242 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-39" data-id="39" data-artnr="50243" data-cat="raeder">
+        <div class="product-img"><img src="produkt-39.jpg" alt="Reserveradhalter" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50243</span></p>
+          <h2 class="product-name">Reserveradhalter</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="49.00">49,00 €</data>
+            <button type="button" class="btn-add" id="btn-39" onclick="addToCart(39)" aria-label="Reserveradhalter – Art. 50243 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-40" data-id="40" data-artnr="50248" data-cat="raeder">
+        <div class="product-img"><img src="produkt-40.jpg" alt="Radstoßdämpfer 1-achsig" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50248</span></p>
+          <h2 class="product-name">Radstoßdämpfer 1-achsig</h2>
+          <p class="product-desc">Für 100 km/h-Zulassung</p>
+          <div class="product-footer">
+            <data class="product-price" value="140.00">140,00 €</data>
+            <button type="button" class="btn-add" id="btn-40" onclick="addToCart(40)" aria-label="Radstoßdämpfer 1-achsig – Art. 50248 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-41" data-id="41" data-artnr="50249" data-cat="raeder">
+        <div class="product-img"><img src="produkt-41.jpg" alt="Radstoßdämpfer Tandem" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50249</span></p>
+          <h2 class="product-name">Radstoßdämpfer Tandem</h2>
+          <p class="product-desc">Für 100 km/h-Zulassung</p>
+          <div class="product-footer">
+            <data class="product-price" value="280.00">280,00 €</data>
+            <button type="button" class="btn-add" id="btn-41" onclick="addToCart(41)" aria-label="Radstoßdämpfer Tandem – Art. 50249 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-42" data-id="42" data-artnr="50235" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-42.jpg" alt="Kasten-Sicherungsschloss" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50235</span></p>
+          <h2 class="product-name">Kasten-Sicherungsschloss</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="40.00">40,00 €</data>
+            <button type="button" class="btn-add" id="btn-42" onclick="addToCart(42)" aria-label="Kasten-Sicherungsschloss – Art. 50235 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-43" data-id="43" data-artnr="50236" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-43.jpg" alt="V-Gummi für Buganschlag bis Typ 500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50236</span></p>
+          <h2 class="product-name">V-Gummi für Buganschlag bis Typ 500</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="20.00">20,00 €</data>
+            <button type="button" class="btn-add" id="btn-43" onclick="addToCart(43)" aria-label="V-Gummi für Buganschlag bis Typ 500 – Art. 50236 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-44" data-id="44" data-artnr="50237" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-44.jpg" alt="V-Gummi für Buganschlag bis Typ 3500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50237</span></p>
+          <h2 class="product-name">V-Gummi für Buganschlag bis Typ 3500</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="28.00">28,00 €</data>
+            <button type="button" class="btn-add" id="btn-44" onclick="addToCart(44)" aria-label="V-Gummi für Buganschlag bis Typ 3500 – Art. 50237 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-45" data-id="45" data-artnr="50238" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-45.jpg" alt="Adapterstecker 7- bis 13-polig" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50238</span></p>
+          <h2 class="product-name">Adapterstecker 7- bis 13-polig</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="39.00">39,00 €</data>
+            <button type="button" class="btn-add" id="btn-45" onclick="addToCart(45)" aria-label="Adapterstecker 7- bis 13-polig – Art. 50238 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-46" data-id="46" data-artnr="50244" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-46.jpg" alt="Katamaranauflage für G 355" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50244</span></p>
+          <h2 class="product-name">Katamaranauflage für G 355</h2>
+          <p class="product-desc">Aufpreis</p>
+          <div class="product-footer">
+            <data class="product-price" value="260.00">260,00 €</data>
+            <button type="button" class="btn-add" id="btn-46" onclick="addToCart(46)" aria-label="Katamaranauflage für G 355 – Art. 50244 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-47" data-id="47" data-artnr="50245" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-47.jpg" alt="Huckepack-Transportwagen für G 500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50245</span></p>
+          <h2 class="product-name">Huckepack-Transportwagen für G 500</h2>
+          <p class="product-desc">Aufpreis</p>
+          <div class="product-footer">
+            <data class="product-price" value="245.00">245,00 €</data>
+            <button type="button" class="btn-add" id="btn-47" onclick="addToCart(47)" aria-label="Huckepack-Transportwagen für G 500 – Art. 50245 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-48" data-id="48" data-artnr="50246" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-48.jpg" alt="Auflagen für 1 Jet-Ski" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50246</span></p>
+          <h2 class="product-name">Auflagen für 1 Jet-Ski</h2>
+          <p class="product-desc">Aufpreis</p>
+          <div class="product-footer">
+            <data class="product-price" value="105.00">105,00 €</data>
+            <button type="button" class="btn-add" id="btn-48" onclick="addToCart(48)" aria-label="Auflagen für 1 Jet-Ski – Art. 50246 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-49" data-id="49" data-artnr="50247" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-49.jpg" alt="Auflagen für 2 Jet-Ski" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50247</span></p>
+          <h2 class="product-name">Auflagen für 2 Jet-Ski</h2>
+          <p class="product-desc">Aufpreis</p>
+          <div class="product-footer">
+            <data class="product-price" value="210.00">210,00 €</data>
+            <button type="button" class="btn-add" id="btn-49" onclick="addToCart(49)" aria-label="Auflagen für 2 Jet-Ski – Art. 50247 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-50" data-id="50" data-artnr="50250" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-50.jpg" alt="2 Luftsliprollen mit vorderer Gewindespindel" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50250</span></p>
+          <h2 class="product-name">2 Luftsliprollen mit vorderer Gewindespindel</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="410.00">410,00 €</data>
+            <button type="button" class="btn-add" id="btn-50" onclick="addToCart(50)" aria-label="2 Luftsliprollen mit vorderer Gewindespindel – Art. 50250 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-51" data-id="51" data-artnr="50251" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-51.jpg" alt="4 Luftsliprollen mit vorderer Gewindespindel" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50251</span></p>
+          <h2 class="product-name">4 Luftsliprollen mit vorderer Gewindespindel</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="475.00">475,00 €</data>
+            <button type="button" class="btn-add" id="btn-51" onclick="addToCart(51)" aria-label="4 Luftsliprollen mit vorderer Gewindespindel – Art. 50251 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-52" data-id="52" data-artnr="50252" data-cat="sonstiges">
+        <div class="product-img"><img src="produkt-52.jpg" alt="6 Luftsliprollen mit vorderer Gewindespindel" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50252</span></p>
+          <h2 class="product-name">6 Luftsliprollen mit vorderer Gewindespindel</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="595.00">595,00 €</data>
+            <button type="button" class="btn-add" id="btn-52" onclick="addToCart(52)" aria-label="6 Luftsliprollen mit vorderer Gewindespindel – Art. 50252 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-54" data-id="54" data-artnr="85027" data-cat="beleuchtung">
+        <div class="product-img"><img src="produkt-54.jpg" alt="Seitenmarkierungsleuchte LED gelb" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Beleuchtung <span class="product-artnr">Art. 85027</span></p>
+          <h2 class="product-name">Seitenmarkierungsleuchte LED gelb</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="20.25">20,25 €</data>
+            <button type="button" class="btn-add" id="btn-54" onclick="addToCart(54)" aria-label="Seitenmarkierungsleuchte LED gelb – Art. 85027 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      <article class="product-card" id="artikel-56" data-id="56" data-artnr="85028" data-cat="beleuchtung">
+        <div class="product-img"><img src="produkt-56.jpg" alt="Begrenzungsleuchte LED weiß" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Beleuchtung <span class="product-artnr">Art. 85028</span></p>
+          <h2 class="product-name">Begrenzungsleuchte LED weiß</h2>
+          <p class="product-desc"></p>
+          <div class="product-footer">
+            <data class="product-price" value="20.95">20,95 €</data>
+            <button type="button" class="btn-add" id="btn-56" onclick="addToCart(56)" aria-label="Begrenzungsleuchte LED weiß – Art. 85028 in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>
+      </div>
+      <p id="shopEmpty" hidden>Keine passenden Artikel. Suchbegriff ändern oder eine andere Kategorie wählen.</p>
     </div>
-  </div>
+  </main>
 
   <!-- WARENKORB DRAWER -->
   <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-  <div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Warenkorb" aria-hidden="true" inert>
     <div class="cart-head">
       <div class="cart-head-title">Warenkorb</div>
-      <button class="cart-close" onclick="toggleCart()">
+      <button type="button" class="cart-close" onclick="toggleCart()" aria-label="Warenkorb schließen">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -402,11 +1175,11 @@
 
   <!-- CHECKOUT MODAL -->
   <div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Bestellung aufgeben">
       <div id="checkoutForm">
         <div class="modal-head">
           <div class="modal-title">Bestellung aufgeben</div>
-          <button class="modal-close" onclick="closeCheckout()">✕</button>
+          <button class="modal-close" aria-label="Bestellung schließen" onclick="closeCheckout()">✕</button>
         </div>
         <div class="modal-body">
           <div class="order-summary" id="orderSummary"></div>
@@ -420,8 +1193,8 @@
             <div class="modal-section-title">Ihre Daten</div>
             <div class="modal-grid" style="margin-bottom:14px">
               <div class="form-group">
-                <label class="form-label">Anrede <span>*</span></label>
-                <select class="form-select form-input" id="co-anrede">
+                <label class="form-label" for="co-anrede">Anrede <span>*</span></label>
+                <select class="form-select form-input" id="co-anrede" autocomplete="honorific-prefix">
                   <option value="">— Bitte wählen —</option>
                   <option>Herr</option><option>Frau</option><option>Familie</option><option>Firma</option>
                 </select>
@@ -430,22 +1203,22 @@
             </div>
             <div class="modal-grid" style="margin-bottom:14px">
               <div class="form-group">
-                <label class="form-label">Vorname <span>*</span></label>
-                <input type="text" class="form-input" id="co-vorname" placeholder="Max">
+                <label class="form-label" for="co-vorname">Vorname <span>*</span></label>
+                <input type="text" class="form-input" id="co-vorname" autocomplete="given-name" placeholder="Max">
               </div>
               <div class="form-group">
-                <label class="form-label">Nachname <span>*</span></label>
-                <input type="text" class="form-input" id="co-nachname" placeholder="Mustermann">
+                <label class="form-label" for="co-nachname">Nachname <span>*</span></label>
+                <input type="text" class="form-input" id="co-nachname" autocomplete="family-name" placeholder="Mustermann">
               </div>
             </div>
             <div class="modal-grid" style="margin-bottom:14px">
               <div class="form-group">
-                <label class="form-label">E-Mail <span>*</span></label>
-                <input type="email" class="form-input" id="co-email" placeholder="max@beispiel.de">
+                <label class="form-label" for="co-email">E-Mail <span>*</span></label>
+                <input type="email" class="form-input" id="co-email" autocomplete="email" placeholder="max@beispiel.de">
               </div>
               <div class="form-group">
-                <label class="form-label">Telefon</label>
-                <input type="tel" class="form-input" id="co-telefon" placeholder="+49 521 ...">
+                <label class="form-label" for="co-telefon">Telefon</label>
+                <input type="tel" class="form-input" id="co-telefon" autocomplete="tel" placeholder="+49 521 ...">
               </div>
             </div>
           </div>
@@ -454,23 +1227,23 @@
             <div class="modal-section-title">Lieferadresse</div>
             <div class="modal-grid full" style="margin-bottom:14px">
               <div class="form-group">
-                <label class="form-label">Straße & Nr. <span>*</span></label>
-                <input type="text" class="form-input" id="co-strasse" placeholder="Musterstraße 1">
+                <label class="form-label" for="co-strasse">Straße & Nr. <span>*</span></label>
+                <input type="text" class="form-input" id="co-strasse" autocomplete="street-address" placeholder="Musterstraße 1">
               </div>
             </div>
             <div class="modal-grid" style="margin-bottom:14px">
               <div class="form-group">
-                <label class="form-label">PLZ <span>*</span></label>
-                <input type="text" class="form-input" id="co-plz" placeholder="12345" maxlength="10">
+                <label class="form-label" for="co-plz">PLZ <span>*</span></label>
+                <input type="text" class="form-input" id="co-plz" autocomplete="postal-code" inputmode="numeric" placeholder="12345" maxlength="10">
               </div>
               <div class="form-group">
-                <label class="form-label">Ort <span>*</span></label>
-                <input type="text" class="form-input" id="co-ort" placeholder="Musterstadt">
+                <label class="form-label" for="co-ort">Ort <span>*</span></label>
+                <input type="text" class="form-input" id="co-ort" autocomplete="address-level2" placeholder="Musterstadt">
               </div>
             </div>
             <div class="modal-grid full">
               <div class="form-group">
-                <label class="form-label">Anmerkung zur Bestellung</label>
+                <label class="form-label" for="co-notiz">Anmerkung zur Bestellung</label>
                 <input type="text" class="form-input" id="co-notiz" placeholder="Optional">
               </div>
             </div>
@@ -484,7 +1257,7 @@
           </div>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;">Als Verbraucher haben Sie ein gesetzliches <a href="widerruf.html" target="_blank" style="color:var(--rot);">Widerrufsrecht von 14 Tagen</a> ab Erhalt der Ware.</p>
 
-          <div class="form-error" id="co-error"></div>
+          <div class="form-error" id="co-error" role="alert"></div>
           <button class="btn-order" id="orderBtn" onclick="submitOrder()">Bestellung verbindlich absenden →</button>
         </div>
       </div>
@@ -550,77 +1323,14 @@
 
   <script>
   // ─── PRODUKTDATENBANK ──────────────────────────────────────────────────────
-  const PRODUKTE = [
-    // Windenstände & Winden
-    { id:1, artnr:50200, cat:'winden', name:'Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 500 kg', preis:295 },
-    { id:2, artnr:50201, cat:'winden', name:'Windenstand mit Winde 1:3 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 1.500 kg', preis:385 },
-    { id:3, artnr:50202, cat:'winden', name:'Windenstand mit Winde 1:8 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 2.500 kg', preis:495 },
-    { id:4, artnr:50203, cat:'winden', name:'Windenstand mit Winde und Masthalter 1:2 (wahlweise Drahtseile oder Gurtband)', desc:'Mit Masthalter', preis:385 },
-    { id:5, artnr:50204, cat:'winden', name:'Windenstand mit Winde und Masthalter 1:3 (wahlweise Drahtseile oder Gurtband)', desc:'Mit Masthalter', preis:445 },
-    { id:6, artnr:50205, cat:'winden', name:'Bugstütze mit Masthalter', desc:'', preis:135 },
-    { id:7, artnr:50206, cat:'winden', name:'Winde untersetzt 1:2 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 500 kg', preis:145 },
-    { id:8, artnr:50207, cat:'winden', name:'Winde untersetzt 1:3 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 1.500 kg', preis:230 },
-    { id:9, artnr:50208, cat:'winden', name:'Winde untersetzt 1:8 (wahlweise Drahtseile oder Gurtband)', desc:'Für Boote bis 2.500 kg', preis:295 },
-    { id:10, artnr:50209, cat:'winden', name:'Stahlseil verz. mit Haken', desc:'', preis:35 },
-    { id:11, artnr:50210, cat:'winden', name:'Stahlseil verz. mit Haken und Umlenkrolle', desc:'Für Boote bis 2.850 kg', preis:95 },
-
-    // Stützräder
-    { id:12, artnr:50211, cat:'stuetzraeder', name:'Stützrad, Vollgummi mit Klemmhalter', desc:'Standardausführung', preis:75 },
-    { id:13, artnr:50212, cat:'stuetzraeder', name:'Stützrad, Vollgummi mit Klemmhalter', desc:'Schwere Ausführung', preis:148 },
-
-    // Kiel- & Stützrollen
-    { id:14, artnr:50214, cat:'rollen', name:'Seitenstützrolle 120×250 höhenverstellbar', desc:'Mit Klemmhalter', preis:85 },
-    { id:15, artnr:50215, cat:'rollen', name:'Seitenstützrolle 120×250 mit Gewindespindel', desc:'Mit Klemmhalter', preis:156 },
-    { id:16, artnr:50216, cat:'rollen', name:'Seitenstützrolle 120×75', desc:'', preis:23 },
-    { id:17, artnr:50217, cat:'rollen', name:'Kielrolle mit Halter Ø 80×130', desc:'Für Rohr 60, 70 □ u. Ø 60, 70', preis:55 },
-    { id:18, artnr:50218, cat:'rollen', name:'Kielrolle mit Halter Ø 80×130 höhenverstellbar', desc:'Für Rohr 60, 70 □ u. Ø 60+70', preis:72 },
-    { id:19, artnr:50219, cat:'rollen', name:'Kielrolle Ø 90×200 mit U-Halter', desc:'', preis:55 },
-    { id:20, artnr:50220, cat:'rollen', name:'Kielrolle mit Halter Ø 90×200 höhenverstellbar', desc:'Für Rohr 60 □', preis:83 },
-    { id:21, artnr:50221, cat:'rollen', name:'Kielrolle Ø 80×130', desc:'', preis:27 },
-    { id:22, artnr:50222, cat:'rollen', name:'Kielrolle Ø 90×200', desc:'', preis:30 },
-    { id:23, artnr:50223, cat:'rollen', name:'POLY-Kielrolle Ø 90×200', desc:'', preis:39 },
-    { id:24, artnr:50224, cat:'rollen', name:'3 Hecksliprollen mit V-Einführung höhenverstellbar', desc:'', preis:295 },
-    { id:25, artnr:50225, cat:'rollen', name:'Heck-V-Einführung 60 □', desc:'', preis:120 },
-    { id:26, artnr:50231, cat:'rollen', name:'Gewindespindel mit Befestigungshalter', desc:'', preis:110 },
-    { id:27, artnr:50253, cat:'rollen', name:'Seitliche Führungsrollen steck- und abnehmbar', desc:'', preis:240 },
-
-    // Auflagen & Kissen
-    { id:28, artnr:50226, cat:'auflagen', name:'Langauflage mit U-Halter 60 cm', desc:'', preis:49 },
-    { id:29, artnr:50227, cat:'auflagen', name:'Langauflage mit U-Halter 90 cm', desc:'', preis:69 },
-    { id:30, artnr:50228, cat:'auflagen', name:'Polsterkissen mit U-Halter', desc:'', preis:48 },
-    { id:53, artnr:83011, cat:'auflagen', name:'Polsterkissen', desc:'', preis:35 },
-    { id:31, artnr:50229, cat:'auflagen', name:'Kielauflage, klappbar mit Halter', desc:'', preis:110 },
-    { id:32, artnr:50230, cat:'auflagen', name:'Kielauflage mit Polsterkissen für Schlauchboot', desc:'', preis:135 },
-    { id:33, artnr:50232, cat:'auflagen', name:'Vordere Rumpfstütze mit Gewindespindel und Polsterkissen', desc:'Stück', preis:145 },
-    { id:34, artnr:50233, cat:'auflagen', name:'Heckstütze höhenverstellbar', desc:'Stück', preis:60 },
-    { id:35, artnr:50234, cat:'auflagen', name:'Laufsteg (Gangway)', desc:'', preis:295 },
-
-    // Räder & Reifen
-    { id:36, artnr:50239, cat:'raeder', name:'Reserverad 145 R 10', desc:'', preis:90 },
-    { id:37, artnr:50240, cat:'raeder', name:'Reserverad 155 R-13', desc:'', preis:120 },
-    { id:38, artnr:50242, cat:'raeder', name:'Reserverad 185 R-14C 8 PR', desc:'', preis:172 },
-    { id:55, artnr:50242, cat:'raeder', name:'Reserverad 195 R-14C 8 PR', desc:'', preis:192 },
-    { id:39, artnr:50243, cat:'raeder', name:'Reserveradhalter', desc:'', preis:49 },
-    { id:40, artnr:50248, cat:'raeder', name:'Radstoßdämpfer 1-achsig', desc:'Für 100 km/h-Zulassung', preis:140 },
-    { id:41, artnr:50249, cat:'raeder', name:'Radstoßdämpfer Tandem', desc:'Für 100 km/h-Zulassung', preis:280 },
-
-    // Sonstiges
-    { id:42, artnr:50235, cat:'sonstiges', name:'Kasten-Sicherungsschloss', desc:'', preis:40 },
-    { id:43, artnr:50236, cat:'sonstiges', name:'V-Gummi für Buganschlag bis Typ 500', desc:'', preis:20 },
-    { id:44, artnr:50237, cat:'sonstiges', name:'V-Gummi für Buganschlag bis Typ 3500', desc:'', preis:28 },
-    { id:45, artnr:50238, cat:'sonstiges', name:'Adapterstecker 7- bis 13-polig', desc:'', preis:39 },
-    { id:46, artnr:50244, cat:'sonstiges', name:'Katamaranauflage für G 355', desc:'Aufpreis', preis:260 },
-    { id:47, artnr:50245, cat:'sonstiges', name:'Huckepack-Transportwagen für G 500', desc:'Aufpreis', preis:245 },
-    { id:48, artnr:50246, cat:'sonstiges', name:'Auflagen für 1 Jet-Ski', desc:'Aufpreis', preis:105 },
-    { id:49, artnr:50247, cat:'sonstiges', name:'Auflagen für 2 Jet-Ski', desc:'Aufpreis', preis:210 },
-    { id:50, artnr:50250, cat:'sonstiges', name:'2 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:410 },
-    { id:51, artnr:50251, cat:'sonstiges', name:'4 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:475 },
-    { id:52, artnr:50252, cat:'sonstiges', name:'6 Luftsliprollen mit vorderer Gewindespindel', desc:'', preis:595 },
-
-    // Beleuchtung
-    { id:54, artnr:85027, cat:'beleuchtung', name:'Seitenmarkierungsleuchte LED gelb', desc:'', preis:20.25 },
-    { id:56, artnr:85028, cat:'beleuchtung', name:'Begrenzungsleuchte LED weiß', desc:'', preis:20.95 },
-  ];
+  // Einzige Datenquelle: der bereits ohne JavaScript lesbare HTML-Katalog.
+  const productCards = [...document.querySelectorAll('#productGrid .product-card')];
+  const PRODUKTE = productCards.map(card => ({
+    id: Number(card.dataset.id), artnr: Number(card.dataset.artnr), cat: card.dataset.cat,
+    name: card.querySelector('.product-name').textContent.trim(),
+    desc: card.querySelector('.product-desc').textContent.trim(),
+    preis: Number(card.querySelector('.product-price').value)
+  }));
 
   // ─── STATE ──────────────────────────────────────────────────────────────────
   let cart = [];
@@ -628,32 +1338,17 @@
 
   // ─── RENDER PRODUKTE ────────────────────────────────────────────────────────
   function renderProducts(cat) {
-    const filtered = cat === 'alle' ? PRODUKTE : PRODUKTE.filter(p => p.cat === cat);
-    document.getElementById('shopCount').textContent = `${filtered.length} Artikel`;
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = filtered.map(p => `
-      <div class="product-card">
-        <div class="product-img" style="overflow:hidden;position:relative;">
-          <img src="produkt-${p.id}.jpg" alt="${p.name}"
-            style="width:100%;height:100%;object-fit:cover;display:block;"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:var(--bg2);position:absolute;inset:0;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="8" width="20" height="10" rx="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
-          </div>
-        </div>
-        <div class="product-body">
-          <div class="product-cat">${catLabel(p.cat)} <span style="color:var(--muted);font-weight:400;font-size:10px;margin-left:6px">Art. ${p.artnr}</span></div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-desc">${p.desc || '&nbsp;'}</div>
-          <div class="product-footer">
-            <div class="product-price">${fmt(p.preis)}</div>
-            <button class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})">
-              + Warenkorb
-            </button>
-          </div>
-        </div>
-      </div>
-    `).join('');
+    const query = document.getElementById('shopSearch').value.trim().toLocaleLowerCase('de');
+    let count = 0;
+    productCards.forEach((card, index) => {
+      const p = PRODUKTE[index];
+      const matches = (cat === 'alle' || p.cat === cat) &&
+        (p.name + ' ' + p.desc + ' ' + p.artnr).toLocaleLowerCase('de').includes(query);
+      card.hidden = !matches;
+      if (matches) count++;
+    });
+    document.getElementById('shopCount').textContent = count + ' von ' + PRODUKTE.length + ' Artikeln';
+    document.getElementById('shopEmpty').hidden = count !== 0;
   }
 
   function catLabel(cat) {
@@ -733,8 +1428,10 @@
   // ─── FILTER ──────────────────────────────────────────────────────────────────
   function filterCat(el) {
     document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.filter-item').forEach(item => item.setAttribute('aria-pressed', String(item === el)));
     el.classList.add('active');
     currentCat = el.dataset.cat;
+    document.getElementById('shopCategory').value = currentCat;
     renderProducts(currentCat);
   }
 
@@ -763,6 +1460,7 @@
   }
 
   function updateCartUI() {
+    const focusedControl = document.activeElement?.closest('#cartItems button')?.getAttribute('onclick');
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
     const count = cart.reduce((s, i) => s + i.qty, 0);
     const versand = calcVersand(cart);
@@ -779,19 +1477,23 @@
     } else {
       itemsEl.innerHTML = cart.map(i => `
         <div class="cart-item">
-          <div class="cart-item-img" style="overflow:hidden;"><img src="produkt-${i.id}.jpg" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"><svg style="display:none;" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="8" width="20" height="10" rx="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
+          <div class="cart-item-img" style="overflow:hidden;"><img src="produkt-${i.id}.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"><svg style="display:none;" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="8" width="20" height="10" rx="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
           <div class="cart-item-info">
             <div class="cart-item-name">${i.name}</div>
             <div class="cart-item-price">${fmt(i.preis)} / Stück</div>
             <div class="cart-item-controls">
-              <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+              <button class="qty-btn" aria-label="Menge verringern" onclick="changeQty(${i.id},-1)">−</button>
               <span class="qty-num">${i.qty}</span>
-              <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
-              <button class="cart-item-del" onclick="removeFromCart(${i.id})">✕</button>
+              <button class="qty-btn" aria-label="Menge erhöhen" onclick="changeQty(${i.id},1)">+</button>
+              <button class="cart-item-del" aria-label="Artikel entfernen" onclick="removeFromCart(${i.id})">✕</button>
             </div>
           </div>
         </div>
       `).join('');
+    }
+    if (focusedControl) {
+      const replacement = [...itemsEl.querySelectorAll('button')].find(el => el.getAttribute('onclick') === focusedControl);
+      (replacement || document.querySelector('.cart-close')).focus();
     }
   }
 
@@ -800,6 +1502,12 @@
     const overlay = document.getElementById('cartOverlay');
     drawer.classList.toggle('open');
     overlay.classList.toggle('open');
+    const open = drawer.classList.contains('open');
+    drawer.inert = !open;
+    drawer.setAttribute('aria-hidden', String(!open));
+    syncShopDialog();
+    if (open) drawer.querySelector('.cart-close').focus();
+    else if (!document.getElementById('modalOverlay').classList.contains('open')) document.querySelector('.cart-btn').focus();
   }
 
   // ─── CHECKOUT ────────────────────────────────────────────────────────────────
@@ -819,10 +1527,13 @@
     document.getElementById('checkoutForm').style.display = '';
     document.getElementById('orderSuccess').classList.remove('show');
     toggleCart();
+    document.getElementById('co-anrede').focus();
   }
 
   function closeCheckout() {
     document.getElementById('modalOverlay').classList.remove('open');
+    syncShopDialog();
+    document.querySelector('.cart-btn').focus();
   }
 
   async function submitOrder() {
@@ -911,7 +1622,27 @@
     }
   }
 
+  function syncShopDialog() {
+    const open = document.getElementById('cartDrawer').classList.contains('open') || document.getElementById('modalOverlay').classList.contains('open');
+    document.body.classList.toggle('shop-dialog-open', open);
+    document.querySelectorAll('body > nav, .page-header, .info-band, .marquee-wrap, #shopContent, footer, .heku-sticky-cta').forEach(el => el.inert = open);
+  }
+  document.addEventListener('keydown', event => {
+    const checkout = document.getElementById('modalOverlay').classList.contains('open');
+    const drawer = document.getElementById('cartDrawer').classList.contains('open');
+    if (!checkout && !drawer) return;
+    if (event.key === 'Escape') { event.preventDefault(); checkout ? closeCheckout() : toggleCart(); return; }
+    if (event.key !== 'Tab') return;
+    const panel = document.querySelector(checkout ? '#modalOverlay .modal' : '#cartDrawer');
+    const focusable = [...panel.querySelectorAll('a[href], button, input, select, textarea')].filter(el => !el.disabled && el.getClientRects().length);
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
+
   // ─── INIT ────────────────────────────────────────────────────────────────────
+  document.querySelectorAll('[data-shop-enhancement]').forEach(el => el.hidden = false);
+  document.querySelectorAll('.btn-add').forEach(el => el.disabled = false);
   renderProducts('alle');
   updateCartUI();
 
@@ -941,7 +1672,9 @@
   function toggleMenu() {
     const c = document.querySelector('.nav-center');
     const open = c.style.display === 'flex';
-    c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
+    document.querySelector('.nav-burger').setAttribute('aria-expanded', String(!open));
+    document.querySelector('.nav-burger').setAttribute('aria-label', open ? 'Menü öffnen' : 'Menü schließen');
+    c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;max-height:calc(100dvh - 130px);overflow-y:auto;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
   }
   </script>
   <!-- ═══ WIDERRUFS-MODAL ═══════════════════════════════════════════════════ -->
