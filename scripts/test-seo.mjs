@@ -6,6 +6,54 @@ import vm from 'node:vm';
 import { ROOT, BASE, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
+const shopCards = () => [...read('shop.html').matchAll(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g)];
+
+test('Shop catalog is visible HTML, not a second JavaScript product array',()=>{
+ const cards=shopCards(); assert.ok(cards.length>0);
+ const ids=cards.map(([,a])=>attributes(a)['data-id']);
+ assert.equal(new Set(ids).size,ids.length);
+ assert.doesNotMatch(read('shop.html'),/const PRODUKTE = \[/);
+ for(const [,a,b] of cards) {
+  const attrs=attributes(a); assert.ok(Number(attrs['data-id'])>0); assert.ok(Number(attrs['data-artnr'])>0);
+  assert.match(b,/<h2 class="product-name">[^<]+<\/h2>/);
+  assert.match(b,/<p class="product-desc">[^<]*<\/p>/);
+  assert.ok(['winden','stuetzraeder','rollen','auflagen','raeder','sonstiges','beleuchtung'].includes(attrs['data-cat']));
+ }
+});
+test('Shop displayed price matches machine-readable price on every card',()=>{
+ for(const [,,body] of shopCards()) {
+  const price=body.match(/<data class="product-price" value="([^"]+)">([^<]+)<\/data>/);
+  assert.ok(price); const value=Number(price[1]); assert.ok(Number.isFinite(value)&&value>0);
+  assert.equal(price[2].replace(/\s/g,''),value.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+'€');
+ }
+});
+test('Shop images exist, are lazy-loaded and product buttons match their IDs',()=>{
+ for(const [,a,body] of shopCards()) {
+  const id=attributes(a)['data-id'];
+  const img=attributes(body.match(/<img\b[^>]*>/)[0]);
+  assert.equal(img.src,`produkt-${id}.jpg`); assert.equal(img.loading,'lazy'); assert.ok(img.alt);
+  assert.ok(fs.existsSync(path.join(ROOT,img.src)));
+  assert.match(body,new RegExp('id="btn-'+id+'" onclick="addToCart\\('+id+'\\)"'));
+ }
+});
+test('Shop checkout controls have labels and mobile input hints',()=>{
+ const s=read('shop.html');
+ for(const id of ['anrede','vorname','nachname','email','telefon','strasse','plz','ort','notiz']) assert.ok(s.includes(`for="co-${id}"`));
+ assert.match(s,/id="co-plz" autocomplete="postal-code" inputmode="numeric"/);
+ assert.match(s,/id="shopSearch" type="search"/);
+ assert.match(s,/id="shopCategory"/);
+ assert.match(s,/<noscript>[\s\S]*?HEKU kontaktieren/);
+});
+test('Shop shipping boundary checks preserve established rules',()=>{
+ const s=read('shop.html');
+ const src=s.match(/  function calcVersand\(cartItems\) \{[\s\S]*?\n  \}/)[0];
+ const calc=vm.runInNewContext(src+';calcVersand');
+ assert.equal(calc([]),0);
+ const lamp={cat:'beleuchtung',artnr:85027,name:'Seitenmarkierungsleuchte LED gelb'};
+ assert.equal(calc([{...lamp,qty:1}]),10); assert.equal(calc([{...lamp,qty:4}]),10); assert.equal(calc([{...lamp,qty:5}]),20);
+ const cushion={cat:'auflagen',artnr:83011,name:'Polsterkissen'};
+ assert.equal(calc([{...cushion,qty:4}]),10); assert.equal(calc([{...cushion,qty:5}]),20);
+});
 test('Technical files, snippets and missing titles excluded',()=>{
  for(const file of ['404.html','heku-conversion-block.html','google123.html']) assert.ok(exclusionReason(file,doc('')));
  assert.ok(exclusionReason('fragment.html','<div>Fragment</div>'));
@@ -77,5 +125,17 @@ test('Inline JavaScript compiles and JSON-LD parses on all pages',()=>{
    if(a.type==='application/ld+json') JSON.parse(m[2]);
    else if(!a.src && (!a.type || /^(text|application)\/javascript$/.test(a.type))) new vm.Script(m[2],{filename:file+':script'+i});
   }
+ }
+});
+
+test('Reserverad article numbers are distinct and match Robin’s correction',()=>{
+ const cards=shopCards();
+ const articles=cards.map(([,a])=>attributes(a)['data-artnr']);
+ assert.equal(new Set(articles).size,articles.length);
+ for(const [id,artnr] of [['38','50241'],['55','50242']]) {
+  const [,a,b]=cards.find(([,a])=>attributes(a)['data-id']===id);
+  assert.equal(attributes(a)['data-artnr'],artnr);
+  assert.ok(b.includes('Art. '+artnr+'</span>'));
+  assert.ok(b.includes('Art. '+artnr+' in den Warenkorb'));
  }
 });
