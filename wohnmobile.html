@@ -52,6 +52,11 @@
     .info-box{background:var(--bg2);border-left:4px solid var(--rot);border-radius:0 10px 10px 0;padding:24px 28px;margin-bottom:40px;}
     .info-box p{font-size:15px;font-weight:400;color:var(--text);line-height:1.75;margin:0;}
     .info-box strong{color:var(--schwarz);}
+    .assortment-cta{display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:48px;margin:20px 0 8px;padding:14px 22px;border-radius:6px;background:var(--rot-dark);color:#fff;font-size:15px;font-weight:600;line-height:1.45;text-align:center;}
+    .assortment-cta:hover{background:var(--schwarz);}
+    .assortment-cta:focus-visible{outline:3px solid var(--schwarz);outline-offset:4px;}
+    .contact-card{min-width:0;}
+    .contact-value{overflow-wrap:anywhere;}
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0;}
     .contact-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px 28px;transition:border-color 0.2s;}
     .contact-card:hover{border-color:#ccc;}
@@ -83,13 +88,14 @@
       .product-grid{grid-template-columns:1fr 1fr;}
       footer{padding:28px 24px;}
     }
+    @media(max-width:420px){.product-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
-    <a href="index.html" class="nav-back">← Zurück zur Startseite</a>
+    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <a href="/" class="nav-back">← Zurück zur Startseite</a>
   </nav>
 
   <div class="page-header">
@@ -102,6 +108,7 @@
 
     <div class="info-box">
       <p>Die Produktion von Wohnmobilen, darunter das Modell HEKU Car Camp, haben wir bei HEKU eingestellt. Als Familienunternehmen konzentrieren wir uns seit vielen Jahren vollständig auf unsere Kernkompetenz: <strong>Bootsanhänger und Bootstrailer nach Maß</strong>, Made in Germany seit 1959.</p>
+      <a class="assortment-cta" href="/bootstrailer.html">Aktuelle Bootsanhänger entdecken</a>
       <p style="margin-top:12px;">Wenn Sie Fragen zu einem früheren HEKU Wohnmobil haben oder Ersatzteile suchen, helfen wir Ihnen gerne persönlich weiter. Melden Sie sich einfach direkt bei uns.</p>
     </div>
 

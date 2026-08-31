@@ -113,6 +113,7 @@
 
     /* MAIN CONTENT */
     .main { padding: 52px 64px; max-width: 760px; }
+    .config-heading { margin-bottom: 32px; }
     .step-page { display: none; }
     .step-page.active { display: block; }
 
@@ -229,7 +230,7 @@
 
     @media (max-width: 900px) {
       .page { grid-template-columns: 1fr; }
-      .sidebar { position: static; height: auto; padding: 32px 24px; }
+      .sidebar { position: relative; top: auto; height: auto; padding: 32px 24px; }
       .steps { flex-direction: row; flex-wrap: wrap; gap: 8px; }
       .step-item::after { display: none; }
       .main { padding: 32px 24px; }
@@ -242,9 +243,12 @@
       .nav-burger { display: flex; }
     }
 
-    /* MARQUEE */
-
-    .main 100% { transform: translateX(-50%); } }
+    @media (max-width: 420px) {
+      nav { padding: 0 12px; gap: 8px; }
+      .nav-right { gap: 6px; }
+      .btn-nav { padding: 9px 10px; font-size: 12px; }
+      .nav-burger { flex-shrink: 0; }
+    }
 
 
     /* Produkte Dropdown */
@@ -259,7 +263,8 @@
 
     .heku-ft{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;position:relative;}
     .heku-ft::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.90);pointer-events:none;z-index:0;}
-    .heku-ft>*{position:relative;z-index:1;}padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+    .heku-ft>*{position:relative;z-index:1;}
+    .heku-ft{padding:32px 48px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
     .heku-ft-left{display:flex;flex-direction:column;gap:8px;}
     .heku-ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
     .heku-ft-contact{font-size:12px;color:rgba(255,255,255,0.3);}
@@ -270,7 +275,7 @@
     .heku-social-link{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,background 0.2s;}
     .heku-social-link:hover{border-color:var(--rot);background:rgba(232,0,14,0.1);}
     .heku-social-link svg{width:15px;height:15px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
-    .heku-social-link:hover svg{fill:var(--rot);} 100% { transform: translateX(-50%); } }
+    .heku-social-link:hover svg{fill:var(--rot);}
 
     .marquee-wrap { width: 100%; background: var(--rot); padding: 13px 0; overflow: hidden; z-index: 100; }
     .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
@@ -282,7 +287,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
     <div class="nav-center">
 
       <!-- Produkte Dropdown -->
@@ -380,6 +385,7 @@
 
     <!-- MAIN -->
     <div class="main">
+      <h1 class="step-title config-heading">Bootsanhänger Konfigurator</h1>
     
 
     <!-- SCHRITT 1: Boot -->
@@ -387,7 +393,7 @@
         <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
         <div class="step-header">
           <div class="step-eyebrow">Schritt 1 von 3</div>
-          <h1 class="step-title">Angaben zu Ihrem Boot</h1>
+          <h2 class="step-title">Angaben zu Ihrem Boot</h2>
           <p class="step-subtitle">Damit wir den richtigen Anhänger finden, benötigen wir einige Angaben zu Ihrem Boot.</p>
         </div>
 
@@ -686,7 +692,7 @@
         </div>
         <h2 class="success-title">Anfrage gesendet!</h2>
         <p class="success-text">Vielen Dank, <span id="successName"></span>. Wir haben Ihre Konfiguration erhalten und melden uns in der Regel innerhalb von 1–2 Werktagen mit einem verbindlichen Angebot.</p>
-        <a href="index.html" class="success-back">← Zurück zur Startseite</a>
+        <a href="/" class="success-back">← Zurück zur Startseite</a>
       </div>
 
     </div>
@@ -1110,7 +1116,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
 
 <!-- Mobile Sticky-CTA (nur < 768px sichtbar) -->
 <div class="heku-sticky-cta" role="navigation" aria-label="Schnellkontakt">
-  <a href="tel:+49521200066" class="hsc-btn hsc-call" aria-label="HEKU anrufen">
+  <a href="tel:+4952120066" class="hsc-btn hsc-call" aria-label="HEKU anrufen">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.56 3.5a1 1 0 01-.24 1z"/></svg>
     <span>Anrufen</span>
   </a>
