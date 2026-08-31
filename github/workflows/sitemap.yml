@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '**.html'
+      - 'scripts/generate-sitemap.mjs'
+      - 'scripts/test-seo.mjs'
+      - '.github/workflows/sitemap.yml'
   workflow_dispatch:
 
 permissions:
@@ -18,52 +21,19 @@ jobs:
   sitemap:
     runs-on: ubuntu-latest
     steps:
-      - name: Repo auschecken (volle Historie fuer lastmod)
+      - name: Aktuellen main auschecken (volle Historie fuer lastmod)
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
-
-      - name: sitemap.xml aus Git-Historie erzeugen
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Sitemap generieren und SEO-Regressionen pruefen
         run: |
-          BASE="https://heku-fahrzeugbau.de"
-          EXCLUDE="404.html"
-
-          {
-            echo '<?xml version="1.0" encoding="UTF-8"?>'
-            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-
-            for f in $(ls *.html | sort); do
-              skip=0
-              for e in $EXCLUDE; do [ "$f" = "$e" ] && skip=1; done
-              [ $skip -eq 1 ] && continue
-
-              # Seiten mit noindex automatisch ueberspringen (z. B. widerruf.html)
-              if grep -qiE 'name="robots"[^>]*noindex' "$f"; then
-                echo "uebersprungen (noindex): $f" >&2
-                continue
-              fi
-
-              LASTMOD=$(git log -1 --format=%cs -- "$f")
-              [ -z "$LASTMOD" ] && LASTMOD=$(date +%F)
-
-              if [ "$f" = "index.html" ]; then
-                LOC="$BASE/"
-              else
-                LOC="$BASE/$f"
-              fi
-
-              echo "  <url>"
-              echo "    <loc>$LOC</loc>"
-              echo "    <lastmod>$LASTMOD</lastmod>"
-              echo "  </url>"
-            done
-
-            echo '</urlset>'
-          } > sitemap.xml
-
-          echo "--- erzeugte sitemap.xml ---"
-          cat sitemap.xml
-
+          node scripts/generate-sitemap.mjs
+          node --test scripts/test-seo.mjs
       - name: Committen, falls veraendert
         run: |
           if git diff --quiet -- sitemap.xml; then
