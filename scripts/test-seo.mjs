@@ -14,6 +14,19 @@ const categoryPages = {
  'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
 };
 
+test('Product overview and Bootstrailer money page have distinct search intents',()=>{
+ const overview=read('produkte.html'), money=read('bootstrailer.html');
+ assert.match(overview,/<title>HEKU Bootsanhänger-Modelle \| B-Serie 350–3500<\/title>/);
+ assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/kaufen|1\.375/);
+ assert.doesNotMatch(overview.match(/<meta name="description"[^>]+>/)[0],/kaufen/i);
+ assert.match(overview,/<h1 class="page-title">HEKU Bootsanhänger-Modelle<br>im Überblick<\/h1>/);
+ assert.match(overview,/href="bootstrailer\.html"[^>]*>Bootsanhänger kaufen: Beratung &amp; Vorteile →<\/a>/);
+ assert.match(money,/<title>Bootsanhänger kaufen ab 1\.375 € \| HEKU Bootstrailer<\/title>/);
+ assert.match(money,/<h1 class="page-title">Bootstrailer &amp; Bootsanhänger<br>kaufen – direkt vom Hersteller<\/h1>/);
+ assert.match(money,/href="produkte\.html" class="link-pill">&#8592; Technische Modellübersicht der B-Serie<\/a>/);
+ for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
+});
+
 test('Seven category guides have unique metadata, self canonicals and one H1',()=>{
  const titles=new Set(), descriptions=new Set();
  for(const file of Object.keys(categoryPages)) {
