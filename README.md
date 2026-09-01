@@ -1,0 +1,46 @@
+# HEKU Website: Aufbau und Pflege
+
+Statische Website auf GitHub Pages mit eigener Domain. Bestehende Hauptseiten und Bilder behalten ihre URLs; keine allgemeine URL-Migration in diesem Änderungsvorschlag.
+
+## Zuständigkeiten
+
+```text
+artikel/                       generierte Detailseiten, z.B. 50241.html
+scripts/                       aktive Generatoren und Tests
+  templates/product-page.tpl   gemeinsame Vorlage für Artikel
+.github/workflows/             aktive GitHub-Actions-Workflows
+shop.html                      EINZIGE Quelle für Produktdaten und Bestelllogik
+product-detail.css             Darstellung der Artikel-Detailseiten
+sitemap.xml                    automatisch generierte Sitemap
+*.html / produkt-*.jpg         bestehende Hauptseiten / vorhandene Bilder
+```
+
+`artikel/` entsteht beim erfolgreichen Build. Dateien darin und markierte Artikellinks werden abgeleitet, nicht von Hand gepflegt. Hauptseiten, Kategorie-Auswahltexte, Formulare und vorhandene Bilder bleiben an ihrem bisherigen Ort.
+
+## Produktdaten ändern
+
+Nur die Produktkarte in `shop.html` bearbeiten. Namen und Beschreibungen sind Klartext. Artikelnummern und interne IDs müssen eindeutig bleiben. Beim Preis **beide Angaben synchron** ändern, z.B. `value="75.00">75,00 €`. Der Warenkorb liest `value`, nicht den sichtbaren Euro-Text. Widersprüche brechen den Build bewusst ab.
+
+```sh
+node scripts/build-site.mjs
+node --test scripts/test-seo.mjs scripts/test-products.mjs
+```
+
+Node.js22 oder neuer; keine npm-Installation erforderlich. Produktseiten und JSON-LD übernehmen die Shop-Daten. Keine unbekannten Lieferzeiten/Bestände/Passformen erfinden. Logo-Platzhalter werden nicht als Produktfotos verwendet.
+
+Artikelnummern bilden die URL `/artikel/NUMMER.html`. Bei SKU-Änderung oder Löschung zuerst die alte URL bewusst stilllegen/weiterleiten; der Generator stoppt bei verwaisten Dateien. Vorhandene flache `shop-artikel-NUMMER.html` werden nicht automatisch gelöscht oder übergangen.
+
+## Änderungen veröffentlichen
+
+Änderungen auf separatem Branch prüfen und als Pull Request vorlegen. PR-Prüfung baut und testet ohne Push oder Deployment. **Merge nach main erst nach Freigabe.** Dann generiert der vorhandene Sitemap-Workflow die Dateien erneut, committet Änderungen und fordert einen Pages-Build an. Generator- UND Pages-Ergebnis und Live-Seiten prüfen.
+
+Voraussetzung für diesen Veröffentlichungsschritt: branchbasiertes GitHub Pages von main/root, Berechtigungen contents:write und pages:write. Der erste echte Durchlauf mit Produktseiten ist noch zu bestätigen; ein grüner lokaler Test ist kein Deployment-Nachweis.
+
+## Später gezielt aufräumen – nicht Teil dieses PR
+
+- Die ähnlich benannten Dateien `sitemap.yml`, `generate-sitemap.mjs`, `test-seo.mjs` im Hauptverzeichnis und `github/workflows/` sind nicht die vom aktuellen Workflow referenzierten Pfade. Nach Herkunfts-/Referenzprüfung separat bereinigen; nicht pauschal löschen.
+- `files.zip` auf Zweck prüfen und Backups künftig außerhalb der veröffentlichten Website halten. Noch nicht verschoben oder gelöscht.
+- Neue Bilder/CSS/JS können später unter `assets/` gesammelt werden. Vorhandene Assets nicht ohne vollständige Pfadprüfung verschieben.
+- Bestehende öffentliche Hauptseiten-URLs vorerst stabil lassen. Ordentlichere GitHub-Ordner allein rechtfertigen keine riskante URL-Umstellung.
+
+Der bisherige ZIP-Entwurf mit Produktseiten im Hauptverzeichnis wird durch den Ordner-Entwurf ersetzt. Nicht beide Varianten mischen.
