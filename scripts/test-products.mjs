@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
-import { catalog, categories, filename, generateProducts, renderProduct } from './generate-product-pages.mjs';
+import { catalog, categories, filename, generateProducts, productDataFile, renderProduct, renderProductCard } from './generate-product-pages.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const all=catalog();
 const schema=s=>JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -75,40 +75,55 @@ test('Article query only recognizes catalog SKUs and never auto-orders',()=>{
  }
 });
 test('Catalog characters escaped in markup and JSON-LD',()=>{
- const p={...all[0],name:'Teil <script> & "Test"',desc:'</script><img src=x>'};
- const s=renderProduct(p,[p],read('scripts/templates/product-page.tpl'));
- assert.ok(s.includes('Teil &lt;script&gt; &amp; &quot;Test&quot;'));
- assert.equal(schema(s)['@graph'][0].name,p.name); assert.equal(schema(s)['@graph'][0].description,p.desc);
- assert.doesNotMatch(s,/<img src=x>/);
+  const p={...all[0],name:'Teil <script> & "Test"',desc:'</script><img src=x>'};
+  const s=renderProduct(p,[p],read('scripts/templates/product-page.tpl'));
+  assert.ok(s.includes('Teil &lt;script&gt; &amp; &quot;Test&quot;'));
+  assert.equal(schema(s)['@graph'][0].name,p.name); assert.equal(schema(s)['@graph'][0].description,p.desc);
+  assert.doesNotMatch(s,/<img src=x>/);
+  assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
 });
 test('Generator idempotence, price update, lastmod and fail-closed invalid/removed articles',()=>{
- const root=fs.mkdtempSync(path.join(ROOT,'.product-test-'));
- try {
-  fs.mkdirSync(path.join(root,'scripts/templates'),{recursive:true});
-  fs.mkdirSync(path.join(root,'artikel'),{recursive:true});
-  fs.mkdirSync(path.join(root,'assets/produkte'),{recursive:true});
-  for(const f of ['shop.html','sitemap.xml','scripts/templates/product-page.tpl',...Object.values(categories).map(x=>x[0]),...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
-  for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.jpg$/.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
-  assert.deepEqual(generateProducts(root).changed,[]);
-  const file=path.join(root,'shop.html'), old=fs.readFileSync(file,'utf8'), p=all[0];
-  fs.writeFileSync(file,old.replace(`value="${p.price}">${p.priceText}`, 'value="299.00">299,00 €'));
-  const result=generateProducts(root); assert.ok(result.changed.includes(filename(p)));
-  assert.equal(schema(fs.readFileSync(path.join(root,filename(p)),'utf8'))['@graph'][0].offers.price,'299.00');
-  const xml=generate(root,{modifiedFiles:new Set(result.changed),modifiedDate:'2026-08-31'});
-  assert.ok(xml.includes(`<loc>${BASE}/${filename(p)}</loc>\n    <lastmod>2026-08-31</lastmod>`));
-  assert.deepEqual(generateProducts(root).changed,[]);
-  fs.writeFileSync(file,old.replace(`value="${p.price}">`,'value="1.00">'));
-  assert.throws(()=>generateProducts(root),/widersprechen/);
-  fs.writeFileSync(file,old.replace(/<article class="product-card"[^>]*>[\s\S]*?<\/article>/,''));
-  assert.throws(()=>generateProducts(root),/Alte URLs zuerst/);
- } finally {
+  const root=fs.mkdtempSync(path.join(ROOT,'.product-test-'));
+  try {
+    fs.mkdirSync(path.join(root,'scripts/templates'),{recursive:true});
+    fs.mkdirSync(path.join(root,'artikel'),{recursive:true});
+    fs.mkdirSync(path.join(root,'assets/produkte'),{recursive:true});
+    fs.mkdirSync(path.join(root,'content/produkte'),{recursive:true});
+    for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl',...Object.values(categories).map(x=>x[0]),...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
+    for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.jpg$/.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
+    assert.deepEqual(generateProducts(root).changed,[]);
+    const file=path.join(root,productDataFile), p=all[0], source=JSON.parse(fs.readFileSync(file,'utf8'));
+    source.find(x=>String(x.id)===p.id).price='299.00'; fs.writeFileSync(file,JSON.stringify(source,null,2)+'\n');
+    const result=generateProducts(root); assert.ok(result.changed.includes(filename(p)));
+    assert.ok(result.changed.includes('shop.html'));
+    assert.equal(schema(fs.readFileSync(path.join(root,filename(p)),'utf8'))['@graph'][0].offers.price,'299.00');
+    assert.ok(fs.readFileSync(path.join(root,'shop.html'),'utf8').includes('value="299.00">299,00 €'));
+    const xml=generate(root,{modifiedFiles:new Set(result.changed),modifiedDate:'2026-08-31'});
+    assert.ok(xml.includes(`<loc>${BASE}/${filename(p)}</loc>\n    <lastmod>2026-08-31</lastmod>`));
+    assert.deepEqual(generateProducts(root).changed,[]);
+    source.find(x=>String(x.id)===p.id).price='1'; fs.writeFileSync(file,JSON.stringify(source,null,2)+'\n');
+    assert.throws(()=>generateProducts(root),/ungültiger Preis/);
+    source.splice(source.findIndex(x=>String(x.id)===p.id),1); fs.writeFileSync(file,JSON.stringify(source,null,2)+'\n');
+    assert.throws(()=>generateProducts(root),/Alte URLs zuerst/);
+  } finally {
   if(path.dirname(root)!==ROOT||!path.basename(root).startsWith('.product-test-')) throw Error('Unsafe cleanup path');
   fs.rmSync(root,{recursive:true,force:true});
  }
 });
-test('Workflow builds/tests, commits managed pages, then explicitly requests Pages build',()=>{
+test('Central product data is complete and renders the public shop catalog',()=>{
+ const source=JSON.parse(read(productDataFile)), shop=read('shop.html');
+ assert.equal(source.length,56); assert.equal(all.length,source.length);
+ assert.equal((shop.match(/<article class="product-card"/g)||[]).length,source.length);
+ for(const p of all) {
+  const record=source.find(x=>String(x.id)===p.id);
+  assert.ok(record); assert.equal(record.sku,p.sku); assert.equal(record.price,p.price);
+  assert.ok(shop.includes(`data-id="${p.id}" data-artnr="${p.sku}" data-cat="${p.category}"`));
+ }
+ assert.match(read('scripts/generate-product-pages.mjs'),/content\/produkte\/produkte\.json is the ONLY source/);
+});
+test('Workflow watches product data, builds/tests, commits managed pages, then explicitly requests Pages build',()=>{
  const w=read('.github/workflows/sitemap.yml');
- for(const s of ['pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','gh api --method POST','/pages/builds']) assert.ok(w.includes(s),s);
+ for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','gh api --method POST','/pages/builds']) assert.ok(w.includes(s),s);
  assert.doesNotMatch(w,/git push --force/);
 });
 

@@ -1,8 +1,8 @@
-// shop.html is the ONLY source of article names, descriptions, images and prices.
+// content/produkte/produkte.json is the ONLY source of public product data.
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { ROOT, BASE, attributes } from './generate-sitemap.mjs';
+import { ROOT, BASE } from './generate-sitemap.mjs';
 
 export const categories = {
   winden: ['windenstaende-winden.html', 'Windenstände & Winden'],
@@ -16,6 +16,7 @@ export const categories = {
 // Verified HEKU-logo placeholder, not a product photograph. A replacement photo
 // gets a different hash automatically, including when its filename stays the same.
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
+export const productDataFile = 'content/produkte/produkte.json';
 export const filename = p => `artikel/${p.sku}.html`;
 export const escapeHTML = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 export function plain(s) {
@@ -26,25 +27,42 @@ export function plain(s) {
   }).trim();
 }
 export function catalog(root=ROOT) {
-  const html=fs.readFileSync(path.join(root,'shop.html'),'utf8');
-  const cards=[...html.matchAll(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g)];
-  if(!cards.length) throw new Error('Keine Produktkarten gefunden. Abbruch statt leerer Produktseiten.');
+  const source=path.join(root,productDataFile);
+  let records;
+  try { records=JSON.parse(fs.readFileSync(source,'utf8')); }
+  catch(error) { throw new Error(`Produktdaten konnten nicht gelesen werden (${productDataFile}): ${error.message}`); }
+  if(!Array.isArray(records)||!records.length) throw new Error('Produktdaten müssen eine nicht-leere Liste sein.');
   const seen=new Set(), ids=new Set();
-  return cards.map(([,tag,body])=>{
-    const a=attributes(tag), sku=a['data-artnr'], id=a['data-id'], category=a['data-cat'];
+  return records.map((record,index)=>{
+    if(!record||typeof record!=='object'||Array.isArray(record)) throw new Error(`Ungültiger Produktdatensatz an Position ${index+1}.`);
+    const id=String(record.id??''), sku=String(record.sku??''), category=String(record.category??'');
     if(!/^\d+$/.test(sku)||!/^\d+$/.test(id)||!categories[category]||seen.has(sku)||ids.has(id)) throw new Error('Ungültige/doppelte Artikelnummer, ID oder Kategorie: '+sku);
     seen.add(sku); ids.add(id);
-    const name=plain(body.match(/<h2 class="product-name">([^<]+)<\/h2>/)?.[1]??'');
-    const desc=plain(body.match(/<p class="product-desc">([^<]*)<\/p>/)?.[1]??'');
-    const price=body.match(/<data class="product-price" value="(\d+\.\d{2})">([^<]+)<\/data>/);
-    if(!name||!price||Number(price[1])<=0) throw new Error('Fehlender Name oder ungültiger Preis: '+sku);
-    const priceText=Number(price[1]).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
-    if(plain(price[2]).replace(/\s/g,'')!==priceText.replace(/\s/g,'')) throw new Error('Sichtbarer Preis und value widersprechen sich: '+sku);
-    const src=attributes(body.match(/<img\b[^>]*>/)?.[0]??'').src;
-    if(!src||!/^assets\/produkte\/produkt-\d+\.(jpg|jpeg|png|webp)$/i.test(src)||!fs.existsSync(path.join(root,src))) throw new Error('Ungültiges/fehlendes Artikelbild: '+sku);
+    if(typeof record.name!=='string'||typeof record.description!=='string'||typeof record.price!=='string'||typeof record.image!=='string') throw new Error('Produktfelder haben einen ungültigen Datentyp: '+sku);
+    const name=plain(record.name??''), desc=plain(record.description??''), price=String(record.price??''), src=String(record.image??'');
+    if(!name||!/^\d+\.\d{2}$/.test(price)||Number(price)<=0) throw new Error('Fehlender Name oder ungültiger Preis: '+sku);
+    const priceText=Number(price).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+    if(!new RegExp(`^assets/produkte/produkt-${id}\\.(jpg|jpeg|png|webp)$`,'i').test(src)||!fs.existsSync(path.join(root,src))) throw new Error('Ungültiges/fehlendes Artikelbild: '+sku);
     const hash=createHash('sha256').update(fs.readFileSync(path.join(root,src))).digest('hex');
-    return {id,sku,category,name,desc,price:price[1],priceText,image:hash===placeholderHash?null:src};
+    return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src};
   });
+}
+const cardCategoryLabels = {winden:'Winden & Ständer',stuetzraeder:'Stützräder',rollen:'Kiel- & Stützrollen',auflagen:'Auflagen & Kissen',raeder:'Räder & Reifen',sonstiges:'Sonstiges',beleuchtung:'Beleuchtung'};
+export function renderProductCard(p) {
+  const e=escapeHTML;
+  return `      <article class="product-card" id="artikel-${p.id}" data-id="${p.id}" data-artnr="${p.sku}" data-cat="${p.category}">
+        <div class="product-img"><img src="${e(p.imagePath)}" alt="${e(p.name)}" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">${e(cardCategoryLabels[p.category])} <span class="product-artnr">Art. ${p.sku}</span></p>
+          <h2 class="product-name">${e(p.name)}</h2>
+          <p class="product-desc">${e(p.desc)}</p>
+          <!-- product-detail-link --><a class="product-details-link" href="${filename(p)}" aria-label="Details: ${e(p.name)} – Art. ${p.sku}">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <div class="product-footer">
+            <data class="product-price" value="${p.price}">${e(p.priceText)}</data>
+            <button type="button" class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})" aria-label="${e(p.name)} – Art. ${p.sku} in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>`;
 }
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c');
 export function renderProduct(p, all, shell) {
@@ -91,12 +109,14 @@ export function generateProducts(root=ROOT) {
   const obsolete=old.filter(x=>!planned.has(x));
   if(obsolete.length) throw new Error('Entfernte/geänderte Artikelnummern: '+obsolete.join(', ')+'. Alte URLs zuerst bewusst stilllegen/weiterleiten; kein automatisches Löschen.');
   let shop=fs.readFileSync(path.join(root,'shop.html'),'utf8');
-  shop=shop.replace(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g,(_,tag,body)=>{
-    const p=all.find(x=>x.id===attributes(tag)['data-id']);
-    body=body.replace(/\s*<!-- product-detail-link -->[\s\S]*?<!-- \/product-detail-link -->/g,'');
-    body=body.replace(/(<p class="product-desc">[^<]*<\/p>)/,`$1\n          <!-- product-detail-link --><a class="product-details-link" href="${filename(p)}" aria-label="Details: ${escapeHTML(p.name)} – Art. ${p.sku}">Artikeldetails ansehen</a><!-- /product-detail-link -->`);
-    return `<article class="product-card"${tag}>${body}</article>`;
-  });
+  const grid=/(      <div class="product-grid" id="productGrid">\r?\n)[\s\S]*?(      <\/div>\r?\n      <p id="shopEmpty")/;
+  if(!grid.test(shop)) throw new Error('Produktbereich in shop.html nicht gefunden. Abbruch statt unvollständigem Katalog.');
+  const eol=shop.includes('\r\n')?'\r\n':'\n';
+  const cards=all.map(renderProductCard).join('\n').replace(/\n/g,eol)
+    // Preserve the established mixed line ending before generated detail links.
+    .replace(/(<p class="product-desc">[^<]*<\/p>)\r\n/g,'$1\n');
+  shop=shop.replace(grid,`$1${cards}${eol}$2`)
+    .replace(/(<div class="shop-count" id="shopCount" role="status" aria-live="polite">)[^<]*(<\/div>)/,`$1${all.length} Artikel$2`);
   planned.set('shop.html',shop);
   for(const [key,[file,label]] of Object.entries(categories)) {
     const links=all.filter(p=>p.category===key).map(p=>`<li><a href="${filename(p)}">${escapeHTML(p.name)} — Art. ${p.sku}${p.desc?' · '+escapeHTML(p.desc):''}</a></li>`).join('\n');
