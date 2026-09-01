@@ -27,6 +27,34 @@ test('Product overview and Bootstrailer money page have distinct search intents'
  for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
 });
 
+test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
+ const file='tuev-bootsanhaenger.html', s=read(file);
+ assert.match(s,/<title>TÜV für Bootsanhänger: HU-Fristen &amp; Kosten \| HEKU<\/title>/);
+ assert.match(s,new RegExp(`<link rel="canonical" href="${BASE}/${file}">`));
+ assert.equal((s.match(/<h1\b/g)||[]).length,1);
+ assert.ok((s.match(/<h2\b/g)||[]).length>=7);
+ assert.match(s,/bis 750 kg zGM oder ohne eigene Bremsanlage[\s\S]*?nach 36 Monaten[\s\S]*?alle 24 Monate/i);
+ assert.match(s,/über 750 kg bis 3,5 t zGM[\s\S]*?nach 24 Monaten[\s\S]*?alle 24 Monate/i);
+ for(const url of [
+  'https://www.gesetze-im-internet.de/stvzo_2012/__29.html',
+  'https://www.gesetze-im-internet.de/stvzo_2012/anlage_viii.html',
+  'https://www.gesetze-im-internet.de/stvzo_2012/anlage_viiia.html',
+  'https://www.gesetze-im-internet.de/bkatv_2013/anlage.html'
+ ]) assert.ok(s.includes(`href="${url}"`),url);
+ const schemas=[...s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+ assert.deepEqual(schemas.map(x=>x['@type']),['Article','FAQPage','BreadcrumbList']);
+ assert.equal(schemas[1].mainEntity.length,5);
+ assert.ok(pages().includes(file));
+ for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
+  if(/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
+  const local=decodeURIComponent(href.split(/[?#]/)[0]);
+  assert.ok(fs.existsSync(path.join(ROOT,local)),`${file}: missing ${local}`);
+ }
+ for(const source of ['ratgeber-bootsanhaenger.html','zulassung.html','faq.html']) assert.ok(read(source).includes('href="tuev-bootsanhaenger.html"'),source);
+ const corrected=['ratgeber-bootsanhaenger.html','zulassung.html','faq.html'].map(read).join('\n');
+ for(const falseClaim of [/keine individuelle TÜV-Hauptuntersuchung/i,/benötigen aber kein eigenes Kennzeichen/i,/grünes Kennzeichen ist[^.]*nicht vorgesehen/i,/alle zugelassenen Bootsanhänger[^.]*steuerfrei/i]) assert.doesNotMatch(corrected,falseClaim);
+});
+
 test('Seven category guides have unique metadata, self canonicals and one H1',()=>{
  const titles=new Set(), descriptions=new Set();
  for(const file of Object.keys(categoryPages)) {
