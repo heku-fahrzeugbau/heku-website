@@ -1,0 +1,506 @@
+[
+  {
+    "id": 1,
+    "sku": "50200",
+    "category": "winden",
+    "name": "Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 500 kg",
+    "price": "295.00",
+    "image": "assets/produkte/produkt-1.jpg"
+  },
+  {
+    "id": 2,
+    "sku": "50201",
+    "category": "winden",
+    "name": "Windenstand mit Winde 1:3 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 1.500 kg",
+    "price": "385.00",
+    "image": "assets/produkte/produkt-2.jpg"
+  },
+  {
+    "id": 3,
+    "sku": "50202",
+    "category": "winden",
+    "name": "Windenstand mit Winde 1:8 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 2.500 kg",
+    "price": "495.00",
+    "image": "assets/produkte/produkt-3.jpg"
+  },
+  {
+    "id": 4,
+    "sku": "50203",
+    "category": "winden",
+    "name": "Windenstand mit Winde und Masthalter 1:2 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Mit Masthalter",
+    "price": "385.00",
+    "image": "assets/produkte/produkt-4.jpg"
+  },
+  {
+    "id": 5,
+    "sku": "50204",
+    "category": "winden",
+    "name": "Windenstand mit Winde und Masthalter 1:3 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Mit Masthalter",
+    "price": "445.00",
+    "image": "assets/produkte/produkt-5.jpg"
+  },
+  {
+    "id": 6,
+    "sku": "50205",
+    "category": "winden",
+    "name": "Bugstütze mit Masthalter",
+    "description": "",
+    "price": "135.00",
+    "image": "assets/produkte/produkt-6.jpg"
+  },
+  {
+    "id": 7,
+    "sku": "50206",
+    "category": "winden",
+    "name": "Winde untersetzt 1:2 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 500 kg",
+    "price": "145.00",
+    "image": "assets/produkte/produkt-7.jpg"
+  },
+  {
+    "id": 8,
+    "sku": "50207",
+    "category": "winden",
+    "name": "Winde untersetzt 1:3 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 1.500 kg",
+    "price": "230.00",
+    "image": "assets/produkte/produkt-8.jpg"
+  },
+  {
+    "id": 9,
+    "sku": "50208",
+    "category": "winden",
+    "name": "Winde untersetzt 1:8 (wahlweise Drahtseile oder Gurtband)",
+    "description": "Für Boote bis 2.500 kg",
+    "price": "295.00",
+    "image": "assets/produkte/produkt-9.jpg"
+  },
+  {
+    "id": 10,
+    "sku": "50209",
+    "category": "winden",
+    "name": "Stahlseil verz. mit Haken",
+    "description": "",
+    "price": "35.00",
+    "image": "assets/produkte/produkt-10.jpg"
+  },
+  {
+    "id": 11,
+    "sku": "50210",
+    "category": "winden",
+    "name": "Stahlseil verz. mit Haken und Umlenkrolle",
+    "description": "Für Boote bis 2.850 kg",
+    "price": "95.00",
+    "image": "assets/produkte/produkt-11.jpg"
+  },
+  {
+    "id": 12,
+    "sku": "50211",
+    "category": "stuetzraeder",
+    "name": "Stützrad, Vollgummi mit Klemmhalter",
+    "description": "Standardausführung",
+    "price": "75.00",
+    "image": "assets/produkte/produkt-12.jpg"
+  },
+  {
+    "id": 13,
+    "sku": "50212",
+    "category": "stuetzraeder",
+    "name": "Stützrad, Vollgummi mit Klemmhalter",
+    "description": "Schwere Ausführung",
+    "price": "148.00",
+    "image": "assets/produkte/produkt-13.jpg"
+  },
+  {
+    "id": 14,
+    "sku": "50214",
+    "category": "rollen",
+    "name": "Seitenstützrolle 120×250 höhenverstellbar",
+    "description": "Mit Klemmhalter",
+    "price": "75.00",
+    "image": "assets/produkte/produkt-14.jpg"
+  },
+  {
+    "id": 15,
+    "sku": "50215",
+    "category": "rollen",
+    "name": "Seitenstützrolle 120×250 mit Gewindespindel",
+    "description": "Mit Klemmhalter",
+    "price": "185.00",
+    "image": "assets/produkte/produkt-15.jpg"
+  },
+  {
+    "id": 16,
+    "sku": "50216",
+    "category": "rollen",
+    "name": "Seitenstützrolle 120×75",
+    "description": "",
+    "price": "23.00",
+    "image": "assets/produkte/produkt-16.jpg"
+  },
+  {
+    "id": 17,
+    "sku": "50217",
+    "category": "rollen",
+    "name": "Kielrolle mit Halter Ø 80×130",
+    "description": "Für Rohr 60, 70 □ u. Ø 60, 70",
+    "price": "55.00",
+    "image": "assets/produkte/produkt-17.jpg"
+  },
+  {
+    "id": 18,
+    "sku": "50218",
+    "category": "rollen",
+    "name": "Kielrolle mit Halter Ø 80×130 höhenverstellbar",
+    "description": "Für Rohr 60, 70 □ u. Ø 60+70",
+    "price": "72.00",
+    "image": "assets/produkte/produkt-18.jpg"
+  },
+  {
+    "id": 19,
+    "sku": "50219",
+    "category": "rollen",
+    "name": "Kielrolle Ø 90×200 mit U-Halter",
+    "description": "",
+    "price": "55.00",
+    "image": "assets/produkte/produkt-19.jpg"
+  },
+  {
+    "id": 20,
+    "sku": "50220",
+    "category": "rollen",
+    "name": "Kielrolle mit Halter Ø 90×200 höhenverstellbar",
+    "description": "Für Rohr 60 □",
+    "price": "83.00",
+    "image": "assets/produkte/produkt-20.jpg"
+  },
+  {
+    "id": 21,
+    "sku": "50221",
+    "category": "rollen",
+    "name": "Kielrolle Ø 80×130",
+    "description": "",
+    "price": "27.00",
+    "image": "assets/produkte/produkt-21.jpg"
+  },
+  {
+    "id": 22,
+    "sku": "50222",
+    "category": "rollen",
+    "name": "Kielrolle Ø 90×200",
+    "description": "",
+    "price": "30.00",
+    "image": "assets/produkte/produkt-22.jpg"
+  },
+  {
+    "id": 23,
+    "sku": "50223",
+    "category": "rollen",
+    "name": "POLY-Kielrolle Ø 90×200",
+    "description": "",
+    "price": "39.00",
+    "image": "assets/produkte/produkt-23.jpg"
+  },
+  {
+    "id": 24,
+    "sku": "50224",
+    "category": "rollen",
+    "name": "3 Hecksliprollen mit V-Einführung höhenverstellbar",
+    "description": "",
+    "price": "295.00",
+    "image": "assets/produkte/produkt-24.jpg"
+  },
+  {
+    "id": 25,
+    "sku": "50225",
+    "category": "rollen",
+    "name": "Heck-V-Einführung 60 □",
+    "description": "",
+    "price": "120.00",
+    "image": "assets/produkte/produkt-25.jpg"
+  },
+  {
+    "id": 26,
+    "sku": "50231",
+    "category": "rollen",
+    "name": "Gewindespindel mit Befestigungshalter",
+    "description": "",
+    "price": "110.00",
+    "image": "assets/produkte/produkt-26.jpg"
+  },
+  {
+    "id": 27,
+    "sku": "50253",
+    "category": "rollen",
+    "name": "Seitliche Führungsrollen steck- und abnehmbar",
+    "description": "",
+    "price": "240.00",
+    "image": "assets/produkte/produkt-27.jpg"
+  },
+  {
+    "id": 28,
+    "sku": "50226",
+    "category": "auflagen",
+    "name": "Langauflage mit U-Halter 60 cm",
+    "description": "",
+    "price": "49.00",
+    "image": "assets/produkte/produkt-28.jpg"
+  },
+  {
+    "id": 29,
+    "sku": "50227",
+    "category": "auflagen",
+    "name": "Langauflage mit U-Halter 90 cm",
+    "description": "",
+    "price": "69.00",
+    "image": "assets/produkte/produkt-29.jpg"
+  },
+  {
+    "id": 30,
+    "sku": "50228",
+    "category": "auflagen",
+    "name": "Polsterkissen mit U-Halter",
+    "description": "",
+    "price": "48.00",
+    "image": "assets/produkte/produkt-30.jpg"
+  },
+  {
+    "id": 53,
+    "sku": "83011",
+    "category": "auflagen",
+    "name": "Polsterkissen",
+    "description": "",
+    "price": "35.00",
+    "image": "assets/produkte/produkt-53.jpg"
+  },
+  {
+    "id": 31,
+    "sku": "50229",
+    "category": "auflagen",
+    "name": "Kielauflage, klappbar mit Halter",
+    "description": "",
+    "price": "110.00",
+    "image": "assets/produkte/produkt-31.jpg"
+  },
+  {
+    "id": 32,
+    "sku": "50230",
+    "category": "auflagen",
+    "name": "Kielauflage mit Polsterkissen für Schlauchboot",
+    "description": "",
+    "price": "135.00",
+    "image": "assets/produkte/produkt-32.jpg"
+  },
+  {
+    "id": 33,
+    "sku": "50232",
+    "category": "auflagen",
+    "name": "Vordere Rumpfstütze mit Gewindespindel und Polsterkissen",
+    "description": "Stück",
+    "price": "145.00",
+    "image": "assets/produkte/produkt-33.jpg"
+  },
+  {
+    "id": 34,
+    "sku": "50233",
+    "category": "auflagen",
+    "name": "Heckstütze höhenverstellbar",
+    "description": "Stück",
+    "price": "60.00",
+    "image": "assets/produkte/produkt-34.jpg"
+  },
+  {
+    "id": 35,
+    "sku": "50234",
+    "category": "auflagen",
+    "name": "Laufsteg (Gangway)",
+    "description": "",
+    "price": "295.00",
+    "image": "assets/produkte/produkt-35.jpg"
+  },
+  {
+    "id": 36,
+    "sku": "50239",
+    "category": "raeder",
+    "name": "Reserverad 145 R 10",
+    "description": "",
+    "price": "90.00",
+    "image": "assets/produkte/produkt-36.jpg"
+  },
+  {
+    "id": 37,
+    "sku": "50240",
+    "category": "raeder",
+    "name": "Reserverad 155 R-13",
+    "description": "",
+    "price": "120.00",
+    "image": "assets/produkte/produkt-37.jpg"
+  },
+  {
+    "id": 38,
+    "sku": "50241",
+    "category": "raeder",
+    "name": "Reserverad 185 R-14C 8 PR",
+    "description": "",
+    "price": "172.00",
+    "image": "assets/produkte/produkt-38.jpg"
+  },
+  {
+    "id": 55,
+    "sku": "50242",
+    "category": "raeder",
+    "name": "Reserverad 195 R-14C 8 PR",
+    "description": "",
+    "price": "192.00",
+    "image": "assets/produkte/produkt-55.jpg"
+  },
+  {
+    "id": 39,
+    "sku": "50243",
+    "category": "raeder",
+    "name": "Reserveradhalter",
+    "description": "",
+    "price": "49.00",
+    "image": "assets/produkte/produkt-39.jpg"
+  },
+  {
+    "id": 40,
+    "sku": "50248",
+    "category": "raeder",
+    "name": "Radstoßdämpfer 1-achsig",
+    "description": "Für 100 km/h-Zulassung",
+    "price": "140.00",
+    "image": "assets/produkte/produkt-40.jpg"
+  },
+  {
+    "id": 41,
+    "sku": "50249",
+    "category": "raeder",
+    "name": "Radstoßdämpfer Tandem",
+    "description": "Für 100 km/h-Zulassung",
+    "price": "280.00",
+    "image": "assets/produkte/produkt-41.jpg"
+  },
+  {
+    "id": 42,
+    "sku": "50235",
+    "category": "sonstiges",
+    "name": "Kasten-Sicherungsschloss",
+    "description": "",
+    "price": "40.00",
+    "image": "assets/produkte/produkt-42.jpg"
+  },
+  {
+    "id": 43,
+    "sku": "50236",
+    "category": "sonstiges",
+    "name": "V-Gummi für Buganschlag bis Typ 500",
+    "description": "",
+    "price": "20.00",
+    "image": "assets/produkte/produkt-43.jpg"
+  },
+  {
+    "id": 44,
+    "sku": "50237",
+    "category": "sonstiges",
+    "name": "V-Gummi für Buganschlag bis Typ 3500",
+    "description": "",
+    "price": "28.00",
+    "image": "assets/produkte/produkt-44.jpg"
+  },
+  {
+    "id": 45,
+    "sku": "50238",
+    "category": "sonstiges",
+    "name": "Adapterstecker 7- bis 13-polig",
+    "description": "",
+    "price": "39.00",
+    "image": "assets/produkte/produkt-45.jpg"
+  },
+  {
+    "id": 46,
+    "sku": "50244",
+    "category": "sonstiges",
+    "name": "Katamaranauflage für G 355",
+    "description": "Aufpreis",
+    "price": "260.00",
+    "image": "assets/produkte/produkt-46.jpg"
+  },
+  {
+    "id": 47,
+    "sku": "50245",
+    "category": "sonstiges",
+    "name": "Huckepack-Transportwagen für G 500",
+    "description": "Aufpreis",
+    "price": "245.00",
+    "image": "assets/produkte/produkt-47.jpg"
+  },
+  {
+    "id": 48,
+    "sku": "50246",
+    "category": "sonstiges",
+    "name": "Auflagen für 1 Jet-Ski",
+    "description": "Aufpreis",
+    "price": "105.00",
+    "image": "assets/produkte/produkt-48.jpg"
+  },
+  {
+    "id": 49,
+    "sku": "50247",
+    "category": "sonstiges",
+    "name": "Auflagen für 2 Jet-Ski",
+    "description": "Aufpreis",
+    "price": "210.00",
+    "image": "assets/produkte/produkt-49.jpg"
+  },
+  {
+    "id": 50,
+    "sku": "50250",
+    "category": "sonstiges",
+    "name": "2 Luftsliprollen mit vorderer Gewindespindel",
+    "description": "",
+    "price": "410.00",
+    "image": "assets/produkte/produkt-50.jpg"
+  },
+  {
+    "id": 51,
+    "sku": "50251",
+    "category": "sonstiges",
+    "name": "4 Luftsliprollen mit vorderer Gewindespindel",
+    "description": "",
+    "price": "475.00",
+    "image": "assets/produkte/produkt-51.jpg"
+  },
+  {
+    "id": 52,
+    "sku": "50252",
+    "category": "sonstiges",
+    "name": "6 Luftsliprollen mit vorderer Gewindespindel",
+    "description": "",
+    "price": "595.00",
+    "image": "assets/produkte/produkt-52.jpg"
+  },
+  {
+    "id": 54,
+    "sku": "85027",
+    "category": "beleuchtung",
+    "name": "Seitenmarkierungsleuchte LED gelb",
+    "description": "",
+    "price": "20.25",
+    "image": "assets/produkte/produkt-54.jpg"
+  },
+  {
+    "id": 56,
+    "sku": "85028",
+    "category": "beleuchtung",
+    "name": "Begrenzungsleuchte LED weiß",
+    "description": "",
+    "price": "20.95",
+    "image": "assets/produkte/produkt-56.jpg"
+  }
+]
