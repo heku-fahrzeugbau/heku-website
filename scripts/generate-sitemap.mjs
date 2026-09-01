@@ -1,4 +1,4 @@
-// Root-level static pages only. No npm dependencies. Run from any directory.
+// Static pages from the root and the explicit artikel/ directory only. No npm dependencies. Run from any directory.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,17 +23,25 @@ export function exclusionReason(file, html) {
   return null;
 }
 export function pages(root = ROOT) {
-  return fs.readdirSync(root,{withFileTypes:true}).filter(e=>e.isFile() && /\.html$/i.test(e.name))
-    .map(e=>e.name).sort().filter(file=>!exclusionReason(file,fs.readFileSync(path.join(root,file),'utf8')));
+  const files=[];
+  // Explicit public roots: never crawl scripts, templates, archives, .git or test fixtures.
+  for(const dir of ['', 'artikel']) {
+    const folder=path.join(root,dir); if(!fs.existsSync(folder)) continue;
+    for(const e of fs.readdirSync(folder,{withFileTypes:true})) {
+      if(e.isFile() && /\.html$/i.test(e.name)) files.push(dir?dir+'/'+e.name:e.name);
+    }
+  }
+  return files.sort().filter(file=>!exclusionReason(path.posix.basename(file),fs.readFileSync(path.join(root,file),'utf8')));
 }
+export const urlForFile = file => BASE + '/' + (file === 'index.html' ? '' : file.split('/').map(encodeURIComponent).join('/'));
 export function render(files, lastmod = () => '') {
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + files.map(file=>{
-    const loc = BASE + '/' + (file === 'index.html' ? '' : encodeURIComponent(file));
+    const loc = urlForFile(file);
     const date = lastmod(file);
     return '  <url>\n    <loc>'+loc+'</loc>\n' + (/^\d{4}-\d{2}-\d{2}$/.test(date) ? '    <lastmod>'+date+'</lastmod>\n' : '') + '  </url>\n';
   }).join('') + '</urlset>\n';
 }
-export function generate(root = ROOT) {
+export function generate(root = ROOT, {modifiedFiles = new Set(), modifiedDate = ''} = {}) {
   let repoRoot = '';
   try { repoRoot = execFileSync('git',['rev-parse','--show-toplevel'],{cwd:root,encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim(); } catch {}
   const isOwnRepo = repoRoot && fs.realpathSync(repoRoot) === fs.realpathSync(root);
@@ -41,11 +49,12 @@ export function generate(root = ROOT) {
   const oldDates = new Map();
   for (const m of existing.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>\s*<\/url>/g)) oldDates.set(m[1],m[2]);
   const xml = render(pages(root), file=>{
+    if (modifiedFiles.has(file) && /^\d{4}-\d{2}-\d{2}$/.test(modifiedDate)) return modifiedDate;
     if (isOwnRepo) {
       try { const date = execFileSync('git',['log','-1','--format=%cs','--',file],{cwd:root,encoding:'utf8'}).trim(); if(date) return date; } catch {}
     }
     // ZIP exports have no Git history. Preserve known dates instead of inventing today's date.
-    return oldDates.get(BASE+'/'+(file==='index.html'?'':encodeURIComponent(file))) ?? '';
+    return oldDates.get(urlForFile(file)) ?? '';
   });
   fs.writeFileSync(path.join(root,'sitemap.xml'),xml);
   return xml;

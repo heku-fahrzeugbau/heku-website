@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { ROOT, BASE, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
+import { ROOT, BASE, urlForFile, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
 const shopCards = () => [...read('shop.html').matchAll(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g)];
@@ -126,7 +126,7 @@ test('Shop images exist, are lazy-loaded and product buttons match their IDs',()
  for(const [,a,body] of shopCards()) {
   const id=attributes(a)['data-id'];
   const img=attributes(body.match(/<img\b[^>]*>/)[0]);
-  assert.equal(img.src,`produkt-${id}.jpg`); assert.equal(img.loading,'lazy'); assert.ok(img.alt);
+  assert.equal(img.src,`assets/produkte/produkt-${id}.jpg`); assert.equal(img.loading,'lazy'); assert.ok(img.alt);
   assert.ok(fs.existsSync(path.join(ROOT,img.src)));
   assert.match(body,new RegExp('id="btn-'+id+'" onclick="addToCart\\('+id+'\\)"'));
  }
@@ -171,7 +171,7 @@ test('Root canonical, URL escaping and no invented lastmod',()=>{
 });
 test('Sitemap exactly matches eligible pages, without duplicates',()=>{
  const urls=[...read('sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
- assert.deepEqual(urls,pages().map(f=>BASE+'/'+(f==='index.html'?'':encodeURIComponent(f))));
+ assert.deepEqual(urls,pages().map(urlForFile));
  assert.equal(new Set(urls).size,urls.length);
 });
 test('Google verification preserved; conversion stub has no executable code',()=>{
@@ -181,7 +181,7 @@ test('Google verification preserved; conversion stub has no executable code',()=
  assert.doesNotMatch(stub,/<script\b|<form\b|<iframe\b/i);
 });
 test('No internal homepage href still uses index.html',()=>{
- for(const file of fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'))) {
+ for(const file of [...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')), ...pages().filter(f=>f.startsWith('artikel/'))]) {
   for(const tag of read(file).matchAll(/<a\b[^>]*>/gi)) {
    const href=attributes(tag[0]).href; if(!href) continue;
    const url=new URL(href,BASE+'/'+file);
@@ -205,7 +205,7 @@ test('Wohnmobile: primary CTA before contact, existing help preserved',()=>{
  assert.match(s,/tel:\+49521200066/);
 });
 test('HEKU phone matches Robin’s confirmation: 0521 200066',()=>{
- for(const file of fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'))) {
+ for(const file of [...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')), ...pages().filter(f=>f.startsWith('artikel/'))]) {
   assert.doesNotMatch(read(file),/href=["']tel:\+4952120066["']/i,file);
   assert.doesNotMatch(read(file),/0521 20066(?!\d)/,file);
  }
@@ -217,7 +217,7 @@ test('Konfigurator CSS regression guards',()=>{
  assert.doesNotMatch(s,/\.main 100%|z-index:1;\}padding:|fill:var\(--rot\);\} 100%/);
 });
 test('Inline JavaScript compiles and JSON-LD parses on all pages',()=>{
- for(const file of fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'))) {
+ for(const file of [...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')), ...pages().filter(f=>f.startsWith('artikel/'))]) {
   let i=0;
   for(const m of read(file).matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)){
    i++; const a=attributes(m[1]);
