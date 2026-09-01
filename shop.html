@@ -482,7 +482,7 @@
           <input id="shopSearch" type="search" placeholder="Name oder Artikelnummer" oninput="renderProducts(currentCat)">
         </div>
       </div>
-      <!-- Produktdaten werden ausschließlich in diesen HTML-Karten gepflegt. Kein zweiter JS-Katalog. -->
+      <!-- Diese Karten werden aus content/produkte/produkte.json generiert und bleiben ohne JavaScript lesbar. -->
       <div class="product-grid" id="productGrid">
       <article class="product-card" id="artikel-1" data-id="1" data-artnr="50200" data-cat="winden">
         <div class="product-img"><img src="assets/produkte/produkt-1.jpg" alt="Windenstand mit Winde 1:2 (wahlweise Drahtseile oder Gurtband)" loading="lazy" decoding="async"></div>
@@ -1393,7 +1393,7 @@
 
   <script>
   // ─── PRODUKTDATENBANK ──────────────────────────────────────────────────────
-  // Einzige Datenquelle: der bereits ohne JavaScript lesbare HTML-Katalog.
+  // Laufzeitquelle: der aus content/produkte/produkte.json generierte, ohne JavaScript lesbare HTML-Katalog.
   const productCards = [...document.querySelectorAll('#productGrid .product-card')];
   const PRODUKTE = productCards.map(card => ({
     id: Number(card.dataset.id), artnr: Number(card.dataset.artnr), cat: card.dataset.cat,
