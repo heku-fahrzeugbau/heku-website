@@ -12,10 +12,11 @@ scripts/                       aktive Generatoren und Tests
 shop.html                      EINZIGE Quelle für Produktdaten und Bestelllogik
 product-detail.css             Darstellung der Artikel-Detailseiten
 sitemap.xml                    automatisch generierte Sitemap
-*.html / produkt-*.jpg         bestehende Hauptseiten / vorhandene Bilder
+*.html                         bestehende Hauptseiten
+assets/produkte/produkt-*.jpg  Produktbilder nach interner Produkt-ID
 ```
 
-`artikel/` entsteht beim erfolgreichen Build. Dateien darin und markierte Artikellinks werden abgeleitet, nicht von Hand gepflegt. Hauptseiten, Kategorie-Auswahltexte, Formulare und vorhandene Bilder bleiben an ihrem bisherigen Ort.
+`artikel/` entsteht beim erfolgreichen Build. Dateien darin und markierte Artikellinks werden abgeleitet, nicht von Hand gepflegt. Hauptseiten, Kategorie-Auswahltexte und Formulare bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
 
 ## Produktdaten ändern
 
@@ -27,6 +28,8 @@ node --test scripts/test-seo.mjs scripts/test-products.mjs
 ```
 
 Node.js22 oder neuer; keine npm-Installation erforderlich. Produktseiten und JSON-LD übernehmen die Shop-Daten. Keine unbekannten Lieferzeiten/Bestände/Passformen erfinden. Logo-Platzhalter werden nicht als Produktfotos verwendet.
+
+Neue Produktbilder nach dem Schema `assets/produkte/produkt-{interne ID}.jpg` ablegen und denselben Pfad in der Produktkarte in `shop.html` verwenden. Der Build bricht bei fehlenden oder außerhalb dieses Ordners referenzierten Produktbildern bewusst ab.
 
 Artikelnummern bilden die URL `/artikel/NUMMER.html`. Bei SKU-Änderung oder Löschung zuerst die alte URL bewusst stilllegen/weiterleiten; der Generator stoppt bei verwaisten Dateien. Vorhandene flache `shop-artikel-NUMMER.html` werden nicht automatisch gelöscht oder übergangen.
 
@@ -40,7 +43,7 @@ Voraussetzung für diesen Veröffentlichungsschritt: branchbasiertes GitHub Page
 
 - Die ähnlich benannten Dateien `sitemap.yml`, `generate-sitemap.mjs`, `test-seo.mjs` im Hauptverzeichnis und `github/workflows/` sind nicht die vom aktuellen Workflow referenzierten Pfade. Nach Herkunfts-/Referenzprüfung separat bereinigen; nicht pauschal löschen.
 - `files.zip` auf Zweck prüfen und Backups künftig außerhalb der veröffentlichten Website halten. Noch nicht verschoben oder gelöscht.
-- Neue Bilder/CSS/JS können später unter `assets/` gesammelt werden. Vorhandene Assets nicht ohne vollständige Pfadprüfung verschieben.
+- Weitere gemeinsam genutzte Bilder/CSS/JS können später schrittweise unter `assets/` gesammelt werden. Bestehende öffentliche Dateien nicht ohne vollständige Pfadprüfung verschieben.
 - Bestehende öffentliche Hauptseiten-URLs vorerst stabil lassen. Ordentlichere GitHub-Ordner allein rechtfertigen keine riskante URL-Umstellung.
 
 Der bisherige ZIP-Entwurf mit Produktseiten im Hauptverzeichnis wird durch den Ordner-Entwurf ersetzt. Nicht beide Varianten mischen.
