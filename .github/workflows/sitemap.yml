@@ -6,6 +6,7 @@ on:
     paths:
       - '**.html'
       - 'scripts/**'
+      - 'content/produkte/**'
       - 'assets/produkte/**'
       - 'product-detail.css'
       - '.github/workflows/sitemap.yml'
