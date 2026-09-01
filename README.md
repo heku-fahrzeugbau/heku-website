@@ -6,30 +6,31 @@ Statische Website auf GitHub Pages mit eigener Domain. Bestehende Hauptseiten un
 
 ```text
 artikel/                       generierte Detailseiten, z.B. 50241.html
+content/produkte/produkte.json EINZIGE Quelle für öffentliche Produktdaten
 scripts/                       aktive Generatoren und Tests
   templates/product-page.tpl   gemeinsame Vorlage für Artikel
 .github/workflows/             aktive GitHub-Actions-Workflows
-shop.html                      EINZIGE Quelle für Produktdaten und Bestelllogik
+shop.html                      generierter Katalog plus Bestell-/Versandlogik
 product-detail.css             Darstellung der Artikel-Detailseiten
 sitemap.xml                    automatisch generierte Sitemap
 *.html                         bestehende Hauptseiten
 assets/produkte/produkt-*.jpg  Produktbilder nach interner Produkt-ID
 ```
 
-`artikel/` entsteht beim erfolgreichen Build. Dateien darin und markierte Artikellinks werden abgeleitet, nicht von Hand gepflegt. Hauptseiten, Kategorie-Auswahltexte und Formulare bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
+`shop.html`, `artikel/` und die markierten Artikellinks der Kategorieseiten werden aus `content/produkte/produkte.json` abgeleitet. Diese Bereiche nicht von Hand pflegen. Bestellformular, Warenkorb und Versandlogik bleiben in `shop.html`; Hauptseiten und Kategorie-Auswahltexte bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
 
 ## Produktdaten ändern
 
-Nur die Produktkarte in `shop.html` bearbeiten. Namen und Beschreibungen sind Klartext. Artikelnummern und interne IDs müssen eindeutig bleiben. Beim Preis **beide Angaben synchron** ändern, z.B. `value="75.00">75,00 €`. Der Warenkorb liest `value`, nicht den sichtbaren Euro-Text. Widersprüche brechen den Build bewusst ab.
+Nur den passenden Datensatz in `content/produkte/produkte.json` bearbeiten. Namen und Beschreibungen sind Klartext. Artikelnummern (`sku`) und interne IDs müssen eindeutig bleiben. Preise werden als positive Zeichenkette mit genau zwei Nachkommastellen gepflegt, z.B. `"price": "75.00"`. Der sichtbare deutsche Preis wird daraus generiert; eine zweite manuelle Preisangabe gibt es nicht mehr. Ungültige oder doppelte Daten brechen den Build bewusst ab.
 
 ```sh
 node scripts/build-site.mjs
 node --test scripts/test-seo.mjs scripts/test-products.mjs
 ```
 
-Node.js22 oder neuer; keine npm-Installation erforderlich. Produktseiten und JSON-LD übernehmen die Shop-Daten. Keine unbekannten Lieferzeiten/Bestände/Passformen erfinden. Logo-Platzhalter werden nicht als Produktfotos verwendet.
+Node.js22 oder neuer; keine npm-Installation erforderlich. Shop, Produktseiten und JSON-LD übernehmen dieselben zentralen Produktdaten. Keine unbekannten Lieferzeiten/Bestände/Passformen erfinden. Logo-Platzhalter werden nicht als Produktfotos verwendet.
 
-Neue Produktbilder nach dem Schema `assets/produkte/produkt-{interne ID}.jpg` ablegen und denselben Pfad in der Produktkarte in `shop.html` verwenden. Der Build bricht bei fehlenden oder außerhalb dieses Ordners referenzierten Produktbildern bewusst ab.
+Neue Produktbilder nach dem Schema `assets/produkte/produkt-{interne ID}.jpg` ablegen und den Pfad im Feld `image` des Produktdatensatzes eintragen. Der Build bricht bei fehlenden oder außerhalb dieses Ordners referenzierten Produktbildern bewusst ab.
 
 Artikelnummern bilden die URL `/artikel/NUMMER.html`. Bei SKU-Änderung oder Löschung zuerst die alte URL bewusst stilllegen/weiterleiten; der Generator stoppt bei verwaisten Dateien. Vorhandene flache `shop-artikel-NUMMER.html` werden nicht automatisch gelöscht oder übergangen.
 
