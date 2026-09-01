@@ -6,7 +6,7 @@ on:
     paths:
       - '**.html'
       - 'scripts/**'
-      - 'produkt-*'
+      - 'assets/produkte/**'
       - 'product-detail.css'
       - '.github/workflows/sitemap.yml'
   pull_request:
