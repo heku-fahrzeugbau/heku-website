@@ -5,20 +5,39 @@ on:
     branches: [main]
     paths:
       - '**.html'
-      - 'scripts/generate-sitemap.mjs'
-      - 'scripts/test-seo.mjs'
+      - 'scripts/**'
+      - 'produkt-*'
+      - 'product-detail.css'
       - '.github/workflows/sitemap.yml'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sitemap
+  group: sitemap-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
+  check-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Produktseiten bauen und alle Tests ausfuehren (kein Push/Deployment)
+        run: |
+          node scripts/build-site.mjs
+          node --test scripts/test-seo.mjs scripts/test-products.mjs
   sitemap:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      pages: write
     runs-on: ubuntu-latest
     steps:
       - name: Aktuellen main auschecken (volle Historie fuer lastmod)
@@ -30,18 +49,44 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Sitemap generieren und SEO-Regressionen pruefen
+      - name: Produktseiten und Sitemap generieren, Regressionen pruefen
         run: |
-          node scripts/generate-sitemap.mjs
-          node --test scripts/test-seo.mjs
-      - name: Committen, falls veraendert
+          node scripts/build-site.mjs
+          node --test scripts/test-seo.mjs scripts/test-products.mjs
+      - name: Abgeleitete Seiten committen, falls veraendert
+        id: generated
+        shell: bash
         run: |
-          if git diff --quiet -- sitemap.xml; then
-            echo "sitemap.xml unveraendert, kein Commit noetig."
+          git add -- sitemap.xml shop.html artikel/ \
+            windenstaende-winden.html stuetzraeder-bootsanhaenger.html \
+            kielrollen-stuetzrollen.html auflagen-polsterkissen.html \
+            raeder-reifen-bootsanhaenger.html beleuchtung-bootsanhaenger.html \
+            weiteres-bootsanhaenger-zubehoer.html
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Keine abgeleiteten Aenderungen; normaler Benutzer-Push startet Pages."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml
-          git commit -m "chore: sitemap.xml mit lastmod aktualisiert [skip ci]"
+          git commit -m "chore: Produktseiten und Sitemap aus Shop aktualisiert [skip ci]"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Bot commits do not automatically trigger branch-based Pages builds.
+      - name: Pages nach Generator-Commit neu bauen
+        if: steps.generated.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          pages_type=$(gh api "repos/$GH_REPO/pages" --jq '.build_type')
+          pages_branch=$(gh api "repos/$GH_REPO/pages" --jq '.source.branch')
+          pages_path=$(gh api "repos/$GH_REPO/pages" --jq '.source.path')
+          if [ "$pages_type" != "legacy" ] || [ "$pages_branch" != "main" ] || [ "$pages_path" != "/" ]; then
+            echo "::error::Erwartet: Settings > Pages > Deploy from a branch: main / root. Konfiguration pruefen; Generator-Commit noch nicht als live bestaetigt."
+            exit 1
+          fi
+          gh api --method POST "repos/$GH_REPO/pages/builds"
+          echo "Build angefordert. pages-build-deployment und Live-Seiten kontrollieren."
