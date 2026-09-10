@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
-import { catalog, categories, filename, generateProducts, productDataFile, renderProduct, renderProductCard } from './generate-product-pages.mjs';
+import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, unitShippingEuro } from './generate-product-pages.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const all=catalog();
 const schema=s=>JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -89,7 +89,7 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
     fs.mkdirSync(path.join(root,'artikel'),{recursive:true});
     fs.mkdirSync(path.join(root,'assets/produkte'),{recursive:true});
     fs.mkdirSync(path.join(root,'content/produkte'),{recursive:true});
-    for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl',...Object.values(categories).map(x=>x[0]),...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
+    for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl',...Object.values(categories).map(x=>x[0]),...categoryHubs,...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
     for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.jpg$/.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
     assert.deepEqual(generateProducts(root).changed,[]);
     const file=path.join(root,productDataFile), p=all[0], source=JSON.parse(fs.readFileSync(file,'utf8'));
@@ -152,4 +152,54 @@ test('Nested pages use root-anchored internal navigation, CSS, scripts and image
  const pr=w.match(/  check-pr:[\s\S]*?(?=  sitemap:)/)[0];
  assert.match(pr,/github.event_name == 'pull_request'/);
  assert.doesNotMatch(pr,/git push|git commit|gh api --method POST|ref: main/);
+});
+
+// Die Artikelseite nennt Versandkosten und meldet sie im Offer-Schema. Der Warenkorb
+// in shop.html bleibt die massgebliche Berechnung. Dieser Test fuehrt die echte
+// calcVersand-Funktion aus shop.html aus und vergleicht sie fuer jeden Artikel mit
+// unitShippingEuro, damit Anzeige und Berechnung nicht auseinanderlaufen.
+test('Shipping shown on article pages matches the cart calculation for one unit',()=>{
+ const shop=read('shop.html');
+ const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
+ assert.ok(src,'calcVersand nicht in shop.html gefunden - Versandlogik umbenannt oder entfernt?');
+ const calcVersand=vm.runInNewContext('('+src[0]+')');
+ for(const p of all) {
+  const cart=[{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}];
+  assert.equal(unitShippingEuro(p),calcVersand(cart),`Versandkosten weichen ab bei Art. ${p.sku} (${p.category})`);
+  const page=read(filename(p));
+  const expected=unitShippingEuro(p).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+  assert.ok(page.includes(`zzgl. ${expected} Versand`),`Sichtbarer Versandhinweis fehlt oder weicht ab bei Art. ${p.sku}`);
+  const offer=schema(page)['@graph'][0].offers;
+  assert.equal(offer.shippingDetails.shippingRate.value,unitShippingEuro(p).toFixed(2));
+  assert.equal(offer.shippingDetails.shippingRate.currency,'EUR');
+ }
+});
+
+// Die Rueckgaberichtlinie gilt fuer den Shop site-weit ueber den Organization-Knoten.
+// Sie muss zur Widerrufsbelehrung passen: 14 Tage, Deutschland, Kunde traegt Ruecksendung.
+test('Site-wide return policy on Organization matches the Widerrufsbelehrung',()=>{
+ const home=read('index.html');
+ const blocks=[...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+ const org=blocks.find(b=>b['@type']==='Organization');
+ assert.ok(org,'Organization-Knoten fehlt auf der Startseite');
+ const rp=org.hasMerchantReturnPolicy;
+ assert.ok(rp,'hasMerchantReturnPolicy fehlt am Organization-Knoten');
+ assert.equal(rp.merchantReturnDays,14);
+ assert.equal(rp.applicableCountry,'DE');
+ assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnFiniteReturnWindow');
+ assert.equal(rp.merchantReturnLink,BASE+'/widerruf.html');
+ assert.match(read('widerruf.html'),/vierzehn Tagen/);
+});
+
+// Jede oeffentliche Seite braucht Canonical, Description und Viewport.
+test('Every indexable page has canonical, description and viewport',()=>{
+ const skip=new Set(['404.html','heku-conversion-block.html','danke.html']);
+ const files=fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')&&!skip.has(f)&&!/^google[0-9a-f]+\.html$/.test(f));
+ for(const f of files) {
+  const s=read(f);
+  assert.match(s,/<link[^>]+rel="canonical"/,`canonical fehlt in ${f}`);
+  assert.match(s,/<meta[^>]+name="description"/,`description fehlt in ${f}`);
+  assert.match(s,/name="viewport"/,`viewport fehlt in ${f}`);
+ }
+ assert.match(read('404.html'),/name="viewport"/,'404.html braucht ebenfalls ein Viewport-Meta');
 });

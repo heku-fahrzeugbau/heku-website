@@ -15,6 +15,9 @@ export const categories = {
 };
 // Verified HEKU-logo placeholder, not a product photograph. A replacement photo
 // gets a different hash automatically, including when its filename stays the same.
+// Seiten, die auf alle Kategorieseiten verlinken. Ohne sie erreicht Google die
+// Kategorie- und Artikelseiten nur ueber shop.html.
+export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'produkte.html'];
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
 export const productDataFile = 'content/produkte/produkte.json';
 export const filename = p => `artikel/${p.sku}.html`;
@@ -47,6 +50,26 @@ export function catalog(root=ROOT) {
     return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src};
   });
 }
+// Versandkosten fuer die Menge 1, gespiegelt aus calcVersand() in shop.html.
+// Der Warenkorb bleibt die massgebliche Berechnung; hier steht nur der Einzelstueckpreis
+// fuer die Artikelseite und das Offer-Schema. scripts/test-products.mjs prueft beide
+// Quellen bei jedem Lauf gegeneinander, damit sie nicht auseinanderlaufen.
+export function unitShippingEuro(p) {
+  if(p.sku==='83011') return 10;
+  const name=p.name.toLowerCase();
+  switch(p.category) {
+    case 'winden': return name.includes('winde') ? 30 : 15;
+    case 'raeder': return 30;
+    case 'stuetzraeder': return 20;
+    case 'rollen': return 20;
+    case 'beleuchtung': return 10;
+    default: return 15;
+  }
+}
+export const shippingSchema = value => ({'@type':'OfferShippingDetails',
+  shippingRate:{'@type':'MonetaryAmount',value:value.toFixed(2),currency:'EUR'},
+  shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'}});
+
 const cardCategoryLabels = {winden:'Winden & Ständer',stuetzraeder:'Stützräder',rollen:'Kiel- & Stützrollen',auflagen:'Auflagen & Kissen',raeder:'Räder & Reifen',sonstiges:'Sonstiges',beleuchtung:'Beleuchtung'};
 export function renderProductCard(p) {
   const e=escapeHTML;
@@ -67,10 +90,21 @@ export function renderProductCard(p) {
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c');
 export function renderProduct(p, all, shell) {
   const e=escapeHTML, [guide,categoryName]=categories[p.category], url=BASE+'/'+filename(p);
+  const shipText=unitShippingEuro(p).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
   const title=`${p.name} – Art. ${p.sku} | HEKU`;
-  const description=`${p.name}${p.desc?' – '+p.desc:''}. Art. ${p.sku}: ${p.priceText} inkl. MwSt., zzgl. Versandkosten. Im HEKU-Shop auswählen.`;
+  // Suchergebnisse schneiden Descriptions bei rund 160 Zeichen ab. Erst die knappe
+  // Fassung versuchen, sonst den Produktnamen an einer Wortgrenze kuerzen.
+  const descTail=`Art. ${p.sku}: ${p.priceText} inkl. MwSt. Im HEKU-Shop bestellen.`;
+  const descFull=`${p.name}${p.desc?' – '+p.desc:''}. ${descTail}`;
+  const descShort=`${p.name}. ${descTail}`;
+  const clampName=limit=>{
+    const room=limit-descTail.length-3;
+    const cut=p.name.slice(0,room);
+    return `${cut.slice(0,cut.lastIndexOf(' '))}… ${descTail}`;
+  };
+  const description=descFull.length<=160?descFull:descShort.length<=160?descShort:clampName(160);
   const shop=`shop.html?artikel=${p.sku}#shopContent`;
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),...(p.image?{image:[BASE+'/'+p.image]}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR'}};
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),...(p.image?{image:[BASE+'/'+p.image]}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',shippingDetails:shippingSchema(unitShippingEuro(p))}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
   const main=`<main id="articleContent" class="detail-main">
@@ -78,7 +112,7 @@ export function renderProduct(p, all, shell) {
     <section class="detail-hero ${p.image?'has-photo':'no-photo'}" aria-labelledby="articleTitle">
       <div class="detail-info"><h1 id="articleTitle">${e(p.name)}</h1><p class="detail-sku">Artikelnummer ${p.sku}</p>
         ${p.desc?`<p class="detail-description">${e(p.desc)}</p>`:''}
-        <div class="detail-purchase"><p class="detail-price"><data value="${p.price}">${e(p.priceText)}</data></p><p class="detail-tax">Inkl. 19 % MwSt., zzgl. Versandkosten.</p><a class="detail-buy" href="${shop}">Im Shop bestellen</a><p class="detail-handoff">Öffnet diesen Artikel im Shop. Menge und Versandkosten sehen Sie im Warenkorb.</p></div>
+        <div class="detail-purchase"><p class="detail-price"><data value="${p.price}">${e(p.priceText)}</data></p><p class="detail-tax">Inkl. 19 % MwSt., zzgl. ${shipText} Versand innerhalb Deutschlands bei Einzelbestellung. Bei mehreren Artikeln berechnet der <a href="${shop}">Warenkorb</a> die tatsächlichen Versandkosten; Einzelheiten in den <a href="agb.html">AGB</a>.</p><a class="detail-buy" href="${shop}">Im Shop bestellen</a><p class="detail-handoff">Öffnet diesen Artikel im Shop. Menge und Versandkosten sehen Sie im Warenkorb.</p></div>
         ${!p.image?'<p class="detail-missing-photo">Für diesen Artikel ist derzeit kein Produktfoto hinterlegt.</p>':''}
       </div>
       ${p.image?`<figure class="detail-photo"><img src="${e(p.image)}" alt="${e(p.name)} – Art. ${p.sku}" decoding="async" fetchpriority="high"><figcaption>Artikel ${p.sku} aus dem HEKU-Shop.</figcaption></figure>`:''}
@@ -124,6 +158,27 @@ export function generateProducts(root=ROOT) {
     let s=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n');
     s=s.replace(/\s*<!-- generated-product-links -->[\s\S]*?<!-- \/generated-product-links -->/g,'');
     s=s.replace('</main>','\n'+block+'\n</main>');
+    planned.set(file,s);
+  }
+  // Ohne diesen Block haengt der gesamte Shop-Zweig allein an shop.html: die sieben
+  // Kategorieseiten sind sonst von keiner Hauptseite aus verlinkt. Zeilenenden der
+  // Zielseite werden bewusst beibehalten - produkte.html liegt mit CRLF im Repo.
+  for(const file of categoryHubs) {
+    const original=fs.readFileSync(path.join(root,file),'utf8');
+    const eol=original.includes('\r\n')?'\r\n':'\n';
+    const links=Object.entries(categories).map(([key,[target,label]])=>{
+      const count=all.filter(p=>p.category===key).length;
+      return `<li><a href="${target}">${escapeHTML(label)}</a> — ${count} ${count===1?'Artikel':'Artikel'}</li>`;
+    }).join('');
+    const block=[
+      '<!-- generated-category-links -->',
+      `<section class="category-hub" id="ersatzteile-kategorien"><h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul>${links}</ul><p><a href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></p></section>`,
+      '<!-- /generated-category-links -->'
+    ].join(eol);
+    let s=original.replace(/\s*<!-- generated-category-links -->[\s\S]*?<!-- \/generated-category-links -->/g,'');
+    const anchor=s.includes('</main>')?'</main>':'<footer>';
+    if(!s.includes(anchor)) throw new Error(`Kein Einfuegepunkt (${anchor}) in ${file} gefunden.`);
+    s=s.replace(anchor,eol+block+eol+anchor);
     planned.set(file,s);
   }
   // Validate everything before changing any file. Only content changes are written.
