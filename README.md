@@ -17,7 +17,7 @@ sitemap.xml                    automatisch generierte Sitemap
 assets/produkte/produkt-*.jpg  Produktbilder nach interner Produkt-ID
 ```
 
-`shop.html`, `artikel/` und die markierten Artikellinks der Kategorieseiten werden aus `content/produkte/produkte.json` abgeleitet. Diese Bereiche nicht von Hand pflegen. Bestellformular, Warenkorb und Versandlogik bleiben in `shop.html`; Hauptseiten und Kategorie-Auswahltexte bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
+`shop.html`, `artikel/`, die markierten Artikellinks der Kategorieseiten und mit `data-catalog-sku` markierte Preislisten-Zeilen werden aus `content/produkte/produkte.json` abgeleitet. Diese Bereiche nicht von Hand pflegen. Bestellformular, Warenkorb und Versandlogik bleiben in `shop.html`; Hauptseiten und Kategorie-Auswahltexte bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
 
 ## Produktdaten ändern
 
