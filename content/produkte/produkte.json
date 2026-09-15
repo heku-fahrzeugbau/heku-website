@@ -502,5 +502,14 @@
     "description": "",
     "price": "20.95",
     "image": "assets/produkte/produkt-56.jpg"
+  },
+  {
+    "id": 57,
+    "sku": "50261",
+    "category": "rollen",
+    "name": "Kielrolle Ø 60×100",
+    "description": "",
+    "price": "5.00",
+    "image": "assets/produkte/produkt-57.jpg"
   }
 ]

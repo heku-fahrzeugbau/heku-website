@@ -1466,6 +1466,12 @@
       const qty = item.qty;
       const name = item.name.toLowerCase();
 
+      // Sonderregel: Kielrolle Art. 50261 → je angefangene 10 Stück = 7 €
+      if (item.artnr === 50261) {
+        versand += Math.ceil(qty / 10) * 7;
+        return;
+      }
+
       // Sonderregel: Polsterkissen Art. 83011 → 4 Stück = 10 €, je weitere 4 = 10 €
       if (item.artnr === 83011) {
         versand += Math.ceil(qty / 4) * 10;

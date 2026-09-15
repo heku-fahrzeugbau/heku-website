@@ -140,7 +140,7 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
 });
 test('Central product data is complete and renders the public shop catalog',()=>{
  const source=JSON.parse(read(productDataFile)), shop=read('shop.html');
- assert.equal(source.length,56); assert.equal(all.length,source.length);
+ assert.equal(source.length,57); assert.equal(all.length,source.length);
  assert.equal((shop.match(/<article class="product-card"/g)||[]).length,source.length);
  for(const p of all) {
   const record=source.find(x=>String(x.id)===p.id);
@@ -201,6 +201,15 @@ test('Shipping shown on article pages matches the cart calculation for one unit'
   assert.equal(offer.shippingDetails.shippingRate.value,unitShippingEuro(p).toFixed(2));
   assert.equal(offer.shippingDetails.shippingRate.currency,'EUR');
  }
+});
+test('Art. 50261 shipping increases by 7 EUR for every started group of 10',()=>{
+  const shop=read('shop.html');
+  const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
+  assert.ok(src,'calcVersand nicht in shop.html gefunden');
+  const calcVersand=vm.runInNewContext('('+src[0]+')');
+  for(const [qty,expected] of [[1,7],[10,7],[11,14],[20,14],[21,21],[30,21]]) {
+    assert.equal(calcVersand([{cat:'rollen',qty,name:'Kielrolle Ø 60×100',artnr:50261}]),expected,`${qty} Stück`);
+  }
 });
 
 // Die Rueckgaberichtlinie gilt fuer den Shop site-weit ueber den Organization-Knoten.

@@ -55,6 +55,7 @@ export function catalog(root=ROOT) {
 // fuer die Artikelseite und das Offer-Schema. scripts/test-products.mjs prueft beide
 // Quellen bei jedem Lauf gegeneinander, damit sie nicht auseinanderlaufen.
 export function unitShippingEuro(p) {
+  if(p.sku==='50261') return 7;
   if(p.sku==='83011') return 10;
   const name=p.name.toLowerCase();
   switch(p.category) {
