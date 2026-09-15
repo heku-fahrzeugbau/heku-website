@@ -59,6 +59,7 @@ jobs:
         shell: bash
         run: |
           git add -- sitemap.xml shop.html artikel/ \
+            produkte.html motorbootanhaenger.html segelbootanhaenger.html \
             windenstaende-winden.html stuetzraeder-bootsanhaenger.html \
             kielrollen-stuetzrollen.html auflagen-polsterkissen.html \
             raeder-reifen-bootsanhaenger.html beleuchtung-bootsanhaenger.html \
