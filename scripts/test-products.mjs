@@ -5,6 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
 import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, unitShippingEuro } from './generate-product-pages.mjs';
+import { priceTableFiles, syncProductPriceTables } from './sync-product-price-tables.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const all=catalog();
 const schema=s=>JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -82,6 +83,33 @@ test('Catalog characters escaped in markup and JSON-LD',()=>{
   assert.doesNotMatch(s,/<img src=x>/);
   assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
 });
+test('Confirmed product prices and SKU stay synchronized in every marked price table',()=>{
+ const expected={50214:['63,03','75,00'],50215:['155,46','185,00'],50241:['144,54','172,00']};
+ let count=0;
+ for(const file of priceTableFiles) for(const row of read(file).matchAll(/<tr data-catalog-sku="(\d+)"><td class="pl-art">([^<]+)<\/td><td>[\s\S]*?<\/td><td class="pl-r pl-netto">([^ ]+) &euro;<\/td><td class="pl-r pl-brutto">([^ ]+) &euro;<\/td><\/tr>/g)) {
+  const [,sourceSku,visibleSku,net,gross]=row;
+  assert.equal(visibleSku,sourceSku,`${file}: sichtbare Artikelnummer`);
+  assert.deepEqual([net,gross],expected[sourceSku],`${file}: Preis ${sourceSku}`);
+  count++;
+ }
+ assert.equal(count,6);
+ assert.match(read('motorbootanhaenger.html'),/data-catalog-sku="50241"><td class="pl-art">50241<\/td><td>Reserverad 185 R-14C/);
+});
+test('Price-table synchronization repairs stale marked values and is idempotent',()=>{
+ const root=fs.mkdtempSync(path.join(ROOT,'.price-table-test-'));
+ try {
+  for(const file of priceTableFiles) fs.copyFileSync(path.join(ROOT,file),path.join(root,file));
+  const target=path.join(root,'produkte.html');
+  fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace('data-catalog-sku="50214"><td class="pl-art">50214</td>','data-catalog-sku="50214"><td class="pl-art">99999</td>').replace('63,03 &euro;</td><td class="pl-r pl-brutto">75,00','1,00 &euro;</td><td class="pl-r pl-brutto">2,00'));
+  const first=syncProductPriceTables(root,all);
+  assert.ok(first.changed.includes('produkte.html'));
+  assert.match(fs.readFileSync(target,'utf8'),/data-catalog-sku="50214"><td class="pl-art">50214<\/td><td>[\s\S]*?63,03 &euro;<\/td><td class="pl-r pl-brutto">75,00 &euro;/);
+  assert.deepEqual(syncProductPriceTables(root,all).changed,[]);
+ } finally {
+  if(path.dirname(root)!==ROOT||!path.basename(root).startsWith('.price-table-test-')) throw Error('Unsafe cleanup path');
+  fs.rmSync(root,{recursive:true,force:true});
+ }
+});
 test('Generator idempotence, price update, lastmod and fail-closed invalid/removed articles',()=>{
   const root=fs.mkdtempSync(path.join(ROOT,'.product-test-'));
   try {
@@ -123,7 +151,7 @@ test('Central product data is complete and renders the public shop catalog',()=>
 });
 test('Workflow watches product data, builds/tests, commits managed pages, then explicitly requests Pages build',()=>{
  const w=read('.github/workflows/sitemap.yml');
- for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','gh api --method POST','/pages/builds']) assert.ok(w.includes(s),s);
+ for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','produkte.html motorbootanhaenger.html segelbootanhaenger.html','gh api --method POST','/pages/builds']) assert.ok(w.includes(s),s);
  assert.doesNotMatch(w,/git push --force/);
 });
 
