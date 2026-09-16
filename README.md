@@ -17,6 +17,8 @@ sitemap.xml                    automatisch generierte Sitemap
 assets/produkte/produkt-*.jpg  Produktbilder nach interner Produkt-ID
 ```
 
+`bootsanhaenger-bielefeld.html` ist die lokale Standortseite für Bielefeld und OWL. Sie enthält Adresse, Anfahrt und die bestätigten Öffnungszeiten mit Mittagspause. Änderungen an den Geschäftszeiten müssen gleichzeitig in den sichtbaren Kontaktangaben und allen `LocalBusiness`-Daten vorgenommen werden; die Tests sichern die aktuelle Aufteilung 08:00–12:30 Uhr und 13:00–16:30 Uhr ab.
+
 `shop.html`, `artikel/`, die markierten Artikellinks der Kategorieseiten und mit `data-catalog-sku` markierte Preislisten-Zeilen werden aus `content/produkte/produkte.json` abgeleitet. Diese Bereiche nicht von Hand pflegen. Bestellformular, Warenkorb und Versandlogik bleiben in `shop.html`; Hauptseiten und Kategorie-Auswahltexte bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
 
 ## Produktdaten ändern
