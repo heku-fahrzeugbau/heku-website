@@ -14,6 +14,41 @@ const categoryPages = {
  'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
 };
 
+test('Local Bielefeld landing page is indexable, useful and internally linked',()=>{
+ const file='bootsanhaenger-bielefeld.html', s=read(file);
+ assert.match(s,/<title>Bootsanhänger Bielefeld &amp; OWL \| Direkt vom Hersteller \| HEKU<\/title>/);
+ assert.ok(s.includes(`<link rel="canonical" href="${BASE}/${file}">`));
+ assert.equal((s.match(/<h1\b/g)||[]).length,1);
+ assert.ok((s.match(/<h2\b/g)||[]).length>=4);
+ assert.match(s,/Bunzlauer Straße 6/);
+ assert.match(s,/08:00–12:30 Uhr/);
+ assert.match(s,/13:00–16:30 Uhr/);
+ assert.match(s,/https:\/\/maps\.app\.goo\.gl\/PUWT9g3SxmCnEfsR7/);
+ assert.equal(exclusionReason(file,s),null);
+ assert.ok(pages().includes(file));
+ const schemas=[...s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+ const local=schemas[0]['@graph'].find(x=>x['@type']==='LocalBusiness');
+ assert.deepEqual(local.openingHoursSpecification.map(x=>[x.opens,x.closes]),[['08:00','12:30'],['13:00','16:30']]);
+ assert.equal(schemas[1]['@type'],'FAQPage');
+ assert.equal(schemas[1].mainEntity.length,4);
+ for(const source of ['index.html','kontakt.html','bootstrailer.html']) assert.ok(read(source).includes(`href="${file}"`),source);
+ for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
+  if(/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
+  const localPath=decodeURIComponent(href.split(/[?#]/)[0]);
+  assert.ok(fs.existsSync(path.join(ROOT,localPath)),`${file}: missing ${localPath}`);
+ }
+});
+
+test('Published opening hours include the confirmed lunch break',()=>{
+ for(const file of ['index.html','kontakt.html','bootstrailer.html','bootsanhaenger-nach-mass.html','jollenanhaenger.html','motorbootanhaenger.html','segelbootanhaenger.html','wasserdichte-radnabe.html']) {
+  const s=read(file);
+  assert.match(s,/"opens": "08:00",\s*"closes": "12:30"/);
+  assert.match(s,/"opens": "13:00",\s*"closes": "16:30"/);
+ }
+ const contact=read('kontakt.html');
+ assert.equal((contact.match(/08:00 – 12:30 Uhr · 13:00 – 16:30 Uhr/g)||[]).length,5);
+});
+
 test('Product overview and Bootstrailer money page have distinct search intents',()=>{
  const overview=read('produkte.html'), money=read('bootstrailer.html');
  assert.match(overview,/<title>HEKU Bootsanhänger-Modelle \| B-Serie 350–3500<\/title>/);
