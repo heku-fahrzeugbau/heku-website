@@ -39,6 +39,29 @@ test('Local Bielefeld landing page is indexable, useful and internally linked',(
  }
 });
 
+test('Replacement-parts hub is indexable, cautious and links every category',()=>{
+ const file='ersatzteile-bootsanhaenger.html', s=read(file);
+ assert.match(s,/<title>Ersatzteile für Bootsanhänger &amp; Bootstrailer \| HEKU<\/title>/);
+ assert.ok(s.includes(`<link rel="canonical" href="${BASE}/${file}">`));
+ assert.equal((s.match(/<h1\b/g)||[]).length,1);
+ assert.ok((s.match(/<h2\b/g)||[]).length>=5);
+ assert.match(s,/Eine allgemeine Passform für andere Hersteller kann nicht zugesagt werden/);
+ const schema=JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+ assert.deepEqual(schema['@graph'].map(x=>x['@type']),['CollectionPage','ItemList','FAQPage','BreadcrumbList']);
+ assert.equal(schema['@graph'][1].itemListElement.length,7);
+ assert.equal(schema['@graph'][2].mainEntity.length,4);
+ assert.doesNotMatch(JSON.stringify(schema),/"(?:Product|Offer|AggregateRating)"/);
+ for(const category of Object.keys(categoryPages)) assert.ok(s.includes(`href="${category}"`),category);
+ for(const source of ['shop.html','ratgeber-bootsanhaenger.html','produkte.html',...Object.keys(categoryPages)]) assert.ok(read(source).includes(`href="${file}"`),source);
+ assert.equal(exclusionReason(file,s),null);
+ assert.ok(pages().includes(file));
+ for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
+  if(/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
+  const localPath=decodeURIComponent(href.split(/[?#]/)[0]);
+  assert.ok(fs.existsSync(path.join(ROOT,localPath)),`${file}: missing ${localPath}`);
+ }
+});
+
 test('Published opening hours include the confirmed lunch break',()=>{
  for(const file of ['index.html','kontakt.html','bootstrailer.html','bootsanhaenger-nach-mass.html','jollenanhaenger.html','motorbootanhaenger.html','segelbootanhaenger.html','wasserdichte-radnabe.html']) {
   const s=read(file);

@@ -17,7 +17,7 @@ export const categories = {
 // gets a different hash automatically, including when its filename stays the same.
 // Seiten, die auf alle Kategorieseiten verlinken. Ohne sie erreicht Google die
 // Kategorie- und Artikelseiten nur ueber shop.html.
-export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'produkte.html'];
+export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'produkte.html', 'ersatzteile-bootsanhaenger.html'];
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
 export const productDataFile = 'content/produkte/produkte.json';
 export const filename = p => `artikel/${p.sku}.html`;
@@ -171,13 +171,17 @@ export function generateProducts(root=ROOT) {
       const count=all.filter(p=>p.category===key).length;
       return `<li><a href="${target}">${escapeHTML(label)}</a> — ${count} ${count===1?'Artikel':'Artikel'}</li>`;
     }).join('');
+    const body=file==='ersatzteile-bootsanhaenger.html'
+      ? `<h2>Ersatzteile nach Baugruppe auswählen</h2><p>Wählen Sie zuerst die Baugruppe. Auf jeder Kategorieseite finden Sie Auswahlhinweise und die zugehörigen Artikel.</p><ul>${links}</ul><div class="category-actions"><a class="category-primary" href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></div>`
+      : `<h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul>${links}</ul><p><a href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></p><p><a href="ersatzteile-bootsanhaenger.html">Ersatzteil-Ratgeber und alle Kategorien im Überblick</a></p>`;
     const block=[
       '<!-- generated-category-links -->',
-      `<section class="category-hub" id="ersatzteile-kategorien"><h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul>${links}</ul><p><a href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></p></section>`,
+      `<section class="category-hub" id="ersatzteile-kategorien">${body}</section>`,
       '<!-- /generated-category-links -->'
     ].join(eol);
     let s=original.replace(/\s*<!-- generated-category-links -->[\s\S]*?<!-- \/generated-category-links -->/g,'');
-    const anchor=s.includes('</main>')?'</main>':'<footer>';
+    const pageAnchor='<!-- category-hub-anchor -->';
+    const anchor=file==='ersatzteile-bootsanhaenger.html' ? pageAnchor : (s.includes('</main>')?'</main>':'<footer>');
     if(!s.includes(anchor)) throw new Error(`Kein Einfuegepunkt (${anchor}) in ${file} gefunden.`);
     s=s.replace(anchor,eol+block+eol+anchor);
     planned.set(file,s);
