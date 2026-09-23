@@ -273,6 +273,22 @@ test('Sitemap exactly matches eligible pages, without duplicates',()=>{
  assert.deepEqual(urls,pages().map(urlForFile));
  assert.equal(new Set(urls).size,urls.length);
 });
+test('Technical pinout page is indexable, internally linked and has both diagrams',()=>{
+ const file='technik-bootsanhaenger.html', s=read(file);
+ assert.match(s,/<title>Anhänger-Steckerbelegung: 7- &amp; 13-polig \| HEKU<\/title>/);
+ assert.ok(s.includes(`<link rel="canonical" href="${BASE}/${file}">`));
+ assert.equal((s.match(/<h1\b/g)||[]).length,1);
+ assert.equal((s.match(/<figure class="diagram">/g)||[]).length,2);
+ for(const image of ['assets/technik/steckerbelegung-7-polig.png','assets/technik/steckerbelegung-13-polig.png']) {
+  assert.ok(s.includes(`src="${image}"`),image);
+  assert.ok(fs.existsSync(path.join(ROOT,image)),image);
+ }
+ assert.ok(read('ratgeber-bootsanhaenger.html').includes(`href="${file}"`));
+ const schemas=JSON.parse(s.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+ assert.deepEqual(schemas['@graph'].map(x=>x['@type']),['TechArticle','BreadcrumbList']);
+ assert.equal(exclusionReason(file,s),null);
+ assert.ok(pages().includes(file));
+});
 test('Google verification preserved; conversion stub has no executable code',()=>{
  for(const file of ['google01302b5f976ee5dc.html','google16d7d28f72100acd.html']) assert.equal(read(file).trim(),'google-site-verification: '+file);
  const stub=read('heku-conversion-block.html');
