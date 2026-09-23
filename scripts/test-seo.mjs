@@ -289,6 +289,13 @@ test('Technical pinout page is indexable, internally linked and has both diagram
  assert.equal(exclusionReason(file,s),null);
  assert.ok(pages().includes(file));
 });
+test('Every indexable page links to the technical data page',()=>{
+ for(const file of pages()) {
+  const href=file.startsWith('artikel/')?'/technik-bootsanhaenger.html':'technik-bootsanhaenger.html';
+  assert.ok(read(file).includes(`href="${href}"`),file);
+ }
+ assert.ok(read('scripts/templates/product-page.tpl').includes('href="technik-bootsanhaenger.html"'));
+});
 test('Google verification preserved; conversion stub has no executable code',()=>{
  for(const file of ['google01302b5f976ee5dc.html','google16d7d28f72100acd.html']) assert.equal(read(file).trim(),'google-site-verification: '+file);
  const stub=read('heku-conversion-block.html');
