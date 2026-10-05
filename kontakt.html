@@ -739,10 +739,7 @@
       c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
     }
   </script>
-
-<!-- ============================================================
-     HEKU CONVERSION + GA4 TRACKING BLOCK
-     Vor <script>
+  <script>
   // Laedt ausschliesslich die Karte. Analytics bleibt davon unberuehrt.
   function hekuAllowMap() {
     var f = document.getElementById('heku-map');
@@ -753,8 +750,11 @@
     var ph = document.querySelector('[data-consent-placeholder="heku-map"]');
     if (ph) ph.style.display = 'none';
   }
-</script>
-</body> auf JEDER Seite einfügen (einmal pro Seite).
+  </script>
+
+<!-- ============================================================
+     HEKU CONVERSION + GA4 TRACKING BLOCK
+     Karten-Einwilligung: hekuAllowMap() im Script direkt darueber.
      Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
      Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
      echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.

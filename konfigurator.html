@@ -612,7 +612,7 @@
 
           <div class="lead-grid">
             <div class="form-group">
-              <label class="form-label">Anrede <span>*</span></label>
+              <label class="form-label" for="anrede">Anrede <span style="color:var(--muted);font-weight:400">(optional)</span></label>
               <select class="lead-select form-input" id="anrede">
                 <option value="">— Bitte wählen —</option>
                 <option value="Herr">Herr</option>
@@ -645,12 +645,12 @@
           </div>
           <div class="lead-grid">
             <div class="form-group">
-              <label class="form-label">PLZ <span>*</span></label>
-              <input type="text" class="form-input" id="plz" placeholder="12345" maxlength="10">
+              <label class="form-label" for="plz">PLZ <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+              <input type="text" class="form-input" id="plz" placeholder="12345" maxlength="10" autocomplete="postal-code" inputmode="numeric">
             </div>
             <div class="form-group">
-              <label class="form-label">Ort <span>*</span></label>
-              <input type="text" class="form-input" id="ort" placeholder="Musterstadt">
+              <label class="form-label" for="ort">Ort <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+              <input type="text" class="form-input" id="ort" placeholder="Musterstadt" autocomplete="address-level2">
             </div>
           </div>
           <div class="lead-grid full">
@@ -933,7 +933,7 @@
     const consent  = document.getElementById('consent').checked;
 
     const errEl = document.getElementById('err-form');
-    if (!anrede || !vorname || !nachname || !email || !plz || !ort) {
+    if (!vorname || !nachname || !email) {
       errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
       errEl.classList.add('show'); return;
     }
@@ -958,7 +958,10 @@
       ? state.zubehoer.map(z => document.querySelector(`[data-value="${z}"] .check-title`)?.textContent || z).join(', ')
       : 'Kein Zubehör';
 
-    const betreff = `HEKU Engineer Anfrage: ${anrede} ${vorname} ${nachname} – ${modell ? 'HEKU '+modell.name : 'Sonderanfrage'}`;
+    const nameLine = [anrede, vorname, nachname].filter(Boolean).join(' ');
+    const ortLine = [plz, ort].filter(Boolean).join(' ');
+    const adressBlock = [strasse, ortLine].filter(Boolean).join('\n');
+    const betreff = `HEKU Engineer Anfrage: ${nameLine} – ${modell ? 'HEKU '+modell.name : 'Sonderanfrage'}`;
     const nachrichtFull = `
 HEKU Engineer Konfiguration:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -975,35 +978,43 @@ Empfohlenes Modell: HEKU ${modell?.name || '–'}
 ${state.laengenSchritte ? `Rahmenverlängerung: +${(state.laengenSchritte * 0.5).toLocaleString('de-DE')} m (${state.laengenSchritte} x 0,5 m) = +${state.laengenAufpreis.toLocaleString('de-DE')} €\n` : ''}${(state.bootstyp === 'segelboot' && state.tiefgang > 0.7) ? `Kielbootanhänger-Aufpreis (Tiefgang > 0,7 m): +180 €\n` : ''}
 Kundendaten:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-${anrede} ${vorname} ${nachname}
-${strasse ? strasse + '\n' : ''}${plz} ${ort}
-E-Mail: ${email}
+${nameLine}
+${adressBlock ? adressBlock + '\n' : ''}E-Mail: ${email}
 ${telefon ? 'Tel: ' + telefon : ''}
 ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
     `.trim();
 
     try {
-      // Formspree – WICHTIG: Ersetze XXXXXXX mit deiner Formspree-ID
-      const res = await fetch('https://formspree.io/f/xgopgpye', {
+      // Gleiches Web3Forms-Postfach wie Kontakt und Händleranfrage. Shop-Bestellungen bleiben bei Formspree.
+      const formData = new FormData();
+      formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
+      formData.append('subject', betreff);
+      formData.append('anrede', anrede);
+      formData.append('vorname', vorname);
+      formData.append('nachname', nachname);
+      formData.append('email', email);
+      formData.append('telefon', telefon);
+      formData.append('strasse', strasse);
+      formData.append('plz', plz);
+      formData.append('ort', ort);
+      formData.append('bootsbezeichnung', state.bootsbezeichnung || '');
+      formData.append('bootstyp', state.bootstyp || '');
+      formData.append('laenge', state.laenge ?? '');
+      formData.append('breite', state.breite ?? '');
+      formData.append('tiefgang', state.tiefgang ?? '');
+      formData.append('gewicht', state.gewicht ?? '');
+      formData.append('antrieb', state.antrieb || '');
+      formData.append('zubehoer', zubehoerText);
+      formData.append('modell', modell ? 'HEKU ' + modell.name : '–');
+      formData.append('nachricht', nachrichtFull);
+      formData.append('replyto', email);
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject: betreff,
-          anrede, vorname, nachname, email, telefon,
-          strasse, plz, ort,
-          bootsbezeichnung: state.bootsbezeichnung,
-          bootstyp: state.bootstyp,
-          laenge: state.laenge, breite: state.breite,
-          tiefgang: state.tiefgang, gewicht: state.gewicht,
-          antrieb: state.antrieb,
-          zubehoer: zubehoerText,
-          modell: modell ? 'HEKU ' + modell.name : '–',
-          nachricht,
-          _replyto: email
-        })
+        body: formData
       });
+      const result = await res.json().catch(() => null);
 
-      if (res.ok) {
+      if (res.ok && result && result.success === true) {
         // Bestätigungsmail an Kunden via EmailJS REST API
         fetch('https://api.emailjs.com/api/v1.0/email/send', {
           method: 'POST',
@@ -1040,7 +1051,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
           notiz: 'Modell: ' + (modell ? modell.name : '–') + ' | Boot: ' + (state.bootsbezeichnung || '–') + ' | Gewicht: ' + (state.gewicht || '–') + ' kg | Nachricht: ' + (nachricht || '–')
         });
       } else {
-        throw new Error('Netzwerkfehler');
+        throw new Error(result && result.message ? result.message : 'Web3Forms hat die Anfrage nicht bestätigt.');
       }
     } catch(e) {
       btn.disabled = false;
