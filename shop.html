@@ -1811,12 +1811,22 @@
   const requestedCategory = new URLSearchParams(window.location.search).get('kategorie');
   const categoryButton = [...document.querySelectorAll('.filter-item')].find(el => el.dataset.cat === requestedCategory);
   if (categoryButton) filterCat(categoryButton); else renderProducts('alle');
-  // Product page links select a known SKU only; never add or order automatically.
+  // Product page links select a known article only; never add or order automatically.
+  // ?artikel=<SKU> stays for bookmarks and already crawled URLs.
+  // #artikel-<id> selects the same card. Fragments are not separate crawlable URLs,
+  // so product-page CTAs use them instead of ?artikel=. Canonical stays shop.html.
   const requestedArticle = new URLSearchParams(window.location.search).get('artikel');
-  const linkedArticle = PRODUKTE.find(p => String(p.artnr) === requestedArticle);
+  const hashArticle = /^#artikel-(\d+)$/.exec(window.location.hash || '');
+  const linkedBySku = PRODUKTE.find(p => String(p.artnr) === requestedArticle);
+  const linkedByHash = hashArticle ? PRODUKTE.find(p => String(p.id) === hashArticle[1]) : undefined;
+  const linkedArticle = linkedBySku || linkedByHash;
   if (linkedArticle) {
     document.getElementById('shopSearch').value = String(linkedArticle.artnr);
     filterCat([...document.querySelectorAll('.filter-item')].find(el => el.dataset.cat === 'alle'));
+    if (hashArticle && String(linkedArticle.id) === hashArticle[1]) {
+      const card = document.getElementById('artikel-' + linkedArticle.id);
+      if (card && typeof card.scrollIntoView === 'function') card.scrollIntoView();
+    }
   }
   // End product page selection.
   updateCartUI();

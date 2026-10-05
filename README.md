@@ -23,6 +23,8 @@ assets/produkte/produkt-*.jpg  Produktbilder nach interner Produkt-ID
 
 `shop.html`, `artikel/`, die markierten Artikellinks der Kategorieseiten und mit `data-catalog-sku` markierte Preislisten-Zeilen werden aus `content/produkte/produkte.json` abgeleitet. Diese Bereiche nicht von Hand pflegen. Bestellformular, Warenkorb und Versandlogik bleiben in `shop.html`; Hauptseiten und Kategorie-Auswahltexte bleiben an ihrem bisherigen Ort. Produktbilder liegen gesammelt unter `assets/produkte/`.
 
+Artikelseiten verlinken den Shop über `shop.html#artikel-<id>`. Das Fragment wählt die Produktkarte aus und ist keine eigene Adresse. `shop.html?artikel=<Artikelnummer>` würde Google als weitere Shop-URL crawlen. Die Abfrage bleibt im Shop auswertbar, damit Lesezeichen und bereits erfasste Adressen den Artikel weiter öffnen; neue Kauf-Buttons setzen sie nicht mehr.
+
 ## Produktdaten ändern
 
 Nur den passenden Datensatz in `content/produkte/produkte.json` bearbeiten. Namen und Beschreibungen sind Klartext. Artikelnummern (`sku`) und interne IDs müssen eindeutig bleiben. Preise werden als positive Zeichenkette mit genau zwei Nachkommastellen gepflegt, z.B. `"price": "75.00"`. Der sichtbare deutsche Preis wird daraus generiert; eine zweite manuelle Preisangabe gibt es nicht mehr. Ungültige oder doppelte Daten brechen den Build bewusst ab.
