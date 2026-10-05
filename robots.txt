@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
 
 Sitemap: https://heku-fahrzeugbau.de/sitemap.xml
