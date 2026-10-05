@@ -104,7 +104,9 @@ export function renderProduct(p, all, shell) {
     return `${cut.slice(0,cut.lastIndexOf(' '))}… ${descTail}`;
   };
   const description=descFull.length<=160?descFull:descShort.length<=160?descShort:clampName(160);
-  const shop=`shop.html?artikel=${p.sku}#shopContent`;
+  // Fragment statt ?artikel=: jede Query-URL ist eine crawl-bare Kopie von shop.html.
+  // #artikel-<id> waehlt dieselbe Karte und ist keine eigene URL.
+  const shop=`shop.html#artikel-${p.id}`;
   const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),...(p.image?{image:[BASE+'/'+p.image]}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',shippingDetails:shippingSchema(unitShippingEuro(p))}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);

@@ -38,14 +38,19 @@ test('Every product has a canonical page, truthful visible price and Product/Off
  assert.equal(titles.size,all.length);
  assert.equal(fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>/^\d+\.html$/.test(x)).length,all.length);
 });
-test('Shop and category link every product; CTA selects SKU without a second checkout',()=>{
+test('Shop and category link every product; CTA uses a fragment and no second checkout',()=>{
  const shop=read('shop.html');
+ assert.ok(shop.includes('<link rel="canonical" href="https://heku-fahrzeugbau.de/shop.html">'));
  for(const p of all) {
   const s=read(filename(p)), category=read(categories[p.category][0]);
   assert.ok(shop.includes(`href="${filename(p)}"`)); assert.ok(category.includes(`href="${filename(p)}"`));
-  assert.ok(s.includes(`href="/shop.html?artikel=${p.sku}#shopContent"`));
+  assert.equal((s.match(new RegExp(`href="/shop.html#artikel-${p.id}"`,'g'))||[]).length,2);
+  assert.doesNotMatch(s,/shop\.html\?artikel=/);
   assert.doesNotMatch(s,/<form\b|function submitOrder|function addToCart/);
   assert.deepEqual(schema(s)['@graph'][1].itemListElement.map(x=>x.position),[1,2,3,4]);
+ }
+ for(const file of fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>x.endsWith('.html'))) {
+  assert.doesNotMatch(read('artikel/'+file),/shop\.html\?artikel=/,file);
  }
 });
 test('Product links, fragments and images resolve locally',()=>{
@@ -66,14 +71,41 @@ test('Product images live only in assets/produkte',()=>{
  assert.deepEqual(fs.readdirSync(ROOT).filter(x=>/^produkt-\d+\.(jpg|jpeg|png|webp)$/i.test(x)),[]);
  for(const p of all) assert.match(p.image??`assets/produkte/produkt-${p.id}.jpg`,/^assets\/produkte\/produkt-\d+\.(jpg|jpeg|png|webp)$/i);
 });
-test('Article query only recognizes catalog SKUs and never auto-orders',()=>{
+test('Article query and hash select a known product and never auto-order',()=>{
  const code=read('shop.html').match(/  const requestedArticle = [\s\S]*?  \/\/ End product page selection\./)[0];
- for(const query of ['', '?artikel=50241','?artikel=50242','?artikel=999999','?artikel=%3Cscript%3E']) {
-  const input={value:''}; let filtered=false;
-  vm.runInNewContext(code,{URLSearchParams,window:{location:{search:query}},PRODUKTE:all.map(p=>({artnr:Number(p.sku)})),document:{getElementById:()=>input,querySelectorAll:()=>[{dataset:{cat:'alle'}}]},filterCat:el=>{assert.equal(el.dataset.cat,'alle');filtered=true;}});
-  const sku=new URLSearchParams(query).get('artikel');
-  assert.equal(filtered,all.some(p=>p.sku===sku)); assert.equal(input.value,filtered?sku:'');
+ assert.match(code,/URLSearchParams\(window\.location\.search\)\.get\('artikel'\)/);
+ assert.match(code,/\^#artikel-\(\\d\+\)\$/);
+ assert.doesNotMatch(code,/addToCart|submitOrder/);
+ const produkte=all.map(p=>({id:Number(p.id),artnr:Number(p.sku)}));
+ function run({search='',hash=''}={}) {
+  const input={value:''}; let filtered=false, scrolled=null;
+  const cards=new Map(produkte.map(p=>['artikel-'+p.id,{id:'artikel-'+p.id,scrollIntoView(){scrolled=p.id;}}]));
+  vm.runInNewContext(code,{URLSearchParams,window:{location:{search,hash}},PRODUKTE:produkte,document:{getElementById:id=>id==='shopSearch'?input:cards.get(id),querySelectorAll:()=>[{dataset:{cat:'alle'}}]},filterCat:el=>{assert.equal(el.dataset.cat,'alle');filtered=true;}});
+  return {input,filtered,scrolled};
  }
+ for(const query of ['', '?artikel=50241','?artikel=50242','?artikel=999999','?artikel=%3Cscript%3E']) {
+  const sku=new URLSearchParams(query).get('artikel');
+  const known=all.some(p=>p.sku===sku);
+  const result=run({search:query});
+  assert.equal(result.filtered,known); assert.equal(result.input.value,known?sku:''); assert.equal(result.scrolled,null);
+ }
+ for(const p of all) {
+  const result=run({hash:'#artikel-'+p.id});
+  assert.equal(result.filtered,true); assert.equal(result.input.value,p.sku); assert.equal(result.scrolled,Number(p.id));
+ }
+ for(const hash of ['', '#shopContent', '#artikel-', '#artikel-abc', '#artikel-999999', '#ARTIKEL-1', '#artikel-1extra', '#artikel-01']) {
+  const result=run({hash});
+  assert.equal(result.filtered,false,hash); assert.equal(result.input.value,'',hash); assert.equal(result.scrolled,null,hash);
+ }
+ const sample=all[0], other=all.find(p=>p.id!==sample.id);
+ const queryWins=run({search:'?artikel='+sample.sku,hash:'#artikel-'+other.id});
+ assert.equal(queryWins.input.value,sample.sku); assert.equal(queryWins.scrolled,null);
+ const same=run({search:'?artikel='+sample.sku,hash:'#artikel-'+sample.id});
+ assert.equal(same.input.value,sample.sku); assert.equal(same.scrolled,Number(sample.id));
+ const fallback=run({search:'?artikel=999999',hash:'#artikel-'+sample.id});
+ assert.equal(fallback.input.value,sample.sku); assert.equal(fallback.scrolled,Number(sample.id));
+ const legacy=run({search:'?artikel='+sample.sku,hash:'#shopContent'});
+ assert.equal(legacy.filtered,true); assert.equal(legacy.input.value,sample.sku); assert.equal(legacy.scrolled,null);
 });
 test('Catalog characters escaped in markup and JSON-LD',()=>{
   const p={...all[0],name:'Teil <script> & "Test"',desc:'</script><img src=x>'};
