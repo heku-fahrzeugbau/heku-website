@@ -233,7 +233,8 @@ test('Shop images exist, are lazy-loaded and product buttons match their IDs',()
 test('Shop checkout controls have labels and mobile input hints',()=>{
  const s=read('shop.html');
  for(const id of ['anrede','vorname','nachname','email','telefon','strasse','plz','ort','notiz']) assert.ok(s.includes(`for="co-${id}"`));
- assert.match(s,/id="co-plz" autocomplete="postal-code" inputmode="numeric"/);
+ assert.match(s,/id="co-plz"[^>]*autocomplete="shipping postal-code"/);
+ assert.doesNotMatch(s,/id="co-plz"[^>]*inputmode="numeric"/);
  assert.match(s,/id="shopSearch" type="search"/);
  assert.match(s,/id="shopCategory"/);
  assert.match(s,/<noscript>[\s\S]*?HEKU kontaktieren/);
@@ -371,10 +372,13 @@ function harness({order='ok',mail='ok'}={}) {
  const node=id=>{
   if(!nodes.has(id)){
    const classes=new Set(id==='modalOverlay'?['open']:[]);
-   nodes.set(id,{value:'Test',checked:true,disabled:false,textContent:'',style:{},scrollTop:100,focus(){this.focused=true;},checkValidity:()=>true,classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)}});
+   nodes.set(id,{value:'Test',checked:true,disabled:false,textContent:'',style:{},attrs:{},scrollTop:100,focus(){this.focused=true;},checkValidity:()=>true,setAttribute(name,value){this.attrs[name]=value;},removeAttribute(name){delete this.attrs[name];},getAttribute(name){return Object.prototype.hasOwnProperty.call(this.attrs,name)?this.attrs[name]:null;},classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)}});
   }return nodes.get(id);
  };
  node('co-email').value='qa@example.invalid';
+ node('co-telefon').value='+49 521 200066';
+ node('co-plz').value='33719';
+ node('co-strasse').value='Teststraße 1';
  const fetch=async(url,options)=>{
   const isOrder=url.includes('formspree');const behavior=isOrder?order:mail;
   requests.push({type:isOrder?'order':'mail',body:JSON.parse(options.body)});
@@ -418,9 +422,10 @@ test('Pending confirmation allows immediate exit; mail timeout shows honest warn
  h.tick(15000);await p;assert.match(h.node('orderMailStatus').textContent,/E-Mail-Versand konnte nicht bestätigt/);assert.equal(h.timers.size,0);
 });
 test('Validation and empty cart prevent network calls',async()=>{
- for(const setting of ['missing','email','consent','empty']){
+ for(const setting of ['missing','email','consent','empty','phone','phone-empty']){
   const h=harness();if(setting==='missing')h.node('co-vorname').value='';if(setting==='email')h.node('co-email').checkValidity=()=>false;
   if(setting==='consent')h.node('co-consent').checked=false;if(setting==='empty')h.api.setCart([]);
+  if(setting==='phone')h.node('co-telefon').value='12345';if(setting==='phone-empty')h.node('co-telefon').value='';
   await h.api.submitOrder();assert.equal(h.requests.length,0,setting);
  }
 });
@@ -431,4 +436,49 @@ test('Late mail response cannot overwrite status of a newer order',async()=>{
  h.pending[1].resolve({ok:true,status:200});await p2;const status=h.node('orderMailStatus').textContent;
  h.pending[0].resolve({ok:false,status:503,text:async()=> 'Late mock error'});await p1;
  assert.equal(h.node('orderRef').textContent,ref);assert.equal(h.node('orderMailStatus').textContent,status);
+});
+
+test('Inquiry forms require phone and full address',()=>{
+ const forms=[
+  ['kontakt.html','telefon','strasse','plz','ort'],
+  ['haendler.html','h-telefon','h-strasse','h-plz','h-ort'],
+  ['konfigurator.html','telefon','strasse','plz','ort'],
+  ['shop.html','co-telefon','co-strasse','co-plz','co-ort']
+ ];
+ const phonePattern='\\+?[0-9\\s\\/\\(\\)\\-]{6,30}';
+ const plzPattern='[0-9A-Za-z \\-]{4,10}';
+ for(const [file,phoneId,streetId,plzId,cityId] of forms){
+  const html=read(file);
+  for(const id of [phoneId,streetId,plzId,cityId]){
+   const tag=html.match(new RegExp('<input\\b[^>]*\\bid="'+id+'"[^>]*>','i'));
+   assert.ok(tag,file+' #'+id);
+   assert.match(tag[0],/\brequired\b/,file+' #'+id+' required');
+   assert.match(tag[0],/\bautocomplete="/,file+' #'+id+' autocomplete');
+   const label=html.match(new RegExp('<label\\b[^>]*\\bfor="'+id+'"[^>]*>[\\s\\S]*?<\\/label>','i'));
+   assert.ok(label,file+' label '+id);
+   assert.match(label[0],/\*/,file+' label * '+id);
+  }
+  const phone=html.match(new RegExp('<input\\b[^>]*\\bid="'+phoneId+'"[^>]*>','i'))[0];
+  assert.match(phone,/type="tel"/,file+' tel');
+  const pattern=phone.match(/\bpattern="([^"]*)"/);
+  assert.ok(pattern,file+' phone pattern');
+  assert.equal(pattern[1],phonePattern,file+' phone pattern text');
+  new RegExp('^(?:'+pattern[1]+')$','v');
+  const plz=html.match(new RegExp('<input\\b[^>]*\\bid="'+plzId+'"[^>]*>','i'))[0];
+  const plzPat=plz.match(/\bpattern="([^"]*)"/);
+  assert.ok(plzPat,file+' plz pattern');
+  assert.equal(plzPat[1],plzPattern,file+' plz pattern text');
+  new RegExp('^(?:'+plzPat[1]+')$','v');
+  assert.doesNotMatch(plz,/inputmode\s*=\s*["']numeric["']/i,file+' plz inputmode');
+  for(const field of ['phone','address','zip','city']) assert.match(html,new RegExp("name:\\s*'"+field+"'"),file+' hubspot '+field);
+  assert.match(html,/Für Rückfragen und ein passendes Angebot benötigen wir Ihre vollständige Anschrift und eine Telefonnummer\./);
+ }
+ const haendler=read('haendler.html');
+ const region=haendler.match(/<input\b[^>]*\bid="h-region"[^>]*>/i)[0];
+ assert.doesNotMatch(region,/\brequired\b/);
+ assert.match(haendler,/Vertriebsgebiet \/ Region/);
+ assert.match(haendler,/Firmenanschrift/);
+ assert.match(haendler,/@media \(max-width: 600px\) \{[^}]*\.form-grid \{ grid-template-columns: 1fr; \}/);
+ assert.doesNotMatch(read('konfigurator.html'),/subscriptionTypeId:\s*999/);
+ assert.match(read('datenschutz.html'),/Anschrift \(Straße, PLZ, Ort\)/);
 });
