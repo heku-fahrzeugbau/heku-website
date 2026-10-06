@@ -17,18 +17,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HEKU Händler werden – Bootsanhänger-Partner in Deutschland &amp; NRW</title>
-  <meta name="description" content="HEKU Bootsanhänger-Händler werden – exklusive Partnerschaft mit einem der führenden Hersteller seit 1959. TÜV-geprüft, Made in Germany. Jetzt anfragen.">
+  <title>HEKU Händler weltweit finden | Händlernetz</title>
+  <meta name="description" content="HEKU Bootsanhänger-Händler auf der Weltkarte finden oder selbst HEKU Händler werden.">
   <link rel="canonical" href="https://heku-fahrzeugbau.de/haendler.html">
-  <meta property="og:title" content="HEKU Händler werden – Bootsanhänger-Partner in Deutschland">
-  <meta property="og:description" content="Werden Sie HEKU Vertragshändler. Exklusive Bootsanhänger made in Germany, TÜV-geprüft, eigenentwickelte wasserdichte Radnabe. Händlernetz von NRW bis Bayern.">
+  <meta property="og:title" content="HEKU Händler weltweit finden">
+  <meta property="og:description" content="HEKU Händler auf der Weltkarte entdecken oder als neuer Händler bewerben.">
   <meta property="og:image" content="https://heku-fahrzeugbau.de/hero.jpg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://heku-fahrzeugbau.de/haendler.html">
   <meta property="og:locale" content="de_DE">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="HEKU Händler werden – Bootsanhänger-Partner in Deutschland">
-  <meta name="twitter:description" content="Werden Sie HEKU Vertragshändler. TÜV-geprüft, Made in Germany. Händlernetz von NRW bis Bayern.">
+  <meta name="twitter:title" content="HEKU Händler weltweit finden">
+  <meta name="twitter:description" content="HEKU Händler auf der Weltkarte entdecken oder als neuer Händler bewerben.">
   <meta name="twitter:image" content="https://heku-fahrzeugbau.de/hero.jpg">
   <script type="application/ld+json">
   {
@@ -36,7 +36,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       {"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"},
-      {"@type": "ListItem", "position": 2, "name": "Händler werden", "item": "https://heku-fahrzeugbau.de/haendler.html"}
+      {"@type": "ListItem", "position": 2, "name": "Händler", "item": "https://heku-fahrzeugbau.de/haendler.html"}
     ]
   }
   </script>
@@ -254,6 +254,55 @@
       footer { padding: 28px 24px; }
     }
 
+    /* Minimaler Händlerkarten-Pilot */
+    .hero, .marquee, .why, .produkte, .konditionen, .testimonial, .steps { display: none !important; }
+    .kontakt { display: none; }
+    .kontakt.application-open { display: block; }
+    .dealer-map-page {
+      min-height: calc(100vh - 64px); margin-top: 64px; padding: 58px 48px 64px;
+      background: radial-gradient(circle at 50% 15%, rgba(232,0,14,.07), transparent 34%), linear-gradient(180deg, #f8f8f8 0%, #fff 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .dealer-map-head { text-align: center; margin-bottom: 30px; }
+    .dealer-map-kicker { color: var(--rot); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
+    .dealer-map-title { font-family: var(--font-display); font-size: clamp(54px, 7vw, 94px); line-height: .95; color: var(--schwarz); letter-spacing: .01em; }
+    .dealer-map-shell { width: min(1120px, 100%); aspect-ratio: 2 / 1; position: relative; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; background: #f7f7f7; box-shadow: 0 24px 70px rgba(0,0,0,.08); cursor: grab; touch-action: pan-y; }
+    .dealer-map-shell.is-zoomed { touch-action: none; }
+    .dealer-map-shell.is-dragging { cursor: grabbing; }
+    .world-map { display: block; width: 100%; height: 100%; user-select: none; }
+    .dealer-pin { position: absolute; left: 52.7%; top: 20.2%; width: 24px; height: 24px; transform: translate(-50%,-50%); color: var(--rot); border: 0; background: transparent; border-radius: 50%; outline: none; z-index: 3; cursor: pointer; }
+    .dealer-pin::before { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: currentColor; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.22); transition: transform .2s ease; }
+    .dealer-pin::after { content: ''; position: absolute; inset: 1px; border-radius: 50%; background: currentColor; opacity: .18; animation: pin-pulse 2s ease-out infinite; }
+    .dealer-pin:hover::before, .dealer-pin:focus::before { transform: scale(1.28); }
+    .dealer-contact-card { position: absolute; left: 52.7%; top: 20.2%; z-index: 4; width: min(255px, calc(100% - 32px)); padding: 15px 17px; border-radius: 8px; background: #0a0a0a; color: #fff; opacity: 0; visibility: hidden; pointer-events: none; transform: translate(22px,-45%); transition: opacity .18s ease, transform .18s ease, visibility .18s ease; box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+    .dealer-contact-card.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(22px,-50%); }
+    .dealer-contact-name { font-size: 14px; font-weight: 700; margin-bottom: 9px; }
+    .dealer-contact-card a { display: block; color: rgba(255,255,255,.76); font-size: 12px; line-height: 1.8; transition: color .15s ease; }
+    .dealer-contact-card a:hover, .dealer-contact-card a:focus { color: #fff; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @keyframes pin-pulse { 0% { transform: scale(.7); opacity: .28; } 70%,100% { transform: scale(1.65); opacity: 0; } }
+    .map-controls { position: absolute; top: 14px; right: 14px; z-index: 5; display: flex; flex-direction: column; gap: 6px; }
+    .map-control { width: 38px; height: 38px; border: 1px solid rgba(0,0,0,.1); border-radius: 7px; background: rgba(255,255,255,.94); color: var(--schwarz); display: grid; place-items: center; font: 500 22px/1 var(--font-body); cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.1); transition: .18s ease; }
+    .map-control:hover, .map-control:focus { border-color: var(--rot); color: var(--rot); transform: translateY(-1px); }
+    .map-control-reset { font-size: 17px; }
+    .dealer-map-action { margin-top: 30px; }
+    .dealer-apply-btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 25px; background: var(--rot); color: #fff; border: 0; border-radius: 7px; font: 600 14px var(--font-body); cursor: pointer; transition: .2s ease; box-shadow: 0 12px 32px rgba(232,0,14,.2); }
+    .dealer-apply-btn:hover, .dealer-apply-btn:focus { background: var(--rot-dark); transform: translateY(-2px); }
+    .dealer-apply-btn svg { width: 17px; height: 17px; }
+    @media (max-width: 768px) {
+      .dealer-map-page { padding: 34px 18px 42px; justify-content: flex-start; }
+      .dealer-map-head { margin: 24px 0; }
+      .dealer-map-title { font-size: clamp(48px, 15vw, 68px); }
+      .dealer-map-shell { border-radius: 12px; }
+      .dealer-map-action { width: 100%; margin-top: 24px; }
+      .dealer-apply-btn { width: 100%; justify-content: center; }
+      .kontakt { padding: 64px 18px !important; }
+      .kontakt-inner { gap: 34px; }
+      .form-wrap { padding: 24px 18px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: auto; }
+    }
+
     /* Produkte Dropdown */
     .nav-dropdown { position: relative; }
     .nav-dropdown-toggle { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; cursor: pointer; }
@@ -324,7 +373,7 @@
 
       <a href="shop.html">Shop</a>
       <a href="ueber-uns.html">Über uns</a>
-      <a href="haendler.html" class="active">Partner werden</a>
+      <a href="haendler.html" class="active">Händler</a>
       <a href="kontakt.html">Kontakt</a>
       <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;">
         <span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>
@@ -338,6 +387,106 @@
     </div>
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
+
+  <main class="dealer-map-page">
+    <header class="dealer-map-head">
+      <div class="dealer-map-kicker">HEKU Händlernetz</div>
+      <h1 class="dealer-map-title">HÄNDLER FINDEN</h1>
+    </header>
+
+    <div class="dealer-map-shell" id="dealerMap" aria-label="Zoombare Weltkarte mit HEKU Händlerstandorten">
+      <svg class="world-map" id="dealerMapSvg" viewBox="0 0 1200 600" role="img" aria-labelledby="dealer-map-title dealer-map-description">
+        <title id="dealer-map-title">HEKU Händler weltweit</title>
+        <desc id="dealer-map-description">Zoombare Weltkarte mit Ländergrenzen und neun HEKU Händlerstandorten in Deutschland.</desc>
+        <rect width="1200" height="600" fill="#f7f7f7" />
+        <use href="assets/world-map-countries.svg#countries" />
+      </svg>
+      <button class="dealer-pin" type="button" data-map-x="633" data-map-y="121" aria-expanded="false" aria-controls="dealer-gruendl-contact" aria-label="Kontaktdaten von Gründl Bootsimport anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Gründl Bootsimport</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-gruendl-contact">
+        <div class="dealer-contact-name">Gründl Bootsimport GmbH</div>
+        <a href="tel:+49405550540">+49 40 55 50 540</a>
+        <a href="mailto:info@gruendl.de">info@gruendl.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="635.64" data-map-y="120.96" aria-expanded="false" aria-controls="dealer-sager-contact" aria-label="Kontaktdaten von Bootsbau Sager anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Bootsbau Sager</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-sager-contact">
+        <div class="dealer-contact-name">Bootsbau Sager</div>
+        <a href="tel:+4945413997">04541 / 3997</a>
+        <a href="mailto:info@bootsbausager.de">info@bootsbausager.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="627.91" data-map-y="124.93" aria-expanded="false" aria-controls="dealer-fricke-dannhus-contact" aria-label="Kontaktdaten von Fricke &amp; Dannhus anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Fricke &amp; Dannhus</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-fricke-dannhus-contact">
+        <div class="dealer-contact-name">Fricke &amp; Dannhus</div>
+        <a href="tel:+495447274">05447 / 274</a>
+        <a href="mailto:info@fricke-dannhus.de">info@fricke-dannhus.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="630.20" data-map-y="129.29" aria-expanded="false" aria-controls="dealer-edersee-contact" aria-label="Kontaktdaten von Yacht-Service Edersee anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Yacht-Service Edersee</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-edersee-contact">
+        <div class="dealer-contact-name">Yacht-Service Edersee</div>
+        <a href="tel:+4916098300277">0160 98300277</a>
+        <a href="mailto:info@yachtservice-edersee.com">info@yachtservice-edersee.com</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="631.86" data-map-y="125.11" aria-expanded="false" aria-controls="dealer-aluforce-contact" aria-label="Kontaktdaten von AluForce anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">AluForce UG (haftungsbeschränkt)</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-aluforce-contact">
+        <div class="dealer-contact-name">AluForce UG (haftungsbeschränkt)</div>
+        <a href="tel:+4951314670815">+49 (0) 5131-4670815</a>
+        <a href="mailto:Info@Alu-Force.de">Info@Alu-Force.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="629.44" data-map-y="126.01" aria-expanded="false" aria-controls="dealer-fette-contact" aria-label="Kontaktdaten von Bootsservice Center Fette anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Bootsservice Center Fette</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-fette-contact">
+        <div class="dealer-contact-name">Bootsservice Center Fette</div>
+        <a href="tel:+4957313100">(05731) 3100</a>
+        <a href="mailto:mail@bootsservice-fette.de">mail@bootsservice-fette.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="638.19" data-map-y="139.71" aria-expanded="false" aria-controls="dealer-bendix-contact" aria-label="Kontaktdaten von Bendix GmbH PKW-Anhänger anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Bendix GmbH PKW-Anhänger</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-bendix-contact">
+        <div class="dealer-contact-name">Bendix GmbH PKW-Anhänger</div>
+        <a href="tel:+4989753086">+49 (0)89 / 75 30 86</a>
+        <a href="mailto:info@bendix-pkw-anhaenger.de">info@bendix-pkw-anhaenger.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="622.50" data-map-y="133.95" aria-expanded="false" aria-controls="dealer-kreusch-contact" aria-label="Kontaktdaten von Motorboote Kreusch anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Motorboote Kreusch</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-kreusch-contact">
+        <div class="dealer-contact-name">Motorboote Kreusch</div>
+        <a href="tel:+49650291300">06502 / 91300</a>
+        <a href="mailto:boote@kreusch.de">boote@kreusch.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="622.59" data-map-y="130.69" aria-expanded="false" aria-controls="dealer-sailart-contact" aria-label="Kontaktdaten von SAILART Segelboote anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">SAILART Segelboote GmbH</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-sailart-contact">
+        <div class="dealer-contact-name">SAILART Segelboote GmbH</div>
+        <a href="tel:+492235463252">+49 22 35 / 46 32 52</a>
+        <a href="mailto:info@sailart.de">info@sailart.de</a>
+      </div>
+      <div class="map-controls" aria-label="Kartensteuerung">
+        <button class="map-control" type="button" onclick="zoomDealerMap(1)" aria-label="Karte vergrößern">+</button>
+        <button class="map-control" type="button" onclick="zoomDealerMap(-1)" aria-label="Karte verkleinern">−</button>
+        <button class="map-control map-control-reset" type="button" onclick="resetDealerMap()" aria-label="Gesamte Weltkarte anzeigen">↺</button>
+      </div>
+    </div>
+
+    <div class="dealer-map-action">
+      <button class="dealer-apply-btn" type="button" aria-controls="kontakt" aria-expanded="false" onclick="openDealerApplication(this)">
+        Als Händler bewerben
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </main>
 
   <!-- HERO -->
   <section class="hero">
@@ -695,7 +844,7 @@
         <div class="ft-head">Unternehmen</div>
         <div class="ft-links">
           <a href="ueber-uns.html">Über uns</a>
-          <a href="haendler.html">Partner werden</a>
+          <a href="haendler.html">Händler</a>
           <a href="kontakt.html">Kontakt</a>
         </div>
       </div>
@@ -716,6 +865,132 @@
   </footer>
 
   <script>
+    const dealerMap = document.getElementById('dealerMap');
+    const dealerMapSvg = document.getElementById('dealerMapSvg');
+    const dealerMapPins = [...dealerMap.querySelectorAll('.dealer-pin')];
+    const dealerContactCards = [...dealerMap.querySelectorAll('.dealer-contact-card')];
+    const dealerWorldWidth = 1200;
+    const dealerWorldHeight = 600;
+    const dealerFocusX = 635;
+    const dealerFocusY = 129;
+    let dealerMapZoom = 1;
+    let dealerView = { x: 0, y: 0, width: dealerWorldWidth, height: dealerWorldHeight };
+    let dealerMapDragging = false;
+    let dealerDragStart = null;
+
+    function renderDealerMap() {
+      dealerView.x = Math.max(0, Math.min(dealerWorldWidth - dealerView.width, dealerView.x));
+      dealerView.y = Math.max(0, Math.min(dealerWorldHeight - dealerView.height, dealerView.y));
+      dealerMapSvg.setAttribute('viewBox', `${dealerView.x} ${dealerView.y} ${dealerView.width} ${dealerView.height}`);
+      dealerMap.classList.toggle('is-zoomed', dealerMapZoom > 1);
+
+      dealerMapPins.forEach((pin) => {
+        const pinLeft = ((Number(pin.dataset.mapX) - dealerView.x) / dealerView.width) * 100;
+        const pinTop = ((Number(pin.dataset.mapY) - dealerView.y) / dealerView.height) * 100;
+        const pinVisible = pinLeft >= 0 && pinLeft <= 100 && pinTop >= 0 && pinTop <= 100;
+        const card = document.getElementById(pin.getAttribute('aria-controls'));
+        pin.style.left = `${pinLeft}%`;
+        pin.style.top = `${pinTop}%`;
+        pin.style.display = pinVisible ? '' : 'none';
+        card.style.left = `${pinLeft}%`;
+        card.style.top = `${pinTop}%`;
+        card.style.display = pinVisible ? '' : 'none';
+      });
+    }
+
+    function zoomDealerMap(direction, focus = null) {
+      const nextZoom = Math.max(1, Math.min(18, direction > 0 ? dealerMapZoom * 1.5 : dealerMapZoom / 1.5));
+      if (nextZoom === 1) return resetDealerMap();
+
+      const target = focus || (direction > 0
+        ? { x: dealerFocusX, y: dealerFocusY, center: true }
+        : { x: dealerView.x + dealerView.width / 2, y: dealerView.y + dealerView.height / 2, center: true });
+      const relativeX = target.center ? 0.5 : (target.x - dealerView.x) / dealerView.width;
+      const relativeY = target.center ? 0.5 : (target.y - dealerView.y) / dealerView.height;
+      const nextWidth = dealerWorldWidth / nextZoom;
+      const nextHeight = dealerWorldHeight / nextZoom;
+      dealerView = {
+        x: target.x - relativeX * nextWidth,
+        y: target.y - relativeY * nextHeight,
+        width: nextWidth,
+        height: nextHeight,
+      };
+      dealerMapZoom = nextZoom;
+      renderDealerMap();
+    }
+
+    function resetDealerMap() {
+      dealerMapZoom = 1;
+      dealerView = { x: 0, y: 0, width: dealerWorldWidth, height: dealerWorldHeight };
+      renderDealerMap();
+    }
+
+    dealerMap.addEventListener('wheel', (event) => {
+      if (event.deltaY > 0 && dealerMapZoom === 1) return;
+      event.preventDefault();
+      const bounds = dealerMap.getBoundingClientRect();
+      const relativeX = (event.clientX - bounds.left) / bounds.width;
+      const relativeY = (event.clientY - bounds.top) / bounds.height;
+      zoomDealerMap(event.deltaY < 0 ? 1 : -1, {
+        x: dealerView.x + relativeX * dealerView.width,
+        y: dealerView.y + relativeY * dealerView.height,
+      });
+    }, { passive: false });
+
+    dealerMap.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('a, button') || dealerMapZoom === 1) return;
+      dealerMapDragging = true;
+      dealerDragStart = { clientX: event.clientX, clientY: event.clientY, x: dealerView.x, y: dealerView.y };
+      dealerMap.classList.add('is-dragging');
+      dealerMap.setPointerCapture(event.pointerId);
+    });
+
+    dealerMap.addEventListener('pointermove', (event) => {
+      if (!dealerMapDragging) return;
+      const bounds = dealerMap.getBoundingClientRect();
+      dealerView.x = dealerDragStart.x - (event.clientX - dealerDragStart.clientX) * dealerView.width / bounds.width;
+      dealerView.y = dealerDragStart.y - (event.clientY - dealerDragStart.clientY) * dealerView.height / bounds.height;
+      renderDealerMap();
+    });
+
+    dealerMap.addEventListener('pointerup', (event) => {
+      dealerMapDragging = false;
+      dealerMap.classList.remove('is-dragging');
+      if (dealerMap.hasPointerCapture(event.pointerId)) dealerMap.releasePointerCapture(event.pointerId);
+    });
+
+    dealerMap.addEventListener('pointercancel', () => {
+      dealerMapDragging = false;
+      dealerMap.classList.remove('is-dragging');
+    });
+
+    renderDealerMap();
+
+    function toggleDealerContact(event, button) {
+      event.stopPropagation();
+      const card = document.getElementById(button.getAttribute('aria-controls'));
+      const willOpen = !card.classList.contains('is-open');
+      dealerContactCards.forEach((dealerCard) => dealerCard.classList.remove('is-open'));
+      dealerMapPins.forEach((dealerPin) => dealerPin.setAttribute('aria-expanded', 'false'));
+      card.classList.toggle('is-open', willOpen);
+      const isOpen = card.classList.contains('is-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    dealerMap.addEventListener('click', (event) => {
+      if (event.target.closest('.dealer-pin, .dealer-contact-card')) return;
+      dealerContactCards.forEach((card) => card.classList.remove('is-open'));
+      dealerMapPins.forEach((pin) => pin.setAttribute('aria-expanded', 'false'));
+    });
+
+    function openDealerApplication(button) {
+      const panel = document.getElementById('kontakt');
+      panel.classList.add('application-open');
+      panel.querySelectorAll('.reveal').forEach(element => element.classList.add('visible'));
+      button.setAttribute('aria-expanded', 'true');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     // Scroll Reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
