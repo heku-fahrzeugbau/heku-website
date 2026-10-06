@@ -835,7 +835,7 @@
       try {
         const formData = new FormData();
         formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
-        formData.append('subject', `Händleranfrage – ${firma} (${region})`);
+        formData.append('subject', (region || ort) ? `Händleranfrage – ${firma} (${region || ort})` : `Händleranfrage – ${firma}`);
         formData.append('anrede', anrede);
         formData.append('firma', firma);
         formData.append('vorname', vorname);

@@ -482,3 +482,10 @@ test('Inquiry forms require phone and full address',()=>{
  assert.doesNotMatch(read('konfigurator.html'),/subscriptionTypeId:\s*999/);
  assert.match(read('datenschutz.html'),/Anschrift \(Straße, PLZ, Ort\)/);
 });
+test('Dealer email subject omits empty parentheses and falls back to the city',()=>{
+ const line=read('haendler.html').match(/formData\.append\('subject', ([\s\S]*?)\);/)[1];
+ const subject=(firma,region,ort)=>vm.runInNewContext('('+line+')',{firma,region,ort});
+ assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage – Firma (Nord)');
+ assert.equal(subject('Firma','','Hamburg'),'Händleranfrage – Firma (Hamburg)');
+ assert.equal(subject('Firma','',''),'Händleranfrage – Firma');
+});
