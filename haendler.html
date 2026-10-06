@@ -190,13 +190,15 @@
     .kontakt-info-item { display: flex; align-items: center; gap: 16px; font-size: 14px; color: #6B6B6B; }
     .kontakt-info-icon { width: 36px; height: 36px; border: 1.5px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #fff; }
     .form-wrap { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-    .form-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6B6B6B; margin-bottom: 28px; }
+    .form-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6B6B6B; margin-bottom: 8px; }
+    .form-note { font-size: 13px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #6B6B6B; line-height: 1.55; margin: 0 0 22px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-group { display: flex; flex-direction: column; gap: 8px; }
     .form-group.full { grid-column: 1 / -1; }
     .form-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6B6B; }
     .form-input { background: #fafafa; border: 1.5px solid var(--border); border-radius: 6px; padding: 13px 16px; font-size: 14px; color: var(--schwarz); outline: none; transition: border-color 0.2s; font-family: var(--font-body); }
     .form-input:focus { border-color: var(--rot); background: #fff; box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .form-input[aria-invalid="true"] { border-color: var(--rot); }
     .form-input::placeholder { color: #bbb; }
     .form-select { background: #fafafa; border: 1.5px solid var(--border); border-radius: 6px; padding: 13px 16px; font-size: 14px; color: var(--schwarz); outline: none; font-family: var(--font-body); appearance: none; }
     .form-select option { background: #fff; }
@@ -252,6 +254,9 @@
       .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
       .steps-grid::before { display: none; }
       footer { padding: 28px 24px; }
+    }
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
     }
 
     /* Produkte Dropdown */
@@ -596,41 +601,57 @@
       <div class="kontakt-right reveal reveal-delay-1">
         <div class="form-wrap" id="formWrap">
           <div class="form-title">Händler-Partnerschaftsanfrage</div>
+          <p class="form-note">Für Rückfragen und ein passendes Angebot benötigen wir Ihre vollständige Anschrift und eine Telefonnummer.</p>
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Anrede *</label>
-              <select class="form-select form-input" id="h-anrede">
+              <label class="form-label" for="h-anrede">Anrede *</label>
+              <select class="form-select form-input" id="h-anrede" name="h-anrede" autocomplete="honorific-prefix" required>
                 <option value="">— Bitte wählen —</option>
                 <option>Herr</option><option>Frau</option><option>Firma</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Firmenname *</label>
-              <input type="text" class="form-input" id="h-firma" placeholder="Bootscenter Muster GmbH">
+              <label class="form-label" for="h-firma">Firmenname *</label>
+              <input type="text" class="form-input" id="h-firma" name="h-firma" autocomplete="organization" placeholder="Bootscenter Muster GmbH" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Vorname *</label>
-              <input type="text" class="form-input" id="h-vorname" placeholder="Max">
+              <label class="form-label" for="h-vorname">Vorname *</label>
+              <input type="text" class="form-input" id="h-vorname" name="h-vorname" autocomplete="given-name" placeholder="Max" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Nachname *</label>
-              <input type="text" class="form-input" id="h-nachname" placeholder="Mustermann">
+              <label class="form-label" for="h-nachname">Nachname *</label>
+              <input type="text" class="form-input" id="h-nachname" name="h-nachname" autocomplete="family-name" placeholder="Mustermann" required>
             </div>
             <div class="form-group">
-              <label class="form-label">E-Mail *</label>
-              <input type="email" class="form-input" id="h-email" placeholder="max@bootscenter.de">
+              <label class="form-label" for="h-email">E-Mail *</label>
+              <input type="email" class="form-input" id="h-email" name="h-email" autocomplete="email" placeholder="max@bootscenter.de" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Telefon</label>
-              <input type="tel" class="form-input" id="h-telefon" placeholder="+49 521 ...">
+              <label class="form-label" for="h-telefon">Telefon *</label>
+              <input type="tel" class="form-input" id="h-telefon" name="h-telefon" autocomplete="tel" inputmode="tel" required minlength="6" maxlength="30" pattern="\+?[0-9\s\/\(\)\-]{6,30}" placeholder="z. B. 0521 200066">
             </div>
             <div class="form-group full">
-              <label class="form-label">Standort / Region *</label>
-              <input type="text" class="form-input" id="h-region" placeholder="z.B. Hamburg, Schleswig-Holstein">
+              <div class="form-label">Firmenanschrift</div>
             </div>
             <div class="form-group full">
-              <label class="form-label">Ihr Geschäft</label>
-              <select class="form-select form-input" id="h-typ">
+              <label class="form-label" for="h-strasse">Straße &amp; Hausnummer *</label>
+              <input type="text" class="form-input" id="h-strasse" name="h-strasse" autocomplete="address-line1" required minlength="3" maxlength="100" placeholder="Musterstraße 1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="h-plz">PLZ *</label>
+              <input type="text" class="form-input" id="h-plz" name="h-plz" autocomplete="postal-code" required minlength="4" maxlength="10" pattern="[0-9A-Za-z \-]{4,10}" placeholder="12345">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="h-ort">Ort *</label>
+              <input type="text" class="form-input" id="h-ort" name="h-ort" autocomplete="address-level2" required minlength="2" maxlength="80" placeholder="Musterstadt">
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="h-region">Vertriebsgebiet / Region</label>
+              <input type="text" class="form-input" id="h-region" name="h-region" autocomplete="off" placeholder="z.B. Hamburg, Schleswig-Holstein">
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="h-typ">Ihr Geschäft</label>
+              <select class="form-select form-input" id="h-typ" name="h-typ" autocomplete="off">
                 <option value="">— Art des Unternehmens —</option>
                 <option>Bootshändler / Bootshaus</option>
                 <option>Wassersport-Fachhandel</option>
@@ -640,8 +661,8 @@
               </select>
             </div>
             <div class="form-group full">
-              <label class="form-label">Ihre Nachricht</label>
-              <textarea class="form-input" id="h-nachricht" placeholder="Erzählen Sie uns von Ihrem Unternehmen und Ihren Vorstellungen..."></textarea>
+              <label class="form-label" for="h-nachricht">Ihre Nachricht</label>
+              <textarea class="form-input" id="h-nachricht" name="h-nachricht" autocomplete="off" placeholder="Erzählen Sie uns von Ihrem Unternehmen und Ihren Vorstellungen..."></textarea>
             </div>
           </div>
           <div class="form-consent">
@@ -731,21 +752,77 @@
       const nachname = document.getElementById('h-nachname').value.trim();
       const email    = document.getElementById('h-email').value.trim();
       const telefon  = document.getElementById('h-telefon').value.trim();
+      const strasse  = document.getElementById('h-strasse').value.trim();
+      const plz      = document.getElementById('h-plz').value.trim();
+      const ort      = document.getElementById('h-ort').value.trim();
       const region   = document.getElementById('h-region').value.trim();
       const typ      = document.getElementById('h-typ').value;
       const nachricht = document.getElementById('h-nachricht').value.trim();
       const consent  = document.getElementById('h-consent').checked;
       const errEl    = document.getElementById('h-error');
 
-      if (!anrede || !firma || !vorname || !nachname || !email || !region) {
-        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+      const requiredFields = [
+        ['h-anrede', anrede, 'Anrede', 1],
+        ['h-firma', firma, 'Firmenname', 1],
+        ['h-vorname', vorname, 'Vorname', 1],
+        ['h-nachname', nachname, 'Nachname', 1],
+        ['h-email', email, 'E-Mail', 1],
+        ['h-telefon', telefon, 'Telefon', 1],
+        ['h-strasse', strasse, 'Straße und Hausnummer', 3],
+        ['h-plz', plz, 'PLZ', 1],
+        ['h-ort', ort, 'Ort', 2]
+      ];
+      requiredFields.forEach(([id]) => document.getElementById(id).removeAttribute('aria-invalid'));
+      document.getElementById('h-consent').removeAttribute('aria-invalid');
+      const fehlend = requiredFields.filter(([, value, , min]) => !value || value.length < min);
+      if (fehlend.length) {
+        fehlend.forEach(([id]) => document.getElementById(id).setAttribute('aria-invalid', 'true'));
+        document.getElementById(fehlend[0][0]).focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: ' + fehlend.map(([, , label]) => label).join(', ') + '.';
         errEl.classList.add('show'); return;
       }
-      if (!email.includes('@')) {
+      const emailEl = document.getElementById('h-email');
+      if (!email.includes('@') || !emailEl.checkValidity()) {
+        emailEl.setAttribute('aria-invalid', 'true');
+        emailEl.focus();
         errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
         errEl.classList.add('show'); return;
       }
+      const phoneDigits = telefon.replace(/\D/g, '').length;
+      const phoneOk = /^\+?[0-9\s\/()\-]+$/.test(telefon) && phoneDigits >= 6 && phoneDigits <= 20;
+      const telefonEl = document.getElementById('h-telefon');
+      if (!phoneOk || !telefonEl.checkValidity()) {
+        telefonEl.setAttribute('aria-invalid', 'true');
+        telefonEl.focus();
+        errEl.textContent = 'Bitte geben Sie eine gültige Telefonnummer mit mindestens 6 Ziffern ein (erlaubt: Ziffern, Leerzeichen, +, /, - und Klammern).';
+        errEl.classList.add('show'); return;
+      }
+      const strasseEl = document.getElementById('h-strasse');
+      if (!strasseEl.checkValidity()) {
+        strasseEl.setAttribute('aria-invalid', 'true');
+        strasseEl.focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: Straße und Hausnummer.';
+        errEl.classList.add('show'); return;
+      }
+      const plzOk = /^[0-9A-Za-z \-]{4,10}$/.test(plz) && /\d/.test(plz);
+      const plzEl = document.getElementById('h-plz');
+      if (!plzOk || !plzEl.checkValidity()) {
+        plzEl.setAttribute('aria-invalid', 'true');
+        plzEl.focus();
+        errEl.textContent = 'Bitte geben Sie eine gültige Postleitzahl ein.';
+        errEl.classList.add('show'); return;
+      }
+      const ortEl = document.getElementById('h-ort');
+      if (!ortEl.checkValidity()) {
+        ortEl.setAttribute('aria-invalid', 'true');
+        ortEl.focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: Ort.';
+        errEl.classList.add('show'); return;
+      }
       if (!consent) {
+        const consentEl = document.getElementById('h-consent');
+        consentEl.setAttribute('aria-invalid', 'true');
+        consentEl.focus();
         errEl.textContent = 'Bitte akzeptieren Sie die AGB und Datenschutzerklärung.';
         errEl.classList.add('show'); return;
       }
@@ -758,13 +835,16 @@
       try {
         const formData = new FormData();
         formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
-        formData.append('subject', `Händleranfrage – ${firma} (${region})`);
+        formData.append('subject', (region || ort) ? `Händleranfrage – ${firma} (${region || ort})` : `Händleranfrage – ${firma}`);
         formData.append('anrede', anrede);
         formData.append('firma', firma);
         formData.append('vorname', vorname);
         formData.append('nachname', nachname);
         formData.append('email', email);
         formData.append('telefon', telefon);
+        formData.append('strasse', strasse);
+        formData.append('plz', plz);
+        formData.append('ort', ort);
         formData.append('region', region);
         formData.append('unternehmenstyp', typ);
         formData.append('nachricht', nachricht);
@@ -779,6 +859,7 @@
           fetch('https://api.emailjs.com/api/v1.0/email/send', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            keepalive: true,
             body: JSON.stringify({
               service_id: 'service_gbfg9bk',
               template_id: 'template_6jm794t',
@@ -794,6 +875,7 @@
           fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            keepalive: true,
             body: JSON.stringify({
               fields: [
                 { name: 'firstname', value: vorname },
@@ -801,13 +883,17 @@
                 { name: 'email', value: email },
                 { name: 'phone', value: telefon },
                 { name: 'company', value: firma },
-                { name: 'city', value: region },
+                { name: 'address', value: strasse },
+                { name: 'zip', value: plz },
+                { name: 'city', value: ort },
                 { name: 'anfragequelle', value: 'Händleranfrage' },
                 { name: 'message', value: `Firma: ${firma} | Typ: ${typ} | Region: ${region} | Nachricht: ${nachricht}` }
               ],
               context: { pageUri: window.location.href, pageName: document.title },
               legalConsentOptions: { consent: { consentToProcess: true, text: 'Einwilligung erteilt.' } }
             })
+          }).then(async (hsRes) => {
+            if (!hsRes.ok) console.warn('HubSpot', hsRes.status, await hsRes.text());
           }).catch(() => {});
 
           document.getElementById('formWrap').style.display = 'none';

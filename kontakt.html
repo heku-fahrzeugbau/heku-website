@@ -152,6 +152,7 @@
     .form-label span { color: var(--rot); }
     .form-input { height: 48px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
     .form-input:focus { border-color: var(--rot); box-shadow: 0 0 0 3px rgba(232,0,14,0.08); }
+    .form-input[aria-invalid="true"], .form-textarea[aria-invalid="true"] { border-color: var(--rot); }
     .form-select { height: 48px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
     .form-select:focus { border-color: var(--rot); }
     .form-textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; color: var(--text); background: var(--bg); outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; }
@@ -370,7 +371,7 @@
     <div class="contact-form-wrap">
       <form id="formWrap" onsubmit="submitKontakt(event)" novalidate>
         <div class="form-title">Schreiben Sie uns</div>
-        <p class="form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder. Wir antworten in der Regel innerhalb von 1–2 Werktagen.</p>
+        <p class="form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder. Für Rückfragen und ein passendes Angebot benötigen wir Ihre vollständige Anschrift und eine Telefonnummer. Wir antworten in der Regel innerhalb von 1–2 Werktagen.</p>
 
         <div class="form-grid">
           <div class="form-group">
@@ -401,24 +402,24 @@
             <input type="email" class="form-input" id="email" name="email" placeholder="max@beispiel.de" autocomplete="email" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="telefon">Telefon</label>
-            <input type="tel" class="form-input" id="telefon" name="telefon" placeholder="+49 521 ..." autocomplete="tel">
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label" for="plz">PLZ <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-            <input type="text" class="form-input" id="plz" name="plz" placeholder="12345" maxlength="10" autocomplete="postal-code" inputmode="numeric">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="ort">Ort <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-            <input type="text" class="form-input" id="ort" name="ort" placeholder="Musterstadt" autocomplete="address-level2">
+            <label class="form-label" for="telefon">Telefon <span>*</span></label>
+            <input type="tel" class="form-input" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" required minlength="6" maxlength="30" pattern="\+?[0-9\s\/\(\)\-]{6,30}" placeholder="z. B. 0521 200066">
           </div>
         </div>
         <div class="form-grid full" style="margin-bottom:18px">
           <div class="form-group">
-            <label class="form-label" for="strasse">Straße &amp; Hausnummer</label>
-            <input type="text" class="form-input" id="strasse" name="strasse" placeholder="Musterstraße 1" autocomplete="street-address">
+            <label class="form-label" for="strasse">Straße &amp; Hausnummer <span>*</span></label>
+            <input type="text" class="form-input" id="strasse" name="strasse" autocomplete="address-line1" required minlength="3" maxlength="100" placeholder="Musterstraße 1">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="plz">PLZ <span>*</span></label>
+            <input type="text" class="form-input" id="plz" name="plz" autocomplete="postal-code" required minlength="4" maxlength="10" pattern="[0-9A-Za-z \-]{4,10}" placeholder="12345">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ort">Ort <span>*</span></label>
+            <input type="text" class="form-input" id="ort" name="ort" autocomplete="address-level2" required minlength="2" maxlength="80" placeholder="Musterstadt">
           </div>
         </div>
         <div class="form-grid full" style="margin-bottom:18px">
@@ -633,15 +634,68 @@
       const consent  = document.getElementById('consent').checked;
       const errEl    = document.getElementById('formErr');
 
-      if (!vorname || !nachname || !email || !betreff || !nachricht) {
-        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+      const requiredFields = [
+        ['vorname', vorname, 'Vorname', 1],
+        ['nachname', nachname, 'Nachname', 1],
+        ['email', email, 'E-Mail', 1],
+        ['telefon', telefon, 'Telefon', 1],
+        ['strasse', strasse, 'Straße und Hausnummer', 3],
+        ['plz', plz, 'PLZ', 1],
+        ['ort', ort, 'Ort', 2],
+        ['betreff', betreff, 'Betreff', 1],
+        ['nachricht', nachricht, 'Nachricht', 1]
+      ];
+      requiredFields.forEach(([id]) => document.getElementById(id).removeAttribute('aria-invalid'));
+      document.getElementById('consent').removeAttribute('aria-invalid');
+      const fehlend = requiredFields.filter(([, value, , min]) => !value || value.length < min);
+      if (fehlend.length) {
+        fehlend.forEach(([id]) => document.getElementById(id).setAttribute('aria-invalid', 'true'));
+        document.getElementById(fehlend[0][0]).focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: ' + fehlend.map(([, , label]) => label).join(', ') + '.';
         errEl.classList.add('show'); return;
       }
-      if (!email.includes('@')) {
+      const emailEl = document.getElementById('email');
+      if (!email.includes('@') || !emailEl.checkValidity()) {
+        emailEl.setAttribute('aria-invalid', 'true');
+        emailEl.focus();
         errEl.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
         errEl.classList.add('show'); return;
       }
+      const phoneDigits = telefon.replace(/\D/g, '').length;
+      const phoneOk = /^\+?[0-9\s\/()\-]+$/.test(telefon) && phoneDigits >= 6 && phoneDigits <= 20;
+      const telefonEl = document.getElementById('telefon');
+      if (!phoneOk || !telefonEl.checkValidity()) {
+        telefonEl.setAttribute('aria-invalid', 'true');
+        telefonEl.focus();
+        errEl.textContent = 'Bitte geben Sie eine gültige Telefonnummer mit mindestens 6 Ziffern ein (erlaubt: Ziffern, Leerzeichen, +, /, - und Klammern).';
+        errEl.classList.add('show'); return;
+      }
+      const strasseEl = document.getElementById('strasse');
+      if (!strasseEl.checkValidity()) {
+        strasseEl.setAttribute('aria-invalid', 'true');
+        strasseEl.focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: Straße und Hausnummer.';
+        errEl.classList.add('show'); return;
+      }
+      const plzOk = /^[0-9A-Za-z \-]{4,10}$/.test(plz) && /\d/.test(plz);
+      const plzEl = document.getElementById('plz');
+      if (!plzOk || !plzEl.checkValidity()) {
+        plzEl.setAttribute('aria-invalid', 'true');
+        plzEl.focus();
+        errEl.textContent = 'Bitte geben Sie eine gültige Postleitzahl ein.';
+        errEl.classList.add('show'); return;
+      }
+      const ortEl = document.getElementById('ort');
+      if (!ortEl.checkValidity()) {
+        ortEl.setAttribute('aria-invalid', 'true');
+        ortEl.focus();
+        errEl.textContent = 'Bitte füllen Sie alle Pflichtfelder aus: Ort.';
+        errEl.classList.add('show'); return;
+      }
       if (!consent) {
+        const consentEl = document.getElementById('consent');
+        consentEl.setAttribute('aria-invalid', 'true');
+        consentEl.focus();
         errEl.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
         errEl.classList.add('show'); return;
       }
@@ -662,7 +716,7 @@
         formData.append('telefon', telefon);
         formData.append('plz', plz);
         formData.append('ort', ort);
-        if (strasse) formData.append('strasse', strasse);
+        formData.append('strasse', strasse);
         formData.append('betreff', betreff);
         formData.append('nachricht', nachricht);
         formData.append('replyto', email);
@@ -683,6 +737,7 @@
           fetch('https://api.emailjs.com/api/v1.0/email/send', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            keepalive: true,
             body: JSON.stringify({
               service_id: 'service_gbfg9bk',
               template_id: 'template_6jm794t',
@@ -712,9 +767,10 @@
 
     async function createHubSpotContact(data) {
       try {
-        await fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
+        const hsRes = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/148243264/f8848164-f3d0-41c8-819a-6de6e02f7e5c', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
           body: JSON.stringify({
             fields: [
               { name: 'firstname', value: data.vorname || '' },
@@ -730,6 +786,7 @@
             context: { pageUri: window.location.href, pageName: document.title }
           })
         });
+        if (!hsRes.ok) console.warn('HubSpot', hsRes.status, await hsRes.text());
       } catch(e) { console.log('HubSpot:', e); }
     }
 
