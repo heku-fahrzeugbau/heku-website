@@ -266,7 +266,16 @@
     .dealer-map-head { text-align: center; margin-bottom: 30px; }
     .dealer-map-kicker { color: var(--rot); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
     .dealer-map-title { font-family: var(--font-display); font-size: clamp(54px, 7vw, 94px); line-height: .95; color: var(--schwarz); letter-spacing: .01em; }
-    .dealer-map-shell { width: min(1120px, 100%); aspect-ratio: 2 / 1; position: relative; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; background: #f7f7f7; box-shadow: 0 24px 70px rgba(0,0,0,.08); cursor: grab; touch-action: pan-y; }
+    .dealer-search { width: min(650px, 100%); margin: 0 auto 28px; }
+    .dealer-search-label { display: block; margin-bottom: 9px; color: #4f4f4f; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-align: center; text-transform: uppercase; }
+    .dealer-search-row { display: grid; grid-template-columns: 1fr auto; padding: 6px; border: 1px solid var(--border); border-radius: 10px; background: #fff; box-shadow: 0 10px 35px rgba(0,0,0,.07); }
+    .dealer-search-input { min-width: 0; padding: 12px 15px; border: 0; outline: 0; color: var(--schwarz); background: transparent; font: 500 16px var(--font-body); }
+    .dealer-search-input::placeholder { color: #999; }
+    .dealer-search-input:focus-visible { box-shadow: inset 0 0 0 2px rgba(232,0,14,.22); border-radius: 6px; }
+    .dealer-search-button { padding: 12px 20px; border: 0; border-radius: 7px; background: var(--rot); color: #fff; font: 600 13px var(--font-body); cursor: pointer; transition: .18s ease; }
+    .dealer-search-button:hover, .dealer-search-button:focus { background: var(--rot-dark); }
+    .dealer-search-status { min-height: 20px; margin-top: 8px; color: #6b6b6b; font-size: 12px; text-align: center; }
+    .dealer-map-shell { width: min(1120px, 100%); aspect-ratio: 2 / 1; position: relative; border: 1px solid #cfdbe2; border-radius: 18px; overflow: hidden; background: #eef4f7; box-shadow: 0 24px 70px rgba(0,0,0,.08); cursor: grab; touch-action: pan-y; }
     .dealer-map-shell.is-zoomed { touch-action: none; }
     .dealer-map-shell.is-dragging { cursor: grabbing; }
     .world-map { display: block; width: 100%; height: 100%; user-select: none; }
@@ -279,6 +288,15 @@
     .dealer-contact-name { font-size: 14px; font-weight: 700; margin-bottom: 9px; }
     .dealer-contact-card a { display: block; color: rgba(255,255,255,.76); font-size: 12px; line-height: 1.8; transition: color .15s ease; }
     .dealer-contact-card a:hover, .dealer-contact-card a:focus { color: #fff; }
+    .dealer-results { display: none; width: min(1120px, 100%); margin-top: 28px; }
+    .dealer-results.is-visible { display: block; }
+    .dealer-results-title { margin-bottom: 14px; color: #6b6b6b; font-size: 11px; font-weight: 700; letter-spacing: .13em; text-align: center; text-transform: uppercase; }
+    .dealer-results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .dealer-result { padding: 19px; border: 1px solid var(--border); border-radius: 10px; background: #fff; box-shadow: 0 8px 26px rgba(0,0,0,.05); }
+    .dealer-result-name { display: block; width: 100%; margin-bottom: 10px; padding: 0; border: 0; background: transparent; color: var(--schwarz); font: 700 14px/1.35 var(--font-body); text-align: left; cursor: pointer; }
+    .dealer-result-name:hover, .dealer-result-name:focus { color: var(--rot); }
+    .dealer-result a { display: block; color: #6b6b6b; font-size: 12px; line-height: 1.9; overflow-wrap: anywhere; }
+    .dealer-result a:hover, .dealer-result a:focus { color: var(--rot); }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @keyframes pin-pulse { 0% { transform: scale(.7); opacity: .28; } 70%,100% { transform: scale(1.65); opacity: 0; } }
     .map-controls { position: absolute; top: 14px; right: 14px; z-index: 5; display: flex; flex-direction: column; gap: 6px; }
@@ -294,6 +312,10 @@
       .dealer-map-head { margin: 24px 0; }
       .dealer-map-title { font-size: clamp(48px, 15vw, 68px); }
       .dealer-map-shell { border-radius: 12px; }
+      .dealer-search { margin-bottom: 20px; }
+      .dealer-search-row { grid-template-columns: 1fr; gap: 6px; }
+      .dealer-search-button { width: 100%; }
+      .dealer-results-grid { grid-template-columns: 1fr; }
       .dealer-map-action { width: 100%; margin-top: 24px; }
       .dealer-apply-btn { width: 100%; justify-content: center; }
       .kontakt { padding: 64px 18px !important; }
@@ -394,14 +416,23 @@
       <h1 class="dealer-map-title">HÄNDLER FINDEN</h1>
     </header>
 
+    <form class="dealer-search" id="dealerSearch" novalidate>
+      <label class="dealer-search-label" for="dealerPostcode">Händler in Ihrer Nähe</label>
+      <div class="dealer-search-row">
+        <input class="dealer-search-input" id="dealerPostcode" name="postcode" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" pattern="[0-9]{5}" placeholder="Ihre Postleitzahl" aria-describedby="dealerSearchStatus">
+        <button class="dealer-search-button" type="submit">Händler finden</button>
+      </div>
+      <div class="dealer-search-status" id="dealerSearchStatus" role="status" aria-live="polite"></div>
+    </form>
+
     <div class="dealer-map-shell" id="dealerMap" aria-label="Zoombare Weltkarte mit HEKU Händlerstandorten">
       <svg class="world-map" id="dealerMapSvg" viewBox="0 0 1200 600" role="img" aria-labelledby="dealer-map-title dealer-map-description">
         <title id="dealer-map-title">HEKU Händler weltweit</title>
         <desc id="dealer-map-description">Zoombare Weltkarte mit Ländergrenzen und neun HEKU Händlerstandorten in Deutschland.</desc>
-        <rect width="1200" height="600" fill="#f7f7f7" />
+        <rect width="1200" height="600" fill="#eef4f7" />
         <use href="assets/world-map-countries.svg#countries" />
       </svg>
-      <button class="dealer-pin" type="button" data-map-x="633" data-map-y="121" aria-expanded="false" aria-controls="dealer-gruendl-contact" aria-label="Kontaktdaten von Gründl Bootsimport anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="633" data-map-y="121" data-lat="53.66" data-lon="9.91" aria-expanded="false" aria-controls="dealer-gruendl-contact" aria-label="Kontaktdaten von Gründl Bootsimport anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Gründl Bootsimport</span>
       </button>
       <div class="dealer-contact-card" id="dealer-gruendl-contact">
@@ -409,7 +440,7 @@
         <a href="tel:+49405550540">+49 40 55 50 540</a>
         <a href="mailto:info@gruendl.de">info@gruendl.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="635.64" data-map-y="120.96" aria-expanded="false" aria-controls="dealer-sager-contact" aria-label="Kontaktdaten von Bootsbau Sager anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="635.64" data-map-y="120.96" data-lat="53.7118" data-lon="10.6924" aria-expanded="false" aria-controls="dealer-sager-contact" aria-label="Kontaktdaten von Bootsbau Sager anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Bootsbau Sager</span>
       </button>
       <div class="dealer-contact-card" id="dealer-sager-contact">
@@ -417,7 +448,7 @@
         <a href="tel:+4945413997">04541 / 3997</a>
         <a href="mailto:info@bootsbausager.de">info@bootsbausager.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="627.91" data-map-y="124.93" aria-expanded="false" aria-controls="dealer-fricke-dannhus-contact" aria-label="Kontaktdaten von Fricke &amp; Dannhus anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="627.91" data-map-y="124.93" data-lat="52.5218" data-lon="8.3718" aria-expanded="false" aria-controls="dealer-fricke-dannhus-contact" aria-label="Kontaktdaten von Fricke &amp; Dannhus anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Fricke &amp; Dannhus</span>
       </button>
       <div class="dealer-contact-card" id="dealer-fricke-dannhus-contact">
@@ -425,7 +456,7 @@
         <a href="tel:+495447274">05447 / 274</a>
         <a href="mailto:info@fricke-dannhus.de">info@fricke-dannhus.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="630.20" data-map-y="129.29" aria-expanded="false" aria-controls="dealer-edersee-contact" aria-label="Kontaktdaten von Yacht-Service Edersee anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="630.20" data-map-y="129.29" data-lat="51.2125" data-lon="9.0608" aria-expanded="false" aria-controls="dealer-edersee-contact" aria-label="Kontaktdaten von Yacht-Service Edersee anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Yacht-Service Edersee</span>
       </button>
       <div class="dealer-contact-card" id="dealer-edersee-contact">
@@ -433,7 +464,7 @@
         <a href="tel:+4916098300277">0160 98300277</a>
         <a href="mailto:info@yachtservice-edersee.com">info@yachtservice-edersee.com</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="631.86" data-map-y="125.11" aria-expanded="false" aria-controls="dealer-aluforce-contact" aria-label="Kontaktdaten von AluForce anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="631.86" data-map-y="125.11" data-lat="52.4661" data-lon="9.5579" aria-expanded="false" aria-controls="dealer-aluforce-contact" aria-label="Kontaktdaten von AluForce anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">AluForce UG (haftungsbeschränkt)</span>
       </button>
       <div class="dealer-contact-card" id="dealer-aluforce-contact">
@@ -441,7 +472,7 @@
         <a href="tel:+4951314670815">+49 (0) 5131-4670815</a>
         <a href="mailto:Info@Alu-Force.de">Info@Alu-Force.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="629.44" data-map-y="126.01" aria-expanded="false" aria-controls="dealer-fette-contact" aria-label="Kontaktdaten von Bootsservice Center Fette anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="629.44" data-map-y="126.01" data-lat="52.1985" data-lon="8.8310" aria-expanded="false" aria-controls="dealer-fette-contact" aria-label="Kontaktdaten von Bootsservice Center Fette anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Bootsservice Center Fette</span>
       </button>
       <div class="dealer-contact-card" id="dealer-fette-contact">
@@ -449,7 +480,7 @@
         <a href="tel:+4957313100">(05731) 3100</a>
         <a href="mailto:mail@bootsservice-fette.de">mail@bootsservice-fette.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="638.19" data-map-y="139.71" aria-expanded="false" aria-controls="dealer-bendix-contact" aria-label="Kontaktdaten von Bendix GmbH PKW-Anhänger anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="638.19" data-map-y="139.71" data-lat="48.0880" data-lon="11.4567" aria-expanded="false" aria-controls="dealer-bendix-contact" aria-label="Kontaktdaten von Bendix GmbH PKW-Anhänger anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Bendix GmbH PKW-Anhänger</span>
       </button>
       <div class="dealer-contact-card" id="dealer-bendix-contact">
@@ -457,7 +488,7 @@
         <a href="tel:+4989753086">+49 (0)89 / 75 30 86</a>
         <a href="mailto:info@bendix-pkw-anhaenger.de">info@bendix-pkw-anhaenger.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="622.50" data-map-y="133.95" aria-expanded="false" aria-controls="dealer-kreusch-contact" aria-label="Kontaktdaten von Motorboote Kreusch anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="622.50" data-map-y="133.95" data-lat="49.8143" data-lon="6.7500" aria-expanded="false" aria-controls="dealer-kreusch-contact" aria-label="Kontaktdaten von Motorboote Kreusch anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">Motorboote Kreusch</span>
       </button>
       <div class="dealer-contact-card" id="dealer-kreusch-contact">
@@ -465,7 +496,7 @@
         <a href="tel:+49650291300">06502 / 91300</a>
         <a href="mailto:boote@kreusch.de">boote@kreusch.de</a>
       </div>
-      <button class="dealer-pin" type="button" data-map-x="622.59" data-map-y="130.69" aria-expanded="false" aria-controls="dealer-sailart-contact" aria-label="Kontaktdaten von SAILART Segelboote anzeigen" onclick="toggleDealerContact(event, this)">
+      <button class="dealer-pin" type="button" data-map-x="622.59" data-map-y="130.69" data-lat="50.7932" data-lon="6.7755" aria-expanded="false" aria-controls="dealer-sailart-contact" aria-label="Kontaktdaten von SAILART Segelboote anzeigen" onclick="toggleDealerContact(event, this)">
         <span class="sr-only">SAILART Segelboote GmbH</span>
       </button>
       <div class="dealer-contact-card" id="dealer-sailart-contact">
@@ -479,6 +510,11 @@
         <button class="map-control map-control-reset" type="button" onclick="resetDealerMap()" aria-label="Gesamte Weltkarte anzeigen">↺</button>
       </div>
     </div>
+
+    <section class="dealer-results" id="dealerResults" aria-labelledby="dealerResultsTitle">
+      <h2 class="dealer-results-title" id="dealerResultsTitle">Die nächsten Händler</h2>
+      <div class="dealer-results-grid" id="dealerResultsGrid"></div>
+    </section>
 
     <div class="dealer-map-action">
       <button class="dealer-apply-btn" type="button" aria-controls="kontakt" aria-expanded="false" onclick="openDealerApplication(this)">
@@ -869,6 +905,11 @@
     const dealerMapSvg = document.getElementById('dealerMapSvg');
     const dealerMapPins = [...dealerMap.querySelectorAll('.dealer-pin')];
     const dealerContactCards = [...dealerMap.querySelectorAll('.dealer-contact-card')];
+    const dealerSearch = document.getElementById('dealerSearch');
+    const dealerPostcode = document.getElementById('dealerPostcode');
+    const dealerSearchStatus = document.getElementById('dealerSearchStatus');
+    const dealerResults = document.getElementById('dealerResults');
+    const dealerResultsGrid = document.getElementById('dealerResultsGrid');
     const dealerWorldWidth = 1200;
     const dealerWorldHeight = 600;
     const dealerFocusX = 635;
@@ -877,6 +918,7 @@
     let dealerView = { x: 0, y: 0, width: dealerWorldWidth, height: dealerWorldHeight };
     let dealerMapDragging = false;
     let dealerDragStart = null;
+    let postcodeDataPromise = null;
 
     function renderDealerMap() {
       dealerView.x = Math.max(0, Math.min(dealerWorldWidth - dealerView.width, dealerView.x));
@@ -981,6 +1023,94 @@
       if (event.target.closest('.dealer-pin, .dealer-contact-card')) return;
       dealerContactCards.forEach((card) => card.classList.remove('is-open'));
       dealerMapPins.forEach((pin) => pin.setAttribute('aria-expanded', 'false'));
+    });
+
+    function distanceInKilometres(latitudeA, longitudeA, latitudeB, longitudeB) {
+      const radians = (degrees) => degrees * Math.PI / 180;
+      const latitudeDelta = radians(latitudeB - latitudeA);
+      const longitudeDelta = radians(longitudeB - longitudeA);
+      const a = Math.sin(latitudeDelta / 2) ** 2
+        + Math.cos(radians(latitudeA)) * Math.cos(radians(latitudeB)) * Math.sin(longitudeDelta / 2) ** 2;
+      return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function focusDealer(pin) {
+      dealerMapZoom = 12;
+      dealerView = {
+        x: Number(pin.dataset.mapX) - dealerWorldWidth / dealerMapZoom / 2,
+        y: Number(pin.dataset.mapY) - dealerWorldHeight / dealerMapZoom / 2,
+        width: dealerWorldWidth / dealerMapZoom,
+        height: dealerWorldHeight / dealerMapZoom,
+      };
+      renderDealerMap();
+      dealerContactCards.forEach((card) => card.classList.remove('is-open'));
+      dealerMapPins.forEach((dealerPin) => dealerPin.setAttribute('aria-expanded', 'false'));
+      document.getElementById(pin.getAttribute('aria-controls')).classList.add('is-open');
+      pin.setAttribute('aria-expanded', 'true');
+      dealerMap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function renderNearestDealers(pins) {
+      dealerResultsGrid.replaceChildren();
+      pins.forEach((pin) => {
+        const contactCard = document.getElementById(pin.getAttribute('aria-controls'));
+        const result = document.createElement('article');
+        result.className = 'dealer-result';
+
+        const name = document.createElement('button');
+        name.className = 'dealer-result-name';
+        name.type = 'button';
+        name.textContent = contactCard.querySelector('.dealer-contact-name').textContent;
+        name.setAttribute('aria-label', `${name.textContent} auf der Karte anzeigen`);
+        name.addEventListener('click', () => focusDealer(pin));
+        result.append(name);
+
+        contactCard.querySelectorAll('a').forEach((sourceLink) => {
+          const link = document.createElement('a');
+          link.href = sourceLink.getAttribute('href');
+          link.textContent = sourceLink.textContent;
+          result.append(link);
+        });
+        dealerResultsGrid.append(result);
+      });
+      dealerResults.classList.add('is-visible');
+    }
+
+    dealerSearch.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const postcode = dealerPostcode.value.replace(/\D/g, '').slice(0, 5);
+      dealerPostcode.value = postcode;
+      if (!/^\d{5}$/.test(postcode)) {
+        dealerSearchStatus.textContent = 'Bitte geben Sie eine fünfstellige deutsche Postleitzahl ein.';
+        dealerResults.classList.remove('is-visible');
+        return;
+      }
+
+      dealerSearchStatus.textContent = 'Die nächsten Händler werden ermittelt …';
+      try {
+        postcodeDataPromise ||= fetch('assets/de-postcode-centroids.json').then((response) => {
+          if (!response.ok) throw new Error('PLZ-Daten konnten nicht geladen werden.');
+          return response.json();
+        });
+        const postcodeData = await postcodeDataPromise;
+        const coordinates = postcodeData.postcodes[postcode] || postcodeData.prefixes[postcode.slice(0, 2)];
+        if (!coordinates) throw new Error('Diese Postleitzahl konnte nicht zugeordnet werden.');
+        const [latitude, longitude] = coordinates;
+        const nearestPins = dealerMapPins
+          .map((pin) => ({
+            pin,
+            distance: distanceInKilometres(latitude, longitude, Number(pin.dataset.lat), Number(pin.dataset.lon)),
+          }))
+          .sort((a, b) => a.distance - b.distance)
+          .slice(0, 3)
+          .map(({ pin }) => pin);
+        renderNearestDealers(nearestPins);
+        dealerSearchStatus.textContent = `Die drei nächsten HEKU Händler für ${postcode}.`;
+        dealerResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (error) {
+        dealerSearchStatus.textContent = error.message || 'Die Händlersuche ist momentan nicht verfügbar.';
+        dealerResults.classList.remove('is-visible');
+      }
     });
 
     function openDealerApplication(button) {

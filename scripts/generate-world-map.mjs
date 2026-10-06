@@ -70,7 +70,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">
   <title id="title">Weltkarte mit Ländergrenzen</title>
   <desc id="description">Politische Weltkarte mit Küstenlinien und Staatsgrenzen.</desc>
-  <g id="countries" fill="#d8d8d8" stroke="#ffffff" stroke-width="0.85" stroke-linejoin="round">
+  <g id="countries" fill="#cbd7df" stroke="#ffffff" stroke-width="0.85" stroke-linejoin="round">
 ${countries}
   </g>
 </svg>

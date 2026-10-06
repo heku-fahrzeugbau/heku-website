@@ -14,6 +14,20 @@ const categoryPages = {
  'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
 };
 
+test('Dealer finder uses local postcode data and keeps nine dealer websites unlinked',()=>{
+ const page=read('haendler.html');
+ const postcodeData=JSON.parse(read('assets/de-postcode-centroids.json'));
+ assert.equal((page.match(/class="dealer-pin"/g)||[]).length,9);
+ assert.equal((page.match(/data-lat="/g)||[]).length,9);
+ assert.equal((page.match(/data-lon="/g)||[]).length,9);
+ assert.match(page,/id="dealerPostcode"/);
+ assert.match(page,/assets\/de-postcode-centroids\.json/);
+ assert.match(page,/slice\(0, 3\)/);
+ assert.doesNotMatch(page,/https?:\/\/(?:www\.)?(?:gruendl|bootsservice-fette|bendix-pkw-anhaenger|kreusch|sailart|bootsbausager|fricke-dannhus|yachtservice-edersee|alu-force)\./i);
+ assert.ok(Object.keys(postcodeData.postcodes).length>10000);
+ assert.deepEqual(postcodeData.postcodes['33719'],[52.0107,8.5926]);
+});
+
 test('Local Bielefeld landing page is indexable, useful and internally linked',()=>{
  const file='bootsanhaenger-bielefeld.html', s=read(file);
  assert.match(s,/<title>Bootsanhänger Bielefeld &amp; OWL \| Direkt vom Hersteller \| HEKU<\/title>/);
