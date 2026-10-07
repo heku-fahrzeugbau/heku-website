@@ -87,6 +87,17 @@
     .info-band { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 80px; display: flex; gap: 32px; flex-wrap: wrap; }
     .info-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text); }
     .info-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; }
+    .guarantee-trigger { border: 0; padding: 0; background: transparent; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .guarantee-trigger:hover, .guarantee-trigger:focus-visible { color: var(--rot); }
+    .guarantee-dialog { width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 14px; overflow: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.28); }
+    .guarantee-dialog::backdrop { background: rgba(0,0,0,0.62); }
+    .guarantee-dialog-close { position: sticky; top: 12px; float: right; z-index: 2; width: 40px; height: 40px; margin: 12px 12px -52px 0; border: 0; border-radius: 50%; background: rgba(10,10,10,0.86); color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
+    .guarantee-dialog-close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .guarantee-notice { display: block; width: 100%; height: auto; background: #fff; }
+    .guarantee-dialog-foot { padding: 16px 20px 20px; background: #fff; font-size: 13px; line-height: 1.55; }
+    .guarantee-dialog-foot a { color: #0645ad; text-decoration: underline; }
+    .guarantee-checkout { width: 100%; margin: 0 0 18px; padding: 11px 14px; border: 1px solid #b8cbe0; border-radius: 8px; background: #f1f7fd; color: #174f86; font: 600 13px var(--font-body); text-align: left; cursor: pointer; }
+    .guarantee-checkout:hover, .guarantee-checkout:focus-visible { border-color: #174f86; }
 
     /* SHOP LAYOUT */
     .shop-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; padding: 48px 80px; align-items: start; }
@@ -420,7 +431,15 @@
     <div class="info-item"><div class="info-dot"></div>Ab Werk Bielefeld</div>
     <div class="info-item"><div class="info-dot"></div>Original HEKU-Teile</div>
     <div class="info-item"><div class="info-dot"></div>Alle Preise inkl. 19% MwSt.</div>
+    <button type="button" class="info-item guarantee-trigger" onclick="openGuaranteeNotice()" aria-haspopup="dialog"><div class="info-dot"></div>Gesetzliche Gewährleistung</button>
   </div>
+
+  <dialog class="guarantee-dialog" id="guaranteeDialog" aria-labelledby="guaranteeDialogTitle" onclick="if(event.target===this) closeGuaranteeNotice()">
+    <button type="button" class="guarantee-dialog-close" onclick="closeGuaranteeNotice()" aria-label="Hinweis zur gesetzlichen Gewährleistung schließen">×</button>
+    <h2 id="guaranteeDialogTitle" hidden>Gesetzliche Gewährleistung</h2>
+    <img class="guarantee-notice" src="assets/legal/eu-gewaehrleistung-de.svg" alt="Offizielle EU-Mitteilung zur gesetzlichen Gewährleistung: mindestens zwei Jahre Gewährleistung für Waren">
+    <p class="guarantee-dialog-foot">Weitere Informationen finden Sie auf der offiziellen Seite der Europäischen Union: <a href="https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_de.htm" target="_blank" rel="noopener noreferrer">Gewährleistungen und Garantien</a>.</p>
+  </dialog>
 
   <div class="marquee-wrap">
     <div class="marquee-track">
@@ -441,7 +460,7 @@
     </div>
   </div>
 
-  <noscript><p class="shop-noscript">Alle Artikel und Preise sind auch ohne JavaScript lesbar. Für Filter und Warenkorb bitte JavaScript aktivieren oder <a href="kontakt.html">HEKU kontaktieren</a>.</p></noscript>
+  <noscript><p class="shop-noscript">Alle Artikel und Preise sind auch ohne JavaScript lesbar. Für Filter und Warenkorb bitte JavaScript aktivieren oder <a href="kontakt.html">HEKU kontaktieren</a>. <a href="assets/legal/eu-gewaehrleistung-de.svg" target="_blank">Gesetzliche Gewährleistung</a>.</p></noscript>
   <main class="shop-layout" id="shopContent">
     <!-- SIDEBAR -->
     <div class="shop-sidebar" data-shop-enhancement hidden>
@@ -1317,6 +1336,7 @@
           <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;">Als Verbraucher haben Sie ein gesetzliches <a href="widerruf.html" target="_blank" style="color:var(--rot);">Widerrufsrecht von 14 Tagen</a> ab Erhalt der Ware.</p>
 
           <div class="form-error" id="co-error" role="alert"></div>
+          <button type="button" class="guarantee-checkout" onclick="openGuaranteeNotice()" aria-haspopup="dialog">ⓘ Gesetzliche Gewährleistung – Informationen anzeigen</button>
           <button class="btn-order" id="orderBtn" onclick="submitOrder()">Bestellung verbindlich absenden →</button>
         </div>
       </div>
@@ -1603,6 +1623,16 @@
   }
 
   // ─── CHECKOUT ────────────────────────────────────────────────────────────────
+  function openGuaranteeNotice() {
+    const dialog = document.getElementById('guaranteeDialog');
+    if (!dialog.open) dialog.showModal();
+    dialog.querySelector('.guarantee-dialog-close').focus();
+  }
+
+  function closeGuaranteeNotice() {
+    document.getElementById('guaranteeDialog').close();
+  }
+
   function openCheckout() {
     if (orderSubmitting || cart.length === 0) return;
     const orderBtn = document.getElementById('orderBtn');

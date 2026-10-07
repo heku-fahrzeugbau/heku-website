@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 import { ROOT, BASE, urlForFile, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
@@ -251,6 +252,17 @@ test('Shop checkout controls have labels and mobile input hints',()=>{
  assert.match(s,/id="shopSearch" type="search"/);
  assert.match(s,/id="shopCategory"/);
  assert.match(s,/<noscript>[\s\S]*?HEKU kontaktieren/);
+});
+test('Shop displays the unchanged official EU legal-guarantee notice',()=>{
+ const s=read('shop.html');
+ const asset='assets/legal/eu-gewaehrleistung-de.svg';
+ const bytes=fs.readFileSync(path.join(ROOT,asset));
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),'fd39364dbe42fa775ff55fb9b7aa80c377a5d04219929fef86a8522eed486b1a');
+ assert.match(s,/class="info-item guarantee-trigger"[^>]+openGuaranteeNotice/);
+ assert.match(s,new RegExp(`<img[^>]+src="${asset.replace(/[./]/g,'\\$&')}"`));
+ assert.match(s,/class="guarantee-checkout"[^>]+openGuaranteeNotice/);
+ assert.match(s,/https:\/\/europa\.eu\/youreurope\/citizens\/consumers\/shopping\/guarantees\/index_de\.htm/);
+ assert.match(s,/dialog\.showModal\(\)/);
 });
 test('Shop shipping boundary checks preserve established rules',()=>{
  const s=read('shop.html');
