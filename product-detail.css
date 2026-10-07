@@ -381,6 +381,16 @@ html { scrollbar-color:#6B6B6B #F7F7F7; }
 .detail-buy { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 24px; background:var(--rot-dark); color:#fff; border-radius:8px; font-size:16px; font-weight:600; }
 .detail-buy:hover { background:#900009; }
 .detail-handoff { max-width:46ch; margin-top:12px; }
+.detail-guarantee { display:flex; align-items:center; gap:7px; margin-top:14px; padding:0; border:0; background:transparent; color:#0645ad; font:600 13px var(--font-body); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.detail-guarantee svg { width:14px; height:14px; fill:currentColor; flex:0 0 auto; }
+.detail-guarantee:hover,.detail-guarantee:focus-visible { color:var(--rot-dark); }
+.guarantee-dialog { width:min(640px,calc(100vw - 32px)); max-height:calc(100vh - 32px); padding:0; border:0; border-radius:14px; overflow:auto; box-shadow:0 24px 80px rgba(0,0,0,.28); }
+.guarantee-dialog::backdrop { background:rgba(0,0,0,.62); }
+.guarantee-dialog-close { position:sticky; top:12px; float:right; z-index:2; width:40px; height:40px; margin:12px 12px -52px 0; border:0; border-radius:50%; background:rgba(10,10,10,.86); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+.guarantee-dialog-close:focus-visible { outline:3px solid #fff; outline-offset:2px; }
+.guarantee-notice { display:block; width:100%; height:auto; background:#fff; }
+.guarantee-dialog-foot { margin:0; padding:16px 20px 20px; background:#fff; font-size:13px; line-height:1.55; }
+.guarantee-dialog-foot a { color:#0645ad; text-decoration:underline; }
 .detail-missing-photo { font-size:14px; line-height:1.6; color:#595959; margin-top:24px; }
 .detail-photo img { display:block; width:100%; height:360px; object-fit:contain; background:#fff; }
 .detail-photo figcaption { font-size:13px; line-height:1.6; color:#595959; margin-top:16px; }

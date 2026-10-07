@@ -83,6 +83,12 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
     <button type="button" class="nav-burger" onclick="toggleMenu()" aria-label="Menü öffnen" aria-controls="shopNav" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 {{MAIN}}
+<dialog class="guarantee-dialog" id="guaranteeDialog" aria-labelledby="guaranteeDialogTitle" onclick="if(event.target===this) closeGuaranteeNotice()">
+  <button type="button" class="guarantee-dialog-close" onclick="closeGuaranteeNotice()" aria-label="Hinweis zur gesetzlichen Gewährleistung schließen">×</button>
+  <h2 id="guaranteeDialogTitle" hidden>Gesetzliche Gewährleistung</h2>
+  <img class="guarantee-notice" src="assets/legal/eu-gewaehrleistung-de.svg" alt="Offizielle EU-Mitteilung zur gesetzlichen Gewährleistung: mindestens zwei Jahre Gewährleistung für Waren">
+  <p class="guarantee-dialog-foot">Weitere Informationen finden Sie auf der offiziellen Seite der Europäischen Union: <a href="https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_de.htm" target="_blank" rel="noopener noreferrer">Gewährleistungen und Garantien</a>.</p>
+</dialog>
 <footer>
     <div class="ft">
       <div>
@@ -130,7 +136,16 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
       <div class="ft-legal" style="flex-wrap:wrap;gap:8px;"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a></div>
     </div>
   </footer>
-<script>  function toggleMenu() {
+<script>
+  function openGuaranteeNotice() {
+    const dialog = document.getElementById('guaranteeDialog');
+    if (!dialog.open) dialog.showModal();
+    dialog.querySelector('.guarantee-dialog-close').focus();
+  }
+  function closeGuaranteeNotice() {
+    document.getElementById('guaranteeDialog').close();
+  }
+  function toggleMenu() {
     const c = document.querySelector('.nav-center');
     const open = c.style.display === 'flex';
     document.querySelector('.nav-burger').setAttribute('aria-expanded', String(!open));

@@ -115,6 +115,16 @@ test('Catalog characters escaped in markup and JSON-LD',()=>{
   assert.doesNotMatch(s,/<img src=x>/);
   assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
 });
+
+test('Every product page links to the official EU legal-guarantee notice',()=>{
+ for(const p of all) {
+  const html=read(`artikel/${p.sku}.html`);
+  assert.match(html,/class="detail-guarantee"[^>]+openGuaranteeNotice/);
+  assert.match(html,/src="\/assets\/legal\/eu-gewaehrleistung-de\.svg"/);
+  assert.match(html,/https:\/\/europa\.eu\/youreurope\/citizens\/consumers\/shopping\/guarantees\/index_de\.htm/);
+  assert.match(html,/dialog\.showModal\(\)/);
+ }
+});
 test('Confirmed product prices and SKU stay synchronized in every marked price table',()=>{
  const expected={50214:['63,03','75,00'],50215:['155,46','185,00'],50241:['144,54','172,00']};
  let count=0;
