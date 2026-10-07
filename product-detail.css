@@ -381,7 +381,7 @@ html { scrollbar-color:#6B6B6B #F7F7F7; }
 .detail-buy { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 24px; background:var(--rot-dark); color:#fff; border-radius:8px; font-size:16px; font-weight:600; }
 .detail-buy:hover { background:#900009; }
 .detail-handoff { max-width:46ch; margin-top:12px; }
-.detail-guarantee { display:flex; align-items:center; gap:7px; margin-top:14px; padding:0; border:0; background:transparent; color:#0645ad; font:600 13px var(--font-body); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.detail-guarantee { appearance:none; display:flex; align-items:center; gap:6px; margin-top:14px; padding:0; border:0; background:none; color:#0645ad; font:600 13px var(--font-body); line-height:1.4; text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
 .detail-guarantee svg { width:14px; height:14px; fill:currentColor; flex:0 0 auto; }
 .detail-guarantee:hover,.detail-guarantee:focus-visible { color:var(--rot-dark); }
 .guarantee-dialog { width:min(640px,calc(100vw - 32px)); max-height:calc(100vh - 32px); padding:0; border:0; border-radius:14px; overflow:auto; box-shadow:0 24px 80px rgba(0,0,0,.28); }
