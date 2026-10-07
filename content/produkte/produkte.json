@@ -90,15 +90,6 @@
     "image": "assets/produkte/produkt-10.jpg"
   },
   {
-    "id": 11,
-    "sku": "50210",
-    "category": "winden",
-    "name": "Stahlseil verz. mit Haken und Umlenkrolle",
-    "description": "Für Boote bis 2.850 kg",
-    "price": "95.00",
-    "image": "assets/produkte/produkt-11.jpg"
-  },
-  {
     "id": 12,
     "sku": "50211",
     "category": "stuetzraeder",
@@ -412,15 +403,6 @@
     "description": "",
     "price": "28.00",
     "image": "assets/produkte/produkt-44.jpg"
-  },
-  {
-    "id": 45,
-    "sku": "50238",
-    "category": "sonstiges",
-    "name": "Adapterstecker 7- bis 13-polig",
-    "description": "",
-    "price": "39.00",
-    "image": "assets/produkte/produkt-45.jpg"
   },
   {
     "id": 46,

@@ -172,7 +172,7 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
 });
 test('Central product data is complete and renders the public shop catalog',()=>{
  const source=JSON.parse(read(productDataFile)), shop=read('shop.html');
- assert.equal(source.length,57); assert.equal(all.length,source.length);
+ assert.equal(source.length,55); assert.equal(all.length,source.length);
  assert.equal((shop.match(/<article class="product-card"/g)||[]).length,source.length);
  for(const p of all) {
   const record=source.find(x=>String(x.id)===p.id);
