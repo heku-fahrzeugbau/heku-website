@@ -134,17 +134,17 @@ test('Confirmed product prices and SKU stay synchronized in every marked price t
   assert.deepEqual([net,gross],expected[sourceSku],`${file}: Preis ${sourceSku}`);
   count++;
  }
- assert.equal(count,6);
+ assert.equal(count,3);
  assert.match(read('motorbootanhaenger.html'),/data-catalog-sku="50241"><td class="pl-art">50241<\/td><td>Reserverad 185 R-14C/);
 });
 test('Price-table synchronization repairs stale marked values and is idempotent',()=>{
  const root=fs.mkdtempSync(path.join(ROOT,'.price-table-test-'));
  try {
   for(const file of priceTableFiles) fs.copyFileSync(path.join(ROOT,file),path.join(root,file));
-  const target=path.join(root,'produkte.html');
+  const target=path.join(root,'motorbootanhaenger.html');
   fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace('data-catalog-sku="50214"><td class="pl-art">50214</td>','data-catalog-sku="50214"><td class="pl-art">99999</td>').replace('63,03 &euro;</td><td class="pl-r pl-brutto">75,00','1,00 &euro;</td><td class="pl-r pl-brutto">2,00'));
   const first=syncProductPriceTables(root,all);
-  assert.ok(first.changed.includes('produkte.html'));
+  assert.ok(first.changed.includes('motorbootanhaenger.html'));
   assert.match(fs.readFileSync(target,'utf8'),/data-catalog-sku="50214"><td class="pl-art">50214<\/td><td>[\s\S]*?63,03 &euro;<\/td><td class="pl-r pl-brutto">75,00 &euro;/);
   assert.deepEqual(syncProductPriceTables(root,all).changed,[]);
  } finally {

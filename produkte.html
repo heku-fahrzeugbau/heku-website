@@ -1,948 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script src="/heku-consent-v2.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
-  <meta charset="UTF-8">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-W97K9YN3YJ');</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="HEKU Bootsanhänger der B-Serie von B 350 bis B 3500: Originalbilder, technische Daten, Grundpreise und individuell wählbare Ausstattung.">
+  <link rel="canonical" href="https://heku-fahrzeugbau.de/produkte.html">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="HEKU Bootsanhänger-Modelle der B-Serie im Überblick: B 350 bis B 3500, Einachser und Tandem mit technischen Daten und Grundpreisen.">
   <title>HEKU Bootsanhänger-Modelle | B-Serie 350–3500</title>
-  <link rel="canonical" href="https://heku-fahrzeugbau.de/produkte.html">
-  <meta property="og:title" content="HEKU Bootsanhänger-Modelle – B-Serie 2026">
-  <meta property="og:description" content="Die HEKU B-Serie von B 350 bis B 3500: Modelle, technische Daten, Grundpreise und Ausstattungsübersicht.">
-  <meta property="og:image" content="https://heku-fahrzeugbau.de/bootsanhaenger.jpg">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://heku-fahrzeugbau.de/produkte.html">
-  <meta property="og:locale" content="de_DE">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="HEKU Bootsanhänger-Modelle | B-Serie 350–3500">
-  <meta name="twitter:description" content="HEKU Bootsanhänger der B-Serie: Modelle, technische Daten, Grundpreise und Ausstattung im Überblick.">
-  <meta name="twitter:image" content="https://heku-fahrzeugbau.de/bootsanhaenger.jpg">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"},
-      {"@type": "ListItem", "position": 2, "name": "Bootsanhänger-Modelle", "item": "https://heku-fahrzeugbau.de/produkte.html"}
-    ]
-  }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
-      --text: #2C2C2C; --muted: #6B6B6B; --border: #E8E8E8;
-      --bg: #FFFFFF; --bg2: #F7F7F7; --bg3: #EFEFEF;
-      --font-head: 'DM Serif Display', serif;
-      --font-body: 'DM Sans', sans-serif;
-      --ease: cubic-bezier(0.4,0,0.2,1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
-    a { text-decoration: none; color: inherit; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo img { height: 30px; }
-    .nav-center { display: flex; gap: 32px; }
-    .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
-    .nav-center a:hover, .nav-center a.active { color: var(--text); }
-    .nav-right { display: flex; gap: 12px; }
-    .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
-    .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
-    .btn-red { background: var(--rot); color: #fff; }
-    .btn-red:hover { background: var(--rot-dark); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .nav-burger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
-
-    /* PAGE HEADER */
-    .page-header { margin-top: 64px; background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 72px 80px; position: relative; overflow: hidden; }
-    .page-header::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.72) 100%); z-index: 0; }
-    .page-header-inner { position: relative; z-index: 2; }
-    .page-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 14px; }
-    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rot); margin-bottom: 12px; }
-    .page-title { font-family: var(--font-head); font-size: clamp(36px, 4vw, 56px); color: #fff; line-height: 1.05; margin-bottom: 14px; }
-    .page-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.55); max-width: 560px; line-height: 1.65; }
-
-    /* FILTER TABS */
-    .filter-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 80px; display: flex; gap: 0; overflow-x: auto; }
-    .filter-tab { padding: 18px 24px; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
-    .filter-tab:hover { color: var(--text); }
-    .filter-tab.active { color: var(--rot); border-bottom-color: var(--rot); font-weight: 600; }
-
-    /* USP BAND */
-    .usp-band { background: var(--bg); border-bottom: 1px solid var(--border); padding: 20px 80px; display: flex; gap: 40px; flex-wrap: wrap; }
-    .usp-item { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--text); }
-    .usp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; }
-
-    /* SECTIONS */
-    .product-section { padding: 64px 80px; }
-    .product-section.gray { background: var(--bg2); }
-    .section-head { margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
-    .section-title { font-family: var(--font-head); font-size: clamp(26px, 3vw, 38px); color: var(--schwarz); }
-    .section-sub { font-size: 14px; font-weight: 300; color: var(--muted); max-width: 480px; line-height: 1.65; margin-top: 8px; }
-    .section-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; white-space: nowrap; }
-    .badge-grau { background: var(--bg3); color: var(--muted); }
-    .badge-gruen { background: rgba(34,197,94,0.1); color: #15803d; }
-    .badge-rot { background: rgba(232,0,14,0.08); color: var(--rot); }
-
-    /* MODELL TABELLE */
-    .model-table { width: 100%; border-collapse: collapse; }
-    .model-table thead tr { background: var(--schwarz); }
-    .model-table thead th { padding: 14px 20px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-    .model-table thead th:last-child { text-align: right; }
-    .model-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
-    .model-table tbody tr:hover { background: rgba(232,0,14,0.03); }
-    .model-table tbody td { padding: 16px 20px; font-size: 14px; color: var(--text); vertical-align: middle; }
-    .model-table tbody td:last-child { text-align: right; }
-    .model-name { font-weight: 600; font-size: 15px; color: var(--schwarz); white-space: nowrap; }
-    .model-price { font-size: 17px; font-weight: 600; color: var(--rot); }
-    .model-length { font-family: 'DM Sans', monospace; font-size: 13px; color: var(--muted); }
-    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
-    .tag-ung { background: var(--bg3); color: var(--muted); }
-    .tag-ein { background: rgba(59,130,246,0.1); color: #1d4ed8; }
-    .tag-tan { background: rgba(232,0,14,0.08); color: var(--rot); }
-
-    /* AUFPREIS KARTEN */
-    .aufpreis-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; }
-    .aufpreis-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.2s, box-shadow 0.2s; }
-    .aufpreis-card:hover { border-color: var(--rot); box-shadow: 0 4px 20px rgba(232,0,14,0.08); }
-    .aufpreis-name { font-size: 15px; font-weight: 600; color: var(--schwarz); margin-bottom: 6px; }
-    .aufpreis-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
-    .aufpreis-price { font-size: 18px; font-weight: 600; color: var(--rot); }
-
-    /* TECH FEATURES */
-    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 56px; }
-    .tech-features { display: flex; flex-direction: column; gap: 20px; }
-    .tech-feat { display: flex; gap: 16px; }
-    .tech-feat-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(232,0,14,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .tech-feat-icon svg { width: 18px; height: 18px; }
-    .tech-feat-title { font-size: 15px; font-weight: 600; color: var(--schwarz); margin-bottom: 4px; }
-    .tech-feat-text { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
-    .tech-img { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; background: var(--bg3); }
-    .tech-img img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* CTA */
-    .cta-banner { background: var(--rot); padding: 64px 80px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
-    .cta-title { font-family: var(--font-head); font-size: clamp(28px, 3vw, 42px); color: #fff; margin-bottom: 10px; }
-    .cta-sub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); max-width: 480px; line-height: 1.65; }
-    .btn-white { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: var(--rot); font-size: 15px; font-weight: 600; padding: 16px 32px; border-radius: 8px; white-space: nowrap; transition: all 0.22s; }
-    .btn-white:hover { background: var(--bg2); transform: translateY(-2px); }
-
-    /* FOOTER */
-
-    .ft-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .ft-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
-    .ft-legal { display: flex; gap: 20px; }
-    .ft-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
-    .ft-legal a:hover { color: rgba(255,255,255,0.5); }
-
-    /* HIDDEN */
-    .sec-hidden { display: none; }
-
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      nav { padding: 0 20px; }
-      .nav-center { display: none; }
-      .nav-burger { display: flex; }
-      .page-header { padding: 52px 24px; }
-      .filter-bar { padding: 0 24px; }
-      .usp-band { padding: 16px 24px; gap: 20px; }
-      .product-section { padding: 48px 24px; }
-      .aufpreis-grid { grid-template-columns: 1fr 1fr; }
-      .tech-grid { grid-template-columns: 1fr; }
-      .cta-banner { grid-template-columns: 1fr; padding: 48px 24px; gap: 24px; }
-      footer { padding: 32px 24px; }
-    }
-    @media (max-width: 640px) {
-      .aufpreis-grid { grid-template-columns: 1fr; }
-      .model-table thead th:nth-child(3),
-      .model-table tbody td:nth-child(3) { display: none; }
-    }
-
-    /* MARQUEE */
-    .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; }
-    .marquee-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
-    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.08em; color: #fff; padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0; }
-    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-    /* Produkte Dropdown */
-    .nav-dropdown { position: relative; }
-    .nav-dropdown-toggle { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; cursor: pointer; }
-    .nav-dropdown:hover .nav-dropdown-toggle { color: var(--text); }
-    .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: -16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 0 8px 8px; min-width: 210px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); z-index: 300; }
-    .nav-dropdown:hover .nav-dropdown-menu { display: flex; flex-direction: column; }
-    .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
-    .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
-    .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
-    footer{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;padding:68px 80px 32px;position:relative;}
-    footer::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.90);pointer-events:none;z-index:0;}
-    footer>*{position:relative;z-index:1;}
-    .ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px;}
-    .ft-logo img{height:26px;margin-bottom:18px;}
-    .ft-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.3);margin-bottom:20px;}
-    .ft-contact{font-size:13px;color:rgba(255,255,255,0.35);line-height:2.1;}
-    .ft-head{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:18px;}
-    .ft-links{display:flex;flex-direction:column;gap:10px;}
-    .ft-links a{font-size:13px;color:rgba(255,255,255,0.45);transition:color 0.2s;}
-    .ft-links a:hover{color:#fff;}
-    .ft-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-    .ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
-    .ft-legal{display:flex;gap:20px;}
-    .ft-legal a{font-size:12px;color:rgba(255,255,255,0.18);transition:color 0.2s;}
-    .ft-legal a:hover{color:rgba(255,255,255,0.45);}
-    .social-links{display:flex;gap:12px;margin-top:20px;}
-    .social-link{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,background 0.2s;}
-    .social-link:hover{border-color:var(--rot);background:rgba(232,0,14,0.1);}
-    .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
-    .social-link:hover svg{fill:var(--rot);}
-  
-    /* ===== PREISLISTEN-BLOECKE / Design: HEKU Preisliste 2026 ===== */
-    :root { --pl-ink:#1C1C1E; --pl-ink2:#26282B; --pl-grau:#6B6E73; --pl-grau2:#8A8D92; --pl-rot:#D62E2D; --pl-line:#E5E5E7;
-            --pl-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,monospace; --pl-serif:'Spectral',Georgia,serif; }
-    .pl-sec { margin: 56px 0; }
-    .pl-sec + .pl-sec { margin-top: 48px; }
-    .pl-eyebrow { font-family:var(--pl-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pl-rot); margin-bottom:14px; }
-    .pl-head { display:flex; align-items:baseline; gap:16px; }
-    .pl-num { font-family:var(--pl-mono); font-size:13px; color:var(--pl-rot); letter-spacing:.06em; }
-    .pl-title { font-family:var(--pl-serif); font-weight:500; font-size:clamp(21px,2.4vw,28px); color:var(--pl-ink); line-height:1.15; }
-    .pl-rule { flex:1; height:1px; background:var(--pl-ink); align-self:center; min-width:24px; }
-    .pl-range { font-family:var(--pl-mono); font-size:12px; color:var(--pl-grau2); letter-spacing:.04em; white-space:nowrap; }
-    .pl-lead { font-size:14px; line-height:1.75; color:var(--pl-grau); margin:14px 0 0; max-width:780px; }
-    .pl-lead b, .pl-lead strong { color:var(--pl-ink); font-weight:600; }
-    .pl-serie { border-top:1px solid var(--pl-line); padding-top:18px; margin:26px 0 0; }
-    .pl-row { font-size:14px; line-height:1.8; color:var(--pl-grau); margin-bottom:10px; max-width:820px; }
-    .pl-row:last-child { margin-bottom:0; }
-    .pl-row b { color:var(--pl-ink); font-weight:600; }
-    .pl-group { display:flex; align-items:baseline; gap:12px; margin:40px 0 0; }
-    .pl-group-name { font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--pl-ink); white-space:nowrap; }
-    .pl-group-sub { font-family:var(--pl-serif); font-style:italic; font-size:13px; color:var(--pl-grau2); white-space:nowrap; }
-    .pl-diamond { color:var(--pl-rot); font-size:10px; }
-    .pl-tablewrap { overflow-x:auto; margin-top:8px; }
-    .pl-table { width:100%; border-collapse:collapse; }
-    .pl-table th { font-family:var(--pl-mono); font-size:10px; font-weight:400; letter-spacing:.1em; text-transform:uppercase;
-                   color:var(--pl-grau2); padding:10px 12px 8px; text-align:left; border-bottom:1px solid var(--pl-ink); white-space:nowrap; }
-    .pl-table th.pl-r, .pl-table td.pl-r { text-align:right; }
-    .pl-table td { padding:11px 12px; font-size:14px; color:var(--pl-ink2); line-height:1.5; border-bottom:1px solid var(--pl-line); vertical-align:top; }
-    .pl-table tbody tr:last-child td { border-bottom:none; }
-    .pl-table td.pl-art { font-family:var(--pl-mono); font-size:11px; color:var(--pl-grau2); white-space:nowrap; }
-    .pl-table td.pl-netto { font-family:var(--pl-mono); font-size:12px; color:var(--pl-grau); white-space:nowrap; }
-    .pl-table td.pl-brutto { font-family:var(--pl-serif); font-weight:600; font-size:15px; color:var(--pl-rot); white-space:nowrap; }
-    .pl-note { font-family:var(--pl-mono); font-size:11px; letter-spacing:.03em; color:var(--pl-grau2); line-height:1.8;
-               margin-top:24px; padding-top:14px; border-top:1px solid var(--pl-line); }
-    .pl-ask { font-size:14px; line-height:1.7; color:var(--pl-grau); margin-top:22px; }
-    .pl-ask b { color:var(--pl-ink); font-weight:600; }
-    .pl-ask a { color:var(--pl-rot); font-weight:500; }
-    @media (max-width:640px) {
-      .pl-head { flex-wrap:wrap; gap:8px; }
-      .pl-rule { display:none; }
-      .pl-group { flex-wrap:wrap; gap:8px; }
-      .pl-table th:first-child, .pl-table td:first-child { display:none; }
-      .pl-table td { font-size:13px; padding:10px 8px; }
-    }
+    :root{--red:#e30613;--red-dark:#b8000b;--ink:#151515;--muted:#626262;--line:#dedede;--soft:#f5f5f5;--white:#fff;--head:"DM Serif Display",Georgia,serif;--display:"Bebas Neue",sans-serif;--body:"DM Sans",Arial,sans-serif}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:var(--ink);font-family:var(--body);background:#fff} a{color:inherit} button{font:inherit}
+    .notice{padding:9px 20px;background:#171717;color:#fff;text-align:center;font-size:13px;letter-spacing:.03em}.notice strong{color:#ff4350}
+    header{height:74px;padding:0 clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:20}
+    .logo img{width:118px;display:block}.nav{display:flex;gap:30px;align-items:center;font-size:14px}.nav a{text-decoration:none}.nav .active{color:var(--red);font-weight:600}.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border:1px solid var(--ink);border-radius:10px;text-decoration:none;font-weight:600}.nav-cta{border-color:var(--red);color:var(--red)}
+    main{overflow:hidden}.intro{max-width:1240px;margin:auto;padding:72px clamp(20px,5vw,76px) 42px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:60px;align-items:end}.eyebrow{font-family:var(--display);letter-spacing:.14em;color:var(--red);font-size:16px}.intro h1{font-family:var(--head);font-weight:400;font-size:clamp(42px,6vw,78px);line-height:.98;margin:14px 0 24px;max-width:760px}.intro p{font-size:18px;line-height:1.65;max-width:760px;margin:0;color:#3f3f3f}.intro-note{border-left:4px solid var(--red);padding:4px 0 4px 22px;font-size:15px;line-height:1.6;color:var(--muted)}
+    .model-nav{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;position:sticky;top:74px;z-index:15}.model-nav-inner{max-width:1240px;margin:auto;padding:14px clamp(20px,5vw,76px);display:flex;gap:10px;overflow:auto}.filter{white-space:nowrap;border:1px solid #cfcfcf;border-radius:999px;background:#fff;padding:10px 18px;cursor:pointer}.filter.active{background:var(--ink);border-color:var(--ink);color:#fff}
+    .series{max-width:1240px;margin:auto;padding:64px clamp(20px,5vw,76px)}.series-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:28px}.series-no{font-family:var(--display);color:var(--red);font-size:15px;letter-spacing:.16em}.series h2{font-family:var(--head);font-weight:400;font-size:clamp(32px,4vw,52px);margin:8px 0 0}.series-head p{margin:0;color:var(--muted);line-height:1.65}
+    .model{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin:22px 0 40px;background:#fff;min-height:500px;box-shadow:0 12px 40px rgba(0,0,0,.05)}.model.reverse .visual-wrap{order:2}.visual-wrap{background:#f5f5f5;padding:18px;display:flex;flex-direction:column;gap:11px}.visual{position:relative;height:320px;overflow:hidden;border-radius:16px;background:#ececec}.visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#ececec}.visual.contain>img{object-fit:contain;padding:0;background:#ececec}.visual-tag{position:absolute;left:16px;top:16px;background:#fff;border-radius:999px;padding:9px 12px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 2px 10px rgba(0,0,0,.12)}.gallery-thumbs{position:absolute;left:16px;right:16px;bottom:16px;display:flex;gap:9px}.gallery-thumb{width:72px;height:54px;padding:3px;border:2px solid transparent;border-radius:10px;background:rgba(255,255,255,.92);cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.18)}.gallery-thumb img{width:100%;height:100%;display:block;object-fit:contain;background:#ececec;border-radius:6px}.gallery-thumb.active{border-color:var(--red)}.image-note{font-size:12px;line-height:1.45;color:#555;margin:0 3px}.content{padding:clamp(28px,4vw,52px);display:flex;flex-direction:column}.model-kicker{font-family:var(--display);font-size:15px;letter-spacing:.15em;color:var(--red)}.model h3{font-family:var(--head);font-weight:400;font-size:clamp(36px,4vw,56px);line-height:1;margin:8px 0 12px}.price{font-size:23px;font-weight:600;margin-bottom:28px}.price small{font-size:13px;color:var(--muted);font-weight:400}.variants{display:grid;gap:8px;margin:0 0 22px}.variant{display:flex;justify-content:space-between;gap:15px;padding:10px 13px;background:var(--soft);border-radius:10px;font-size:13px}.variant strong{font-weight:600}.specs{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-bottom:24px}.spec{padding:15px 0;border-bottom:1px solid var(--line)}.spec:nth-child(odd){padding-right:18px}.spec:nth-child(even){padding-left:18px;border-left:1px solid var(--line)}.spec-label{display:block;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--muted);margin-bottom:5px}.spec strong{font-size:16px}.setup-label{font-size:13px;font-weight:600;margin:0 0 10px}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{font-size:12px;border:1px solid #cfcfcf;border-radius:999px;background:#fff;padding:7px 11px}.setup-note{font-size:13px;line-height:1.55;color:var(--muted);margin:12px 0 24px}.actions{display:flex;gap:10px;margin-top:auto}.btn.primary{background:var(--red);border-color:var(--red);color:#fff}.btn.secondary{background:#fff}.btn:hover{border-color:var(--red-dark)}
+    .config-strip{background:#171717;color:#fff}.config-inner{max-width:1240px;margin:auto;padding:52px clamp(20px,5vw,76px);display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}.config-inner h2{font-family:var(--head);font-size:clamp(30px,4vw,48px);font-weight:400;margin:0 0 10px}.config-inner p{margin:0;color:#cfcfcf;line-height:1.6}.config-strip .btn{background:var(--red);border-color:var(--red);color:#fff;min-width:220px}
+    footer{padding:38px clamp(20px,5vw,76px);display:flex;justify-content:space-between;gap:30px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+    @media(max-width:900px){.nav{display:none}.intro,.series-head{grid-template-columns:1fr}.intro{padding-top:48px;gap:24px}.model,.model.reverse{grid-template-columns:1fr}.model.reverse .visual-wrap{order:0}.visual{height:300px}.config-inner{grid-template-columns:1fr}.config-strip .btn{width:max-content}.model-nav{top:74px}}
+    @media(max-width:560px){.notice{font-size:11px}.intro h1{font-size:45px}.series{padding-top:44px}.model{margin-left:-8px;margin-right:-8px}.content{padding:26px 22px}.visual{height:220px}.specs{grid-template-columns:1fr}.spec:nth-child(even),.spec:nth-child(odd){padding:14px 0;border-left:0}.actions{flex-direction:column}.btn{width:100%}.config-strip .btn{width:100%}footer{flex-direction:column}}
   </style>
 </head>
 <body>
+  <header>
+    <a class="logo" href="/"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <nav class="nav" aria-label="Hauptnavigation"><a class="active" href="produkte.html">Produkte</a><a href="shop.html">Shop</a><a href="ueber-uns.html">Über uns</a><a href="haendler.html">Händler</a><a href="kontakt.html">Kontakt</a></nav>
+    <a class="nav-cta" href="konfigurator.html">Konfigurator</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><div class="eyebrow">HEKU B-SERIE · 2026</div><h1 class="page-title">HEKU Bootsanhänger-Modelle<br>im Überblick</h1><p>Jedes Fahrgestell wird passend zu den Abmessungen und dem Gewicht des Bootes aufgebaut. Die benötigten Auflagen, Rollen und Stützen werden bei der Konfiguration festgelegt.</p><p style="margin-top:18px"><a href="bootstrailer.html">Bootsanhänger kaufen: Beratung &amp; Vorteile →</a></p></div>
+      <div class="intro-note"><strong>Keine feste Bootsklasse.</strong><br>Das Modell bestimmt die technische Basis. Die Ausrüstung wird passend zum jeweiligen Boot gewählt.</div>
+    </section>
 
-  <nav>
-    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
-    <div class="nav-center">
+    <div class="model-nav" id="modelle"><div class="model-nav-inner"><button class="filter active" data-filter="all">Alle Modelle</button><button class="filter" data-filter="ungebremst">Ungebremst</button><button class="filter" data-filter="einachser">Gebremste Einachser</button><button class="filter" data-filter="tandem">Tandem</button><button class="filter" data-filter="ruderboot">Ruderbootanhänger</button></div></div>
 
-      <!-- Produkte Dropdown -->
-      <div class="nav-dropdown">
-        <a href="produkte.html" class="nav-dropdown-toggle active">Produkte ▾</a>
-        <div class="nav-dropdown-menu">
-          <a href="produkte.html" class="active">Alle Modelle</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
+    <section class="series" data-series="ungebremst">
+      <div class="series-head"><div><span class="series-no">01 · BIS 750 KG</span><h2>Ungebremste Modelle</h2></div><p>Kompakte, leichte Fahrgestelle mit Betriebserlaubnis. Die konkrete Ausrüstung wird anhand der Bootsmaße zusammengestellt.</p></div>
+      <article class="model">
+        <div class="visual contain"><span class="visual-tag">Beispielfotos</span><img class="gallery-main" src="assets/bootsanhaenger.jpg" alt="HEKU Bootsanhänger – Seitenansicht"><div class="gallery-thumbs" aria-label="Weitere Bilder B 350"><button class="gallery-thumb active" type="button" data-src="assets/bootsanhaenger.jpg" data-alt="HEKU Bootsanhänger – Seitenansicht"><img src="assets/bootsanhaenger.jpg" alt="Seitenansicht auswählen"></button><button class="gallery-thumb" type="button" data-src="assets/hero.jpg" data-alt="HEKU Bootsanhänger mit Boot"><img src="assets/hero.jpg" alt="Ansicht mit Boot auswählen"></button></div></div>
+        <div class="content"><div class="model-kicker">UNgebremst · Einachser</div><h3>B 350</h3><div class="price">ab 1.375 € <small>inkl. 19 % MwSt., ab Werk</small></div>
+          <div class="specs"><div class="spec"><span class="spec-label">Gesamtgewicht</span><strong>350 kg</strong></div><div class="spec"><span class="spec-label">Zuladung ca.</span><strong>275 kg</strong></div><div class="spec"><span class="spec-label">Länge über alles</span><strong>3,80 m</strong></div><div class="spec"><span class="spec-label">Beleuchtung</span><strong>+ 0,70 m</strong></div></div>
+          <p class="setup-label">Mögliche Ausrüstung</p><div class="chips"><span class="chip">Kielrollen</span><span class="chip">Polsterkissen</span><span class="chip">Langauflagen</span><span class="chip">Bugstütze</span></div><p class="setup-note">Die dargestellten Anbauteile sind Beispiele. Die endgültige Ausstattung richtet sich nach deinem Boot.</p>
+          <div class="actions"><a class="btn primary" href="#konfigurieren">B 350 konfigurieren</a><a class="btn secondary" href="#">Details ansehen</a></div>
         </div>
-      </div>
+      </article>
+    </section>
 
-      <!-- Ratgeber Dropdown -->
-      <div class="nav-dropdown">
-        <a href="ratgeber-bootsanhaenger.html" class="nav-dropdown-toggle">Ratgeber ▾</a>
-        <div class="nav-dropdown-menu">
-          <a href="ratgeber-bootsanhaenger.html">Kaufberatung</a>
-          <a href="fuehrerschein.html">Führerschein</a>
-          <a href="zulassung.html">Zulassung</a>
-          <a href="ladungssicherung.html">Ladungssicherung</a>
-          <a href="100kmh-regelung.html">100 km/h Regelung</a>
-          <a href="technik-bootsanhaenger.html">Technische Daten</a>
-          <a href="faq.html">FAQ</a>
-          <a href="wasserdichte-radnabe.html">Wasserdichte Radnabe</a>
+    <section class="series" data-series="einachser">
+      <div class="series-head"><div><span class="series-no">02 · 900–1.800 KG</span><h2>Gebremste Einachser</h2></div><p>Mehr Tragfähigkeit und ein gebremstes Fahrgestell. Auflagen, Rollen und Stützen bleiben frei konfigurierbar.</p></div>
+      <article class="model reverse">
+        <div class="visual"><span class="visual-tag">Beispielfotos</span><img class="gallery-main" src="assets/bootsanhaenger.jpg" alt="HEKU gebremster Bootsanhänger – Übersicht"><div class="gallery-thumbs" aria-label="Weitere Bilder B 900"><button class="gallery-thumb active" type="button" data-src="assets/bootsanhaenger.jpg" data-alt="HEKU gebremster Bootsanhänger – Übersicht"><img src="assets/bootsanhaenger.jpg" alt="Übersicht auswählen"></button><button class="gallery-thumb" type="button" data-src="assets/hero.jpg" data-alt="HEKU Anhänger mit aufgebautem Boot"><img src="assets/hero.jpg" alt="Ansicht mit Boot auswählen"></button></div></div>
+        <div class="content"><div class="model-kicker">Gebremst · Einachser</div><h3>B 900</h3><div class="price">ab 3.190 € <small>inkl. 19 % MwSt., ab Werk</small></div>
+          <div class="specs"><div class="spec"><span class="spec-label">Gesamtgewicht</span><strong>900 kg</strong></div><div class="spec"><span class="spec-label">Zuladung ca.</span><strong>660 kg</strong></div><div class="spec"><span class="spec-label">Länge über alles</span><strong>6,00 m</strong></div><div class="spec"><span class="spec-label">Beleuchtung</span><strong>+ 1,55 m</strong></div></div>
+          <p class="setup-label">Mögliche Ausrüstung</p><div class="chips"><span class="chip">Kielrollen</span><span class="chip">Rumpfstützen</span><span class="chip">Langauflagen</span><span class="chip">Sicherheitswinde</span></div><p class="setup-note">Die technische Basis bleibt gleich. Erst die gewählte Ausrüstung passt den Anhänger an die Form des Bootes an.</p>
+          <div class="actions"><a class="btn primary" href="#konfigurieren">B 900 konfigurieren</a><a class="btn secondary" href="#">Details ansehen</a></div>
         </div>
-      </div>
+      </article>
+    </section>
 
-      <a href="shop.html">Shop</a>
-      <a href="ueber-uns.html">Über uns</a>
-      <a href="haendler.html">Partner werden</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="karriere.html" class="btn-nav" style="border:1.5px solid var(--rot);color:var(--rot);display:flex;align-items:center;gap:6px;">
-        <span style="width:7px;height:7px;background:var(--rot);border-radius:50%;display:inline-block;animation:pulse-dot 1.8s infinite;flex-shrink:0;"></span>
-        Jobs
-      </a>
-
-    </div>
-    <div class="nav-right">
-      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
-      <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
-    </div>
-    <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
-  </nav>
-
-  <!-- HEADER -->
-  <div class="page-header">
-    <div class="page-header-inner">
-      <div class="page-eyebrow">Modellübersicht · B-Serie 2026 · Ab Werk Bielefeld</div>
-      <h1 class="page-title">HEKU Bootsanhänger-Modelle<br>im Überblick</h1>
-      <p class="page-sub">Vergleichen Sie die B-Serie vom kompakten Jollenanhänger bis zum Tandem-Trailer: Gesamtgewicht, Zuladung, Länge, Ausstattung und Grundpreis auf einen Blick.</p>
-    </div>
-  </div>
-
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">WASSERDICHTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-      <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
-      <div class="marquee-item">WASSERDICHTE RADNABE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
-      <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
-      <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
-      <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
-    </div>
-  </div>
-
-  <!-- FILTER -->
-  <div class="filter-bar">
-    <div class="filter-tab active" onclick="showSection('alle')">Alle Modelle</div>
-    <div class="filter-tab" onclick="showSection('ungebremst')">Ungebremst</div>
-    <div class="filter-tab" onclick="showSection('einachsig')">Einachsig gebremst</div>
-    <div class="filter-tab" onclick="showSection('tandem')">Tandem</div>
-    <div class="filter-tab" onclick="showSection('aufpreise')">Aufpreise & Zubehör</div>
-  </div>
-
-  <!-- USP BAND -->
-  <div class="usp-band">
-    <div class="usp-item"><div class="usp-dot"></div>5 Jahre Garantie auf Radnabe</div>
-    <div class="usp-item"><div class="usp-dot"></div>Feuerverzinkt nach DIN 1461</div>
-    <div class="usp-item"><div class="usp-dot"></div>Einzelfertigung nach Maß</div>
-    <div class="usp-item"><div class="usp-dot"></div>KBA-Typprüfung bis 2.000 kg</div>
-    <div class="usp-item"><div class="usp-dot"></div>TÜV EG-Typgenehmigung bis 3.500 kg</div>
-    <div class="usp-item"><div class="usp-dot"></div>Steuerfrei</div>
-  </div>
-
-  <!-- UNGEBREMST -->
-  <div class="product-section" id="sec-ungebremst">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Kategorie 1</div>
-        <div class="section-title">Ungebremste Anhänger</div>
-        <div class="section-sub">Ideal für leichte Jollen, Schlauchboote und kleine Motorboote. In 4 Teile zerlegbar, praktisch bei festem Liegeplatz oder für die Wintersaison. Mit wasserdichter Radnabe und ausziehbarer ALU-Beleuchtung.</div>
-      </div>
-      <span class="section-badge badge-grau">Typ B 350 – B 750</span>
-    </div>
-
-    <div class="pl-serie">
-      <div class="pl-row"><b>Serienausstattung:</b> Kielauflage vorne &middot; Langauflage / Polsterkissen hinten &middot; ausziehbare Beleuchtung &middot; eigenentwickelte wasserdichte Radnabe &middot; 5 Jahre Garantie &middot; feuerverzinkt &middot; inkl. Betriebserlaubnis (CoC).</div>
-    </div>
-
-    <table class="model-table">
-      <thead>
-        <tr>
-          <th>Modell</th>
-          <th>Länge ü.a.</th>
-          <th>Beleuchtung</th>
-          <th>Zuladung ca.</th>
-          <th>Achse</th>
-          <th>Preis ab (inkl. MwSt.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 350</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Jolle / kleines Segelboot</div></td>
-          <td><span class="model-length">3,80 m</span></td>
-          <td><span class="model-length">+ 0,70 m</span></td>
-          <td>275 kg</td>
-          <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.375,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 350</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Jolle / kleines Segelboot</div></td>
-          <td><span class="model-length">4,80 m</span></td>
-          <td><span class="model-length">+ 0,70 m</span></td>
-          <td>265 kg</td>
-          <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.475,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 500</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- / Segelboot</div></td>
-          <td><span class="model-length">4,50 m</span></td>
-          <td><span class="model-length">+ 1,00 m</span></td>
-          <td>450 kg</td>
-          <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.575,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 500</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- / Segelboot</div></td>
-          <td><span class="model-length">5,00 m</span></td>
-          <td><span class="model-length">+ 1,00 m</span></td>
-          <td>445 kg</td>
-          <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.650,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 750</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motor- oder Segelboot</div></td>
-          <td><span class="model-length">5,00 m</span></td>
-          <td><span class="model-length">+ 1,00 m</span></td>
-          <td>620 kg</td>
-          <td><span class="tag tag-ung">Ungebremst</span></td>
-          <td><div class="model-price">ab 1.995,– €</div></td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="margin-top:16px;font-size:13px;color:var(--muted);background:var(--bg2);padding:16px 20px;border-radius:8px;line-height:1.65">
-      Im Preis enthalten: Wasserdichte Radnabe einachsig (210 €), verstärktes Stützrad (80 €), Gewindespindel in Langauflage 2× (220 €). Gesamtwert: <strong>510 €</strong>.<br>
-      Windenstand mit Winde: B 350 / B 500 = 295 € · B 750 = 375 € (Aufpreis)
-    </div>
-  </div>
-
-  <!-- EINACHSIG GEBREMST -->
-  <div class="product-section gray" id="sec-einachsig">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Kategorie 2</div>
-        <div class="section-title">Einachsig gebremst</div>
-        <div class="section-sub">Für mittlere Motor- und Segelboote bis 1.450 kg Zuladung. Mit Rückfahrautomatik, Einzelradfederung, Windenstand mit Sicherheitswinde und KBA-Typprüfung.</div>
-      </div>
-      <span class="section-badge badge-gruen">Typ B 900 – B 1800</span>
-    </div>
-
-    <div class="pl-serie">
-      <div class="pl-row"><b>Motorboot-Ausf&uuml;hrung:</b> R&uuml;ckfahrautomatik, Kielrollen, Langauflagen mit Gewindespindeln, St&uuml;tzrad, Windenstand mit Sicherheitswinde (horizontal &amp; vertikal verstellbar), Einzelradfederung, 4 Verzurr&ouml;sen.</div>
-      <div class="pl-row"><b>Segelboot-Ausf&uuml;hrung:</b> R&uuml;ckfahrautomatik, St&uuml;tzrad, vordere Bugst&uuml;tze verstellbar, 4 Rumpfst&uuml;tzen verstellbar, Kielauflage in Achsh&ouml;he (tiefster Schwerpunkt), 4 Verzurr&ouml;sen.</div>
-      <div class="pl-row"><b>Zulassung:</b> inkl. Betriebserlaubnis (CoC).</div>
-      <div class="pl-row"><b>L&auml;ngenzuschlag:</b> je +0,5&nbsp;m Rahmenl&auml;nge (+0,5&nbsp;m &Uuml;berstand): 130,25&nbsp;&euro; netto / <b>155,00&nbsp;&euro;</b> inkl. MwSt.</div>
-    </div>
-
-    <table class="model-table">
-      <thead>
-        <tr>
-          <th>Modell</th>
-          <th>Länge ü.a.</th>
-          <th>Beleuchtung</th>
-          <th>Zuladung ca.</th>
-          <th>Achse</th>
-          <th>Preis ab (inkl. MwSt.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 900</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
-          <td><span class="model-length">6,00 m</span></td>
-          <td><span class="model-length">+ 1,55 m</span></td>
-          <td>660 kg</td>
-          <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.190,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 1100</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
-          <td><span class="model-length">6,60 m</span></td>
-          <td><span class="model-length">+ 1,55 m</span></td>
-          <td>815 kg</td>
-          <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.390,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 1300</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
-          <td><span class="model-length">6,60 m</span></td>
-          <td><span class="model-length">+ 1,55 m</span></td>
-          <td>1.000 kg</td>
-          <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.590,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 1500</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
-          <td><span class="model-length">6,60 m</span></td>
-          <td><span class="model-length">+ 1,55 m</span></td>
-          <td>1.175 kg</td>
-          <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.850,– €</div></td>
-        </tr>
-        <tr onclick="openKonfigurator()">
-          <td><div class="model-name">B 1800</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Motorboot / Segelboot</div></td>
-          <td><span class="model-length">6,60 m</span></td>
-          <td><span class="model-length">+ 1,55 m</span></td>
-          <td>1.450 kg</td>
-          <td><span class="tag tag-ein">Einachsig</span></td>
-          <td><div class="model-price">ab 3.995,– €</div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- TANDEM -->
-  <div class="product-section" id="sec-tandem">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Kategorie 3</div>
-        <h2 class="section-title">Tandem-Bootstrailer – für schwere Motor- und Segelboote bis 3.500 kg</h2>
-        <div class="section-sub">HEKU Tandem-Bootstrailer sind die richtige Wahl für schwere Motorboote und Segelyachten ab ca. 1.000 kg Eigengewicht. Der <strong>Bootstrailer</strong> mit Tandemachse bietet maximale Fahrstabilität, höhere Zuladung und TÜV EG-Typgenehmigung. Alle <strong>Bootstrailer</strong>-Modelle der B-Serie 2000–3500 sind in drei Längen erhältlich und werden individuell auf Ihr Boot abgestimmt.</div>
-      </div>
-      <span class="section-badge badge-rot">Typ B 2000 – B 3500</span>
-    </div>
-
-    <div class="pl-serie">
-      <div class="pl-row"><b>Serienausstattung:</b> Motorboot- &amp; Segelboot-Ausf&uuml;hrung wie Einachser. R&uuml;ckfahrautomatik, Sicherheitswinde, Einzelradfederung, 4 Verzurr&ouml;sen serienm&auml;&szlig;ig.</div>
-      <div class="pl-row"><b>Zulassung:</b> inkl. T&Uuml;V-Einzelabnahme.</div>
-      <div class="pl-row"><b>L&auml;ngenzuschlag:</b> je +0,5&nbsp;m Rahmenl&auml;nge (+0,5&nbsp;m &Uuml;berstand): 175,63&nbsp;&euro; netto / <b>209,00&nbsp;&euro;</b> inkl. MwSt.</div>
-    </div>
-
-    <table class="model-table">
-      <thead>
-        <tr>
-          <th>Modell</th>
-          <th>Länge ü.a.</th>
-          <th>Beleuchtung</th>
-          <th>Zuladung ca.</th>
-          <th>Achse</th>
-          <th>Preis ab (inkl. MwSt.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>1.610 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 4.655,– €</div></td></tr>
-
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.000 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.110,– €</div></td></tr>
-
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 2700</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.150 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.310,– €</div></td></tr>
-
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3000</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.400 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 5.855,– €</div></td></tr>
-
-        <tr onclick="openKonfigurator()"><td><div class="model-name">B 3500</div></td><td><span class="model-length">6,60 m</span></td><td><span class="model-length">+ 1,55 m</span></td><td>2.850 kg</td><td><span class="tag tag-tan">Tandem</span></td><td><div class="model-price">ab 6.555,– €</div></td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:20px;">
-      <a href="bootstrailer.html" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--rot);border:1.5px solid var(--rot);padding:10px 20px;border-radius:8px;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='#E8000E';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#E8000E'">Bootsanhänger kaufen: Beratung &amp; Vorteile →</a>
-    </div>
-  </div>
-
-  <!-- AUFPREISE -->
-  <div class="product-section gray" id="sec-aufpreise">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Optionen</div>
-        <div class="section-title">Aufpreise &amp; Zubehör</div>
-        <div class="section-sub">Alle Preise verstehen sich als Aufpreis zum Grundmodell, inkl. 19% MwSt.</div>
-      </div>
-    </div>
-    <div class="pl-sec">
-      <div class="pl-eyebrow">Teil II der Preisliste 2026</div>
-      <div class="pl-head">
-        <span class="pl-num">&#9670;</span>
-        <span class="pl-title">Zubeh&ouml;r &amp; Aufpreise</span>
-        <span class="pl-rule"></span>
-        <span class="pl-range">&Uuml;BER 60 POSITIONEN</span>
-      </div>
-      <p class="pl-lead">Alle Preise als Aufpreis zum Grundmodell. <b>Netto</b> = Preis ohne MwSt. &middot; <b>Brutto</b> = Endpreis inkl. 19% MwSt., ab Werk Bielefeld.</p>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">SICHERHEIT</span>
-        <span class="pl-group-sub">D&auml;mpfer, Bereifung &amp; Reserverad</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50248</td><td>Radsto&szlig;d&auml;mpfer 1-achsig (erforderlich bei 100&nbsp;km/h Zulassung)</td><td class="pl-r pl-netto">117,65 &euro;</td><td class="pl-r pl-brutto">140,00 &euro;</td></tr>
-            <tr><td class="pl-art">50249</td><td>Radsto&szlig;d&auml;mpfer Tandem (erforderlich bei 100&nbsp;km/h Zulassung)</td><td class="pl-r pl-netto">235,29 &euro;</td><td class="pl-r pl-brutto">280,00 &euro;</td></tr>
-            <tr><td class="pl-art">50238</td><td>Adapterstecker 7- bis 13-polig</td><td class="pl-r pl-netto">32,77 &euro;</td><td class="pl-r pl-brutto">39,00 &euro;</td></tr>
-            <tr><td class="pl-art">50239</td><td>Reserverad 145 R 10</td><td class="pl-r pl-netto">75,63 &euro;</td><td class="pl-r pl-brutto">90,00 &euro;</td></tr>
-            <tr><td class="pl-art">50240</td><td>Reserverad 155 R-13</td><td class="pl-r pl-netto">100,84 &euro;</td><td class="pl-r pl-brutto">120,00 &euro;</td></tr>
-            <tr data-catalog-sku="50241"><td class="pl-art">50241</td><td>Reserverad 185 R-14C, 8 PR</td><td class="pl-r pl-netto">144,54 &euro;</td><td class="pl-r pl-brutto">172,00 &euro;</td></tr>
-            <tr><td class="pl-art">50242</td><td>Reserverad 195 R-14C, 8 PR</td><td class="pl-r pl-netto">161,34 &euro;</td><td class="pl-r pl-brutto">192,00 &euro;</td></tr>
-            <tr><td class="pl-art">50243</td><td>Reserveradhalter</td><td class="pl-r pl-netto">41,18 &euro;</td><td class="pl-r pl-brutto">49,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">SLIPHILFEN &amp; SEILWINDEN</span>
-        <span class="pl-group-sub">Winden, Sliprollen &amp; Stahlseile</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50200</td><td>Windenstand mit Winde 1:2, f&uuml;r Boote bis 500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">247,90 &euro;</td><td class="pl-r pl-brutto">295,00 &euro;</td></tr>
-            <tr><td class="pl-art">50201</td><td>Windenstand mit Winde 1:3, f&uuml;r Boote bis 1.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">323,53 &euro;</td><td class="pl-r pl-brutto">385,00 &euro;</td></tr>
-            <tr><td class="pl-art">50202</td><td>Windenstand mit Winde 1:8, f&uuml;r Boote bis 2.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">415,97 &euro;</td><td class="pl-r pl-brutto">495,00 &euro;</td></tr>
-            <tr><td class="pl-art">50203</td><td>Windenstand mit Winde und Masthalter 1:2, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">323,53 &euro;</td><td class="pl-r pl-brutto">385,00 &euro;</td></tr>
-            <tr><td class="pl-art">50204</td><td>Windenstand mit Winde und Masthalter 1:3, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">373,95 &euro;</td><td class="pl-r pl-brutto">445,00 &euro;</td></tr>
-            <tr><td class="pl-art">50205</td><td>Bugst&uuml;tze mit Masthalter</td><td class="pl-r pl-netto">113,45 &euro;</td><td class="pl-r pl-brutto">135,00 &euro;</td></tr>
-            <tr><td class="pl-art">50206</td><td>Winde untersetzt 1:2, f&uuml;r Boote bis 500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">121,85 &euro;</td><td class="pl-r pl-brutto">145,00 &euro;</td></tr>
-            <tr><td class="pl-art">50207</td><td>Winde untersetzt 1:3, f&uuml;r Boote bis 1.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">193,28 &euro;</td><td class="pl-r pl-brutto">230,00 &euro;</td></tr>
-            <tr><td class="pl-art">50208</td><td>Winde untersetzt 1:8, f&uuml;r Boote bis 2.500&nbsp;kg, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">247,90 &euro;</td><td class="pl-r pl-brutto">295,00 &euro;</td></tr>
-            <tr><td class="pl-art">50209</td><td>Stahlseil verzinkt mit Haken</td><td class="pl-r pl-netto">29,41 &euro;</td><td class="pl-r pl-brutto">35,00 &euro;</td></tr>
-            <tr><td class="pl-art">50210</td><td>Stahlseil verzinkt mit Haken und Umlenkrolle bis 2.850&nbsp;kg</td><td class="pl-r pl-netto">79,83 &euro;</td><td class="pl-r pl-brutto">95,00 &euro;</td></tr>
-            <tr><td class="pl-art">90005</td><td>Elektrische Seilwinde, wahlweise Stahl- oder Gurtband</td><td class="pl-r pl-netto">ab 500,00 &euro;</td><td class="pl-r pl-brutto">ab 595,00 &euro;</td></tr>
-            <tr><td class="pl-art">50250</td><td>2 Luftsliprollen mit vorderer Gewindespindel</td><td class="pl-r pl-netto">344,54 &euro;</td><td class="pl-r pl-brutto">410,00 &euro;</td></tr>
-            <tr><td class="pl-art">50251</td><td>4 Luftsliprollen mit vorderer Gewindespindel</td><td class="pl-r pl-netto">399,16 &euro;</td><td class="pl-r pl-brutto">475,00 &euro;</td></tr>
-            <tr><td class="pl-art">50252</td><td>6 Luftsliprollen mit vorderer Gewindespindel</td><td class="pl-r pl-netto">500,00 &euro;</td><td class="pl-r pl-brutto">595,00 &euro;</td></tr>
-            <tr><td class="pl-art">50253</td><td>Seitliche F&uuml;hrungsrollen, steck- und abnehmbar</td><td class="pl-r pl-netto">201,68 &euro;</td><td class="pl-r pl-brutto">240,00 &euro;</td></tr>
-            <tr><td class="pl-art">50224</td><td>3 Hecksliprollen mit V-Einf&uuml;hrung h&ouml;henverstellbar</td><td class="pl-r pl-netto">247,90 &euro;</td><td class="pl-r pl-brutto">295,00 &euro;</td></tr>
-            <tr><td class="pl-art">50225</td><td>Heck-V-Einf&uuml;hrung 60 n</td><td class="pl-r pl-netto">100,84 &euro;</td><td class="pl-r pl-brutto">120,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">BELEUCHTUNG</span>
-        <span class="pl-group-sub">LED-Beleuchtungss&auml;tze</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">90014</td><td>LED-Beleuchtungssatz, bis B 3500</td><td class="pl-r pl-netto">ab 378,15 &euro;</td><td class="pl-r pl-brutto">ab 450,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">COMFORT &amp; DESIGN</span>
-        <span class="pl-group-sub">Laufsteg, Staubox &amp; Sonderlackierung</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50234</td><td>Laufsteg (Gangway), bis 6,50&nbsp;m Fahrgestelll&auml;nge</td><td class="pl-r pl-netto">293,28 &euro;</td><td class="pl-r pl-brutto">349,00 &euro;</td></tr>
-            <tr><td class="pl-art">50244</td><td>Kunststoff Staubox, abschlie&szlig;bar mit B&uuml;gelbefestigung</td><td class="pl-r pl-netto">125,21 &euro;</td><td class="pl-r pl-brutto">149,00 &euro;</td></tr>
-            <tr><td class="pl-art">90010</td><td>Sonderlackierung Einheitsfarbe nach Wunsch, Typ B 350 bis B 750</td><td class="pl-r pl-netto">504,20 &euro;</td><td class="pl-r pl-brutto">600,00 &euro;</td></tr>
-            <tr><td class="pl-art">90011</td><td>Sonderlackierung Einheitsfarbe nach Wunsch, Typ B 900 bis B 1800, bis 7&nbsp;m</td><td class="pl-r pl-netto">1.134,45 &euro;</td><td class="pl-r pl-brutto">1.350,00 &euro;</td></tr>
-            <tr><td class="pl-art">90012</td><td>Sonderlackierung Einheitsfarbe nach Wunsch, Typ B 2000 bis B 3500, bis 8&nbsp;m</td><td class="pl-r pl-netto">1.470,59 &euro;</td><td class="pl-r pl-brutto">1.750,00 &euro;</td></tr>
-            <tr><td class="pl-art">90013</td><td>Zierstreifensatz Sonderfarbe, bis 12&nbsp;m Rahmenl&auml;nge</td><td class="pl-r pl-netto">75,63 &euro;</td><td class="pl-r pl-brutto">90,00 &euro;</td></tr>
-            <tr><td class="pl-art">50235</td><td>Kasten-Sicherungsschloss</td><td class="pl-r pl-netto">33,61 &euro;</td><td class="pl-r pl-brutto">40,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">AUFLAGEN &amp; ST&Uuml;TZEN</span>
-        <span class="pl-group-sub">Langauflagen, Kielauflagen &amp; Rumpfst&uuml;tzen</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50226</td><td>Langauflage mit U-Halter 60&nbsp;cm</td><td class="pl-r pl-netto">41,18 &euro;</td><td class="pl-r pl-brutto">49,00 &euro;</td></tr>
-            <tr><td class="pl-art">50227</td><td>Langauflage mit U-Halter 90&nbsp;cm</td><td class="pl-r pl-netto">57,98 &euro;</td><td class="pl-r pl-brutto">69,00 &euro;</td></tr>
-            <tr><td class="pl-art">50228</td><td>Polsterkissen mit U-Halter</td><td class="pl-r pl-netto">40,34 &euro;</td><td class="pl-r pl-brutto">48,00 &euro;</td></tr>
-            <tr><td class="pl-art">83011</td><td>Polsterkissen</td><td class="pl-r pl-netto">29,41 &euro;</td><td class="pl-r pl-brutto">35,00 &euro;</td></tr>
-            <tr><td class="pl-art">50229</td><td>Kielauflage, klappbar mit Halter</td><td class="pl-r pl-netto">92,44 &euro;</td><td class="pl-r pl-brutto">110,00 &euro;</td></tr>
-            <tr><td class="pl-art">50230</td><td>Kielauflage mit Polsterkissen f&uuml;r Schlauchboot</td><td class="pl-r pl-netto">113,45 &euro;</td><td class="pl-r pl-brutto">135,00 &euro;</td></tr>
-            <tr><td class="pl-art">50231</td><td>Gewindespindel mit Befestigungshalter</td><td class="pl-r pl-netto">92,44 &euro;</td><td class="pl-r pl-brutto">110,00 &euro;</td></tr>
-            <tr><td class="pl-art">50232</td><td>Vordere Rumpfst&uuml;tze mit Gewindespindel und Polsterkissen</td><td class="pl-r pl-netto">132,77 &euro;</td><td class="pl-r pl-brutto">158,00 &euro;</td></tr>
-            <tr><td class="pl-art">50233</td><td>Heckst&uuml;tze h&ouml;henverstellbar, St&uuml;ck</td><td class="pl-r pl-netto">50,42 &euro;</td><td class="pl-r pl-brutto">60,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">KIELROLLEN &amp; ST&Uuml;TZROLLEN</span>
-        <span class="pl-group-sub">St&uuml;tzr&auml;der, Seiten- &amp; Kielrollen</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50211</td><td>St&uuml;tzrad Vollgummi mit Klemmhalter</td><td class="pl-r pl-netto">63,03 &euro;</td><td class="pl-r pl-brutto">75,00 &euro;</td></tr>
-            <tr><td class="pl-art">50212</td><td>St&uuml;tzrad Vollgummi mit Klemmhalter, schwere Ausf&uuml;hrung</td><td class="pl-r pl-netto">124,37 &euro;</td><td class="pl-r pl-brutto">148,00 &euro;</td></tr>
-            <tr data-catalog-sku="50214"><td class="pl-art">50214</td><td>Seitenst&uuml;tzrolle h&ouml;henverstellbar 120&times;250 mit Klemmhalter</td><td class="pl-r pl-netto">63,03 &euro;</td><td class="pl-r pl-brutto">75,00 &euro;</td></tr>
-            <tr data-catalog-sku="50215"><td class="pl-art">50215</td><td>Seitenst&uuml;tzrolle 120&times;250 mit Gewindespindel und Klemmhalter</td><td class="pl-r pl-netto">155,46 &euro;</td><td class="pl-r pl-brutto">185,00 &euro;</td></tr>
-            <tr><td class="pl-art">50216</td><td>Seitenst&uuml;tzrolle 120&times;75</td><td class="pl-r pl-netto">19,33 &euro;</td><td class="pl-r pl-brutto">23,00 &euro;</td></tr>
-            <tr><td class="pl-art">50217</td><td>Kielrolle mit Halter &Oslash; 80&times;130</td><td class="pl-r pl-netto">46,22 &euro;</td><td class="pl-r pl-brutto">55,00 &euro;</td></tr>
-            <tr><td class="pl-art">50218</td><td>Kielrolle mit Halter &Oslash; 80&times;130 h&ouml;henverstellbar</td><td class="pl-r pl-netto">60,50 &euro;</td><td class="pl-r pl-brutto">72,00 &euro;</td></tr>
-            <tr><td class="pl-art">50219</td><td>Kielrolle &Oslash; 90&times;200 mit U-Halter</td><td class="pl-r pl-netto">46,22 &euro;</td><td class="pl-r pl-brutto">55,00 &euro;</td></tr>
-            <tr><td class="pl-art">50220</td><td>Kielrolle mit Halter &Oslash; 90&times;200 h&ouml;henverstellbar</td><td class="pl-r pl-netto">69,75 &euro;</td><td class="pl-r pl-brutto">83,00 &euro;</td></tr>
-            <tr><td class="pl-art">50221</td><td>Kielrolle &Oslash; 80&times;130</td><td class="pl-r pl-netto">22,69 &euro;</td><td class="pl-r pl-brutto">27,00 &euro;</td></tr>
-            <tr><td class="pl-art">50222</td><td>Kielrolle &Oslash; 90&times;200</td><td class="pl-r pl-netto">25,21 &euro;</td><td class="pl-r pl-brutto">30,00 &euro;</td></tr>
-            <tr><td class="pl-art">50223</td><td>POLY-Kielrolle &Oslash; 90&times;200</td><td class="pl-r pl-netto">32,77 &euro;</td><td class="pl-r pl-brutto">39,00 &euro;</td></tr>
-            <tr><td class="pl-art">50261</td><td>Kielrolle &Oslash; 60&times;100</td><td class="pl-r pl-netto">4,20 &euro;</td><td class="pl-r pl-brutto">5,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-group">
-        <span class="pl-diamond">&#9670;</span>
-        <span class="pl-group-name">DIVERSES</span>
-        <span class="pl-group-sub">Buganschlag, Zurr&ouml;sen &amp; Aufpreise</span>
-        <span class="pl-rule"></span>
-      </div>
-      <div class="pl-tablewrap">
-        <table class="pl-table">
-          <thead><tr><th>Art.-Nr.</th><th>Bezeichnung</th><th class="pl-r">Netto</th><th class="pl-r">Brutto inkl. MwSt.</th></tr></thead>
-          <tbody>
-            <tr><td class="pl-art">50244</td><td>Katamaranauflage f&uuml;r G 355 (Aufpreis)</td><td class="pl-r pl-netto">218,49 &euro;</td><td class="pl-r pl-brutto">260,00 &euro;</td></tr>
-            <tr><td class="pl-art">50245</td><td>Huckepack-Transportwagen f&uuml;r G 500 (Aufpreis)</td><td class="pl-r pl-netto">205,88 &euro;</td><td class="pl-r pl-brutto">245,00 &euro;</td></tr>
-            <tr><td class="pl-art">50246</td><td>Auflagen f&uuml;r 1 Jet-Ski</td><td class="pl-r pl-netto">88,24 &euro;</td><td class="pl-r pl-brutto">105,00 &euro;</td></tr>
-            <tr><td class="pl-art">50247</td><td>Auflagen f&uuml;r 2 Jet-Ski (Aufpreis)</td><td class="pl-r pl-netto">176,47 &euro;</td><td class="pl-r pl-brutto">210,00 &euro;</td></tr>
-            <tr><td class="pl-art">50236</td><td>V-Gummi f&uuml;r Buganschlag bis Typ 500</td><td class="pl-r pl-netto">16,81 &euro;</td><td class="pl-r pl-brutto">20,00 &euro;</td></tr>
-            <tr><td class="pl-art">50237</td><td>V-Gummi f&uuml;r Buganschlag bis Typ 3500</td><td class="pl-r pl-netto">23,53 &euro;</td><td class="pl-r pl-brutto">28,00 &euro;</td></tr>
-            <tr><td class="pl-art">50104</td><td>Zurr&ouml;se zum Anschrauben</td><td class="pl-r pl-netto">24,16 &euro;</td><td class="pl-r pl-brutto">28,75 &euro;</td></tr>
-            <tr><td class="pl-art">90001</td><td>Kielvertiefung, einachsig (Aufpreis)</td><td class="pl-r pl-netto">331,94 &euro;</td><td class="pl-r pl-brutto">395,01 &euro;</td></tr>
-            <tr><td class="pl-art">90002</td><td>Kielvertiefung, Tandem (Aufpreis)</td><td class="pl-r pl-netto">500,00 &euro;</td><td class="pl-r pl-brutto">595,00 &euro;</td></tr>
-            <tr><td class="pl-art">90003</td><td>Aufpreis Kielbootanh&auml;nger ab Tiefgang 70&nbsp;cm</td><td class="pl-r pl-netto">151,26 &euro;</td><td class="pl-r pl-brutto">180,00 &euro;</td></tr>
-            <tr><td class="pl-art">90004</td><td>Aufpreis Seitenst&uuml;tzrolle, Satz</td><td class="pl-r pl-netto">126,05 &euro;</td><td class="pl-r pl-brutto">150,00 &euro;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pl-ask"><b>Sie vermissen ein Zubeh&ouml;rteil?</b> Sprechen Sie uns einfach an. Wir versuchen, alle Ihre W&uuml;nsche zu erf&uuml;llen. <a href="kontakt.html">Zubeh&ouml;r anfragen &rarr;</a></div>
-      <div class="pl-note">Brutto = Endpreis inkl. 19% MwSt. &middot; Netto = Preis ohne MwSt. &middot; Preise ab Werk Bielefeld &middot; Stand Juni 2026 &middot; Irrt&uuml;mer und &Auml;nderungen vorbehalten.</div>
-    </div>
-  </div>
-
-  <!-- TECHNIK -->
-  <div class="product-section">
-    <div class="eyebrow">Serienausstattung</div>
-    <div class="section-title" style="margin-bottom:8px">In jedem HEKU enthalten</div>
-    <div class="tech-grid">
-      <div class="tech-features">
-        <div class="tech-feat">
-          <div class="tech-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
-          <div><div class="tech-feat-title">Wasserdichte Radnabe</div><div class="tech-feat-text">Eigenentwicklung, wartungsfrei, 5 Jahre Garantie. Vom TH Hannover für dicht erklärt.</div></div>
+    <section class="series" data-series="tandem">
+      <div class="series-head"><div><span class="series-no">03 · 2.000–3.500 KG</span><h2>Tandem-Modelle</h2></div><p>Zwei Achsen, hohe Zuladung und individuelle Rahmenlängen. Auch hier entscheidet das Boot über die passende Ausstattung.</p></div>
+      <article class="model">
+        <div class="visual"><span class="visual-tag">Beispielfotos</span><img class="gallery-main" src="assets/hero.jpg" alt="HEKU Tandem-Bootsanhänger mit Boot"><div class="gallery-thumbs" aria-label="Weitere Bilder B 2500"><button class="gallery-thumb active" type="button" data-src="assets/hero.jpg" data-alt="HEKU Tandem-Bootsanhänger mit Boot"><img src="assets/hero.jpg" alt="Ansicht mit Boot auswählen"></button><button class="gallery-thumb" type="button" data-src="assets/bootsanhaenger.jpg" data-alt="HEKU Tandem-Fahrgestell"><img src="assets/bootsanhaenger.jpg" alt="Fahrgestell auswählen"></button></div></div>
+        <div class="content"><div class="model-kicker">Gebremst · Tandem</div><h3>B 2500</h3><div class="price">ab 5.110 € <small>inkl. 19 % MwSt., ab Werk</small></div>
+          <div class="specs"><div class="spec"><span class="spec-label">Gesamtgewicht</span><strong>2.500 kg</strong></div><div class="spec"><span class="spec-label">Zuladung ca.</span><strong>2.000 kg</strong></div><div class="spec"><span class="spec-label">Grundlänge</span><strong>6,60 m</strong></div><div class="spec"><span class="spec-label">Achsen</span><strong>Tandem</strong></div></div>
+          <p class="setup-label">Mögliche Ausrüstung</p><div class="chips"><span class="chip">Kielrollen</span><span class="chip">Polsterauflagen</span><span class="chip">Rumpfstützen</span><span class="chip">Sliprollen</span></div><p class="setup-note">Rahmenlänge, Stützpunkte und Anbauteile werden passend zu Gewicht, Abmessungen und Rumpfform festgelegt.</p>
+          <div class="actions"><a class="btn primary" href="#konfigurieren">B 2500 konfigurieren</a><a class="btn secondary" href="#">Details ansehen</a></div>
         </div>
-        <div class="tech-feat">
-          <div class="tech-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div><div class="tech-feat-title">Feuerverzinkt nach DIN 1461</div><div class="tech-feat-text">Tauchbad-Feuerverzinkung. Maximaler Schutz für Salz- und Süßwasser.</div></div>
-        </div>
-        <div class="tech-feat">
-          <div class="tech-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div><div class="tech-feat-title">Verstellbarer Stahlrahmen</div><div class="tech-feat-text">Stahlbriedenverschraubung, gelbchromatiert. Jedes Bauteil einzeln austauschbar.</div></div>
-        </div>
-        <div class="tech-feat">
-          <div class="tech-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-          <div><div class="tech-feat-title">ALU-Beleuchtungsprofil</div><div class="tech-feat-text">Ausziehbar und abnehmbar. Kabel im Rahmen verlegt, weniger Schwingungskräfte.</div></div>
-        </div>
-        <div class="tech-feat">
-          <div class="tech-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
-          <div><div class="tech-feat-title">Bremsseile aus Edelstahl</div><div class="tech-feat-text">Großdimensioniertes Bremssystem mit Rückfahrautomatik.</div></div>
-        </div>
-      </div>
-      <div class="tech-img">
-        <img src="hero.jpg" alt="HEKU Bootsanhänger Technik">
-      </div>
-    </div>
-  </div>
+      </article>
+    </section>
 
-  <!-- CTA -->
-  <div class="cta-banner">
-    <div>
-      <div class="cta-title">Nicht sicher welches Modell passt?</div>
-      <p class="cta-sub">Der HEKU Engineer berechnet in 3 Schritten das passende Modell für Ihr Boot, mit exakter Preisrange. Kostenlos und unverbindlich.</p>
-      <p style="margin-top:14px;font-size:14px;"><a href="/erfahrungen.html" style="color:#fff;font-weight:600;text-decoration:underline;">Was Kunden an HEKU Bootsanhängern schätzen</a> <span aria-hidden="true" style="color:#fff;">&#8594;</span></p>
-    </div>
-    <a href="konfigurator.html" class="btn-white">HEKU Engineer starten →</a>
-  </div>
+    <section class="series" data-series="ruderboot">
+      <div class="series-head"><div><span class="series-no">04 · SONDERAUSFÜHRUNG</span><h2>Ruderbootanhänger</h2></div><p>Eine eigenständige Anhängerkategorie für lange Ruderboote – mit seitlicher Be- und Entladung und speziell abgestimmtem Aufbau.</p></div>
+    </section>
+
+    <section class="config-strip" id="konfigurieren"><div class="config-inner"><div><h2>Welches Fahrgestell passt zu deinen Bootsdaten?</h2><p>Gewicht und Abmessungen eingeben. HEKU ermittelt das passende Grundmodell und die benötigte Ausstattung.</p></div><a class="btn" href="konfigurator.html">Konfigurator öffnen</a></div></section>
 
 <!-- generated-category-links -->
 <section class="category-hub" id="ersatzteile-kategorien"><h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul><li><a href="windenstaende-winden.html">Windenstände &amp; Winden</a> — 10 Artikel</li><li><a href="stuetzraeder-bootsanhaenger.html">Stützräder</a> — 2 Artikel</li><li><a href="kielrollen-stuetzrollen.html">Kiel- &amp; Stützrollen</a> — 15 Artikel</li><li><a href="auflagen-polsterkissen.html">Auflagen &amp; Kissen</a> — 9 Artikel</li><li><a href="raeder-reifen-bootsanhaenger.html">Räder &amp; Reifen</a> — 7 Artikel</li><li><a href="beleuchtung-bootsanhaenger.html">Beleuchtung</a> — 2 Artikel</li><li><a href="weiteres-bootsanhaenger-zubehoer.html">Weiteres Zubehör</a> — 10 Artikel</li></ul><p><a href="shop.html">Alle 55 Artikel im HEKU-Shop ansehen</a></p><p><a href="ersatzteile-bootsanhaenger.html">Ersatzteil-Ratgeber und alle Kategorien im Überblick</a></p></section>
 <!-- /generated-category-links -->
-<footer>
-    <div class="ft">
-      <div>
-        <div class="ft-logo"><img src="logo.svg" alt="HEKU"></div>
-        <p class="ft-desc">Familienunternehmen in der dritten Generation. Eigenentwickelte wasserdichte Radnabe. Einzelfertigung seit 1959.</p>
-        <div class="ft-contact">Bunzlauer Str. 6 · 33719 Bielefeld<br>0521 200066<br>info@heku-fahrzeugbau.de</div>
-        <div class="social-links">
-          <a href="https://www.instagram.com/hekutrailer/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          <a href="https://www.facebook.com/p/HEKU-Fahrzeugbau-GMBH-100050950194401/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-          <a href="https://www.linkedin.com/company/heku-fahrzeugbau-gmbh/" class="social-link" target="_blank" rel="noopener" aria-label="HEKU auf LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        </div>
-      </div>
-      <div>
-        <div class="ft-head">Produkte</div>
-        <div class="ft-links">
-          <a href="produkte.html">Bootsanhänger</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="shop.html">Zubehör &amp; Shop</a>
-          <a href="konfigurator.html">HEKU Engineer</a>
-        </div>
-      </div>
-      <div>
-        <div class="ft-head">Unternehmen</div>
-        <div class="ft-links">
-          <a href="ueber-uns.html">Über uns</a>
-          <a href="haendler.html">Partner werden</a>
-          <a href="kontakt.html">Kontakt</a>
-        </div>
-      </div>
-      <div>
-        <div class="ft-head">Service</div>
-        <div class="ft-links">
-          <a href="kontakt.html">Anfrage stellen</a>
-          <a href="faq.html">FAQ</a>
-          <a href="ratgeber-bootsanhaenger.html">Ratgeber</a>
-        <a href="wasserdichte-radnabe.html">Wasserdichte Radnabe</a>
-        </div>
-      </div>
-    </div>
-    <div class="ft-bottom">
-      <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div>
-    </div>
-  </footer>
-
+</main>
+  <footer><span>HEKU Fahrzeugbau GmbH · Bunzlauer Str. 6 · 33719 Bielefeld</span><span><a href="ersatzteile-bootsanhaenger.html">Ersatzteile</a> · <a href="technik-bootsanhaenger.html">Technische Daten</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span></footer>
   <script>
-    function showSection(filter) {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      const secs = ['ungebremst','einachsig','tandem','aufpreise'];
-      if (filter === 'alle') {
-        secs.forEach(s => document.getElementById('sec-'+s).style.display = '');
-      } else {
-        secs.forEach(s => {
-          document.getElementById('sec-'+s).style.display = s === filter ? '' : 'none';
-        });
-      }
-      window.scrollTo({top: document.querySelector('.filter-bar').offsetTop - 64, behavior:'smooth'});
-    }
+    const modelData={
+      ungebremst:[
+        {name:'B 350',price:'1.675',payload:'275–265 kg',weight:'350 kg',approval:'KBA',tag:'Originalfoto B 500',images:[['assets/anhaenger/B500.jpg','HEKU B 500 als Beispiel für Modell B 350']],variants:[['3,80 m','275 kg · 1.675 €'],['4,80 m','265 kg · 1.775 €']]},
+        {name:'B 500',price:'1.875',payload:'450–445 kg',weight:'500 kg',approval:'KBA',tag:'Originalfoto',images:[['assets/anhaenger/B500.jpg','HEKU B 500 Bootsanhänger im Originalfoto']],variants:[['4,50 m','450 kg · 1.875 €'],['5,00 m','445 kg · 1.950 €']]},
+        {name:'B 750',price:'2.150',payload:'620 kg',weight:'750 kg',approval:'KBA',tag:'Originalfoto',images:[['assets/anhaenger/B750.jpeg','HEKU B 750 Bootsanhänger im Originalfoto']]}
+      ],
+      einachser:[
+        {name:'B 900',price:'3.390',payload:'660 kg',weight:'900 kg',approval:'TÜV EG',tag:'Originalfoto B 1300',images:[['assets/anhaenger/B1300.jpg','HEKU B 1300 als Beispiel für Modell B 900']]},
+        {name:'B 1100',price:'3.490',payload:'815 kg',weight:'1.100 kg',approval:'TÜV EG',tag:'Originalfoto B 1300',images:[['assets/anhaenger/B1300.jpg','HEKU B 1300 als Beispiel für Modell B 1100']]},
+        {name:'B 1300',price:'3.590',payload:'1.000 kg',weight:'1.300 kg',approval:'TÜV EG',tag:'Originalfoto',images:[['assets/anhaenger/B1300.jpg','HEKU B 1300 Bootsanhänger im Originalfoto']]},
+        {name:'B 1500',price:'3.850',payload:'1.175 kg',weight:'1.500 kg',approval:'TÜV EG',tag:'Originalfoto B 1300',images:[['assets/anhaenger/B1300.jpg','HEKU B 1300 als Beispiel für Modell B 1500']]},
+        {name:'B 1800',price:'3.995',payload:'1.450 kg',weight:'1.800 kg',approval:'TÜV EG',tag:'Originalfoto',images:[['assets/anhaenger/B1800.jpg','HEKU B 1800 Bootsanhänger im Originalfoto']]}
+      ],
+      tandem:[
+        {name:'B 2000',price:'4.495',payload:'bis 1.610 kg',weight:'2.000 kg',approval:'TÜV EG',tag:'2 Originalfotos',images:[['assets/anhaenger/B2000_1.jpg','HEKU B 2000 mit Rollen im Originalfoto'],['assets/anhaenger/B2000_Segelboot.jpg','HEKU B 2000 mit Segelboot-Ausstattung im Originalfoto']],variants:[['6,60 m','1.610 kg · 4.495 €'],['7,10 m','1.600 kg · 4.695 €'],['7,60 m','1.590 kg · 4.895 €']]},
+        {name:'B 2500',price:'4.950',payload:'bis 2.000 kg',weight:'2.500 kg',approval:'TÜV EG',tag:'Originalfoto',images:[['assets/anhaenger/HEKU_B2500.jpeg','HEKU B 2500 Tandem-Bootsanhänger im Originalfoto']],variants:[['6,60 m','2.000 kg · 4.950 €'],['7,60 m','1.985 kg · 5.150 €'],['8,10 m','1.970 kg · 5.350 €']]},
+        {name:'B 2700',price:'5.150',payload:'bis 2.150 kg',weight:'2.700 kg',approval:'TÜV EG',tag:'Originalfoto B 2500',images:[['assets/anhaenger/HEKU_B2500.jpeg','HEKU B 2500 als Beispiel für B 2700']],variants:[['6,60 m','2.150 kg · 5.150 €'],['7,60 m','2.135 kg · 5.295 €'],['8,10 m','2.120 kg · 5.450 €']]},
+        {name:'B 3000',price:'5.695',payload:'bis 2.400 kg',weight:'3.000 kg',approval:'TÜV EG',tag:'Originalfoto',images:[['assets/anhaenger/B3000-neu.jpeg','HEKU B 3000 Tandem-Bootsanhänger im Originalfoto']],variants:[['6,60 m','2.400 kg · 5.695 €'],['7,60 m','2.380 kg'],['8,60 m','2.360 kg']]},
+        {name:'B 3500',price:'6.395',payload:'bis 2.850 kg',weight:'3.500 kg',approval:'TÜV EG',tag:'Originalfoto',images:[['assets/anhaenger/HEKU_B3500.jpeg','HEKU B 3500 Tandem-Bootsanhänger im Originalfoto']],variants:[['6,60 m','2.850 kg · 6.395 €'],['7,60 m','2.830 kg · 6.585 €'],['8,60 m','2.810 kg · 6.795 €']]}
+      ],
+      ruderboot:[
+        {name:'B 1300 Ruderboot',price:'8.000',payload:'750 kg',weight:'1.300 kg',approval:'Einzelabnahme',type:'Ruderbootausführung',tag:'Originalfoto',images:[['assets/anhaenger/B1300_Ruderboot.jpeg','HEKU B 1300 Ruderbootanhänger im Originalfoto mit 6 Meter langer Kiste']],length:'10,50 m',lighting:'+ 1,50 m ausziehbar',box:'6,00 m',chips:['Ruderbootausführung','6-m-Kiste','Abnehmbare Traversen','Ausziehbare Lichtleiste'],note:'Die Traversen sind für die seitliche Be- und Entladung des Ruderbootes abnehmbar.'}
+      ]
+    };
 
-    function openKonfigurator() {
-      window.location.href = 'konfigurator.html';
-    }
+    const card=(m,index)=>{
+      const thumbs=m.images.map((img,i)=>`<button class="gallery-thumb${i===0?' active':''}" type="button" data-src="${img[0]}" data-alt="${img[1]}"><img src="${img[0]}" alt="${img[1]} auswählen"></button>`).join('');
+      const variants=m.variants?`<div class="variants" aria-label="Längenvarianten">${m.variants.map(v=>`<div class="variant"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>`:'';
+      const isRuderboot=m.type==='Ruderbootausführung';
+      const typeLabel=isRuderboot?'Ruderbootanhänger · Sonderausführung':m.weight==='350 kg'||m.weight==='500 kg'||m.weight==='750 kg'?'Ungebremst · Einachser':m.weight==='2.000 kg'||m.weight==='2.500 kg'||m.weight==='2.700 kg'||m.weight==='3.000 kg'||m.weight==='3.500 kg'?'Gebremst · Tandem':'Gebremst · Einachser';
+      const specs=isRuderboot?`<div class="specs"><div class="spec"><span class="spec-label">Gesamtlänge</span><strong>${m.length}</strong></div><div class="spec"><span class="spec-label">Lichtleiste</span><strong>${m.lighting}</strong></div><div class="spec"><span class="spec-label">Zuladung ca.</span><strong>${m.payload}</strong></div><div class="spec"><span class="spec-label">Zulassung</span><strong>${m.approval}</strong></div><div class="spec"><span class="spec-label">Kistenlänge</span><strong>${m.box}</strong></div><div class="spec"><span class="spec-label">Ausstattung</span><strong>${m.type}</strong></div></div>`:`<div class="specs"><div class="spec"><span class="spec-label">Gesamtgewicht</span><strong>${m.weight}</strong></div><div class="spec"><span class="spec-label">Zuladung ca.</span><strong>${m.payload}</strong></div><div class="spec"><span class="spec-label">Zulassung</span><strong>${m.approval}</strong></div><div class="spec"><span class="spec-label">Ausstattung</span><strong>nach Bootsdaten</strong></div></div>`;
+      const chips=(m.chips||['Kielrollen','Polsterkissen','Langauflagen','Bugstütze']).map(chip=>`<span class="chip">${chip}</span>`).join('');
+      return `<article class="model${index%2?' reverse':''}">
+        <div class="visual-wrap"><div class="visual"><span class="visual-tag">${m.tag}</span><img class="gallery-main" src="${m.images[0][0]}" alt="${m.images[0][1]}"><div class="gallery-thumbs" aria-label="Weitere Bilder ${m.name}">${thumbs}</div></div><p class="image-note">* Produktabbildungen können Zubehör gegen Aufpreis beinhalten.</p></div>
+        <div class="content"><div class="model-kicker">${typeLabel}</div><h3>${m.name}</h3><div class="price">ab ${m.price} € <small>inkl. 19 % MwSt., ab Werk</small></div>${variants}${specs}
+          <p class="setup-label">${isRuderboot?'Ausstattung':'Mögliche Ausrüstung'}</p><div class="chips">${chips}</div><p class="setup-note">${m.note||'Auflagen, Rollen und Stützen werden passend zu Abmessungen, Gewicht und Rumpfform des Bootes zusammengestellt.'}</p>
+          <div class="actions">${isRuderboot?'':`<a class="btn primary" href="konfigurator.html">${m.name} konfigurieren</a>`}<a class="btn secondary" href="kontakt.html">Anfragen</a></div></div>
+      </article>`;
+    };
 
-    function toggleMenu() {
-      const c = document.querySelector('.nav-center');
-      const open = c.style.display === 'flex';
-      c.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:20px 24px;gap:16px;border-bottom:1px solid #E8E8E8;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.07);';
-    }
+    document.querySelectorAll('[data-series]').forEach(section=>{
+      section.querySelectorAll('.model').forEach(model=>model.remove());
+      section.insertAdjacentHTML('beforeend',modelData[section.dataset.series].map(card).join(''));
+    });
+
+    document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{
+      document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===button));
+      const wanted=button.dataset.filter;
+      document.querySelectorAll('[data-series]').forEach(section=>section.hidden=wanted!=='all'&&section.dataset.series!==wanted);
+    }));
+    document.querySelectorAll('.gallery-thumb').forEach(button=>button.addEventListener('click',()=>{
+      const gallery=button.closest('.visual');
+      const main=gallery.querySelector('.gallery-main');
+      main.src=button.dataset.src;
+      main.alt=button.dataset.alt;
+      gallery.querySelectorAll('.gallery-thumb').forEach(x=>x.classList.toggle('active',x===button));
+    }));
   </script>
-
-<!-- ============================================================
-     HEKU CONVERSION + GA4 TRACKING BLOCK
-     Vor </body> auf JEDER Seite einfügen (einmal pro Seite).
-     Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
-     Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
-     echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.
-     ============================================================ -->
-
-<!-- Mobile Sticky-CTA (nur < 768px sichtbar) -->
-<div class="heku-sticky-cta" role="navigation" aria-label="Schnellkontakt">
-  <a href="tel:+49521200066" class="hsc-btn hsc-call" aria-label="HEKU anrufen">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.56 3.5a1 1 0 01-.24 1z"/></svg>
-    <span>Anrufen</span>
-  </a>
-  <a href="/kontakt.html" class="hsc-btn hsc-inquiry">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1zm8 7L4.5 6.3 4 7l8 5 8-5-.5-.7z"/></svg>
-    <span>Anfrage</span>
-  </a>
-  <a href="/konfigurator.html" class="hsc-btn hsc-config">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2 1.7.3 2.6-2.5.6-1 2.4L13 20l-1 .1L11 20l-1.8-1.1-2.5-.6L4 15.7 6 14v-.1L4 12l2-1.7L5.7 7l2.5-.6 1-2.4L13 4l1-.1L15 4l1.8 1.1 2.5.6.3 2.6L21 12z"/></svg>
-    <span>Konfigurator</span>
-  </a>
-</div>
-
-<style>
-  .heku-sticky-cta{display:none;}
-  @media(max-width:768px){
-    .heku-sticky-cta{
-      display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
-      position:fixed;left:0;right:0;bottom:0;z-index:300;
-      background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.08);
-      box-shadow:0 -6px 20px rgba(0,0,0,0.25);
-      padding-bottom:env(safe-area-inset-bottom);
-    }
-    .hsc-btn{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-      padding:9px 4px 8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
-      letter-spacing:.02em;color:#fff;text-decoration:none;line-height:1;
-      border-right:1px solid rgba(255,255,255,0.08);
-    }
-    .hsc-btn:last-child{border-right:none;}
-    .hsc-btn svg{opacity:.9;}
-    .hsc-call{color:#fff;}
-    .hsc-config{background:#E8000E;}
-    .hsc-inquiry{color:#fff;}
-    .hsc-btn:active{opacity:.75;}
-    /* Platz schaffen, damit Footer nicht verdeckt wird */
-    body{padding-bottom:60px;}
-  }
-
-  .nav-dropdown-menu a.active { color: var(--rot); }
-</style>
-
-<script>
-/* HEKU Lead- & Event-Tracking ------------------------------------------------
-   Robust: bricht nie, auch wenn GA4 blockiert/geladen wird nicht.            */
-(function () {
-  "use strict";
-
-  // Sicherer gtag-Wrapper: schluckt Fehler, wenn gtag fehlt/geblockt ist.
-  function hekuTrack(eventName, params) {
-    try {
-      if (typeof window.gtag === "function") {
-        window.gtag("event", eventName, params || {});
-      }
-    } catch (e) { /* absichtlich still */ }
-  }
-  // Global verfuegbar machen (fuer Formular-Erfolg in kontakt/konfigurator/shop)
-  window.hekuTrack = hekuTrack;
-
-  var path = (location && location.pathname) ? location.pathname : "";
-
-  // Ein Klick-Delegate fuer die ganze Seite -> keine doppelten Listener.
-  document.addEventListener("click", function (ev) {
-    var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
-    if (!a) return;
-    var href = a.getAttribute("href") || "";
-
-    // Telefonklicks (auch aus der Sticky-Bar)
-    if (href.indexOf("tel:") === 0) {
-      hekuTrack("qualify_lead", { lead_type: "phone_click", page_path: path });
-      return;
-    }
-    // E-Mail-Klicks
-    if (href.indexOf("mailto:") === 0) {
-      hekuTrack("qualify_lead", { lead_type: "email_click", page_path: path });
-      return;
-    }
-  }, true);
-})();
-</script>
-
 </body>
 </html>

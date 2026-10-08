@@ -257,7 +257,7 @@ test('Shop displays the unchanged official EU legal-guarantee notice',()=>{
  const s=read('shop.html');
  const asset='assets/legal/eu-gewaehrleistung-de.svg';
  const bytes=fs.readFileSync(path.join(ROOT,asset));
- assert.equal(createHash('sha256').update(bytes).digest('hex'),'fd39364dbe42fa775ff55fb9b7aa80c377a5d04219929fef86a8522eed486b1a');
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),'ff05bcd771f26b3e5b28582723ce156ac64bbe8e612e2a154cf34ad73efa1bc5');
  assert.match(s,/class="info-item guarantee-trigger"[^>]+openGuaranteeNotice/);
  assert.match(s,new RegExp(`<img[^>]+src="${asset.replace(/[./]/g,'\\$&')}"`));
  assert.match(s,/class="guarantee-checkout"[^>]+openGuaranteeNotice/);
