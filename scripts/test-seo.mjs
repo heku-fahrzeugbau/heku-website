@@ -412,6 +412,80 @@ test('self-hosted fonts replace Google hosts and include valid local assets and 
  }
 });
 
+test('GA4 basic consent blocks Google until opt-in and keeps every tracked page behind the manager',()=>{
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ const template='scripts/templates/product-page.tpl';
+ const googleTagHost=/https:\/\/www\.googletagmanager\.com\/gtag\/js/i;
+ assert.match('<script src="https://www.googletagmanager.com/gtag/js?id=TEST"></script>',googleTagHost,'positive control');
+
+ let managedPages=0;
+ for(const file of [...htmlFiles,template]) {
+  const source=read(file);
+  assert.doesNotMatch(source,googleTagHost,file);
+  assert.doesNotMatch(source,/gtag\(['"]config['"],\s*['"]G-W97K9YN3YJ['"]\)/,file);
+  if(source.includes('src="/heku-consent-v2.js"')) managedPages++;
+  if(/(?:window\.)?gtag\(['"]event['"]/.test(source)) {
+   assert.ok(source.includes('src="/heku-consent-v2.js"'),`${file}: event tracking without consent manager`);
+  }
+ }
+ assert.equal(managedPages,93);
+
+ const privacy=read('datenschutz.html');
+ assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
+ assert.match(privacy,/keine Verbindung zu Google Fonts oder einem anderen Schriftanbieter/);
+ assert.doesNotMatch(privacy,/Ohne Ihre Einwilligung wird Google Analytics im sogenannten Consent Mode betrieben/);
+
+ const manager=read('heku-consent-v2.js');
+ assert.equal((manager.match(googleTagHost)||[]).length,1);
+ assert.match(manager,/analytics_storage: "denied"/);
+ assert.match(manager,/analytics_storage: "granted"/);
+
+ function consentHarness(stored) {
+  const appended=[],listeners={},storage={};
+  if(stored!==null) storage.heku_consent_v1=JSON.stringify({analytics:stored,ts:Date.now()});
+  const element=tag=>({
+   tagName:tag.toUpperCase(),style:{},className:'',innerHTML:'',async:false,src:'',
+   classList:{add(){},remove(){}},setAttribute(name,value){this[name]=value;},
+   getAttribute(name){return this[name]||null;},addEventListener(type,fn){listeners[type]=fn;}
+  });
+  const context=vm.createContext({
+   window:{dataLayer:[]},
+   document:{
+    readyState:'complete',head:{appendChild(node){appended.push(node);}},
+    body:{appendChild(node){appended.push(node);}},createElement:element,
+    querySelectorAll(){return [];},querySelector(){return null;}
+   },
+   localStorage:{getItem:key=>storage[key]||null,setItem:(key,value)=>{storage[key]=value;},removeItem:key=>{delete storage[key];}},
+   location:{reload(){}},requestAnimationFrame:fn=>fn(),Date,JSON,encodeURIComponent
+  });
+  vm.runInContext(manager,context,{filename:'heku-consent-v2.js'});
+  return {context,appended,listeners,storage};
+ }
+
+ const undecided=consentHarness(null);
+ assert.equal(undecided.appended.filter(node=>node.tagName==='SCRIPT').length,0);
+ assert.equal(typeof undecided.context.window.gtag,'undefined');
+
+ const denied=consentHarness(false);
+ assert.equal(denied.appended.filter(node=>node.tagName==='SCRIPT').length,0);
+ assert.equal(typeof denied.context.window.gtag,'undefined');
+
+ const granted=consentHarness(true);
+ const scripts=granted.appended.filter(node=>node.tagName==='SCRIPT');
+ assert.equal(scripts.length,1);
+ assert.equal(scripts[0].src,'https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ');
+ assert.equal(typeof granted.context.window.gtag,'function');
+ assert.deepEqual([...granted.context.window.dataLayer].map(args=>args[0]),['consent','js','config','consent']);
+
+ const accepted=consentHarness(null);
+ accepted.listeners.click({target:{closest(){return {getAttribute(){return 'allow';}};}}});
+ assert.equal(accepted.appended.filter(node=>node.tagName==='SCRIPT').length,1);
+ assert.equal(JSON.parse(accepted.storage.heku_consent_v1).analytics,true);
+});
+
 test('P0 traffic-law statements use the correct registration fields and complete Tempo-100 conditions',()=>{
  const guide=read('ratgeber-bootsanhaenger.html');
  const faq=read('faq.html');
