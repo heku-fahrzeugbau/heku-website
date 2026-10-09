@@ -426,9 +426,9 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
   const source=read(file);
   assert.doesNotMatch(source,googleTagHost,file);
   assert.doesNotMatch(source,/gtag\(['"]config['"],\s*['"]G-W97K9YN3YJ['"]\)/,file);
-  if(source.includes('src="/heku-consent-v2.js"')) managedPages++;
+  if(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"')) managedPages++;
   if(/(?:window\.)?gtag\(['"]event['"]/.test(source)) {
-   assert.ok(source.includes('src="/heku-consent-v2.js"'),`${file}: event tracking without consent manager`);
+   assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
  assert.equal(managedPages,93);

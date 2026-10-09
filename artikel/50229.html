@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="de"><head>
-  <script src="/heku-consent-v2.js"></script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
