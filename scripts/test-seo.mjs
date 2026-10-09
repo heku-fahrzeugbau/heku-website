@@ -486,6 +486,23 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
  assert.equal(JSON.parse(accepted.storage.heku_consent_v1).analytics,true);
 });
 
+test('contact upload is safely disabled without loading Uploadcare',()=>{
+ const publicSources=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`),
+  'scripts/templates/product-page.tpl'
+ ];
+ const uploadcare=/uploadcare|ucarecdn\.com|ucarecd\.net/i;
+ assert.match('<script src="https://ucarecdn.com/widget.js"></script>',uploadcare,'positive control');
+ for(const file of publicSources) assert.doesNotMatch(read(file),uploadcare,file);
+
+ const contact=read('kontakt.html');
+ assert.doesNotMatch(contact,/role=["']uploadcare-uploader["']/i);
+ assert.doesNotMatch(contact,/UPLOADCARE_PUBLIC_KEY|uploadedFileUrl|formData\.append\(["']anhang["']/);
+ assert.match(contact,/Der direkte Datei-Upload ist derzeit aus Datenschutz- und Sicherheitsgründen deaktiviert/);
+ assert.match(contact,/href="mailto:info@heku-fahrzeugbau\.de"/);
+});
+
 test('P0 traffic-law statements use the correct registration fields and complete Tempo-100 conditions',()=>{
  const guide=read('ratgeber-bootsanhaenger.html');
  const faq=read('faq.html');
