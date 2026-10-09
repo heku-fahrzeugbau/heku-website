@@ -431,7 +431,7 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
    assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
- assert.equal(managedPages,93);
+ assert.equal(managedPages,94);
 
  const privacy=read('datenschutz.html');
  assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
