@@ -376,6 +376,32 @@ test('Inline JavaScript compiles and JSON-LD parses on all pages',()=>{
  }
 });
 
+test('P0 traffic-law statements use the correct registration fields and complete Tempo-100 conditions',()=>{
+ const guide=read('ratgeber-bootsanhaenger.html');
+ const faq=read('faq.html');
+ const custom=read('bootsanhaenger-nach-mass.html');
+ const combined=[guide,faq,custom].join('\n');
+
+ assert.match(guide,/Feld <strong>O\.2<\/strong>/);
+ assert.match(guide,/Feld <strong>13<\/strong> nennt dagegen die Stützlast/);
+ assert.doesNotMatch(combined,/Anhängelast[^<\n]{0,100}Feld 13/i);
+ assert.doesNotMatch(combined,/Zugfahrzeug muss ebenfalls (?:für 100 km\/h mit Anhänger )?freigegeben/i);
+ assert.doesNotMatch(combined,/Zugfahrzeug für 100 km\/h mit Anhänger zugelassen/i);
+
+ for(const html of [guide,faq]) {
+  assert.match(html,/ABS\/ABV/);
+  assert.match(html,/sechs Jahre/);
+  assert.match(html,/Masseverhältnis/);
+  assert.match(html,/Stützlast/);
+  assert.match(html,/Tempo-100-Plakette/);
+  assert.match(html,/100kmh-regelung\.html/);
+ }
+
+ assert.doesNotMatch(guide,/>100 km\/h-Zulassung – (?:Einachsig|Tandem)</);
+ assert.match(guide,/Radstoßdämpfer-Paket für Tempo-100-Konfiguration – Einachsig/);
+ assert.match(custom,/Radstoßdämpfer-Paket: 280 €/);
+});
+
 test('Reserverad article numbers are distinct and match Robin’s correction',()=>{
  const cards=shopCards();
  const articles=cards.map(([,a])=>attributes(a)['data-artnr']);
