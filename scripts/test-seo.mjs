@@ -587,6 +587,30 @@ test('Validation and empty cart prevent network calls',async()=>{
   await h.api.submitOrder();assert.equal(h.requests.length,0,setting);
  }
 });
+test('Ruderbootanhänger FAQ reveals its answer and the video stays within native pixels',()=>{
+ const page=read('ruderbootanhaenger.html');
+ assert.match(page,/\.faq-answer\{max-height:0;overflow:hidden;/);
+ assert.match(page,/\.faq-item\.open \.faq-answer\{max-height:800px;\}/);
+ const questions=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">/g)];
+ const items=[...page.matchAll(/<div class="faq-item">/g)];
+ assert.equal(questions.length, items.length);
+ assert.ok(questions.length>=4);
+ assert.match(page,/function toggleFaq\(btn\)/);
+ assert.match(page,/width="576" height="1024"/);
+ assert.match(page,/grid-template-columns:minmax\(0,1fr\) 320px/);
+ assert.match(page,/max-width:576px/);
+ assert.equal(page.match(/"duration": "PT19S"/g).length,1);
+ const video=fs.statSync(path.join(ROOT,'assets/video/B1300_Mehrstock_Ruderboot.mp4'));
+ assert.ok(video.size>4_000_000 && video.size<=6*1024*1024, `video ${video.size} bytes`);
+ const jpeg=fs.readFileSync(path.join(ROOT,'assets/video/B1300_Mehrstock_Ruderboot_poster.jpg'));
+ let i=2, size=null;
+ while(i+8<jpeg.length && jpeg[i]===0xff){
+  const marker=jpeg[i+1];
+  if(marker===0xc0 || marker===0xc2){ size={h:jpeg.readUInt16BE(i+5), w:jpeg.readUInt16BE(i+7)}; break; }
+  i+=2+jpeg.readUInt16BE(i+2);
+ }
+ assert.deepEqual(size,{w:576,h:1024});
+});
 test('Late mail response cannot overwrite status of a newer order',async()=>{
  const h=harness({mail:'pending'});const p1=h.api.submitOrder();await new Promise(setImmediate);
  h.api.setCart([{id:54,artnr:85027,name:'Test',preis:20.25,qty:1}]);const p2=h.api.submitOrder();await new Promise(setImmediate);
