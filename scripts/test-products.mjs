@@ -116,6 +116,27 @@ test('Catalog characters escaped in markup and JSON-LD',()=>{
   assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
 });
 
+test('Confirmed B-Serie ab prices on produkte.html',()=>{
+ const html=read('produkte.html');
+ const block=html.match(/const modelData=\{[\s\S]*?\n    \};/);
+ assert.ok(block,'modelData fehlt in produkte.html');
+ const expected={
+  'B 350':'1.375',
+  'B 500':'1.575',
+  'B 750':'1.995',
+  'B 900':'3.190',
+  'B 2000':'4.655',
+  'B 2500':'5.110',
+  'B 3000':'5.855',
+  'B 3500':'6.555'
+ };
+ for(const [name,price] of Object.entries(expected)) {
+  const row=block[0].match(new RegExp("\\{name:'"+name+"',price:'([^']+)'"));
+  assert.ok(row,name+' fehlt in modelData');
+  assert.equal(row[1],price,name+' ab-Preis');
+ }
+});
+
 test('Every product page links to the official EU legal-guarantee notice',()=>{
  for(const p of all) {
   const html=read(`artikel/${p.sku}.html`);
