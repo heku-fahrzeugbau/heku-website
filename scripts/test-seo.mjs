@@ -376,6 +376,42 @@ test('Inline JavaScript compiles and JSON-LD parses on all pages',()=>{
  }
 });
 
+test('self-hosted fonts replace Google hosts and include valid local assets and licenses',()=>{
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ const template='scripts/templates/product-page.tpl';
+ const externalFontHost=/fonts\.(?:googleapis|gstatic)\.com/i;
+ assert.match('<link href="https://fonts.googleapis.com/css2?family=DM+Sans">',externalFontHost,'positive control');
+
+ let localStylesheetCount=0;
+ for(const file of [...htmlFiles,template]) {
+  const source=read(file);
+  assert.doesNotMatch(source,externalFontHost,file);
+  if(source.includes('href="/assets/css/fonts.css"')) localStylesheetCount++;
+ }
+ assert.ok(localStylesheetCount>=90,`only ${localStylesheetCount} local font stylesheet links found`);
+ assert.match(read(template),/href="\/assets\/css\/fonts\.css"/);
+
+ const fontCss=read('assets/css/fonts.css');
+ assert.doesNotMatch(fontCss,/https?:\/\//);
+ for(const family of ['Bebas Neue','Crimson Pro','DM Sans','DM Serif Display','IBM Plex Mono','Spectral']) {
+  assert.ok(fontCss.includes(`font-family: '${family}'`),family);
+ }
+ const fontUrls=[...fontCss.matchAll(/url\('\.\.\/fonts\/([^']+\.woff2)'\)/g)].map(match=>match[1]);
+ assert.equal(new Set(fontUrls).size,10);
+ for(const filename of new Set(fontUrls)) {
+  const fontPath=path.join(ROOT,'assets','fonts',filename);
+  assert.ok(fs.statSync(fontPath).size>10_000,filename);
+  assert.equal(fs.readFileSync(fontPath).subarray(0,4).toString('ascii'),'wOF2',filename);
+ }
+ for(const family of ['Bebas-Neue','Crimson-Pro','DM-Sans','DM-Serif-Display','IBM-Plex-Mono','Spectral']) {
+  const license=read(`assets/fonts/OFL-${family}.txt`);
+  assert.match(license,/SIL OPEN FONT LICENSE Version 1\.1/);
+ }
+});
+
 test('P0 traffic-law statements use the correct registration fields and complete Tempo-100 conditions',()=>{
  const guide=read('ratgeber-bootsanhaenger.html');
  const faq=read('faq.html');
