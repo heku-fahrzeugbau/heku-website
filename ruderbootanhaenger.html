@@ -324,7 +324,7 @@
     .ref-video{margin:0;}
     .ref-video video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:10px;background:#0A0A0A;object-fit:cover;}
     .ref-video figcaption{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px;}
-    .ref-video figcaption a{color:var(--rot);font-weight:500;}
+    .ref-video-link{display:inline-block;margin-top:4px;font-size:12px;font-weight:400;line-height:1.5;color:var(--text);text-decoration:underline;}
     .ref-note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
     .option-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0 56px;}
     .option-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color 0.2s;}
@@ -442,11 +442,12 @@
       <p class="ref-note">Die Lichtleiste dient als Lichtbalken für den Überhang der Boote. Alle Merkmale sind auf Kundenwunsch anpassbar; der Endpreis hängt von der Konfiguration ab.</p>
       </div>
       <figure class="ref-video">
-        <video controls muted playsinline preload="none" width="540" height="960" poster="assets/video/B1300_Mehrstock_Ruderboot_poster.jpg" aria-label="Video: Rundgang um den HEKU B1300 Mehrstock-Ruderbootanhänger für einen Ruderverein, ohne Ton, 19 Sekunden">
+        <video controls muted playsinline preload="none" width="540" height="960" poster="assets/video/B1300_Mehrstock_Ruderboot_poster.jpg" aria-label="Video: Rundgang um den HEKU B1300 Mehrstock-Ruderbootanhänger für einen Ruderverein">
           <source src="assets/video/B1300_Mehrstock_Ruderboot.mp4" type="video/mp4">
           <a href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video des B1300 Mehrstock-Ruderbootanhängers herunterladen (MP4, ca. 3 MB)</a>
         </video>
-        <figcaption>Video (19 s, ohne Ton): der B1300 Mehrstock-Ruderbootanhänger. <a href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video direkt öffnen</a></figcaption>
+        <figcaption>Der B1300 Mehrstock-Ruderbootanhänger im Video.</figcaption>
+        <a class="ref-video-link" href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video direkt öffnen</a>
       </figure>
       </div>
     </div>
