@@ -587,6 +587,16 @@ test('Validation and empty cart prevent network calls',async()=>{
   await h.api.submitOrder();assert.equal(h.requests.length,0,setting);
  }
 });
+test('Every toggleFaq page reveals the answer when the item is open',()=>{
+ const files=fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'));
+ const broken=[];
+ for(const file of files){
+  const page=read(file);
+  if(!page.includes('function toggleFaq') || !/\.faq-answer[^{]*\{[^}]*max-height:\s*0/.test(page)) continue;
+  if(!/\.faq-item\.open \.faq-answer[^{]*\{[^}]*max-height:\s*[1-9]/.test(page)) broken.push(file);
+ }
+ assert.deepEqual(broken,[]);
+});
 test('Ruderbootanhänger FAQ reveals its answer and the video stays within native pixels',()=>{
  const page=read('ruderbootanhaenger.html');
  assert.match(page,/\.faq-answer\{max-height:0;overflow:hidden;/);
