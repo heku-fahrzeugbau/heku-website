@@ -270,6 +270,7 @@
     .faq-item.open .faq-icon{background:var(--rot);border-color:var(--rot);}
     .faq-item.open .faq-icon::before{color:#fff;transform:rotate(45deg);}
     .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+    .faq-item.open .faq-answer{max-height:800px;}
     .faq-answer-inner{padding:4px 0 22px;font-size:15px;font-weight:300;line-height:1.75;color:var(--muted);max-width:720px;}
     .internal-links{background:var(--bg2);border-radius:12px;padding:32px;margin:48px 0;}
     .internal-links-title{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
@@ -319,10 +320,10 @@
     .ref-spec{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid var(--border);}
     .ref-spec-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
     .ref-spec-value{font-size:15px;font-weight:600;color:var(--schwarz);}
-    .ref-grid{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:32px;align-items:start;}
+    .ref-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start;}
     .ref-grid .ref-specs{grid-template-columns:1fr;}
-    .ref-video{margin:0;}
-    .ref-video video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:10px;background:#0A0A0A;object-fit:cover;}
+    .ref-video{margin:0;max-width:576px;}
+    .ref-video video{display:block;width:100%;max-width:576px;height:auto;aspect-ratio:9/16;border-radius:10px;background:#0A0A0A;object-fit:contain;}
     .ref-video figcaption{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px;}
     .ref-video-link{display:inline-block;margin-top:4px;font-size:12px;font-weight:400;line-height:1.5;color:var(--text);text-decoration:underline;}
     .ref-note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
@@ -333,7 +334,7 @@
     .option-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;}
     .price-note{font-size:14px;color:var(--muted);line-height:1.7;margin-top:12px;}
     @media(max-width:1024px){.page-header{padding-top:84px;}.page-header-grid{grid-template-columns:1fr;gap:32px;}.option-grid{grid-template-columns:1fr 1fr;}}
-    @media(max-width:760px){.ref-grid{grid-template-columns:1fr;}.ref-video{width:100%;max-width:min(100%,calc(70vh * 9 / 16));margin:8px auto 0;}}
+    @media(max-width:760px){.ref-grid{grid-template-columns:1fr;}.ref-video{width:100%;max-width:min(576px,100%,calc(70vh * 9 / 16));margin:8px auto 0;}}
     @media(max-width:600px){.option-grid{grid-template-columns:1fr;}.ref-specs{grid-template-columns:1fr;}.ref-box{padding:24px 20px;}.hero-actions .btn-cta,.hero-actions .btn-hero-ghost{width:100%;justify-content:center;}}
   </style>
 </head>
@@ -442,9 +443,9 @@
       <p class="ref-note">Die Lichtleiste dient als Lichtbalken für den Überhang der Boote. Alle Merkmale sind auf Kundenwunsch anpassbar; der Endpreis hängt von der Konfiguration ab.</p>
       </div>
       <figure class="ref-video">
-        <video controls muted playsinline preload="none" width="540" height="960" poster="assets/video/B1300_Mehrstock_Ruderboot_poster.jpg" aria-label="Video: Rundgang um den HEKU B1300 Mehrstock-Ruderbootanhänger für einen Ruderverein">
+        <video controls muted playsinline preload="none" width="576" height="1024" poster="assets/video/B1300_Mehrstock_Ruderboot_poster.jpg" aria-label="Video: Rundgang um den HEKU B1300 Mehrstock-Ruderbootanhänger für einen Ruderverein">
           <source src="assets/video/B1300_Mehrstock_Ruderboot.mp4" type="video/mp4">
-          <a href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video des B1300 Mehrstock-Ruderbootanhängers herunterladen (MP4, ca. 3 MB)</a>
+          <a href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video des B1300 Mehrstock-Ruderbootanhängers herunterladen (MP4, ca. 6 MB)</a>
         </video>
         <figcaption>Der B1300 Mehrstock-Ruderbootanhänger im Video.</figcaption>
         <a class="ref-video-link" href="assets/video/B1300_Mehrstock_Ruderboot.mp4">Video direkt öffnen</a>
