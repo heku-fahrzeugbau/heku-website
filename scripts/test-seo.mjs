@@ -621,6 +621,52 @@ test('Ruderbootanhänger FAQ reveals its answer and the video stays within nativ
  }
  assert.deepEqual(size,{w:576,h:1024});
 });
+test('VideoObject uploadDate has a timezone and offer availability is a schema.org URL',()=>{
+ const itemAvailability=new Set([
+  'https://schema.org/BackOrder','https://schema.org/Discontinued','https://schema.org/InStock',
+  'https://schema.org/InStoreOnly','https://schema.org/LimitedAvailability','https://schema.org/MadeToOrder',
+  'https://schema.org/OnlineOnly','https://schema.org/OutOfStock','https://schema.org/PreOrder',
+  'https://schema.org/PreSale','https://schema.org/Reserved','https://schema.org/SoldOut'
+ ]);
+ const isoWithZone=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html']);
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ let videos=0, offers=0;
+ for(const file of [...htmlFiles,'scripts/templates/product-page.tpl','scripts/generate-product-pages.mjs','scripts/build-site.mjs','content/produkte/produkte.json']) {
+  assert.doesNotMatch(read(file),/"uploadDate"\s*:\s*"\d{4}-\d{2}-\d{2}"/,file);
+  assert.doesNotMatch(read(file),/availability["']?\s*[:=]\s*["'](?!https:\/\/schema\.org\/)[A-Za-z]/,file);
+ }
+ for(const file of htmlFiles) {
+  let pageOffers=0;
+  for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+   const data=JSON.parse(block[1]);
+   const stack=[data];
+   while(stack.length) {
+    const node=stack.pop();
+    if(!node||typeof node!=='object') continue;
+    if(Array.isArray(node)) { stack.push(...node); continue; }
+    if(node['@type']==='VideoObject') {
+     videos++;
+     assert.match(node.uploadDate,isoWithZone,`${file} uploadDate`);
+    }
+    if(typeof node.availability==='string') {
+     offers++; pageOffers++;
+     assert.ok(itemAvailability.has(node.availability),`${file}: ${node.availability}`);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
+    }
+    for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
+   }
+  }
+  if(file.startsWith('artikel/')) assert.equal(pageOffers,1,file);
+ }
+ assert.equal(videos,1);
+ assert.equal((read('ruderbootanhaenger.html').match(/"uploadDate": "2026-10-09T12:00:00\+02:00"/g)||[]).length,1);
+ assert.match(read('scripts/generate-product-pages.mjs'),/availability:'https:\/\/schema\.org\/InStock'/);
+});
 test('Late mail response cannot overwrite status of a newer order',async()=>{
  const h=harness({mail:'pending'});const p1=h.api.submitOrder();await new Promise(setImmediate);
  h.api.setCart([{id:54,artnr:85027,name:'Test',preis:20.25,qty:1}]);const p2=h.api.submitOrder();await new Promise(setImmediate);

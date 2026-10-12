@@ -28,8 +28,9 @@ test('Every product has a canonical page, truthful visible price and Product/Off
   assert.equal(product.name,p.name); assert.equal(product.sku,p.sku);
   assert.equal(product.offers.price,p.price); assert.equal(product.offers.priceCurrency,'EUR');
   assert.equal(product.offers.url,BASE+'/'+filename(p));
+  assert.equal(product.offers.availability,'https://schema.org/InStock');
   assert.ok(s.includes(`<data value="${p.price}">${p.priceText}</data>`));
-  assert.ok(!product.offers.availability&&!product.aggregateRating&&!product.gtin&&!product.mpn);
+  assert.ok(!product.aggregateRating&&!product.gtin&&!product.mpn);
   if(p.image) assert.deepEqual(product.image,[BASE+'/'+p.image]);
   else { assert.equal(product.image,undefined); assert.match(s,/kein Produktfoto hinterlegt/); assert.doesNotMatch(s,/<figure class="detail-photo"/); }
   assert.match(s,/<body>\s*<!--\s*THESIS:/);
