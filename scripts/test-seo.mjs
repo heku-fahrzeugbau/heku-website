@@ -89,15 +89,75 @@ test('Published opening hours include the confirmed lunch break',()=>{
 
 test('Product overview and Bootstrailer money page have distinct search intents',()=>{
  const overview=read('produkte.html'), money=read('bootstrailer.html');
- assert.match(overview,/<title>HEKU Bootsanhänger-Modelle \| B-Serie 350–3500<\/title>/);
- assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/kaufen|1\.375/);
- assert.doesNotMatch(overview.match(/<meta name="description"[^>]+>/)[0],/kaufen/i);
- assert.match(overview,/<h1 class="page-title">HEKU Bootsanhänger-Modelle<br>im Überblick<\/h1>/);
+ assert.match(overview,/<title>Bootsanhänger kaufen vom Hersteller \| HEKU B-Serie<\/title>/);
+ assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/Bootstrailer|1\.375/);
+ assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/Bootsanhänger kaufen vom Hersteller/);
+ assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/kleine Anhänger/);
+ assert.match(overview,/<h1 class="page-title">Bootsanhänger kaufen<br>vom Hersteller<\/h1>/);
  assert.match(overview,/href="bootstrailer\.html"[^>]*>Bootsanhänger kaufen: Beratung &amp; Vorteile →<\/a>/);
- assert.match(money,/<title>Bootsanhänger kaufen ab 1\.375 € \| HEKU Bootstrailer<\/title>/);
- assert.match(money,/<h1 class="page-title">Bootstrailer &amp; Bootsanhänger<br>kaufen – direkt vom Hersteller<\/h1>/);
+ const introParas=[...overview.match(/<section class="intro">([\s\S]*?)<\/section>/)[1].matchAll(/<p(?: style="margin-top:18px")?>([\s\S]*?)<\/p>/g)].map(m=>m[1]).filter(x=>!x.includes('<a '));
+ const words=introParas.join(' ').replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean);
+ assert.ok(words.length>=100 && words.length<=150, 'intro words '+words.length);
+ assert.match(money,/<title>Bootstrailer kaufen vom Hersteller \| ab 1\.375 € \| HEKU<\/title>/);
+ assert.match(money,/<h1 class="page-title">Bootstrailer kaufen<br>vom Hersteller<\/h1>/);
+ assert.match(money,/Kleiner Bootstrailer und leichter Bootsanhänger/);
+ assert.match(money,/Bootstrailer 350 kg/);
+ assert.match(money,/href="jollenanhaenger\.html"/);
+ assert.match(money,/href="motorbootanhaenger\.html"/);
+ assert.match(money,/ca\. 2 Wochen/);
  assert.match(money,/href="produkte\.html" class="link-pill">&#8592; Technische Modellübersicht der B-Serie<\/a>/);
  for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
+ assert.notEqual(overview.match(/<title>([^<]+)/)[1], money.match(/<title>([^<]+)/)[1]);
+});
+
+test('Query-led pages state only catalog facts and link real accessory articles',()=>{
+ const segel=read('segelbootanhaenger.html');
+ assert.match(segel,/<title>Segelboot Anhänger kaufen \| Anhänger für Segelboot \| HEKU<\/title>/);
+ assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen –<br>Anhänger für Segelboot<\/h1>/);
+ assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
+ assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
+ assert.equal((segel.match(/<h1\b/g)||[]).length,1);
+
+ const custom=read('bootsanhaenger-nach-mass.html');
+ assert.match(custom,/<title>Bootsanhänger nach Maß \| maßgeschneiderter Anhänger \| HEKU<\/title>/);
+ assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß –<br>maßgeschneiderter Anhänger<\/h1>/);
+ assert.match(custom,/Umbau und Nachrüstung bestehender Trailer/);
+ assert.match(custom,/Rollen statt Gummischiene/);
+ assert.match(custom,/bessere Zentrierung/);
+ assert.match(custom,/href="kontakt\.html"/);
+ assert.match(custom,/href="kielrollen-stuetzrollen\.html"/);
+ assert.equal((custom.match(/<h1\b/g)||[]).length,1);
+ assert.doesNotMatch(custom.slice(custom.indexOf('Umbau und Nachrüstung'), custom.indexOf('TECHNISCHE BASIS')),/patentiert|seit 1959|65\+/i);
+
+ const tempo=read('100kmh-regelung.html');
+ assert.match(tempo,/<title>100 km\/h mit Anhänger: Plakette, Bußgeld, Autobahn \| HEKU<\/title>/);
+ assert.match(tempo,/id="kurzantwort"/);
+ const box=tempo.slice(tempo.indexOf('id="kurzantwort"'), tempo.indexOf('class="lead-text"'));
+ for(const fact of ['Tempo 80','Zeichen 330.1','Zeichen 331.1','Tempo-100-Plakette','Faktor 0,3','540 kg','Bußgeldkatalog']) assert.match(box, new RegExp(fact.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+ assert.doesNotMatch(box,/\d+\s*€|Bußgeld von \d+/);
+ const schemas=[...tempo.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+ assert.equal(schemas.filter(x=>x['@type']==='FAQPage').length,1);
+ const faq=schemas.find(x=>x['@type']==='FAQPage');
+ const visible=[...tempo.matchAll(/<p style="font-weight:600;margin-bottom:6px;">([^<]+)<\/p><p class="section-text">([^<]+)<\/p>/g)];
+ assert.deepEqual(faq.mainEntity.map(q=>q.name), visible.map(m=>m[1]));
+ assert.deepEqual(faq.mainEntity.map(q=>q.acceptedAnswer.text), visible.map(m=>m[2]));
+
+ const guides={
+  'auflagen-polsterkissen.html':['Polsterbezug erneuern','artikel/50227.html'],
+  'windenstaende-winden.html':['Welcher Windenstand passt','artikel/50201.html','artikel/50202.html','artikel/50203.html','artikel/50206.html'],
+  'kielrollen-stuetzrollen.html':['Kielrollen mit Halter auswählen','artikel/50218.html'],
+  'beleuchtung-bootsanhaenger.html':['artikel/85027.html'],
+  'weiteres-bootsanhaenger-zubehoer.html':['artikel/50235.html']
+ };
+ for(const [file,needles] of Object.entries(guides)) {
+  const html=read(file);
+  for(const needle of needles) assert.ok(html.includes(needle), file+' '+needle);
+  assert.doesNotMatch(html,/artikel\/50210\.html|patentiert/i, file);
+  assert.equal((html.match(/<h1\b/g)||[]).length,1);
+ }
+ const sitemap=read('sitemap.xml');
+ for(const sku of ['50201','50202','50203','50206','50218','50227','50235','85027']) assert.match(sitemap, new RegExp('/artikel/'+sku+'\\.html'));
+ assert.doesNotMatch(sitemap,/artikel\/50210\.html/);
 });
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
