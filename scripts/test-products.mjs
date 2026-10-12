@@ -32,11 +32,21 @@ test('Every product has a canonical page, truthful visible price and Product/Off
   assert.ok(s.includes(`<data value="${p.price}">${p.priceText}</data>`));
   assert.ok(!product.aggregateRating&&!product.gtin&&!product.mpn);
   if(p.image) assert.deepEqual(product.image,[BASE+'/'+p.image]);
-  else { assert.equal(product.image,undefined); assert.match(s,/kein Produktfoto hinterlegt/); assert.doesNotMatch(s,/<figure class="detail-photo"/); }
+  else {
+   assert.deepEqual(product.image,[BASE+'/'+p.imagePath]);
+   assert.match(product.image[0],/^https:\/\/heku-fahrzeugbau\.de\/assets\/produkte\/produkt-\d+\.(jpg|jpeg|png|webp)$/i);
+   assert.ok(fs.existsSync(path.join(ROOT,p.imagePath)));
+   assert.match(s,/kein Produktfoto hinterlegt/);
+   assert.doesNotMatch(s,/<figure class="detail-photo"/);
+  }
   assert.match(s,/<body>\s*<!--\s*THESIS:/);
   assert.match(s,/FINISH: unreviewed and undocumented is unfinished/);
  }
  assert.equal(titles.size,all.length);
+ for(const sku of ['50246','50253','50244']) {
+  const p=all.find(x=>x.sku===sku); assert.ok(p&&!p.image,sku);
+  assert.deepEqual(schema(read(filename(p)))['@graph'][0].image,[BASE+'/'+p.imagePath]);
+ }
  assert.equal(fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>/^\d+\.html$/.test(x)).length,all.length);
 });
 test('Shop and category link every product; CTA uses a fragment and no second checkout',()=>{
