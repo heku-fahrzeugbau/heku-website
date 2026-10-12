@@ -667,6 +667,50 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
  assert.equal((read('ruderbootanhaenger.html').match(/"uploadDate": "2026-10-09T12:00:00\+02:00"/g)||[]).length,1);
  assert.match(read('scripts/generate-product-pages.mjs'),/availability:'https:\/\/schema\.org\/InStock'/);
 });
+test('Every offer has availability and every product image is an absolute URL',()=>{
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','produkte.html']);
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ let offers=0, products=0, dated=0;
+ const types=value=>[].concat(value||[]);
+ for(const file of htmlFiles) {
+  for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+   const data=JSON.parse(block[1]);
+   const stack=[data];
+   while(stack.length) {
+    const node=stack.pop();
+    if(!node||typeof node!=='object') continue;
+    if(Array.isArray(node)) { stack.push(...node); continue; }
+    const kind=types(node['@type']);
+    if(kind.includes('Product')) {
+     products++;
+     const images=[].concat(node.image||[]);
+     assert.ok(images.length,`${file}: Product image fehlt`);
+     for(const image of images) assert.match(String(image),/^https:\/\/heku-fahrzeugbau\.de\//,`${file} image`);
+    }
+    if(kind.includes('Offer')||kind.includes('AggregateOffer')) {
+     offers++;
+     assert.equal(typeof node.availability,'string',`${file}: availability fehlt`);
+     assert.match(node.availability,/^https:\/\/schema\.org\//,file);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
+     if(node.priceValidUntil) {
+      dated++;
+      assert.equal(node.validFrom,'2026-10-01',file);
+      assert.ok(node.validFrom<=node.priceValidUntil,file);
+     }
+    }
+    for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
+   }
+  }
+ }
+ assert.ok(products>=55);
+ assert.ok(offers>=70);
+ assert.equal(dated,11);
+ assert.match(read('scripts/generate-product-pages.mjs'),/p\.image\|\|p\.imagePath/);
+});
 test('Late mail response cannot overwrite status of a newer order',async()=>{
  const h=harness({mail:'pending'});const p1=h.api.submitOrder();await new Promise(setImmediate);
  h.api.setCart([{id:54,artnr:85027,name:'Test',preis:20.25,qty:1}]);const p2=h.api.submitOrder();await new Promise(setImmediate);
