@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script src="/heku-consent-v2.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -31,9 +23,7 @@
   <meta name="twitter:title" content="HEKU Wohnmobile – Produktion eingestellt | HEKU Fahrzeugbau">
   <meta name="twitter:description" content="HEKU hat die Wohnmobilproduktion eingestellt. Info zu ehemaligen HEKU Wohnmobilen und HEKU Car Camp, plus Kontakt in Bielefeld.">
   <meta name="twitter:image" content="https://heku-fahrzeugbau.de/bootsanhaenger.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fonts.css">
   <style>
     :root{--rot:#E8000E;--rot-dark:#B8000B;--schwarz:#0A0A0A;--text:#2C2C2C;--muted:#6B6B6B;--border:#E8E8E8;--bg:#FFFFFF;--bg2:#F7F7F7;--font-head:'DM Serif Display',serif;--font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -173,7 +163,7 @@
 
   <!-- ============================================================
        HEKU GA4 LEAD-TRACKING (nur tel: / mailto:, keine Sticky-Bar)
-       Abhaengigkeit: gtag.js ist im <head> geladen (G-W97K9YN3YJ).
+       Abhaengigkeit: Der Consent-Manager gibt gtag.js erst nach Einwilligung frei.
        ============================================================ -->
   <script>
   (function () {

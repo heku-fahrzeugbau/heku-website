@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="de"><head>
-  <!-- Google tag (gtag.js) -->
-  <script src="/heku-consent-v2.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -18,9 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {{HEAD}}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fonts.css">
 <link rel="stylesheet" href="product-detail.css">
 </head><body>
 <!--
@@ -83,6 +73,12 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
     <button type="button" class="nav-burger" onclick="toggleMenu()" aria-label="Menü öffnen" aria-controls="shopNav" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 {{MAIN}}
+<dialog class="guarantee-dialog" id="guaranteeDialog" aria-labelledby="guaranteeDialogTitle" onclick="if(event.target===this) closeGuaranteeNotice()">
+  <button type="button" class="guarantee-dialog-close" onclick="closeGuaranteeNotice()" aria-label="Hinweis zur gesetzlichen Gewährleistung schließen">×</button>
+  <h2 id="guaranteeDialogTitle" hidden>Gesetzliche Gewährleistung</h2>
+  <img class="guarantee-notice" src="assets/legal/eu-gewaehrleistung-de.svg" alt="Offizielle EU-Mitteilung zur gesetzlichen Gewährleistung: mindestens zwei Jahre Gewährleistung für Waren">
+  <p class="guarantee-dialog-foot">Weitere Informationen finden Sie auf der offiziellen Seite der Europäischen Union: <a href="https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_de.htm" target="_blank" rel="noopener noreferrer">Gewährleistungen und Garantien</a>.</p>
+</dialog>
 <footer>
     <div class="ft">
       <div>
@@ -130,7 +126,16 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
       <div class="ft-legal" style="flex-wrap:wrap;gap:8px;"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a></div>
     </div>
   </footer>
-<script>  function toggleMenu() {
+<script>
+  function openGuaranteeNotice() {
+    const dialog = document.getElementById('guaranteeDialog');
+    if (!dialog.open) dialog.showModal();
+    dialog.querySelector('.guarantee-dialog-close').focus();
+  }
+  function closeGuaranteeNotice() {
+    document.getElementById('guaranteeDialog').close();
+  }
+  function toggleMenu() {
     const c = document.querySelector('.nav-center');
     const open = c.style.display === 'flex';
     document.querySelector('.nav-burger').setAttribute('aria-expanded', String(!open));

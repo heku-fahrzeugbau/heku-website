@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script src="/heku-consent-v2.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -40,9 +32,7 @@
     ]
   }
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fonts.css">
   <style>
     :root {
       --rot: #E8000E; --rot-dark: #B8000B; --schwarz: #0A0A0A;
@@ -87,6 +77,18 @@
     .info-band { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 80px; display: flex; gap: 32px; flex-wrap: wrap; }
     .info-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text); }
     .info-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rot); flex-shrink: 0; }
+    .guarantee-trigger { border: 0; padding: 0; background: transparent; color: #0645ad; font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .guarantee-trigger .info-dot { background: #0645ad; }
+    .guarantee-trigger:hover, .guarantee-trigger:focus-visible { color: var(--rot); }
+    .guarantee-dialog { width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 14px; overflow: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.28); }
+    .guarantee-dialog::backdrop { background: rgba(0,0,0,0.62); }
+    .guarantee-dialog-close { position: sticky; top: 12px; float: right; z-index: 2; width: 40px; height: 40px; margin: 12px 12px -52px 0; border: 0; border-radius: 50%; background: rgba(10,10,10,0.86); color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
+    .guarantee-dialog-close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .guarantee-notice { display: block; width: 100%; height: auto; background: #fff; }
+    .guarantee-dialog-foot { padding: 16px 20px 20px; background: #fff; font-size: 13px; line-height: 1.55; }
+    .guarantee-dialog-foot a { color: #0645ad; text-decoration: underline; }
+    .guarantee-checkout { width: 100%; margin: 0 0 18px; padding: 11px 14px; border: 1px solid #b8cbe0; border-radius: 8px; background: #f1f7fd; color: #174f86; font: 600 13px var(--font-body); text-align: left; cursor: pointer; }
+    .guarantee-checkout:hover, .guarantee-checkout:focus-visible { border-color: #174f86; }
 
     /* SHOP LAYOUT */
     .shop-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; padding: 48px 80px; align-items: start; }
@@ -422,7 +424,15 @@
     <div class="info-item"><div class="info-dot"></div>Ab Werk Bielefeld</div>
     <div class="info-item"><div class="info-dot"></div>Original HEKU-Teile</div>
     <div class="info-item"><div class="info-dot"></div>Alle Preise inkl. 19% MwSt.</div>
+    <button type="button" class="info-item guarantee-trigger" onclick="openGuaranteeNotice()" aria-haspopup="dialog"><div class="info-dot"></div>Gesetzliche Gewährleistung</button>
   </div>
+
+  <dialog class="guarantee-dialog" id="guaranteeDialog" aria-labelledby="guaranteeDialogTitle" onclick="if(event.target===this) closeGuaranteeNotice()">
+    <button type="button" class="guarantee-dialog-close" onclick="closeGuaranteeNotice()" aria-label="Hinweis zur gesetzlichen Gewährleistung schließen">×</button>
+    <h2 id="guaranteeDialogTitle" hidden>Gesetzliche Gewährleistung</h2>
+    <img class="guarantee-notice" src="assets/legal/eu-gewaehrleistung-de.svg" alt="Offizielle EU-Mitteilung zur gesetzlichen Gewährleistung: mindestens zwei Jahre Gewährleistung für Waren">
+    <p class="guarantee-dialog-foot">Weitere Informationen finden Sie auf der offiziellen Seite der Europäischen Union: <a href="https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_de.htm" target="_blank" rel="noopener noreferrer">Gewährleistungen und Garantien</a>.</p>
+  </dialog>
 
   <div class="marquee-wrap">
     <div class="marquee-track">
@@ -443,7 +453,7 @@
     </div>
   </div>
 
-  <noscript><p class="shop-noscript">Alle Artikel und Preise sind auch ohne JavaScript lesbar. Für Filter und Warenkorb bitte JavaScript aktivieren oder <a href="kontakt.html">HEKU kontaktieren</a>.</p></noscript>
+  <noscript><p class="shop-noscript">Alle Artikel und Preise sind auch ohne JavaScript lesbar. Für Filter und Warenkorb bitte JavaScript aktivieren oder <a href="kontakt.html">HEKU kontaktieren</a>. <a href="assets/legal/eu-gewaehrleistung-de.svg" target="_blank">Gesetzliche Gewährleistung</a>.</p></noscript>
   <main class="shop-layout" id="shopContent">
     <!-- SIDEBAR -->
     <div class="shop-sidebar" data-shop-enhancement hidden>
@@ -482,7 +492,7 @@
 <li><a href="beleuchtung-bootsanhaenger.html">Beleuchtung</a></li>
 <li><a href="weiteres-bootsanhaenger-zubehoer.html">Weiteres Zubehör</a></li></ul></details>
       <div class="shop-header">
-        <div class="shop-count" id="shopCount" role="status" aria-live="polite">57 Artikel</div>
+        <div class="shop-count" id="shopCount" role="status" aria-live="polite">55 Artikel</div>
         <div class="shop-search" data-shop-enhancement hidden>
           <label for="shopSearch">Artikel suchen</label>
           <input id="shopSearch" type="search" placeholder="Name oder Artikelnummer" oninput="renderProducts(currentCat)">
@@ -617,19 +627,6 @@
           <div class="product-footer">
             <data class="product-price" value="35.00">35,00 €</data>
             <button type="button" class="btn-add" id="btn-10" onclick="addToCart(10)" aria-label="Stahlseil verz. mit Haken – Art. 50209 in den Warenkorb" disabled>+ Warenkorb</button>
-          </div>
-        </div>
-      </article>
-      <article class="product-card" id="artikel-11" data-id="11" data-artnr="50210" data-cat="winden">
-        <div class="product-img"><img src="assets/produkte/produkt-11.jpg" alt="Stahlseil verz. mit Haken und Umlenkrolle" loading="lazy" decoding="async"></div>
-        <div class="product-body">
-          <p class="product-cat">Winden &amp; Ständer <span class="product-artnr">Art. 50210</span></p>
-          <h2 class="product-name">Stahlseil verz. mit Haken und Umlenkrolle</h2>
-          <p class="product-desc">Für Boote bis 2.850 kg</p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50210.html" aria-label="Details: Stahlseil verz. mit Haken und Umlenkrolle – Art. 50210">Artikeldetails ansehen</a><!-- /product-detail-link -->
-          <div class="product-footer">
-            <data class="product-price" value="95.00">95,00 €</data>
-            <button type="button" class="btn-add" id="btn-11" onclick="addToCart(11)" aria-label="Stahlseil verz. mit Haken und Umlenkrolle – Art. 50210 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
@@ -959,54 +956,54 @@
         </div>
       </article>
       <article class="product-card" id="artikel-36" data-id="36" data-artnr="50239" data-cat="raeder">
-        <div class="product-img"><img src="assets/produkte/produkt-36.jpg" alt="Reserverad 145 R 10" loading="lazy" decoding="async"></div>
+        <div class="product-img"><img src="assets/produkte/produkt-36.jpg" alt="Komplettrad 145 R 10" loading="lazy" decoding="async"></div>
         <div class="product-body">
           <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50239</span></p>
-          <h2 class="product-name">Reserverad 145 R 10</h2>
+          <h2 class="product-name">Komplettrad 145 R 10</h2>
           <p class="product-desc"></p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50239.html" aria-label="Details: Reserverad 145 R 10 – Art. 50239">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <!-- product-detail-link --><a class="product-details-link" href="artikel/50239.html" aria-label="Details: Komplettrad 145 R 10 – Art. 50239">Artikeldetails ansehen</a><!-- /product-detail-link -->
           <div class="product-footer">
             <data class="product-price" value="90.00">90,00 €</data>
-            <button type="button" class="btn-add" id="btn-36" onclick="addToCart(36)" aria-label="Reserverad 145 R 10 – Art. 50239 in den Warenkorb" disabled>+ Warenkorb</button>
+            <button type="button" class="btn-add" id="btn-36" onclick="addToCart(36)" aria-label="Komplettrad 145 R 10 – Art. 50239 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
       <article class="product-card" id="artikel-37" data-id="37" data-artnr="50240" data-cat="raeder">
-        <div class="product-img"><img src="assets/produkte/produkt-37.jpg" alt="Reserverad 155 R-13" loading="lazy" decoding="async"></div>
+        <div class="product-img"><img src="assets/produkte/produkt-37.jpg" alt="Komplettrad 155 R-13" loading="lazy" decoding="async"></div>
         <div class="product-body">
           <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50240</span></p>
-          <h2 class="product-name">Reserverad 155 R-13</h2>
+          <h2 class="product-name">Komplettrad 155 R-13</h2>
           <p class="product-desc"></p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50240.html" aria-label="Details: Reserverad 155 R-13 – Art. 50240">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <!-- product-detail-link --><a class="product-details-link" href="artikel/50240.html" aria-label="Details: Komplettrad 155 R-13 – Art. 50240">Artikeldetails ansehen</a><!-- /product-detail-link -->
           <div class="product-footer">
             <data class="product-price" value="120.00">120,00 €</data>
-            <button type="button" class="btn-add" id="btn-37" onclick="addToCart(37)" aria-label="Reserverad 155 R-13 – Art. 50240 in den Warenkorb" disabled>+ Warenkorb</button>
+            <button type="button" class="btn-add" id="btn-37" onclick="addToCart(37)" aria-label="Komplettrad 155 R-13 – Art. 50240 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
       <article class="product-card" id="artikel-38" data-id="38" data-artnr="50241" data-cat="raeder">
-        <div class="product-img"><img src="assets/produkte/produkt-38.jpg" alt="Reserverad 185 R-14C 8 PR" loading="lazy" decoding="async"></div>
+        <div class="product-img"><img src="assets/produkte/produkt-38.jpg" alt="Komplettrad 185 R-14C 8 PR" loading="lazy" decoding="async"></div>
         <div class="product-body">
           <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50241</span></p>
-          <h2 class="product-name">Reserverad 185 R-14C 8 PR</h2>
+          <h2 class="product-name">Komplettrad 185 R-14C 8 PR</h2>
           <p class="product-desc"></p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50241.html" aria-label="Details: Reserverad 185 R-14C 8 PR – Art. 50241">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <!-- product-detail-link --><a class="product-details-link" href="artikel/50241.html" aria-label="Details: Komplettrad 185 R-14C 8 PR – Art. 50241">Artikeldetails ansehen</a><!-- /product-detail-link -->
           <div class="product-footer">
             <data class="product-price" value="172.00">172,00 €</data>
-            <button type="button" class="btn-add" id="btn-38" onclick="addToCart(38)" aria-label="Reserverad 185 R-14C 8 PR – Art. 50241 in den Warenkorb" disabled>+ Warenkorb</button>
+            <button type="button" class="btn-add" id="btn-38" onclick="addToCart(38)" aria-label="Komplettrad 185 R-14C 8 PR – Art. 50241 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
       <article class="product-card" id="artikel-55" data-id="55" data-artnr="50242" data-cat="raeder">
-        <div class="product-img"><img src="assets/produkte/produkt-55.jpg" alt="Reserverad 195 R-14C 8 PR" loading="lazy" decoding="async"></div>
+        <div class="product-img"><img src="assets/produkte/produkt-55.jpg" alt="Komplettrad 195 R-14C 8 PR" loading="lazy" decoding="async"></div>
         <div class="product-body">
           <p class="product-cat">Räder &amp; Reifen <span class="product-artnr">Art. 50242</span></p>
-          <h2 class="product-name">Reserverad 195 R-14C 8 PR</h2>
+          <h2 class="product-name">Komplettrad 195 R-14C 8 PR</h2>
           <p class="product-desc"></p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50242.html" aria-label="Details: Reserverad 195 R-14C 8 PR – Art. 50242">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <!-- product-detail-link --><a class="product-details-link" href="artikel/50242.html" aria-label="Details: Komplettrad 195 R-14C 8 PR – Art. 50242">Artikeldetails ansehen</a><!-- /product-detail-link -->
           <div class="product-footer">
             <data class="product-price" value="192.00">192,00 €</data>
-            <button type="button" class="btn-add" id="btn-55" onclick="addToCart(55)" aria-label="Reserverad 195 R-14C 8 PR – Art. 50242 in den Warenkorb" disabled>+ Warenkorb</button>
+            <button type="button" class="btn-add" id="btn-55" onclick="addToCart(55)" aria-label="Komplettrad 195 R-14C 8 PR – Art. 50242 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
@@ -1085,19 +1082,6 @@
           <div class="product-footer">
             <data class="product-price" value="28.00">28,00 €</data>
             <button type="button" class="btn-add" id="btn-44" onclick="addToCart(44)" aria-label="V-Gummi für Buganschlag bis Typ 3500 – Art. 50237 in den Warenkorb" disabled>+ Warenkorb</button>
-          </div>
-        </div>
-      </article>
-      <article class="product-card" id="artikel-45" data-id="45" data-artnr="50238" data-cat="sonstiges">
-        <div class="product-img"><img src="assets/produkte/produkt-45.jpg" alt="Adapterstecker 7- bis 13-polig" loading="lazy" decoding="async"></div>
-        <div class="product-body">
-          <p class="product-cat">Sonstiges <span class="product-artnr">Art. 50238</span></p>
-          <h2 class="product-name">Adapterstecker 7- bis 13-polig</h2>
-          <p class="product-desc"></p>
-          <!-- product-detail-link --><a class="product-details-link" href="artikel/50238.html" aria-label="Details: Adapterstecker 7- bis 13-polig – Art. 50238">Artikeldetails ansehen</a><!-- /product-detail-link -->
-          <div class="product-footer">
-            <data class="product-price" value="39.00">39,00 €</data>
-            <button type="button" class="btn-add" id="btn-45" onclick="addToCart(45)" aria-label="Adapterstecker 7- bis 13-polig – Art. 50238 in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>
@@ -1348,6 +1332,7 @@
           <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;">Als Verbraucher haben Sie ein gesetzliches <a href="widerruf.html" target="_blank" style="color:var(--rot);">Widerrufsrecht von 14 Tagen</a> ab Erhalt der Ware.</p>
 
           <div class="form-error" id="co-error" role="alert"></div>
+          <button type="button" class="guarantee-checkout" onclick="openGuaranteeNotice()" aria-haspopup="dialog">ⓘ Gesetzliche Gewährleistung – Informationen anzeigen</button>
           <button class="btn-order" id="orderBtn" onclick="submitOrder()">Bestellung verbindlich absenden →</button>
         </div>
       </div>
@@ -1634,6 +1619,16 @@
   }
 
   // ─── CHECKOUT ────────────────────────────────────────────────────────────────
+  function openGuaranteeNotice() {
+    const dialog = document.getElementById('guaranteeDialog');
+    if (!dialog.open) dialog.showModal();
+    dialog.querySelector('.guarantee-dialog-close').focus();
+  }
+
+  function closeGuaranteeNotice() {
+    document.getElementById('guaranteeDialog').close();
+  }
+
   function openCheckout() {
     if (orderSubmitting || cart.length === 0) return;
     const orderBtn = document.getElementById('orderBtn');
@@ -2020,7 +2015,7 @@
 <!-- ============================================================
      HEKU CONVERSION + GA4 TRACKING BLOCK
      Vor </body> auf JEDER Seite einfügen (einmal pro Seite).
-     Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
+     Abhaengigkeit: Der Consent-Manager gibt gtag.js erst nach Einwilligung frei.
      Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
      echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.
      ============================================================ -->

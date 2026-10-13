@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 import { ROOT, BASE, urlForFile, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
@@ -13,6 +14,20 @@ const categoryPages = {
  'raeder-reifen-bootsanhaenger.html':'raeder', 'beleuchtung-bootsanhaenger.html':'beleuchtung',
  'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
 };
+
+test('Dealer finder uses local postcode data and keeps nine dealer websites unlinked',()=>{
+ const page=read('haendler.html');
+ const postcodeData=JSON.parse(read('assets/de-postcode-centroids.json'));
+ assert.equal((page.match(/class="dealer-pin"/g)||[]).length,9);
+ assert.equal((page.match(/data-lat="/g)||[]).length,9);
+ assert.equal((page.match(/data-lon="/g)||[]).length,9);
+ assert.match(page,/id="dealerPostcode"/);
+ assert.match(page,/assets\/de-postcode-centroids\.json/);
+ assert.match(page,/slice\(0, 3\)/);
+ assert.doesNotMatch(page,/https?:\/\/(?:www\.)?(?:gruendl|bootsservice-fette|bendix-pkw-anhaenger|kreusch|sailart|bootsbausager|fricke-dannhus|yachtservice-edersee|alu-force)\./i);
+ assert.ok(Object.keys(postcodeData.postcodes).length>10000);
+ assert.deepEqual(postcodeData.postcodes['33719'],[52.0107,8.5926]);
+});
 
 test('Local Bielefeld landing page is indexable, useful and internally linked',()=>{
  const file='bootsanhaenger-bielefeld.html', s=read(file);
@@ -74,15 +89,75 @@ test('Published opening hours include the confirmed lunch break',()=>{
 
 test('Product overview and Bootstrailer money page have distinct search intents',()=>{
  const overview=read('produkte.html'), money=read('bootstrailer.html');
- assert.match(overview,/<title>HEKU Bootsanhänger-Modelle \| B-Serie 350–3500<\/title>/);
- assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/kaufen|1\.375/);
- assert.doesNotMatch(overview.match(/<meta name="description"[^>]+>/)[0],/kaufen/i);
- assert.match(overview,/<h1 class="page-title">HEKU Bootsanhänger-Modelle<br>im Überblick<\/h1>/);
+ assert.match(overview,/<title>Bootsanhänger kaufen vom Hersteller \| HEKU B-Serie<\/title>/);
+ assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/Bootstrailer|1\.375/);
+ assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/Bootsanhänger kaufen vom Hersteller/);
+ assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/kleine Anhänger/);
+ assert.match(overview,/<h1 class="page-title">Bootsanhänger kaufen<br>vom Hersteller<\/h1>/);
  assert.match(overview,/href="bootstrailer\.html"[^>]*>Bootsanhänger kaufen: Beratung &amp; Vorteile →<\/a>/);
- assert.match(money,/<title>Bootsanhänger kaufen ab 1\.375 € \| HEKU Bootstrailer<\/title>/);
- assert.match(money,/<h1 class="page-title">Bootstrailer &amp; Bootsanhänger<br>kaufen – direkt vom Hersteller<\/h1>/);
+ const introParas=[...overview.match(/<section class="intro">([\s\S]*?)<\/section>/)[1].matchAll(/<p(?: style="margin-top:18px")?>([\s\S]*?)<\/p>/g)].map(m=>m[1]).filter(x=>!x.includes('<a '));
+ const words=introParas.join(' ').replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean);
+ assert.ok(words.length>=100 && words.length<=150, 'intro words '+words.length);
+ assert.match(money,/<title>Bootstrailer kaufen vom Hersteller \| ab 1\.375 € \| HEKU<\/title>/);
+ assert.match(money,/<h1 class="page-title">Bootstrailer kaufen<br>vom Hersteller<\/h1>/);
+ assert.match(money,/Kleiner Bootstrailer und leichter Bootsanhänger/);
+ assert.match(money,/Bootstrailer 350 kg/);
+ assert.match(money,/href="jollenanhaenger\.html"/);
+ assert.match(money,/href="motorbootanhaenger\.html"/);
+ assert.match(money,/ca\. 2 Wochen/);
  assert.match(money,/href="produkte\.html" class="link-pill">&#8592; Technische Modellübersicht der B-Serie<\/a>/);
  for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
+ assert.notEqual(overview.match(/<title>([^<]+)/)[1], money.match(/<title>([^<]+)/)[1]);
+});
+
+test('Query-led pages state only catalog facts and link real accessory articles',()=>{
+ const segel=read('segelbootanhaenger.html');
+ assert.match(segel,/<title>Segelboot Anhänger kaufen \| Anhänger für Segelboot \| HEKU<\/title>/);
+ assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen –<br>Anhänger für Segelboot<\/h1>/);
+ assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
+ assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
+ assert.equal((segel.match(/<h1\b/g)||[]).length,1);
+
+ const custom=read('bootsanhaenger-nach-mass.html');
+ assert.match(custom,/<title>Bootsanhänger nach Maß \| maßgeschneiderter Anhänger \| HEKU<\/title>/);
+ assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß –<br>maßgeschneiderter Anhänger<\/h1>/);
+ assert.match(custom,/Umbau und Nachrüstung bestehender Trailer/);
+ assert.match(custom,/Rollen statt Gummischiene/);
+ assert.match(custom,/bessere Zentrierung/);
+ assert.match(custom,/href="kontakt\.html"/);
+ assert.match(custom,/href="kielrollen-stuetzrollen\.html"/);
+ assert.equal((custom.match(/<h1\b/g)||[]).length,1);
+ assert.doesNotMatch(custom.slice(custom.indexOf('Umbau und Nachrüstung'), custom.indexOf('TECHNISCHE BASIS')),/patentiert|seit 1959|65\+/i);
+
+ const tempo=read('100kmh-regelung.html');
+ assert.match(tempo,/<title>100 km\/h mit Anhänger: Plakette, Bußgeld, Autobahn \| HEKU<\/title>/);
+ assert.match(tempo,/id="kurzantwort"/);
+ const box=tempo.slice(tempo.indexOf('id="kurzantwort"'), tempo.indexOf('class="lead-text"'));
+ for(const fact of ['Tempo 80','Zeichen 330.1','Zeichen 331.1','Tempo-100-Plakette','Faktor 0,3','540 kg','Bußgeldkatalog']) assert.match(box, new RegExp(fact.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+ assert.doesNotMatch(box,/\d+\s*€|Bußgeld von \d+/);
+ const schemas=[...tempo.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+ assert.equal(schemas.filter(x=>x['@type']==='FAQPage').length,1);
+ const faq=schemas.find(x=>x['@type']==='FAQPage');
+ const visible=[...tempo.matchAll(/<p style="font-weight:600;margin-bottom:6px;">([^<]+)<\/p><p class="section-text">([^<]+)<\/p>/g)];
+ assert.deepEqual(faq.mainEntity.map(q=>q.name), visible.map(m=>m[1]));
+ assert.deepEqual(faq.mainEntity.map(q=>q.acceptedAnswer.text), visible.map(m=>m[2]));
+
+ const guides={
+  'auflagen-polsterkissen.html':['Polsterbezug erneuern','artikel/50227.html'],
+  'windenstaende-winden.html':['Welcher Windenstand passt','artikel/50201.html','artikel/50202.html','artikel/50203.html','artikel/50206.html'],
+  'kielrollen-stuetzrollen.html':['Kielrollen mit Halter auswählen','artikel/50218.html'],
+  'beleuchtung-bootsanhaenger.html':['artikel/85027.html'],
+  'weiteres-bootsanhaenger-zubehoer.html':['artikel/50235.html']
+ };
+ for(const [file,needles] of Object.entries(guides)) {
+  const html=read(file);
+  for(const needle of needles) assert.ok(html.includes(needle), file+' '+needle);
+  assert.doesNotMatch(html,/artikel\/50210\.html|patentiert/i, file);
+  assert.equal((html.match(/<h1\b/g)||[]).length,1);
+ }
+ const sitemap=read('sitemap.xml');
+ for(const sku of ['50201','50202','50203','50206','50218','50227','50235','85027']) assert.match(sitemap, new RegExp('/artikel/'+sku+'\\.html'));
+ assert.doesNotMatch(sitemap,/artikel\/50210\.html/);
 });
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
@@ -239,6 +314,18 @@ test('Shop checkout controls have labels and mobile input hints',()=>{
  assert.match(s,/id="shopCategory"/);
  assert.match(s,/<noscript>[\s\S]*?HEKU kontaktieren/);
 });
+test('Shop displays the unchanged official EU legal-guarantee notice',()=>{
+ const s=read('shop.html');
+ const asset='assets/legal/eu-gewaehrleistung-de.svg';
+ const bytes=fs.readFileSync(path.join(ROOT,asset));
+ const normalized=Buffer.from(bytes.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+ assert.equal(createHash('sha256').update(normalized).digest('hex'),'fd39364dbe42fa775ff55fb9b7aa80c377a5d04219929fef86a8522eed486b1a');
+ assert.match(s,/class="info-item guarantee-trigger"[^>]+openGuaranteeNotice/);
+ assert.match(s,new RegExp(`<img[^>]+src="${asset.replace(/[./]/g,'\\$&')}"`));
+ assert.match(s,/class="guarantee-checkout"[^>]+openGuaranteeNotice/);
+ assert.match(s,/https:\/\/europa\.eu\/youreurope\/citizens\/consumers\/shopping\/guarantees\/index_de\.htm/);
+ assert.match(s,/dialog\.showModal\(\)/);
+});
 test('Shop shipping boundary checks preserve established rules',()=>{
  const s=read('shop.html');
  const src=s.match(/  function calcVersand\(cartItems\) \{[\s\S]*?\n  \}/)[0];
@@ -350,6 +437,142 @@ test('Inline JavaScript compiles and JSON-LD parses on all pages',()=>{
  }
 });
 
+test('self-hosted fonts replace Google hosts and include valid local assets and licenses',()=>{
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ const template='scripts/templates/product-page.tpl';
+ const externalFontHost=/fonts\.(?:googleapis|gstatic)\.com/i;
+ assert.match('<link href="https://fonts.googleapis.com/css2?family=DM+Sans">',externalFontHost,'positive control');
+
+ let localStylesheetCount=0;
+ for(const file of [...htmlFiles,template]) {
+  const source=read(file);
+  assert.doesNotMatch(source,externalFontHost,file);
+  if(source.includes('href="/assets/css/fonts.css"')) localStylesheetCount++;
+ }
+ assert.ok(localStylesheetCount>=90,`only ${localStylesheetCount} local font stylesheet links found`);
+ assert.match(read(template),/href="\/assets\/css\/fonts\.css"/);
+
+ const fontCss=read('assets/css/fonts.css');
+ assert.doesNotMatch(fontCss,/https?:\/\//);
+ for(const family of ['Bebas Neue','Crimson Pro','DM Sans','DM Serif Display','IBM Plex Mono','Spectral']) {
+  assert.ok(fontCss.includes(`font-family: '${family}'`),family);
+ }
+ const fontUrls=[...fontCss.matchAll(/url\('\.\.\/fonts\/([^']+\.woff2)'\)/g)].map(match=>match[1]);
+ assert.equal(new Set(fontUrls).size,10);
+ for(const filename of new Set(fontUrls)) {
+  const fontPath=path.join(ROOT,'assets','fonts',filename);
+  assert.ok(fs.statSync(fontPath).size>10_000,filename);
+  assert.equal(fs.readFileSync(fontPath).subarray(0,4).toString('ascii'),'wOF2',filename);
+ }
+ for(const family of ['Bebas-Neue','Crimson-Pro','DM-Sans','DM-Serif-Display','IBM-Plex-Mono','Spectral']) {
+  const license=read(`assets/fonts/OFL-${family}.txt`);
+  assert.match(license,/SIL OPEN FONT LICENSE Version 1\.1/);
+ }
+});
+
+test('GA4 basic consent blocks Google until opt-in and keeps every tracked page behind the manager',()=>{
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ const template='scripts/templates/product-page.tpl';
+ const googleTagHost=/https:\/\/www\.googletagmanager\.com\/gtag\/js/i;
+ assert.match('<script src="https://www.googletagmanager.com/gtag/js?id=TEST"></script>',googleTagHost,'positive control');
+
+ let managedPages=0;
+ for(const file of [...htmlFiles,template]) {
+  const source=read(file);
+  assert.doesNotMatch(source,googleTagHost,file);
+  assert.doesNotMatch(source,/gtag\(['"]config['"],\s*['"]G-W97K9YN3YJ['"]\)/,file);
+  if(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"')) managedPages++;
+  if(/(?:window\.)?gtag\(['"]event['"]/.test(source)) {
+   assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
+  }
+ }
+ assert.equal(managedPages,94);
+
+ const privacy=read('datenschutz.html');
+ assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
+ assert.match(privacy,/keine Verbindung zu Google Fonts oder einem anderen Schriftanbieter/);
+ assert.doesNotMatch(privacy,/Ohne Ihre Einwilligung wird Google Analytics im sogenannten Consent Mode betrieben/);
+
+ const manager=read('heku-consent-v2.js');
+ assert.equal((manager.match(googleTagHost)||[]).length,1);
+ assert.match(manager,/analytics_storage: "denied"/);
+ assert.match(manager,/analytics_storage: "granted"/);
+
+ function consentHarness(stored) {
+  const appended=[],listeners={},storage={};
+  if(stored!==null) storage.heku_consent_v1=JSON.stringify({analytics:stored,ts:Date.now()});
+  const element=tag=>({
+   tagName:tag.toUpperCase(),style:{},className:'',innerHTML:'',async:false,src:'',
+   classList:{add(){},remove(){}},setAttribute(name,value){this[name]=value;},
+   getAttribute(name){return this[name]||null;},addEventListener(type,fn){listeners[type]=fn;}
+  });
+  const context=vm.createContext({
+   window:{dataLayer:[]},
+   document:{
+    readyState:'complete',head:{appendChild(node){appended.push(node);}},
+    body:{appendChild(node){appended.push(node);}},createElement:element,
+    querySelectorAll(){return [];},querySelector(){return null;}
+   },
+   localStorage:{getItem:key=>storage[key]||null,setItem:(key,value)=>{storage[key]=value;},removeItem:key=>{delete storage[key];}},
+   location:{reload(){}},requestAnimationFrame:fn=>fn(),Date,JSON,encodeURIComponent
+  });
+  vm.runInContext(manager,context,{filename:'heku-consent-v2.js'});
+  return {context,appended,listeners,storage};
+ }
+
+ const undecided=consentHarness(null);
+ assert.equal(undecided.appended.filter(node=>node.tagName==='SCRIPT').length,0);
+ assert.equal(typeof undecided.context.window.gtag,'undefined');
+
+ const denied=consentHarness(false);
+ assert.equal(denied.appended.filter(node=>node.tagName==='SCRIPT').length,0);
+ assert.equal(typeof denied.context.window.gtag,'undefined');
+
+ const granted=consentHarness(true);
+ const scripts=granted.appended.filter(node=>node.tagName==='SCRIPT');
+ assert.equal(scripts.length,1);
+ assert.equal(scripts[0].src,'https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ');
+ assert.equal(typeof granted.context.window.gtag,'function');
+ assert.deepEqual([...granted.context.window.dataLayer].map(args=>args[0]),['consent','js','config','consent']);
+
+ const accepted=consentHarness(null);
+ accepted.listeners.click({target:{closest(){return {getAttribute(){return 'allow';}};}}});
+ assert.equal(accepted.appended.filter(node=>node.tagName==='SCRIPT').length,1);
+ assert.equal(JSON.parse(accepted.storage.heku_consent_v1).analytics,true);
+});
+
+test('P0 traffic-law statements use the correct registration fields and complete Tempo-100 conditions',()=>{
+ const guide=read('ratgeber-bootsanhaenger.html');
+ const faq=read('faq.html');
+ const custom=read('bootsanhaenger-nach-mass.html');
+ const combined=[guide,faq,custom].join('\n');
+
+ assert.match(guide,/Feld <strong>O\.2<\/strong>/);
+ assert.match(guide,/Feld <strong>13<\/strong> nennt dagegen die Stützlast/);
+ assert.doesNotMatch(combined,/Anhängelast[^<\n]{0,100}Feld 13/i);
+ assert.doesNotMatch(combined,/Zugfahrzeug muss ebenfalls (?:für 100 km\/h mit Anhänger )?freigegeben/i);
+ assert.doesNotMatch(combined,/Zugfahrzeug für 100 km\/h mit Anhänger zugelassen/i);
+
+ for(const html of [guide,faq]) {
+  assert.match(html,/ABS\/ABV/);
+  assert.match(html,/sechs Jahre/);
+  assert.match(html,/Masseverhältnis/);
+  assert.match(html,/Stützlast/);
+  assert.match(html,/Tempo-100-Plakette/);
+  assert.match(html,/100kmh-regelung\.html/);
+ }
+
+ assert.doesNotMatch(guide,/>100 km\/h-Zulassung – (?:Einachsig|Tandem)</);
+ assert.match(guide,/Radstoßdämpfer-Paket für Tempo-100-Konfiguration – Einachsig/);
+ assert.match(custom,/Radstoßdämpfer-Paket: 280 €/);
+});
+
 test('Reserverad article numbers are distinct and match Robin’s correction',()=>{
  const cards=shopCards();
  const articles=cards.map(([,a])=>attributes(a)['data-artnr']);
@@ -428,6 +651,130 @@ test('Validation and empty cart prevent network calls',async()=>{
   if(setting==='phone')h.node('co-telefon').value='12345';if(setting==='phone-empty')h.node('co-telefon').value='';
   await h.api.submitOrder();assert.equal(h.requests.length,0,setting);
  }
+});
+test('Every toggleFaq page reveals the answer when the item is open',()=>{
+ const files=fs.readdirSync(ROOT).filter(f=>f.endsWith('.html'));
+ const broken=[];
+ for(const file of files){
+  const page=read(file);
+  if(!page.includes('function toggleFaq') || !/\.faq-answer[^{]*\{[^}]*max-height:\s*0/.test(page)) continue;
+  if(!/\.faq-item\.open \.faq-answer[^{]*\{[^}]*max-height:\s*[1-9]/.test(page)) broken.push(file);
+ }
+ assert.deepEqual(broken,[]);
+});
+test('Ruderbootanhänger FAQ reveals its answer and the video stays within native pixels',()=>{
+ const page=read('ruderbootanhaenger.html');
+ assert.match(page,/\.faq-answer\{max-height:0;overflow:hidden;/);
+ assert.match(page,/\.faq-item\.open \.faq-answer\{max-height:800px;\}/);
+ const questions=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">/g)];
+ const items=[...page.matchAll(/<div class="faq-item">/g)];
+ assert.equal(questions.length, items.length);
+ assert.ok(questions.length>=4);
+ assert.match(page,/function toggleFaq\(btn\)/);
+ assert.match(page,/width="576" height="1024"/);
+ assert.match(page,/grid-template-columns:minmax\(0,1fr\) 320px/);
+ assert.match(page,/max-width:576px/);
+ assert.equal(page.match(/"duration": "PT19S"/g).length,1);
+ const video=fs.statSync(path.join(ROOT,'assets/video/B1300_Mehrstock_Ruderboot.mp4'));
+ assert.ok(video.size>4_000_000 && video.size<=6*1024*1024, `video ${video.size} bytes`);
+ const jpeg=fs.readFileSync(path.join(ROOT,'assets/video/B1300_Mehrstock_Ruderboot_poster.jpg'));
+ let i=2, size=null;
+ while(i+8<jpeg.length && jpeg[i]===0xff){
+  const marker=jpeg[i+1];
+  if(marker===0xc0 || marker===0xc2){ size={h:jpeg.readUInt16BE(i+5), w:jpeg.readUInt16BE(i+7)}; break; }
+  i+=2+jpeg.readUInt16BE(i+2);
+ }
+ assert.deepEqual(size,{w:576,h:1024});
+});
+test('VideoObject uploadDate has a timezone and offer availability is a schema.org URL',()=>{
+ const itemAvailability=new Set([
+  'https://schema.org/BackOrder','https://schema.org/Discontinued','https://schema.org/InStock',
+  'https://schema.org/InStoreOnly','https://schema.org/LimitedAvailability','https://schema.org/MadeToOrder',
+  'https://schema.org/OnlineOnly','https://schema.org/OutOfStock','https://schema.org/PreOrder',
+  'https://schema.org/PreSale','https://schema.org/Reserved','https://schema.org/SoldOut'
+ ]);
+ const isoWithZone=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html']);
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ let videos=0, offers=0;
+ for(const file of [...htmlFiles,'scripts/templates/product-page.tpl','scripts/generate-product-pages.mjs','scripts/build-site.mjs','content/produkte/produkte.json']) {
+  assert.doesNotMatch(read(file),/"uploadDate"\s*:\s*"\d{4}-\d{2}-\d{2}"/,file);
+  assert.doesNotMatch(read(file),/availability["']?\s*[:=]\s*["'](?!https:\/\/schema\.org\/)[A-Za-z]/,file);
+ }
+ for(const file of htmlFiles) {
+  let pageOffers=0;
+  for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+   const data=JSON.parse(block[1]);
+   const stack=[data];
+   while(stack.length) {
+    const node=stack.pop();
+    if(!node||typeof node!=='object') continue;
+    if(Array.isArray(node)) { stack.push(...node); continue; }
+    if(node['@type']==='VideoObject') {
+     videos++;
+     assert.match(node.uploadDate,isoWithZone,`${file} uploadDate`);
+    }
+    if(typeof node.availability==='string') {
+     offers++; pageOffers++;
+     assert.ok(itemAvailability.has(node.availability),`${file}: ${node.availability}`);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
+    }
+    for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
+   }
+  }
+  if(file.startsWith('artikel/')) assert.equal(pageOffers,1,file);
+ }
+ assert.equal(videos,1);
+ assert.equal((read('ruderbootanhaenger.html').match(/"uploadDate": "2026-10-09T12:00:00\+02:00"/g)||[]).length,1);
+ assert.match(read('scripts/generate-product-pages.mjs'),/availability:'https:\/\/schema\.org\/InStock'/);
+});
+test('Every offer has availability and every product image is an absolute URL',()=>{
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','produkte.html']);
+ const htmlFiles=[
+  ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
+  ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
+ ];
+ let offers=0, products=0, dated=0;
+ const types=value=>[].concat(value||[]);
+ for(const file of htmlFiles) {
+  for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+   const data=JSON.parse(block[1]);
+   const stack=[data];
+   while(stack.length) {
+    const node=stack.pop();
+    if(!node||typeof node!=='object') continue;
+    if(Array.isArray(node)) { stack.push(...node); continue; }
+    const kind=types(node['@type']);
+    if(kind.includes('Product')) {
+     products++;
+     const images=[].concat(node.image||[]);
+     assert.ok(images.length,`${file}: Product image fehlt`);
+     for(const image of images) assert.match(String(image),/^https:\/\/heku-fahrzeugbau\.de\//,`${file} image`);
+    }
+    if(kind.includes('Offer')||kind.includes('AggregateOffer')) {
+     offers++;
+     assert.equal(typeof node.availability,'string',`${file}: availability fehlt`);
+     assert.match(node.availability,/^https:\/\/schema\.org\//,file);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
+     if(node.priceValidUntil) {
+      dated++;
+      assert.equal(node.validFrom,'2026-10-01',file);
+      assert.ok(node.validFrom<=node.priceValidUntil,file);
+     }
+    }
+    for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
+   }
+  }
+ }
+ assert.ok(products>=55);
+ assert.ok(offers>=70);
+ assert.equal(dated,11);
+ assert.match(read('scripts/generate-product-pages.mjs'),/p\.image\|\|p\.imagePath/);
 });
 test('Late mail response cannot overwrite status of a newer order',async()=>{
  const h=harness({mail:'pending'});const p1=h.api.submitOrder();await new Promise(setImmediate);

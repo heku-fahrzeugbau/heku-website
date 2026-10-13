@@ -107,7 +107,11 @@ export function renderProduct(p, all, shell) {
   // Fragment statt ?artikel=: jede Query-URL ist eine crawl-bare Kopie von shop.html.
   // #artikel-<id> waehlt dieselbe Karte und ist keine eigene URL.
   const shop=`shop.html#artikel-${p.id}`;
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),...(p.image?{image:[BASE+'/'+p.image]}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',shippingDetails:shippingSchema(unitShippingEuro(p))}};
+  // Shop-Zubehör ist bestellbar. Anhänger-Einzelfertigung steht auf den Modellseiten
+  // als https://schema.org/MadeToOrder, nicht in diesem Katalog.
+  // JSON-LD braucht ein Produktbild. Ohne Foto die vorhandene Platzhalterdatei
+  // (HEKU-Logo) als absolute URL; das sichtbare Hinweis-Markup bleibt.
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p))}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
   const main=`<main id="articleContent" class="detail-main">
@@ -115,7 +119,7 @@ export function renderProduct(p, all, shell) {
     <section class="detail-hero ${p.image?'has-photo':'no-photo'}" aria-labelledby="articleTitle">
       <div class="detail-info"><h1 id="articleTitle">${e(p.name)}</h1><p class="detail-sku">Artikelnummer ${p.sku}</p>
         ${p.desc?`<p class="detail-description">${e(p.desc)}</p>`:''}
-        <div class="detail-purchase"><p class="detail-price"><data value="${p.price}">${e(p.priceText)}</data></p><p class="detail-tax">Inkl. 19 % MwSt., zzgl. ${shipText} Versand innerhalb Deutschlands bei Einzelbestellung. Bei mehreren Artikeln berechnet der <a href="${shop}">Warenkorb</a> die tatsächlichen Versandkosten; Einzelheiten in den <a href="agb.html">AGB</a>.</p><a class="detail-buy" href="${shop}">Im Shop bestellen</a><p class="detail-handoff">Öffnet diesen Artikel im Shop. Menge und Versandkosten sehen Sie im Warenkorb.</p></div>
+        <div class="detail-purchase"><p class="detail-price"><data value="${p.price}">${e(p.priceText)}</data></p><p class="detail-tax">Inkl. 19 % MwSt., zzgl. ${shipText} Versand innerhalb Deutschlands bei Einzelbestellung. Bei mehreren Artikeln berechnet der <a href="${shop}">Warenkorb</a> die tatsächlichen Versandkosten; Einzelheiten in den <a href="agb.html">AGB</a>.</p><a class="detail-buy" href="${shop}">Im Shop bestellen</a><p class="detail-handoff">Öffnet diesen Artikel im Shop. Menge und Versandkosten sehen Sie im Warenkorb.</p><button type="button" class="detail-guarantee" onclick="openGuaranteeNotice()" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4.5 5v5.8c0 5 3.2 9.2 7.5 11.2 4.3-2 7.5-6.2 7.5-11.2V5L12 2Zm0 2.2 5.5 2.2v4.4c0 3.9-2.2 7.3-5.5 9.1-3.3-1.8-5.5-5.2-5.5-9.1V6.4L12 4.2Z"/></svg> GESETZLICHE GEWÄHRLEISTUNG</button></div>
         ${!p.image?'<p class="detail-missing-photo">Für diesen Artikel ist derzeit kein Produktfoto hinterlegt.</p>':''}
       </div>
       ${p.image?`<figure class="detail-photo"><img src="${e(p.image)}" alt="${e(p.name)} – Art. ${p.sku}" decoding="async" fetchpriority="high"><figcaption>Artikel ${p.sku} aus dem HEKU-Shop.</figcaption></figure>`:''}

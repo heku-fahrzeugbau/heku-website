@@ -4,7 +4,6 @@ import { ROOT } from './generate-sitemap.mjs';
 import { catalog } from './generate-product-pages.mjs';
 
 export const priceTableFiles = [
-  'produkte.html',
   'motorbootanhaenger.html',
   'segelbootanhaenger.html'
 ];
@@ -44,6 +43,6 @@ export function syncProductPriceTables(root = ROOT, products = catalog(root)) {
     }
   }
 
-  if (managedRows !== 6) throw new Error(`Erwartet 6 zentral gepflegte Preislisten-Zeilen, gefunden: ${managedRows}.`);
+  if (managedRows !== 3) throw new Error(`Erwartet 3 zentral gepflegte Preislisten-Zeilen, gefunden: ${managedRows}.`);
   return { changed, managedRows };
 }

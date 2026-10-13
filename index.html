@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script src="/heku-consent-v2.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="preload" as="image" href="hero.jpg" fetchpriority="high">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -146,6 +138,7 @@
     "itemListElement": [
       {
         "@type": "Offer",
+        "availability": "https://schema.org/MadeToOrder",
         "itemOffered": {
           "@type": "Product",
           "name": "Bootsanhänger ungebremst",
@@ -160,7 +153,7 @@
               "priceCurrency": "EUR",
               "valueAddedTaxIncluded": true
             },
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/MadeToOrder",
             "url": "https://heku-fahrzeugbau.de/",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
@@ -204,6 +197,7 @@
       },
       {
         "@type": "Offer",
+        "availability": "https://schema.org/MadeToOrder",
         "itemOffered": {
           "@type": "Product",
           "name": "Motorbootanhänger",
@@ -218,7 +212,7 @@
               "priceCurrency": "EUR",
               "valueAddedTaxIncluded": true
             },
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/MadeToOrder",
             "url": "https://heku-fahrzeugbau.de/motorbootanhaenger.html",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
@@ -262,6 +256,7 @@
       },
       {
         "@type": "Offer",
+        "availability": "https://schema.org/MadeToOrder",
         "itemOffered": {
           "@type": "Product",
           "name": "Tandem-Bootstrailer",
@@ -276,7 +271,7 @@
               "priceCurrency": "EUR",
               "valueAddedTaxIncluded": true
             },
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/MadeToOrder",
             "url": "https://heku-fahrzeugbau.de/bootstrailer.html",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
@@ -347,9 +342,7 @@
   ]
 }
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fonts.css">
   <style>
     :root {
       --rot:       #E8000E;
@@ -1042,7 +1035,7 @@
 <!-- ============================================================
      HEKU CONVERSION + GA4 TRACKING BLOCK
      Vor </body> auf JEDER Seite einfügen (einmal pro Seite).
-     Abhaengigkeit: gtag.js ist bereits im <head> geladen (G-W97K9YN3YJ).
+     Abhaengigkeit: Der Consent-Manager gibt gtag.js erst nach Einwilligung frei.
      Setzt KEINE Events doppelt. Feuert qualify_lead nur bei
      echtem Nutzer-Klick (Telefon/E-Mail) bzw. echtem Submit.
      ============================================================ -->

@@ -28,14 +28,25 @@ test('Every product has a canonical page, truthful visible price and Product/Off
   assert.equal(product.name,p.name); assert.equal(product.sku,p.sku);
   assert.equal(product.offers.price,p.price); assert.equal(product.offers.priceCurrency,'EUR');
   assert.equal(product.offers.url,BASE+'/'+filename(p));
+  assert.equal(product.offers.availability,'https://schema.org/InStock');
   assert.ok(s.includes(`<data value="${p.price}">${p.priceText}</data>`));
-  assert.ok(!product.offers.availability&&!product.aggregateRating&&!product.gtin&&!product.mpn);
+  assert.ok(!product.aggregateRating&&!product.gtin&&!product.mpn);
   if(p.image) assert.deepEqual(product.image,[BASE+'/'+p.image]);
-  else { assert.equal(product.image,undefined); assert.match(s,/kein Produktfoto hinterlegt/); assert.doesNotMatch(s,/<figure class="detail-photo"/); }
+  else {
+   assert.deepEqual(product.image,[BASE+'/'+p.imagePath]);
+   assert.match(product.image[0],/^https:\/\/heku-fahrzeugbau\.de\/assets\/produkte\/produkt-\d+\.(jpg|jpeg|png|webp)$/i);
+   assert.ok(fs.existsSync(path.join(ROOT,p.imagePath)));
+   assert.match(s,/kein Produktfoto hinterlegt/);
+   assert.doesNotMatch(s,/<figure class="detail-photo"/);
+  }
   assert.match(s,/<body>\s*<!--\s*THESIS:/);
   assert.match(s,/FINISH: unreviewed and undocumented is unfinished/);
  }
  assert.equal(titles.size,all.length);
+ for(const sku of ['50246','50253','50244']) {
+  const p=all.find(x=>x.sku===sku); assert.ok(p&&!p.image,sku);
+  assert.deepEqual(schema(read(filename(p)))['@graph'][0].image,[BASE+'/'+p.imagePath]);
+ }
  assert.equal(fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>/^\d+\.html$/.test(x)).length,all.length);
 });
 test('Shop and category link every product; CTA uses a fragment and no second checkout',()=>{
@@ -115,6 +126,38 @@ test('Catalog characters escaped in markup and JSON-LD',()=>{
   assert.doesNotMatch(s,/<img src=x>/);
   assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
 });
+
+test('Confirmed B-Serie ab prices on produkte.html',()=>{
+ const html=read('produkte.html');
+ const block=html.match(/const modelData=\{[\s\S]*?\n    \};/);
+ assert.ok(block,'modelData fehlt in produkte.html');
+ const expected={
+  'B 350':'1.375',
+  'B 500':'1.575',
+  'B 750':'1.995',
+  'B 900':'3.190',
+  'B 2000':'4.655',
+  'B 2500':'5.110',
+  'B 3000':'5.855',
+  'B 3500':'6.555'
+ };
+ for(const [name,price] of Object.entries(expected)) {
+  const row=block[0].match(new RegExp("\\{name:'"+name+"',price:'([^']+)'"));
+  assert.ok(row,name+' fehlt in modelData');
+  assert.equal(row[1],price,name+' ab-Preis');
+ }
+ assert.match(block[0],/\{name:'B 500',price:'1\.575'[\s\S]*?variants:\[\['4,50 m','450 kg · 1\.575 €'\],\['5,00 m','445 kg · 1\.650 €'\]\]\}/,'B 500 Laengenvarianten');
+});
+
+test('Every product page links to the official EU legal-guarantee notice',()=>{
+ for(const p of all) {
+  const html=read(`artikel/${p.sku}.html`);
+  assert.match(html,/class="detail-guarantee"[^>]+openGuaranteeNotice/);
+  assert.match(html,/src="\/assets\/legal\/eu-gewaehrleistung-de\.svg"/);
+  assert.match(html,/https:\/\/europa\.eu\/youreurope\/citizens\/consumers\/shopping\/guarantees\/index_de\.htm/);
+  assert.match(html,/dialog\.showModal\(\)/);
+ }
+});
 test('Confirmed product prices and SKU stay synchronized in every marked price table',()=>{
  const expected={50214:['63,03','75,00'],50215:['155,46','185,00'],50241:['144,54','172,00']};
  let count=0;
@@ -124,17 +167,17 @@ test('Confirmed product prices and SKU stay synchronized in every marked price t
   assert.deepEqual([net,gross],expected[sourceSku],`${file}: Preis ${sourceSku}`);
   count++;
  }
- assert.equal(count,6);
+ assert.equal(count,3);
  assert.match(read('motorbootanhaenger.html'),/data-catalog-sku="50241"><td class="pl-art">50241<\/td><td>Reserverad 185 R-14C/);
 });
 test('Price-table synchronization repairs stale marked values and is idempotent',()=>{
  const root=fs.mkdtempSync(path.join(ROOT,'.price-table-test-'));
  try {
   for(const file of priceTableFiles) fs.copyFileSync(path.join(ROOT,file),path.join(root,file));
-  const target=path.join(root,'produkte.html');
+  const target=path.join(root,'motorbootanhaenger.html');
   fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace('data-catalog-sku="50214"><td class="pl-art">50214</td>','data-catalog-sku="50214"><td class="pl-art">99999</td>').replace('63,03 &euro;</td><td class="pl-r pl-brutto">75,00','1,00 &euro;</td><td class="pl-r pl-brutto">2,00'));
   const first=syncProductPriceTables(root,all);
-  assert.ok(first.changed.includes('produkte.html'));
+  assert.ok(first.changed.includes('motorbootanhaenger.html'));
   assert.match(fs.readFileSync(target,'utf8'),/data-catalog-sku="50214"><td class="pl-art">50214<\/td><td>[\s\S]*?63,03 &euro;<\/td><td class="pl-r pl-brutto">75,00 &euro;/);
   assert.deepEqual(syncProductPriceTables(root,all).changed,[]);
  } finally {
@@ -172,7 +215,7 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
 });
 test('Central product data is complete and renders the public shop catalog',()=>{
  const source=JSON.parse(read(productDataFile)), shop=read('shop.html');
- assert.equal(source.length,57); assert.equal(all.length,source.length);
+ assert.equal(source.length,55); assert.equal(all.length,source.length);
  assert.equal((shop.match(/<article class="product-card"/g)||[]).length,source.length);
  for(const p of all) {
   const record=source.find(x=>String(x.id)===p.id);

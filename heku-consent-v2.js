@@ -1,11 +1,11 @@
 /* ============================================================
    HEKU Consent Manager
-   Muss VOR dem gtag.js-Script im <head> geladen werden.
+   Wird als einziges Analytics-Script im <head> geladen.
 
    Funktion:
-   1. Setzt Google Consent Mode v2 auf "denied" als Standard.
-      GA4 laedt zwar, setzt aber keine Cookies und uebertraegt
-      keine identifizierenden Daten, bis eingewilligt wurde.
+   1. Setzt Google Consent Mode v2 lokal auf "denied".
+      Das Google-Tag wird erst nach aktiver Einwilligung geladen;
+      vorher gibt es keine Analytics-Anfrage an Google.
    2. Zeigt einen Banner mit gleichwertigen Buttons
       (Ablehnen ist genauso prominent wie Akzeptieren).
    3. Gibt bei Einwilligung Analytics frei und laedt eingebettete
@@ -17,11 +17,12 @@
 
   var KEY = "heku_consent_v1";
   var MAX_AGE_DAYS = 180;
+  var MEASUREMENT_ID = "G-W97K9YN3YJ";
+  var analyticsLoaded = false;
 
   /* --- 1. Consent Mode v2: Standard ist Ablehnung --------------- */
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
-  window.gtag = window.gtag || gtag;
 
   gtag("consent", "default", {
     ad_storage: "denied",
@@ -32,6 +33,28 @@
     security_storage: "granted",
     wait_for_update: 500
   });
+  gtag("js", new Date());
+  gtag("config", MEASUREMENT_ID);
+
+  function loadAnalytics() {
+    if (analyticsLoaded) return;
+    analyticsLoaded = true;
+
+    gtag("consent", "update", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "granted"
+    });
+    /* Event-Handler auf den Seiten senden erst ab diesem Zeitpunkt. */
+    window.gtag = gtag;
+
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(MEASUREMENT_ID);
+    script.setAttribute("data-heku-analytics", "true");
+    document.head.appendChild(script);
+  }
 
   /* --- 2. Gespeicherte Entscheidung lesen ----------------------- */
   function readStored() {
@@ -52,10 +75,9 @@
   }
 
   function applyAnalytics(granted) {
-    gtag("consent", "update", {
-      analytics_storage: granted ? "granted" : "denied"
-    });
-    if (granted) loadDeferredEmbeds();
+    if (!granted) return;
+    loadAnalytics();
+    loadDeferredEmbeds();
   }
 
   /* --- 3. Eingebettete Inhalte erst nach Einwilligung ------------ */

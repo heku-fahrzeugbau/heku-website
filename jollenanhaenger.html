@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script src="/heku-consent-v2.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W97K9YN3YJ');
-  </script>
+  <script src="/heku-consent-v2.js?v=20261009-ga4"></script>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -116,9 +108,7 @@
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"}, {"@type": "ListItem", "position": 2, "name": "Produkte", "item": "https://heku-fahrzeugbau.de/produkte.html"}, {"@type": "ListItem", "position": 3, "name": "Jollenanhänger", "item": "https://heku-fahrzeugbau.de/jollenanhaenger.html"}]}
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fonts.css">
   <style>
     :root { --rot:#E8000E;--rot-dark:#B8000B;--schwarz:#0A0A0A;--text:#2C2C2C;--muted:#6B6B6B;--border:#E8E8E8;--bg:#FFFFFF;--bg2:#F7F7F7;--bg3:#EFEFEF;--font-head:'DM Serif Display',serif;--font-body:'DM Sans',sans-serif;--ease:cubic-bezier(0.4,0,0.2,1); }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -220,6 +210,7 @@
     .faq-item.open .faq-icon{background:var(--rot);border-color:var(--rot);}
     .faq-item.open .faq-icon::before{color:#fff;transform:rotate(45deg);}
     .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+    .faq-item.open .faq-answer{max-height:800px;}
     .faq-answer-inner{padding:4px 0 22px;font-size:15px;font-weight:300;line-height:1.75;color:var(--muted);max-width:720px;}
     .internal-links{background:var(--bg2);border-radius:12px;padding:32px;margin:48px 0;}
     .internal-links-title{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
@@ -281,8 +272,8 @@
           "@type": "Offer",
           "price": "1375.00",
           "priceCurrency": "EUR",
-          "availability": "https://schema.org/InStock",
-          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/MadeToOrder",
+          "validFrom": "2026-10-01", "priceValidUntil": "2026-12-31",
           "url": "https://heku-fahrzeugbau.de/konfigurator.html",
           "shippingDetails": {
             "@type": "OfferShippingDetails",
@@ -335,8 +326,8 @@
           "@type": "Offer",
           "price": "1575.00",
           "priceCurrency": "EUR",
-          "availability": "https://schema.org/InStock",
-          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/MadeToOrder",
+          "validFrom": "2026-10-01", "priceValidUntil": "2026-12-31",
           "url": "https://heku-fahrzeugbau.de/konfigurator.html",
           "shippingDetails": {
             "@type": "OfferShippingDetails",
@@ -613,6 +604,7 @@
         <a href="segelbootanhaenger.html" class="link-pill">← Alle Segelbootanhänger</a>
         <a href="produkte.html" class="link-pill">← Alle Bootsanhänger-Modelle</a>
         <a href="motorbootanhaenger.html" class="link-pill">Motorbootanhänger →</a>
+        <a href="ruderbootanhaenger.html" class="link-pill">Ruderbootanhänger für Vereine →</a>
         <a href="ratgeber-bootsanhaenger.html" class="link-pill">Ratgeber: Welcher Anhänger passt? →</a>
         <a href="konfigurator.html" class="link-pill">HEKU Engineer Konfigurator →</a>
       </div>
