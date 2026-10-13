@@ -67,9 +67,17 @@ export function unitShippingEuro(p) {
     default: return 15;
   }
 }
+// 2-5 Werktage gesamt, aufgeteilt in 1-2 Tage Bearbeitung und 1-3 Tage Versand.
+// Die Aufteilung ordnet die genannte Spanne zu; sie ist keine gemessene Trennung.
 export const shippingSchema = value => ({'@type':'OfferShippingDetails',
   shippingRate:{'@type':'MonetaryAmount',value:value.toFixed(2),currency:'EUR'},
-  shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'}});
+  shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'},
+  deliveryTime:{'@type':'ShippingDeliveryTime',
+    handlingTime:{'@type':'QuantitativeValue',minValue:1,maxValue:2,unitCode:'DAY'},
+    transitTime:{'@type':'QuantitativeValue',minValue:1,maxValue:3,unitCode:'DAY'}}});
+
+// Spiegel der Organization-Richtlinie: 14 Tage, DE, Kunde traegt die Ruecksendung.
+export const accessoryReturnPolicy = {'@type':'MerchantReturnPolicy',applicableCountry:'DE',returnPolicyCountry:'DE',returnPolicyCategory:'https://schema.org/MerchantReturnFiniteReturnWindow',merchantReturnDays:14,returnMethod:'https://schema.org/ReturnByMail',returnFees:'https://schema.org/ReturnFeesCustomerResponsibility',merchantReturnLink:BASE+'/widerruf.html'};
 
 const cardCategoryLabels = {winden:'Winden & Ständer',stuetzraeder:'Stützräder',rollen:'Kiel- & Stützrollen',auflagen:'Auflagen & Kissen',raeder:'Räder & Reifen',sonstiges:'Sonstiges',beleuchtung:'Beleuchtung'};
 export function renderProductCard(p) {
@@ -111,7 +119,7 @@ export function renderProduct(p, all, shell) {
   // als https://schema.org/MadeToOrder, nicht in diesem Katalog.
   // JSON-LD braucht ein Produktbild. Ohne Foto die vorhandene Platzhalterdatei
   // (HEKU-Logo) als absolute URL; das sichtbare Hinweis-Markup bleibt.
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p))}};
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
   const main=`<main id="articleContent" class="detail-main">

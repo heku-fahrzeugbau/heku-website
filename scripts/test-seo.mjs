@@ -417,6 +417,7 @@ test('HEKU phone matches Robin’s confirmation: 0521 200066',()=>{
  for(const file of [...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')), ...pages().filter(f=>f.startsWith('artikel/'))]) {
   assert.doesNotMatch(read(file),/href=["']tel:\+4952120066["']/i,file);
   assert.doesNotMatch(read(file),/0521 20066(?!\d)/,file);
+  assert.doesNotMatch(read(file),/20899840/,file);
  }
  for(const file of ['shop.html','kontakt.html','impressum.html']) assert.ok(read(file).includes('tel:+49521200066'),file);
 });
@@ -733,7 +734,7 @@ test('Every offer has availability and every product image is an absolute URL',(
   ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
   ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
  ];
- let offers=0, products=0, dated=0;
+ let offers=0, products=0;
  const types=value=>[].concat(value||[]);
  for(const file of htmlFiles) {
   for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
@@ -744,6 +745,18 @@ test('Every offer has availability and every product image is an absolute URL',(
     if(!node||typeof node!=='object') continue;
     if(Array.isArray(node)) { stack.push(...node); continue; }
     const kind=types(node['@type']);
+    if(kind.includes('ItemList')) {
+     const items=node.itemListElement;
+     if(Array.isArray(items) && node.numberOfItems!=null) assert.equal(node.numberOfItems, items.length, file);
+     if(file==='motorbootanhaenger.html' || file==='segelbootanhaenger.html') {
+      const productsInList=Array.isArray(items) && items.some(el=>el&&el.item&&types(el.item['@type']).includes('Product'));
+      if(productsInList) {
+       assert.equal(items.length,3,file);
+       assert.equal(node.numberOfItems,3,file);
+      }
+     }
+     if(file==='jollenanhaenger.html' || file==='bootstrailer.html') assert.equal(node.numberOfItems,undefined,file);
+    }
     if(kind.includes('Product')) {
      products++;
      const images=[].concat(node.image||[]);
@@ -756,11 +769,27 @@ test('Every offer has availability and every product image is an absolute URL',(
      assert.match(node.availability,/^https:\/\/schema\.org\//,file);
      if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
      if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
-     if(node.priceValidUntil) {
-      dated++;
-      assert.equal(node.validFrom,'2026-10-01',file);
-      assert.ok(node.validFrom<=node.priceValidUntil,file);
+     assert.equal(node.priceValidUntil,undefined,`${file}: priceValidUntil`);
+     assert.equal(node.validFrom,undefined,`${file}: validFrom`);
+     if(trailers.has(file) && node.price!=null) {
+      const place=node.availableAtOrFrom;
+      assert.ok(place&&place.address,`${file}: availableAtOrFrom fehlt`);
+      assert.equal(place.address.streetAddress,'Bunzlauer Straße 6',file);
+      assert.equal(place.address.addressLocality,'Bielefeld',file);
+      assert.equal(place.address.postalCode,'33719',file);
+      assert.equal(place.address.addressRegion,'Nordrhein-Westfalen',file);
+      assert.equal(place.address.addressCountry,'DE',file);
+      const rp=node.hasMerchantReturnPolicy;
+      assert.equal(rp&&rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
+      assert.equal(rp.applicableCountry,'DE',file);
+      assert.equal(rp.merchantReturnLink,'https://heku-fahrzeugbau.de/agb.html#ausschluss-einzelanfertigung',file);
+      assert.equal(node.shippingDetails,undefined,`${file}: shippingDetails`);
+      if(file==='index.html') {
+       assert.notEqual(node.url,'https://heku-fahrzeugbau.de/');
+       assert.notEqual(node.url,'https://heku-fahrzeugbau.de');
+      }
      }
+     if(trailers.has(file) && node.price==null) assert.equal(node.availableAtOrFrom,undefined,`${file}: Abholung nur an Angeboten mit Preis`);
     }
     for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
    }
@@ -768,7 +797,7 @@ test('Every offer has availability and every product image is an absolute URL',(
  }
  assert.ok(products>=55);
  assert.ok(offers>=70);
- assert.equal(dated,11);
+ assert.match(read('agb.html'), /<p id="ausschluss-einzelanfertigung"><strong>Ausschluss des Widerrufsrechts:<\/strong>/);
  assert.match(read('scripts/generate-product-pages.mjs'),/p\.image\|\|p\.imagePath/);
 });
 test('Late mail response cannot overwrite status of a newer order',async()=>{

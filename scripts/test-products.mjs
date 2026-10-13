@@ -5,6 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
 import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, unitShippingEuro } from './generate-product-pages.mjs';
+import { generateFeed } from './generate-merchant-feed.mjs';
 import { priceTableFiles, syncProductPriceTables } from './sync-product-price-tables.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const all=catalog();
@@ -226,7 +227,7 @@ test('Central product data is complete and renders the public shop catalog',()=>
 });
 test('Workflow watches product data, builds/tests, commits managed pages, then explicitly requests Pages build',()=>{
  const w=read('.github/workflows/sitemap.yml');
- for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','produkte.html motorbootanhaenger.html segelbootanhaenger.html','gh api --method POST','/pages/builds']) assert.ok(w.includes(s),s);
+ for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','produkte.html motorbootanhaenger.html segelbootanhaenger.html','gh api --method POST','/pages/builds','merchant-feed.xml']) assert.ok(w.includes(s),s);
  assert.doesNotMatch(w,/git push --force/);
 });
 
@@ -275,6 +276,26 @@ test('Shipping shown on article pages matches the cart calculation for one unit'
   const offer=schema(page)['@graph'][0].offers;
   assert.equal(offer.shippingDetails.shippingRate.value,unitShippingEuro(p).toFixed(2));
   assert.equal(offer.shippingDetails.shippingRate.currency,'EUR');
+  assert.equal(offer.shippingDetails.deliveryTime.handlingTime.minValue,1);
+  assert.equal(offer.shippingDetails.deliveryTime.handlingTime.maxValue,2);
+  assert.equal(offer.shippingDetails.deliveryTime.transitTime.minValue,1);
+  assert.equal(offer.shippingDetails.deliveryTime.transitTime.maxValue,3);
+  assert.equal(offer.shippingDetails.deliveryTime.handlingTime.unitCode,'DAY');
+  assert.equal(offer.shippingDetails.deliveryTime.transitTime.unitCode,'DAY');
+  const rp=offer.hasMerchantReturnPolicy;
+  assert.equal(rp.merchantReturnDays,14);
+  assert.equal(rp.applicableCountry,'DE');
+  assert.equal(rp.returnPolicyCountry,'DE');
+  assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnFiniteReturnWindow');
+  assert.equal(rp.returnMethod,'https://schema.org/ReturnByMail');
+  assert.equal(rp.returnFees,'https://schema.org/ReturnFeesCustomerResponsibility');
+  assert.equal(rp.merchantReturnLink,BASE+'/widerruf.html');
+  const product=schema(page)['@graph'][0];
+  assert.equal(product.brand,undefined);
+  assert.equal(product.gtin,undefined);
+  assert.equal(product.mpn,undefined);
+  assert.equal(offer.gtin,undefined);
+  assert.equal(offer.mpn,undefined);
  }
 });
 test('Art. 50261 shipping increases by 7 EUR for every started group of 10',()=>{
@@ -314,4 +335,41 @@ test('Every indexable page has canonical, description and viewport',()=>{
   assert.match(s,/name="viewport"/,`viewport fehlt in ${f}`);
  }
  assert.match(read('404.html'),/name="viewport"/,'404.html braucht ebenfalls ein Viewport-Meta');
+});
+
+test('Merchant feed lists every accessory once and omits trailers',()=>{
+ const xml=read('merchant-feed.xml');
+ assert.match(xml,/xmlns:g="http:\/\/base\.google\.com\/ns\/1\.0"/);
+ assert.match(xml,/<rss version="2.0"/);
+ const ids=[...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map(m=>m[1]);
+ assert.deepEqual(ids, all.map(p=>p.sku));
+ assert.equal(ids.length,55);
+ assert.doesNotMatch(xml,/<g:brand>|<g:gtin>|<g:mpn>|<g:sale_price>/);
+ assert.equal((xml.match(/<g:identifier_exists>no<\/g:identifier_exists>/g)||[]).length,55);
+ assert.doesNotMatch(xml,/bootstrailer\.html|motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html/);
+ const shop=read('shop.html');
+ const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
+ assert.ok(src,'calcVersand nicht in shop.html gefunden');
+ const calcVersand=vm.runInNewContext('('+src[0]+')');
+ for(const p of all) {
+  const block=xml.match(new RegExp(`<item>[\\s\\S]*?<g:id>${p.sku}</g:id>[\\s\\S]*?</item>`));
+  assert.ok(block, p.sku);
+  const item=block[0];
+  assert.match(item, new RegExp(`<g:price>${p.price} EUR</g:price>`));
+  assert.match(item, new RegExp(`<g:shipping>[\\s\\S]*<g:country>DE</g:country>[\\s\\S]*<g:price>${unitShippingEuro(p).toFixed(2)} EUR</g:price>`));
+  assert.equal(unitShippingEuro(p), calcVersand([{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}]));
+  assert.match(item, /<g:availability>in_stock<\/g:availability>/);
+  assert.match(item, /<g:condition>new<\/g:condition>/);
+  assert.match(item, new RegExp(`<g:link>${BASE}/artikel/${p.sku}\\.html</g:link>`));
+  assert.match(item, new RegExp(`<g:image_link>${BASE}/`));
+  const image=item.match(/<g:image_link>([^<]+)<\/g:image_link>/)[1];
+  assert.ok(fs.existsSync(path.join(ROOT, image.slice((BASE+'/').length))), image);
+ }
+ assert.doesNotMatch(read('sitemap.xml'), /merchant-feed/);
+ const robots=read('robots.txt');
+ assert.equal((robots.match(/^Sitemap:/gm)||[]).length,1);
+ assert.match(robots, /Sitemap: https:\/\/heku-fahrzeugbau\.de\/sitemap\.xml/);
+ assert.doesNotMatch(robots, /merchant-feed/);
+ assert.match(read('scripts/build-site.mjs'), /generateFeed/);
+ assert.deepEqual(generateFeed().changed, []);
 });
