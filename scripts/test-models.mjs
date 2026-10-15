@@ -201,3 +201,17 @@ test('Generator is idempotent, fails closed and updates only the changed model',
     assert.throws(() => generateModels(tmp), /Bild fehlt/);
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });
+
+test('Every model page has a visible back link to the model overview on produkte.html', () => {
+  assert.match(read('produkte.html'), /id="modelle"/);
+  for (const m of all) {
+    const html = read(m.slug);
+    const links = [...html.matchAll(/<a href="([^"]+)" class="nav-back" data-back-to-overview>([^<]+)<\/a>/g)];
+    assert.equal(links.length, 1, m.slug);
+    assert.equal(links[0][1], 'produkte.html#modelle', m.slug);
+    assert.equal(links[0][2], '&#8592; Zurück zur Modellübersicht', m.slug);
+    assert.ok(html.indexOf('data-back-to-overview>') < html.indexOf('<h1'), `${m.slug}: Zurück-Link steht über der H1`);
+    assert.match(html, /\.nav-back \{[^}]*font-size: 13px/, m.slug);
+    assert.match(html, /history\.back\(\)/, m.slug);
+  }
+});

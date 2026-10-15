@@ -190,6 +190,7 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
         </div>`).join('\n');
   return `  <div class="page-header">
     <div class="page-header-inner">
+      <a href="produkte.html#modelle" class="nav-back" data-back-to-overview>&#8592; Zurück zur Modellübersicht</a>
       <div class="breadcrumb">
         <a href="/">HEKU</a>
         <span>&#8250;</span>
