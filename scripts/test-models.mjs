@@ -15,7 +15,7 @@ const visibleText = html => html.replace(/<script\b[\s\S]*?<\/script>/gi, ' ').r
 const de = p => Number(p).toLocaleString('de-DE');
 
 // Robins bestätigte ab-Preise (15.10.2026) plus die in allen Quellen identischen Site-Preise B 1300/1500/1800.
-const confirmed = { 'B 350': '1375.00', 'B 500': '1575.00', 'B 750': '1995.00', 'B 900': '3190.00', 'B 1100': '3390.00', 'B 1300': '3590.00', 'B 1500': '3850.00', 'B 1800': '3995.00', 'B 2000': '4655.00', 'B 2500': '5110.00', 'B 2700': null, 'B 3000': '5855.00', 'B 3500': '6555.00' };
+const confirmed = { 'B 350': '1375.00', 'B 500': '1575.00', 'B 750': '1995.00', 'B 900': '3190.00', 'B 1100': '3390.00', 'B 1300': '3590.00', 'B 1500': '3850.00', 'B 1800': '3995.00', 'B 2000': '4655.00', 'B 2500': '5110.00', 'B 2700': '5310.00', 'B 3000': '5855.00', 'B 3500': '6555.00' };
 
 test('Model data: 13 models, unique slugs, valid prices, existing images', () => {
   assert.equal(all.length, 13);
@@ -26,7 +26,7 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
     if (m.preisAb !== null) assert.match(m.preisAb, /^\d+\.\d{2}$/);
     for (const b of m.bilder) assert.ok(fs.existsSync(path.join(ROOT, b.src)), b.src);
   }
-  assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), ['B 2700']);
+  assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -46,7 +46,7 @@ test('Every model page is generated, indexable, unique and in the sitemap', () =
   for (const other of ['produkte.html', 'bootstrailer.html']) assert.ok(!titles.has(read(other).match(/<title>([^<]+)<\/title>/)[1]));
 });
 
-test('Visible price, meta description and Offer agree; B 2700 is "Preis auf Anfrage" without Product', () => {
+test('Visible price, meta description and Offer agree; a model without price gets no Product', () => {
   for (const m of all) {
     const html = read(m.slug), graph = jsonld(html).flatMap(nodes);
     const products = graph.filter(n => types(n).includes('Product')), offers = graph.filter(n => types(n).includes('Offer') || types(n).includes('AggregateOffer'));
@@ -138,6 +138,9 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
     }
   }
   assert.doesNotMatch(data, /name:'B 1100',price:'3\.490'/);
+  // Robins Tandem-Preisliste: B 2700 = 5.310 € (Art. 55533); die alten Werte 5.150/5.295/5.450 € dürfen nicht mehr auftauchen.
+  assert.doesNotMatch(data, /name:'B 2700',price:'5\.150'|5\.295 €|5\.450 €/);
+  assert.doesNotMatch(read('bootsanhaenger-b2700.html'), /5\.150 €/);
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
 });
 
