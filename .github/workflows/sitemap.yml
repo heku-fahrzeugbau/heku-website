@@ -7,6 +7,7 @@ on:
       - '**.html'
       - 'scripts/**'
       - 'content/produkte/**'
+      - 'content/modelle/**'
       - 'assets/produkte/**'
       - 'product-detail.css'
       - '.github/workflows/sitemap.yml'
@@ -33,7 +34,7 @@ jobs:
       - name: Produktseiten bauen und alle Tests ausfuehren (kein Push/Deployment)
         run: |
           node scripts/build-site.mjs
-          node --test scripts/test-seo.mjs scripts/test-products.mjs
+          node --test scripts/test-seo.mjs scripts/test-products.mjs scripts/test-models.mjs
   sitemap:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     permissions:
@@ -53,7 +54,7 @@ jobs:
       - name: Produktseiten und Sitemap generieren, Regressionen pruefen
         run: |
           node scripts/build-site.mjs
-          node --test scripts/test-seo.mjs scripts/test-products.mjs
+          node --test scripts/test-seo.mjs scripts/test-products.mjs scripts/test-models.mjs
       - name: Abgeleitete Seiten committen, falls veraendert
         id: generated
         shell: bash
@@ -63,7 +64,8 @@ jobs:
             windenstaende-winden.html stuetzraeder-bootsanhaenger.html \
             kielrollen-stuetzrollen.html auflagen-polsterkissen.html \
             raeder-reifen-bootsanhaenger.html beleuchtung-bootsanhaenger.html \
-            weiteres-bootsanhaenger-zubehoer.html
+            weiteres-bootsanhaenger-zubehoer.html \
+            bootsanhaenger-b*.html
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Keine abgeleiteten Aenderungen; normaler Benutzer-Push startet Pages."

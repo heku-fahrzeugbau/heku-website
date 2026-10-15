@@ -137,6 +137,10 @@ test('Confirmed B-Serie ab prices on produkte.html',()=>{
   'B 500':'1.575',
   'B 750':'1.995',
   'B 900':'3.190',
+  'B 1100':'3.390',
+  'B 1300':'3.590',
+  'B 1500':'3.850',
+  'B 1800':'3.995',
   'B 2000':'4.655',
   'B 2500':'5.110',
   'B 3000':'5.855',
@@ -227,7 +231,8 @@ test('Central product data is complete and renders the public shop catalog',()=>
 });
 test('Workflow watches product data, builds/tests, commits managed pages, then explicitly requests Pages build',()=>{
  const w=read('.github/workflows/sitemap.yml');
- for(const s of ['content/produkte/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','artikel/','produkte.html motorbootanhaenger.html segelbootanhaenger.html','gh api --method POST','/pages/builds','merchant-feed.xml']) assert.ok(w.includes(s),s);
+ for(const s of ['content/produkte/**','content/modelle/**','pages: write','node scripts/build-site.mjs','scripts/test-products.mjs','scripts/test-models.mjs','artikel/','bootsanhaenger-b*.html','produkte.html motorbootanhaenger.html segelbootanhaenger.html','gh api --method POST','/pages/builds','merchant-feed.xml']) assert.ok(w.includes(s),s);
+ assert.equal((w.match(/node --test scripts\/test-seo\.mjs scripts\/test-products\.mjs scripts\/test-models\.mjs/g)||[]).length,2,'PR- und main-Job testen die Modellseiten');
  assert.doesNotMatch(w,/git push --force/);
 });
 
@@ -346,7 +351,7 @@ test('Merchant feed lists every accessory once and omits trailers',()=>{
  assert.equal(ids.length,55);
  assert.doesNotMatch(xml,/<g:brand>|<g:gtin>|<g:mpn>|<g:sale_price>/);
  assert.equal((xml.match(/<g:identifier_exists>no<\/g:identifier_exists>/g)||[]).length,55);
- assert.doesNotMatch(xml,/bootstrailer\.html|motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html/);
+ assert.doesNotMatch(xml,/bootstrailer\.html|motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html|bootsanhaenger-b\d+\.html/);
  const shop=read('shop.html');
  const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
  assert.ok(src,'calcVersand nicht in shop.html gefunden');
