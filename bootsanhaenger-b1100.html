@@ -456,6 +456,9 @@
     .model-section { margin-bottom: 64px; }
     .model-section ul { margin: 12px 0 0 20px; color: var(--text); font-size: 15px; line-height: 1.8; }
     .model-section ul a, .model-section p a { color: var(--rot); }
+    /* Zurück-Link wie .nav-back auf agb/widerruf/datenschutz, Farben für den dunklen Seitenkopf */
+    .nav-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); margin-bottom: 14px; transition: color .2s; }
+    .nav-back:hover, .nav-back:focus-visible { color: #fff; }
     .neighbors { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
     @media (max-width: 900px) { .model-intro { grid-template-columns: 1fr; gap: 28px; } }
   </style>
@@ -513,6 +516,7 @@
 
   <div class="page-header">
     <div class="page-header-inner">
+      <a href="produkte.html#modelle" class="nav-back" data-back-to-overview>&#8592; Zurück zur Modellübersicht</a>
       <div class="breadcrumb">
         <a href="/">HEKU</a>
         <span>&#8250;</span>
@@ -839,5 +843,22 @@
 })();
 </script>
 
+<script>
+/* Zurück zur Modellübersicht: kam der Besucher von produkte.html, springt history.back() an die alte
+   Scrollposition. Ohne JS oder bei anderem Einstieg gilt das normale href (produkte.html#modelle). */
+(function () {
+  var link = document.querySelector('[data-back-to-overview]');
+  if (!link) return;
+  link.addEventListener('click', function (event) {
+    try {
+      var from = document.referrer ? new URL(document.referrer) : null;
+      if (from && from.origin === location.origin && /\/produkte\.html$/.test(from.pathname) && history.length > 1) {
+        event.preventDefault();
+        history.back();
+      }
+    } catch (e) { /* href bleibt als Fallback */ }
+  });
+})();
+</script>
 </body>
 </html>
