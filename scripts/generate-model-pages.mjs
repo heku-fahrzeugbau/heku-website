@@ -19,6 +19,10 @@ const ORG = BASE + '/#organization';
 const kg = n => n.toLocaleString('de-DE') + ' kg';
 const euro = p => Number(p).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';
 const pageUrl = m => `${BASE}/${m.slug}`;
+// Robin (15.10.2026): gebremste Modelle nur in 6,60 m; längere Ausführung je 0,5 m: Einachser + 155 €, Tandem + 209 €.
+export const GRUNDLAENGE = '6,60 m';
+export const LAENGEN_ZUSCHLAG = { einachser: 155, tandem: 209 };
+export const laengenZuschlagText = m => `Längere Ausführung: +${LAENGEN_ZUSCHLAG[m.klasse]} € je 0,5 m`;
 
 // Robins Vorgaben (15.10.2026): B 350–B 2000 CoC, ab B 2500 TÜV-EG; ungebremst Tempo 100
 // serienmäßig, gebremst optional (Einachser 140 €, Tandem 280 €).
@@ -52,6 +56,7 @@ export function models(root = ROOT) {
       if (l.preis !== null && !/^\d+\.\d{2}$/.test(String(l.preis))) throw new Error(`${where}: ungültiger Längenpreis.`);
       if (m.preisAb === null && l.preis !== null) throw new Error(`${where}: Längenpreis ohne ab-Preis.`);
     }
+    if (m.klasse !== 'ungebremst' && (m.laengen.length !== 1 || m.laengen[0].laenge !== GRUNDLAENGE || m.laengen[0].preis !== m.preisAb || m.laengen[0].zuladung !== m.zuladung)) throw new Error(`${where}: gebremste Modelle nur mit einer Länge (${GRUNDLAENGE}) zum ab-Preis.`);
     const prices = m.laengen.map(l => l.preis).filter(Boolean);
     if (prices.length && m.preisAb !== prices[0]) throw new Error(`${where}: ab-Preis muss dem Preis der Grundlänge entsprechen.`);
     if (!Array.isArray(m.bilder) || !m.bilder.length) throw new Error(`${where}: mindestens ein Bild nötig.`);
@@ -87,6 +92,7 @@ export function faqs(m) {
   list.push([`Darf ich mit dem HEKU ${m.name} 100 km/h fahren?`, m.tempo100.serie
     ? `Der ${m.name} ist serienmäßig für Tempo 100 zugelassen. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Zugfahrzeug ab: Faktor 0,3 der Leermasse, ABS/ABV, geeignete Reifen, richtige Stützlast und die Tempo-100-Plakette.`
     : `Tempo 100 ist beim ${m.name} optional und kostet mit dem Radstoßdämpfer-Paket ${m.tempo100.option} €. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Masseverhältnis zum Zugfahrzeug, ABS/ABV, geeigneten Reifen, der Stützlast und der Tempo-100-Plakette ab.`]);
+  if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt. ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
   list.push([`Wie lange dauert die Lieferung des HEKU ${m.name}?`, `Jeder HEKU-Anhänger wird auf Bestellung gefertigt, die Lieferzeit liegt bei ca. 2 Wochen. Sie holen den Anhänger im Werk Bunzlauer Str. 6, 33719 Bielefeld ab (Mo–Fr 08:00–12:30 und 13:00–16:30 Uhr). Eine Anlieferung wird separat kalkuliert.`]);
   list.push([`Kann ich den HEKU ${m.name} zurückgeben?`, `Nein. Jeder HEKU-Bootsanhänger wird nach Ihren Bootsdaten einzeln gefertigt; für Einzelanfertigungen besteht kein Widerrufsrecht. Die Einzelheiten stehen in unseren AGB.`]);
   list.push([`Wann muss der HEKU ${m.name} zur Hauptuntersuchung?`, m.klasse === 'ungebremst'
@@ -159,9 +165,9 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
           </tbody>
         </table>
       </div>` : '';
-  const laengenText = m.klasse === 'einachser'
-    ? `<p class="body-text">Die Rahmenlänge wird passend zum Boot festgelegt. Laut Preisliste kostet jede zusätzliche Rahmenlänge von 0,5&nbsp;m + 155&nbsp;€ (inkl. MwSt.).</p>`
-    : `<p class="body-text">Weitere Längen und Sondermaße auf Anfrage.</p>`;
+  const laengenText = m.klasse === 'ungebremst'
+    ? `<p class="body-text">Weitere Längen und Sondermaße auf Anfrage.</p>`
+    : `<p class="body-text" data-length-surcharge>Grundlänge ${e(GRUNDLAENGE)}. ${e(laengenZuschlagText(m))} (inkl. MwSt.).</p>`;
   const ausstattung = m.klasse === 'ungebremst'
     ? `<ul>
           <li>Kielauflage vorne, Langauflage bzw. Polsterkissen hinten</li>

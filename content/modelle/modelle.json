@@ -46,7 +46,7 @@
   },
   {
     "slug": "bootsanhaenger-b900.html", "name": "B 900", "klasse": "einachser", "zgg": 900, "zuladung": 660,
-    "laengen": [],
+    "laengen": [{ "laenge": "6,60 m", "zuladung": 660, "preis": "3190.00" }],
     "preisAb": "3190.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["Motorboot", "Kabinenboot"],
     "abgrenzung": "Der B 900 ist der Einstieg in die gebremsten Einachser. Wiegt Ihr Boot mehr als ca. 660 kg, ist der B 1100 mit ca. 815 kg Zuladung die nächste Stufe.",
@@ -112,9 +112,7 @@
   {
     "slug": "bootsanhaenger-b2000.html", "name": "B 2000", "klasse": "tandem", "zgg": 2000, "zuladung": 1610,
     "laengen": [
-      { "laenge": "6,60 m", "zuladung": 1610, "preis": "4655.00" },
-      { "laenge": "7,10 m", "zuladung": 1600, "preis": "4695.00" },
-      { "laenge": "7,60 m", "zuladung": 1590, "preis": "4895.00" }
+      { "laenge": "6,60 m", "zuladung": 1610, "preis": "4655.00" }
     ],
     "preisAb": "4655.00", "zulassung": "CoC", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
@@ -122,7 +120,7 @@
     "intro": "Der HEKU B 2000 ist der Einstieg in die Tandem-Bootsanhänger: zwei gebremste Achsen, 2.000 kg zulässiges Gesamtgewicht und bis zu 1.610 kg Zuladung für schwere Motor- und Segelyachten. Zwei Achsen sorgen für ruhigen Geradeauslauf.",
     "title": "Tandem-Bootsanhänger 2.000 kg – HEKU B 2000 | HEKU",
     "h1": "HEKU B 2000 – Tandem-Bootsanhänger 2.000 kg",
-    "description": "Tandem-Bootsanhänger, 2.000 kg zGG, bis 1.610 kg Zuladung, 6,60–7,60 m, CoC. Tempo 100 optional. Ab 4.655 €, Fertigung auf Bestellung.",
+    "description": "Tandem-Bootsanhänger, 2.000 kg zGG, bis 1.610 kg Zuladung, 6,60 m, CoC. Tempo 100 optional. Ab 4.655 €, Fertigung auf Bestellung.",
     "bilder": [
       { "src": "assets/anhaenger/B2000_1.jpg", "alt": "HEKU B 2000 Tandem-Bootsanhänger mit Rollen im Originalfoto", "beispiel": false },
       { "src": "assets/anhaenger/B2000_Segelboot.jpg", "alt": "HEKU B 2000 mit Segelboot-Ausstattung im Originalfoto", "beispiel": false },
@@ -133,9 +131,7 @@
   {
     "slug": "bootsanhaenger-b2500.html", "name": "B 2500", "klasse": "tandem", "zgg": 2500, "zuladung": 2000,
     "laengen": [
-      { "laenge": "6,60 m", "zuladung": 2000, "preis": "5110.00" },
-      { "laenge": "7,60 m", "zuladung": 1985, "preis": "5150.00" },
-      { "laenge": "8,10 m", "zuladung": 1970, "preis": "5350.00" }
+      { "laenge": "6,60 m", "zuladung": 2000, "preis": "5110.00" }
     ],
     "preisAb": "5110.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
@@ -143,16 +139,14 @@
     "intro": "Der HEKU B 2500 ist ein Tandem-Bootsanhänger mit 2.500 kg zulässigem Gesamtgewicht und bis zu 2.000 kg Zuladung für schwere Motor- und Segelyachten.",
     "title": "Tandem-Bootsanhänger 2.500 kg – HEKU B 2500 | HEKU",
     "h1": "HEKU B 2500 – Tandem-Bootsanhänger 2.500 kg",
-    "description": "2.500 kg zGG, bis 2.000 kg Zuladung, 6,60–8,10 m, TÜV-EG. Tempo 100 optional. Ab 5.110 €, auf Bestellung in ca. 2 Wochen.",
+    "description": "2.500 kg zGG, bis 2.000 kg Zuladung, 6,60 m, TÜV-EG. Tempo 100 optional. Ab 5.110 €, auf Bestellung in ca. 2 Wochen.",
     "bilder": [{ "src": "assets/anhaenger/HEKU_B2500.jpeg", "alt": "HEKU B 2500 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
     "leergewicht": null, "bereifung": null, "maxBootslaenge": null
   },
   {
     "slug": "bootsanhaenger-b2700.html", "name": "B 2700", "klasse": "tandem", "zgg": 2700, "zuladung": 2150,
     "laengen": [
-      { "laenge": "6,60 m", "zuladung": 2150, "preis": "5310.00" },
-      { "laenge": "7,60 m", "zuladung": 2135, "preis": null },
-      { "laenge": "8,10 m", "zuladung": 2120, "preis": null }
+      { "laenge": "6,60 m", "zuladung": 2150, "preis": "5310.00" }
     ],
     "preisAb": "5310.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
@@ -160,16 +154,14 @@
     "intro": "Der HEKU B 2700 ist ein Tandem-Bootsanhänger mit 2.700 kg zulässigem Gesamtgewicht und bis zu 2.150 kg Zuladung. Er schließt die Lücke zwischen B 2500 und B 3000 für schwere Motor- und Segelyachten.",
     "title": "Tandem-Bootsanhänger 2.700 kg – HEKU B 2700 | HEKU",
     "h1": "HEKU B 2700 – Tandem-Bootsanhänger 2.700 kg",
-    "description": "2.700 kg zGG, bis 2.150 kg Zuladung, 6,60–8,10 m, TÜV-EG. Tempo 100 optional. Ab 5.310 €, auf Bestellung in ca. 2 Wochen.",
+    "description": "2.700 kg zGG, bis 2.150 kg Zuladung, 6,60 m, TÜV-EG. Tempo 100 optional. Ab 5.310 €, auf Bestellung in ca. 2 Wochen.",
     "bilder": [{ "src": "assets/anhaenger/HEKU_B2500.jpeg", "alt": "HEKU B 2500 als Beispielfoto für den Tandem-Bootsanhänger B 2700", "beispiel": true }],
     "leergewicht": null, "bereifung": null, "maxBootslaenge": null
   },
   {
     "slug": "bootsanhaenger-b3000.html", "name": "B 3000", "klasse": "tandem", "zgg": 3000, "zuladung": 2400,
     "laengen": [
-      { "laenge": "6,60 m", "zuladung": 2400, "preis": "5855.00" },
-      { "laenge": "7,60 m", "zuladung": 2380, "preis": null },
-      { "laenge": "8,60 m", "zuladung": 2360, "preis": null }
+      { "laenge": "6,60 m", "zuladung": 2400, "preis": "5855.00" }
     ],
     "preisAb": "5855.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
@@ -177,16 +169,14 @@
     "intro": "Der HEKU B 3000 ist ein Tandem-Bootsanhänger mit 3.000 kg zulässigem Gesamtgewicht und bis zu 2.400 kg Zuladung für schwere Motor- und Segelyachten.",
     "title": "Tandem-Bootsanhänger 3.000 kg – HEKU B 3000 | HEKU",
     "h1": "HEKU B 3000 – Tandem-Bootsanhänger 3.000 kg",
-    "description": "3.000 kg zGG, bis 2.400 kg Zuladung, TÜV-EG, Tempo 100 optional. Ab 5.855 € (6,60 m), längere Rahmen auf Anfrage.",
+    "description": "3.000 kg zGG, bis 2.400 kg Zuladung, TÜV-EG, Tempo 100 optional. Ab 5.855 € (6,60 m), auf Bestellung in ca. 2 Wochen.",
     "bilder": [{ "src": "assets/anhaenger/B3000-neu.jpeg", "alt": "HEKU B 3000 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
     "leergewicht": null, "bereifung": null, "maxBootslaenge": null
   },
   {
     "slug": "bootsanhaenger-b3500.html", "name": "B 3500", "klasse": "tandem", "zgg": 3500, "zuladung": 2850,
     "laengen": [
-      { "laenge": "6,60 m", "zuladung": 2850, "preis": "6555.00" },
-      { "laenge": "7,60 m", "zuladung": 2830, "preis": "6585.00" },
-      { "laenge": "8,60 m", "zuladung": 2810, "preis": "6795.00" }
+      { "laenge": "6,60 m", "zuladung": 2850, "preis": "6555.00" }
     ],
     "preisAb": "6555.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
     "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
@@ -194,7 +184,7 @@
     "intro": "Der HEKU B 3500 ist der größte Bootsanhänger der B-Serie: ein Tandem mit 3.500 kg zulässigem Gesamtgewicht und bis zu 2.850 kg Zuladung für die schwersten Motor- und Segelyachten, die mit einem Pkw-Gespann bewegt werden.",
     "title": "Bootstrailer 3,5 t Tandem – HEKU B 3500 | HEKU",
     "h1": "HEKU B 3500 – Tandem-Bootsanhänger 3.500 kg",
-    "description": "Größter HEKU-Bootsanhänger: 3.500 kg zGG, bis 2.850 kg Zuladung, 6,60–8,60 m, TÜV-EG. Ab 6.555 €, auf Bestellung in ca. 2 Wochen.",
+    "description": "Größter HEKU-Bootsanhänger: 3.500 kg zGG, bis 2.850 kg Zuladung, 6,60 m, TÜV-EG. Ab 6.555 €, auf Bestellung in ca. 2 Wochen.",
     "bilder": [{ "src": "assets/anhaenger/HEKU_B3500.jpeg", "alt": "HEKU B 3500 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
     "leergewicht": null, "bereifung": null, "maxBootslaenge": null
   }

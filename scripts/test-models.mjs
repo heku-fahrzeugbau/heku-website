@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { ROOT, BASE, attributes, exclusionReason, pages } from './generate-sitemap.mjs';
-import { models, generateModels, modelDataFile, faqs, expectedZulassung } from './generate-model-pages.mjs';
+import { models, generateModels, modelDataFile, faqs, expectedZulassung, GRUNDLAENGE, LAENGEN_ZUSCHLAG } from './generate-model-pages.mjs';
 
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const all = models();
@@ -214,4 +214,70 @@ test('Every model page has a visible back link to the model overview on produkte
     assert.match(html, /\.nav-back \{[^}]*font-size: 13px/, m.slug);
     assert.match(html, /history\.back\(\)/, m.slug);
   }
+});
+
+// Robin (15.10.2026): gebremste Modelle B 900–B 3500 nur in 6,60 m, keine weiteren Längenvarianten.
+const lengthsIn = text => [...text.replace(/&nbsp;/g, ' ').matchAll(/(?<![\d,.])(\d{1,2},\d{1,2}) ?m\b/g)].map(x => x[1]);
+const classPages = ['produkte.html', 'bootstrailer.html', 'motorbootanhaenger.html', 'segelbootanhaenger.html', 'jollenanhaenger.html', 'ratgeber-bootsanhaenger.html', 'bootsanhaenger-nach-mass.html', 'faq.html', 'index.html'];
+
+test('Braked models list only the 6,60 m length (model pages, produkte.html, class pages)', () => {
+  assert.equal(GRUNDLAENGE, '6,60 m');
+  const braked = all.filter(m => m.klasse !== 'ungebremst');
+  assert.deepEqual(braked.map(m => m.name), ['B 900', 'B 1100', 'B 1300', 'B 1500', 'B 1800', 'B 2000', 'B 2500', 'B 2700', 'B 3000', 'B 3500']);
+  for (const m of braked) {
+    assert.deepEqual(m.laengen, [{ laenge: '6,60 m', zuladung: m.zuladung, preis: m.preisAb }], m.name);
+    const html = read(m.slug);
+    // Erlaubt: Grundlänge 6,60 m, Lichtleiste + 1,55 m, Zuschlagsschritt 0,5 m.
+    const other = lengthsIn(html).filter(l => !['6,60', '1,55', '0,5'].includes(l));
+    assert.deepEqual(other, [], `${m.slug}: nur 6,60 m erlaubt`);
+    assert.ok(lengthsIn(html).includes('6,60'), m.slug);
+    const product = jsonld(html).flatMap(nodes).find(n => types(n).includes('Product'));
+    assert.ok(!/\d,\d0 ?–/.test(product.description), `${m.slug}: keine Längenspanne in der Description`);
+    assert.ok(!nodes(jsonld(html)).some(n => types(n).includes('ProductGroup') || n.hasVariant), `${m.slug}: keine Varianten im JSON-LD`);
+  }
+  const produkte = read('produkte.html');
+  const data = produkte.match(/const modelData=\{[\s\S]*?\n    \};/)[0];
+  for (const group of ['einachser', 'tandem']) {
+    const block = data.match(new RegExp(group + ':\\[([\\s\\S]*?)\\n      \\]'))[1];
+    for (const row of block.split('\n').filter(r => r.includes('{name:'))) {
+      const name = row.match(/name:'([^']+)'/)[1];
+      assert.match(row, /variants:\[\['6,60 m','[^']+'\]\]/, `produkte.html ${name}: genau eine Variante 6,60 m`);
+      assert.deepEqual(lengthsIn(row), ['6,60'], `produkte.html ${name}`);
+    }
+  }
+  for (const series of ['einachser', 'tandem']) {
+    const section = produkte.match(new RegExp(`<section class="series" data-series="${series}">[\\s\\S]*?</section>`))[0];
+    assert.deepEqual(lengthsIn(section).filter(l => !['6,60', '1,55', '0,5'].includes(l)), [], `produkte.html statisch ${series}`);
+  }
+  assert.doesNotMatch(produkte, /Länge über alles<\/span><strong>6,00 m/, 'B 900 steht auf 6,60 m');
+  for (const f of classPages) assert.doesNotMatch(read(f), /\b(7,10|7,60|8,10|8,60) ?m\b|mehreren Längen|individuelle Rahmenlängen/, f);
+  assert.match(read('motorbootanhaenger.html'), /B 900<\/div><div class="model-sub">[^<]+<\/div><\/td><td>6,60 m<\/td>/);
+});
+
+test('Length surcharge: braked single-axle +155 €, tandem +209 € per 0,5 m everywhere', () => {
+  assert.deepEqual(LAENGEN_ZUSCHLAG, { einachser: 155, tandem: 209 });
+  const surcharge = m => `Längere Ausführung: +${LAENGEN_ZUSCHLAG[m.klasse]} € je 0,5 m`;
+  for (const m of all) {
+    const html = read(m.slug).replace(/&nbsp;/g, ' ');
+    const faq = faqs(m).find(f => f[0] === `Welche Länge hat der HEKU ${m.name}?`);
+    if (m.klasse === 'ungebremst') { assert.equal(faq, undefined, m.name); assert.doesNotMatch(html, /je 0,5 m/, m.slug); continue; }
+    assert.ok(html.includes(surcharge(m)), `${m.slug}: Zuschlagssatz sichtbar`);
+    assert.ok(faq && faq[1].includes(surcharge(m)), `${m.slug}: Zuschlag in der FAQ`);
+  }
+  // Kein anderer Zuschlagswert irgendwo auf den Klassen-, Modell- und Ratgeberseiten oder im Konfigurator.
+  for (const f of [...classPages, ...all.map(m => m.slug)]) {
+    const text = read(f).replace(/&nbsp;/g, ' ');
+    for (const x of text.matchAll(/\+ ?(\d+) ?€ je 0,5 m/g)) assert.ok(['155', '209'].includes(x[1]), `${f}: ${x[0]}`);
+    assert.doesNotMatch(text, /je 0,5 m \+ ?(?!155|209)\d+/, f);
+  }
+  const data = read('produkte.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
+  for (const [group, rate] of [['einachser', 155], ['tandem', 209]]) {
+    const block = data.match(new RegExp(group + ':\\[([\\s\\S]*?)\\n      \\]'))[1];
+    const rows = block.split('\n').filter(r => r.includes('{name:'));
+    assert.ok(rows.length >= 5, group);
+    for (const row of rows) assert.match(row, new RegExp(`surcharge:${rate}\\}`), row.slice(0, 40));
+  }
+  assert.doesNotMatch(data.match(/ungebremst:\[[\s\S]*?\n      \]/)[0], /surcharge/);
+  assert.match(read('produkte.html'), /Längere Ausführung: \+\$\{m\.surcharge\} € je 0,5 m/);
+  assert.match(read('konfigurator.html'), /const laengenRate = isTandem \? 209 : 155;/);
 });
