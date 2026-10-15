@@ -1,0 +1,201 @@
+[
+  {
+    "slug": "bootsanhaenger-b350.html", "name": "B 350", "klasse": "ungebremst", "zgg": 350, "zuladung": 275,
+    "laengen": [
+      { "laenge": "3,80 m", "zuladung": 275, "preis": "1375.00" },
+      { "laenge": "4,80 m", "zuladung": 265, "preis": "1475.00" }
+    ],
+    "preisAb": "1375.00", "zulassung": "CoC", "tempo100": { "serie": true }, "lichtleiste": "+ 0,70 m",
+    "bootstypen": ["Kleinstjolle / Optimist", "Jolle / Laser / 420er", "Jolle / kleines Segelboot", "kleines Schlauchboot"],
+    "abgrenzung": "Wiegt Ihr Boot samt Ausrüstung mehr als ca. 275 kg, ist der B 500 mit ca. 450 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 350 ist der kleinste Bootsanhänger der B-Serie: ein leichter, ungebremster Einachser mit 350 kg zulässigem Gesamtgewicht für Jollen, Optimisten und kleine Schlauchboote. Er ist zerlegbar und wird wie jeder HEKU-Anhänger auf Bestellung im Werk Bielefeld gefertigt.",
+    "title": "Bootsanhänger 350 kg ungebremst – HEKU B 350 | HEKU",
+    "h1": "HEKU B 350 – Bootsanhänger 350 kg, ungebremst",
+    "description": "Ungebremster Bootsanhänger, 350 kg zGG, ca. 275 kg Zuladung, 3,80 oder 4,80 m. Tempo 100 serienmäßig, CoC. Ab 1.375 €, Lieferung ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B500.jpg", "alt": "HEKU B 500 als Beispielfoto für den Bootsanhänger B 350", "beispiel": true }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b500.html", "name": "B 500", "klasse": "ungebremst", "zgg": 500, "zuladung": 450,
+    "laengen": [
+      { "laenge": "4,50 m", "zuladung": 450, "preis": "1575.00" },
+      { "laenge": "5,00 m", "zuladung": 445, "preis": "1650.00" }
+    ],
+    "preisAb": "1575.00", "zulassung": "CoC", "tempo100": { "serie": true }, "lichtleiste": null,
+    "bootstypen": ["470er / größere Jolle", "Schwerjolle / Zweihandjolle", "Jolle / Segelboot", "Schlauchboot / kleines Motorboot"],
+    "abgrenzung": "Für Boote bis ca. 275 kg genügt der B 350. Wiegt Ihr Boot mehr als ca. 450 kg, ist der B 750 mit ca. 620 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 500 ist ein ungebremster Bootsanhänger mit 500 kg zulässigem Gesamtgewicht für größere Jollen, Zweihandjollen, Schlauchboote und kleine Motorboote. Er ist zerlegbar und in zwei Längen erhältlich.",
+    "title": "Bootsanhänger 500 kg ungebremst – HEKU B 500 | HEKU",
+    "h1": "HEKU B 500 – Bootsanhänger 500 kg, ungebremst",
+    "description": "500 kg zGG, ca. 450 kg Zuladung, 4,50 oder 5,00 m. Für Jollen und Schlauchboote. Tempo 100 serienmäßig. Ab 1.575 €, auf Bestellung in ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B500.jpg", "alt": "HEKU B 500 Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b750.html", "name": "B 750", "klasse": "ungebremst", "zgg": 750, "zuladung": 620,
+    "laengen": [{ "laenge": "5,00 m", "zuladung": 620, "preis": "1995.00" }],
+    "preisAb": "1995.00", "zulassung": "CoC", "tempo100": { "serie": true }, "lichtleiste": null,
+    "bootstypen": ["Speedboot", "kleines Motorboot"],
+    "abgrenzung": "Der B 750 ist das größte ungebremste Modell. Wiegt Ihr Boot mehr als ca. 620 kg, folgt der gebremste Einachser B 900 mit ca. 660 kg Zuladung.",
+    "intro": "Der HEKU B 750 ist der größte ungebremste Bootsanhänger der B-Serie: 750 kg zulässiges Gesamtgewicht für Speedboote und kleine Motorboote, ohne Auflaufbremse und damit leicht und wartungsarm.",
+    "title": "Bootsanhänger 750 kg ungebremst – HEKU B 750 | HEKU",
+    "h1": "HEKU B 750 – Bootsanhänger 750 kg, ungebremst",
+    "description": "Größter ungebremster HEKU-Bootsanhänger: 750 kg zGG, ca. 620 kg Zuladung, Tempo 100 serienmäßig, CoC. Ab 1.995 €, Lieferung ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B750.jpeg", "alt": "HEKU B 750 Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b900.html", "name": "B 900", "klasse": "einachser", "zgg": 900, "zuladung": 660,
+    "laengen": [],
+    "preisAb": "3190.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["Motorboot", "Kabinenboot"],
+    "abgrenzung": "Der B 900 ist der Einstieg in die gebremsten Einachser. Wiegt Ihr Boot mehr als ca. 660 kg, ist der B 1100 mit ca. 815 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 900 ist der kleinste gebremste Einachser der B-Serie: 900 kg zulässiges Gesamtgewicht, Auflaufbremse mit Rückfahrautomatik und Einzelradfederung für Motorboote und Kabinenboote, die für einen ungebremsten Anhänger zu schwer sind.",
+    "title": "Bootsanhänger 900 kg gebremst – HEKU B 900 | HEKU",
+    "h1": "HEKU B 900 – gebremster Bootsanhänger 900 kg",
+    "description": "Gebremster Einachser, 900 kg zGG, ca. 660 kg Zuladung, Rückfahrautomatik, CoC. Tempo 100 optional. Ab 3.190 €, auf Bestellung in ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B1300.jpg", "alt": "HEKU B 1300 als Beispielfoto für den gebremsten Einachser B 900", "beispiel": true }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b1100.html", "name": "B 1100", "klasse": "einachser", "zgg": 1100, "zuladung": 815,
+    "laengen": [{ "laenge": "6,60 m", "zuladung": 815, "preis": "3390.00" }],
+    "preisAb": "3390.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": null,
+    "bootstypen": ["Motorboot", "Kabinenboot", "Kielboot / Segelboot"],
+    "abgrenzung": "Nehmen Sie den B 1100 statt des B 900, wenn Ihr Boot mehr als ca. 660 kg wiegt. Ab ca. 815 kg ist der B 1300 mit ca. 1.000 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 1100 ist ein gebremster Einachser mit 1.100 kg zulässigem Gesamtgewicht für Motorboote, Kabinenboote und kleinere Kielboote. Er wird als Motorboot- oder Segelboot-Ausführung gefertigt.",
+    "title": "Bootsanhänger 1.100 kg gebremst – HEKU B 1100 | HEKU",
+    "h1": "HEKU B 1100 – gebremster Bootsanhänger 1.100 kg",
+    "description": "Gebremster Einachser für Motor- und Kielboote, 1.100 kg zGG, ca. 815 kg Zuladung, CoC. Tempo 100 optional. Ab 3.390 €, Lieferung ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B1300.jpg", "alt": "HEKU B 1300 als Beispielfoto für den gebremsten Einachser B 1100", "beispiel": true }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b1300.html", "name": "B 1300", "klasse": "einachser", "zgg": 1300, "zuladung": 1000,
+    "laengen": [{ "laenge": "6,60 m", "zuladung": 1000, "preis": "3590.00" }],
+    "preisAb": "3590.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": null,
+    "bootstypen": ["Motorboot", "Kabinenboot", "Kielboot / Segelboot"],
+    "abgrenzung": "Nehmen Sie den B 1300 statt des B 1100, wenn Ihr Boot mehr als ca. 815 kg wiegt. Ab ca. 1.000 kg ist der B 1500 mit ca. 1.175 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 1300 ist ein gebremster Einachser mit 1.300 kg zulässigem Gesamtgewicht und ca. 1.000 kg Zuladung, eine häufige Wahl für Kabinenboote und Kielboote. Die Mehrstock-Ausführung für Rudervereine auf Basis des B 1300 finden Sie beim Ruderbootanhänger.",
+    "title": "Bootsanhänger 1.300 kg gebremst – HEKU B 1300 | HEKU",
+    "h1": "HEKU B 1300 – gebremster Bootsanhänger 1.300 kg",
+    "description": "Einachser mit Auflaufbremse, 1.300 kg zGG, ca. 1.000 kg Zuladung, CoC. Für Kabinen- und Kielboote. Ab 3.590 €, auf Bestellung in ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B1300.jpg", "alt": "HEKU B 1300 Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b1500.html", "name": "B 1500", "klasse": "einachser", "zgg": 1500, "zuladung": 1175,
+    "laengen": [{ "laenge": "6,60 m", "zuladung": 1175, "preis": "3850.00" }],
+    "preisAb": "3850.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": null,
+    "bootstypen": ["Motorboot", "Kabinenboot", "Kielboot / Segelboot"],
+    "abgrenzung": "Nehmen Sie den B 1500 statt des B 1300, wenn Ihr Boot mehr als ca. 1.000 kg wiegt. Ab ca. 1.175 kg ist der B 1800 mit ca. 1.450 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 1500 ist ein gebremster Einachser mit 1.500 kg zulässigem Gesamtgewicht und ca. 1.175 kg Zuladung für größere Kabinenboote und Kielboote, die noch auf einer Achse transportiert werden sollen.",
+    "title": "Bootsanhänger 1.500 kg gebremst – HEKU B 1500 | HEKU",
+    "h1": "HEKU B 1500 – gebremster Bootsanhänger 1.500 kg",
+    "description": "Gebremster Einachser, 1.500 kg zGG, ca. 1.175 kg Zuladung, CoC, Tempo 100 optional. Ab 3.850 €, Fertigung auf Bestellung, ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B1300.jpg", "alt": "HEKU B 1300 als Beispielfoto für den gebremsten Einachser B 1500", "beispiel": true }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b1800.html", "name": "B 1800", "klasse": "einachser", "zgg": 1800, "zuladung": 1450,
+    "laengen": [{ "laenge": "6,60 m", "zuladung": 1450, "preis": "3995.00" }],
+    "preisAb": "3995.00", "zulassung": "CoC", "tempo100": { "option": 140 }, "lichtleiste": null,
+    "bootstypen": ["Motorboot / Motoryacht", "Kielboot / Segelyacht"],
+    "abgrenzung": "Nehmen Sie den B 1800 statt des B 1500, wenn Ihr Boot mehr als ca. 1.175 kg wiegt. Ab ca. 1.450 kg folgt der Tandem-Anhänger B 2000 mit bis zu 1.610 kg Zuladung.",
+    "intro": "Der HEKU B 1800 ist der größte Einachser der B-Serie: 1.800 kg zulässiges Gesamtgewicht und ca. 1.450 kg Zuladung für Motoryachten und Segelyachten, die noch nicht auf einen Tandem-Anhänger müssen.",
+    "title": "Bootsanhänger 1.800 kg gebremst – HEKU B 1800 | HEKU",
+    "h1": "HEKU B 1800 – gebremster Bootsanhänger 1.800 kg",
+    "description": "Größter HEKU-Einachser: 1.800 kg zGG, ca. 1.450 kg Zuladung, CoC. Für Motoryachten und Segelyachten. Ab 3.995 €, Lieferung ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/B1800.jpg", "alt": "HEKU B 1800 Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b2000.html", "name": "B 2000", "klasse": "tandem", "zgg": 2000, "zuladung": 1610,
+    "laengen": [
+      { "laenge": "6,60 m", "zuladung": 1610, "preis": "4655.00" },
+      { "laenge": "7,10 m", "zuladung": 1600, "preis": "4695.00" },
+      { "laenge": "7,60 m", "zuladung": 1590, "preis": "4895.00" }
+    ],
+    "preisAb": "4655.00", "zulassung": "CoC", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
+    "abgrenzung": "Der B 2000 ist das kleinste Tandem-Modell. Wiegt Ihr Boot mehr als ca. 1.610 kg, ist der B 2500 mit bis zu 2.000 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 2000 ist der Einstieg in die Tandem-Bootsanhänger: zwei gebremste Achsen, 2.000 kg zulässiges Gesamtgewicht und bis zu 1.610 kg Zuladung für schwere Motor- und Segelyachten. Zwei Achsen sorgen für ruhigen Geradeauslauf.",
+    "title": "Tandem-Bootsanhänger 2.000 kg – HEKU B 2000 | HEKU",
+    "h1": "HEKU B 2000 – Tandem-Bootsanhänger 2.000 kg",
+    "description": "Tandem-Bootsanhänger, 2.000 kg zGG, bis 1.610 kg Zuladung, 6,60–7,60 m, CoC. Tempo 100 optional. Ab 4.655 €, Fertigung auf Bestellung.",
+    "bilder": [
+      { "src": "assets/anhaenger/B2000_1.jpg", "alt": "HEKU B 2000 Tandem-Bootsanhänger mit Rollen im Originalfoto", "beispiel": false },
+      { "src": "assets/anhaenger/B2000_Segelboot.jpg", "alt": "HEKU B 2000 mit Segelboot-Ausstattung im Originalfoto", "beispiel": false },
+      { "src": "assets/anhaenger/B2000.jpg", "alt": "HEKU B 2000 mit Rollen und Windenstand im Originalfoto", "beispiel": false }
+    ],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b2500.html", "name": "B 2500", "klasse": "tandem", "zgg": 2500, "zuladung": 2000,
+    "laengen": [
+      { "laenge": "6,60 m", "zuladung": 2000, "preis": "5110.00" },
+      { "laenge": "7,60 m", "zuladung": 1985, "preis": "5150.00" },
+      { "laenge": "8,10 m", "zuladung": 1970, "preis": "5350.00" }
+    ],
+    "preisAb": "5110.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
+    "abgrenzung": "Nehmen Sie den B 2500 statt des B 2000, wenn Ihr Boot mehr als ca. 1.610 kg wiegt. Ab ca. 2.000 kg sind B 2700 und B 3000 die nächsten Stufen.",
+    "intro": "Der HEKU B 2500 ist ein Tandem-Bootsanhänger mit 2.500 kg zulässigem Gesamtgewicht und bis zu 2.000 kg Zuladung für schwere Motor- und Segelyachten.",
+    "title": "Tandem-Bootsanhänger 2.500 kg – HEKU B 2500 | HEKU",
+    "h1": "HEKU B 2500 – Tandem-Bootsanhänger 2.500 kg",
+    "description": "2.500 kg zGG, bis 2.000 kg Zuladung, 6,60–8,10 m, TÜV-EG. Tempo 100 optional. Ab 5.110 €, auf Bestellung in ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/HEKU_B2500.jpeg", "alt": "HEKU B 2500 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b2700.html", "name": "B 2700", "klasse": "tandem", "zgg": 2700, "zuladung": 2150,
+    "laengen": [
+      { "laenge": "6,60 m", "zuladung": 2150, "preis": null },
+      { "laenge": "7,60 m", "zuladung": 2135, "preis": null },
+      { "laenge": "8,10 m", "zuladung": 2120, "preis": null }
+    ],
+    "preisAb": null, "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
+    "abgrenzung": "Nehmen Sie den B 2700 statt des B 2500, wenn Ihr Boot mehr als ca. 2.000 kg wiegt. Ab ca. 2.150 kg ist der B 3000 mit bis zu 2.400 kg Zuladung die nächste Stufe.",
+    "intro": "Der HEKU B 2700 ist ein Tandem-Bootsanhänger mit 2.700 kg zulässigem Gesamtgewicht und bis zu 2.150 kg Zuladung. Er schließt die Lücke zwischen B 2500 und B 3000 für schwere Motor- und Segelyachten.",
+    "title": "Tandem-Bootsanhänger 2.700 kg – HEKU B 2700 | HEKU",
+    "h1": "HEKU B 2700 – Tandem-Bootsanhänger 2.700 kg",
+    "description": "2.700 kg zGG, bis 2.150 kg Zuladung, 6,60–8,10 m, TÜV-EG. Tempo 100 optional. Preis auf Anfrage, Fertigung auf Bestellung.",
+    "bilder": [{ "src": "assets/anhaenger/HEKU_B2500.jpeg", "alt": "HEKU B 2500 als Beispielfoto für den Tandem-Bootsanhänger B 2700", "beispiel": true }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b3000.html", "name": "B 3000", "klasse": "tandem", "zgg": 3000, "zuladung": 2400,
+    "laengen": [
+      { "laenge": "6,60 m", "zuladung": 2400, "preis": "5855.00" },
+      { "laenge": "7,60 m", "zuladung": 2380, "preis": null },
+      { "laenge": "8,60 m", "zuladung": 2360, "preis": null }
+    ],
+    "preisAb": "5855.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
+    "abgrenzung": "Nehmen Sie den B 3000 statt des B 2700, wenn Ihr Boot mehr als ca. 2.150 kg wiegt. Ab ca. 2.400 kg ist der B 3500 mit bis zu 2.850 kg Zuladung das größte Modell.",
+    "intro": "Der HEKU B 3000 ist ein Tandem-Bootsanhänger mit 3.000 kg zulässigem Gesamtgewicht und bis zu 2.400 kg Zuladung für schwere Motor- und Segelyachten.",
+    "title": "Tandem-Bootsanhänger 3.000 kg – HEKU B 3000 | HEKU",
+    "h1": "HEKU B 3000 – Tandem-Bootsanhänger 3.000 kg",
+    "description": "3.000 kg zGG, bis 2.400 kg Zuladung, TÜV-EG, Tempo 100 optional. Ab 5.855 € (6,60 m), längere Rahmen auf Anfrage.",
+    "bilder": [{ "src": "assets/anhaenger/B3000-neu.jpeg", "alt": "HEKU B 3000 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  },
+  {
+    "slug": "bootsanhaenger-b3500.html", "name": "B 3500", "klasse": "tandem", "zgg": 3500, "zuladung": 2850,
+    "laengen": [
+      { "laenge": "6,60 m", "zuladung": 2850, "preis": "6555.00" },
+      { "laenge": "7,60 m", "zuladung": 2830, "preis": "6585.00" },
+      { "laenge": "8,60 m", "zuladung": 2810, "preis": "6795.00" }
+    ],
+    "preisAb": "6555.00", "zulassung": "TÜV-EG", "tempo100": { "option": 280 }, "lichtleiste": "+ 1,55 m",
+    "bootstypen": ["schwere Motoryacht", "schwere Segelyacht"],
+    "abgrenzung": "Der B 3500 ist das größte Modell der B-Serie. Für Boote bis ca. 2.400 kg genügt der B 3000.",
+    "intro": "Der HEKU B 3500 ist der größte Bootsanhänger der B-Serie: ein Tandem mit 3.500 kg zulässigem Gesamtgewicht und bis zu 2.850 kg Zuladung für die schwersten Motor- und Segelyachten, die mit einem Pkw-Gespann bewegt werden.",
+    "title": "Bootstrailer 3,5 t Tandem – HEKU B 3500 | HEKU",
+    "h1": "HEKU B 3500 – Tandem-Bootsanhänger 3.500 kg",
+    "description": "Größter HEKU-Bootsanhänger: 3.500 kg zGG, bis 2.850 kg Zuladung, 6,60–8,60 m, TÜV-EG. Ab 6.555 €, auf Bestellung in ca. 2 Wochen.",
+    "bilder": [{ "src": "assets/anhaenger/HEKU_B3500.jpeg", "alt": "HEKU B 3500 Tandem-Bootsanhänger im Originalfoto", "beispiel": false }],
+    "leergewicht": null, "bereifung": null, "maxBootslaenge": null
+  }
+]

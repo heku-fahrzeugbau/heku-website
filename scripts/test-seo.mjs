@@ -492,7 +492,8 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
    assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
- assert.equal(managedPages,94);
+ // 94 bestehende Seiten + 13 generierte Modellseiten (bootsanhaenger-b*.html)
+ assert.equal(managedPages,107);
 
  const privacy=read('datenschutz.html');
  assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
@@ -571,6 +572,7 @@ test('P0 traffic-law statements use the correct registration fields and complete
  assert.doesNotMatch(guide,/>100 km\/h-Zulassung – (?:Einachsig|Tandem)</);
  assert.match(guide,/Radstoßdämpfer-Paket für Tempo-100-Konfiguration – Einachsig/);
  assert.match(custom,/Radstoßdämpfer-Paket: 280 €/);
+ assert.match(custom,/Radstoßdämpfer-Paket: 140 € \(Einachser\)/);
 });
 
 test('Reserverad article numbers are distinct and match Robin’s correction',()=>{
@@ -690,13 +692,13 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
   'https://schema.org/PreSale','https://schema.org/Reserved','https://schema.org/SoldOut'
  ]);
  const isoWithZone=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
- const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html']);
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html',...fs.readdirSync(ROOT).filter(file=>/^bootsanhaenger-b\d+\.html$/.test(file))]);
  const htmlFiles=[
   ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
   ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
  ];
  let videos=0, offers=0;
- for(const file of [...htmlFiles,'scripts/templates/product-page.tpl','scripts/generate-product-pages.mjs','scripts/build-site.mjs','content/produkte/produkte.json']) {
+ for(const file of [...htmlFiles,'scripts/templates/product-page.tpl','scripts/generate-product-pages.mjs','scripts/build-site.mjs','content/produkte/produkte.json','scripts/templates/model-page.tpl','scripts/generate-model-pages.mjs','content/modelle/modelle.json']) {
   assert.doesNotMatch(read(file),/"uploadDate"\s*:\s*"\d{4}-\d{2}-\d{2}"/,file);
   assert.doesNotMatch(read(file),/availability["']?\s*[:=]\s*["'](?!https:\/\/schema\.org\/)[A-Za-z]/,file);
  }
@@ -729,7 +731,7 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
  assert.match(read('scripts/generate-product-pages.mjs'),/availability:'https:\/\/schema\.org\/InStock'/);
 });
 test('Every offer has availability and every product image is an absolute URL',()=>{
- const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','produkte.html']);
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','produkte.html',...fs.readdirSync(ROOT).filter(file=>/^bootsanhaenger-b\d+\.html$/.test(file))]);
  const htmlFiles=[
   ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
   ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)

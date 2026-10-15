@@ -40,6 +40,14 @@ Neue Produktbilder nach dem Schema `assets/produkte/produkt-{interne ID}.jpg` ab
 
 Artikelnummern bilden die URL `/artikel/NUMMER.html`. Bei SKU-Änderung oder Löschung zuerst die alte URL bewusst stilllegen/weiterleiten; der Generator stoppt bei verwaisten Dateien. Vorhandene flache `shop-artikel-NUMMER.html` werden nicht automatisch gelöscht oder übergangen.
 
+## Modelldaten ändern (Bootsanhänger B 350 bis B 3500)
+
+- Einzige Quelle für die Modellseiten `bootsanhaenger-b*.html` und den Modellblock auf `produkte.html`: `content/modelle/modelle.json`.
+- Generator: `scripts/generate-model-pages.mjs` mit Vorlage `scripts/templates/model-page.tpl`, aufgerufen von `node scripts/build-site.mjs`. Die generierten Seiten nicht von Hand bearbeiten.
+- `preisAb: null` bedeutet „Preis auf Anfrage“: Die Seite erhält dann bewusst kein Product/Offer-Markup (derzeit B 2700).
+- Der Generator bricht ab, wenn Zulassung (B 350–B 2000 CoC, ab B 2500 TÜV-EG), Tempo 100 (ungebremst serienmäßig, Einachser + 140 €, Tandem + 280 €), Preisformat oder Bilder nicht stimmen.
+- Die Kartenpreise in `produkte.html` (`modelData`) und die Modelltabellen der Klassenseiten werden noch von Hand gepflegt; `scripts/test-models.mjs` prüft, dass sie mit `modelle.json` übereinstimmen.
+
 ## Änderungen veröffentlichen
 
 Änderungen auf separatem Branch prüfen und als Pull Request vorlegen. PR-Prüfung baut und testet ohne Push oder Deployment. **Merge nach main erst nach Freigabe.** Dann generiert der vorhandene Sitemap-Workflow die Dateien erneut, committet Änderungen und fordert einen Pages-Build an. Generator- UND Pages-Ergebnis und Live-Seiten prüfen.
