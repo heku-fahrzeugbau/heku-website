@@ -729,7 +729,7 @@
     // GEBREMST TANDEM – Längenvariabel (Basispreis)
     { id:'B2000', name:'B 2000',  maxZuladung:1610, gebremst:true,  achse:'Tandem',    preisMin:4655, preisMax:4655  },
     { id:'B2500', name:'B 2500',  maxZuladung:2000, gebremst:true,  achse:'Tandem',    preisMin:5110, preisMax:5110  },
-    { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:null, preisMax:null  }, // Preis offen, kein Eurobetrag
+    { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:5310, preisMax:5310, maxBootslaenge:'6,60 m'  },
     { id:'B3000', name:'B 3000',  maxZuladung:2400, gebremst:true,  achse:'Tandem',    preisMin:5855, preisMax:5855  },
     { id:'B3500', name:'B 3500',  maxZuladung:2850, gebremst:true,  achse:'Tandem',    preisMin:6555, preisMax:6555  },
   ];
@@ -887,7 +887,7 @@
       <div class="spec-card">
         <div class="spec-label">Zulassung</div>
         <div class="spec-value">${zulassungLabel(modell)}</div>
-      </div>`;
+      </div>${modell.maxBootslaenge ? `<div class="spec-card"><div class="spec-label">Max. Bootslänge</div><div class="spec-value">${modell.maxBootslaenge}</div></div>` : ''}`;
     
     // 100km/h Checkbox: Bei B350-B750 ausblenden (serienmäßig)
     const km100Checkbox = document.querySelector('[data-value="100kmh"]');

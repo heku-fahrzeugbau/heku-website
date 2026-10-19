@@ -16,7 +16,7 @@ const visibleText = html => html.replace(/<script\b[\s\S]*?<\/script>/gi, ' ').r
 const de = p => Number(p).toLocaleString('de-DE');
 
 // Robins bestätigte ab-Preise (15.10.2026) plus die in allen Quellen identischen Site-Preise B 1300/1500/1800.
-const confirmed = { 'B 350': '1375.00', 'B 500': '1575.00', 'B 750': '1995.00', 'B 900': '3190.00', 'B 1100': '3390.00', 'B 1300': '3590.00', 'B 1500': '3850.00', 'B 1800': '3995.00', 'B 2000': '4655.00', 'B 2500': '5110.00', 'B 2700': null, 'B 3000': '5855.00', 'B 3500': '6555.00' };
+const confirmed = { 'B 350': '1375.00', 'B 500': '1575.00', 'B 750': '1995.00', 'B 900': '3190.00', 'B 1100': '3390.00', 'B 1300': '3590.00', 'B 1500': '3850.00', 'B 1800': '3995.00', 'B 2000': '4655.00', 'B 2500': '5110.00', 'B 2700': '5310.00', 'B 3000': '5855.00', 'B 3500': '6555.00' };
 
 test('Model data: 13 models, unique slugs, valid prices, existing images', () => {
   assert.equal(all.length, 13);
@@ -27,7 +27,9 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
     if (m.preisAb !== null) assert.match(m.preisAb, /^\d+\.\d{2}$/);
     for (const b of m.bilder) assert.ok(fs.existsSync(path.join(ROOT, b.src)), b.src);
   }
-  assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), ['B 2700']);
+  assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
+  assert.equal(all.find(m => m.name === 'B 2700').maxBootslaenge, '6,60 m');
+  for (const m of all) if (m.name !== 'B 2700') assert.equal(m.maxBootslaenge, null, m.name);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -139,14 +141,14 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
     }
   }
   assert.doesNotMatch(data, /name:'B 1100',price:'3\.490'/);
-  // B 2700 bleibt ohne veröffentlichten Preis (5.150 / 5.295 / 5.310 / 5.450 € nicht ausgeben).
-  assert.match(data, /\{name:'B 2700',price:null,/);
-  assert.doesNotMatch(data, /5\.150|5\.295|5\.310|5\.450/);
-  for (const file of ['bootsanhaenger-b2700.html', 'produkte.html', 'bootstrailer.html', 'motorbootanhaenger.html', 'segelbootanhaenger.html', 'konfigurator.html']) {
-    assert.doesNotMatch(read(file), /5\.150|5\.295|5\.310|5\.450|5310/, file);
-  }
-  const b2700row = read('bootstrailer.html').match(/class="model-name">B 2700<[\s\S]*?<\/tr>/);
-  assert.match(b2700row[0], /auf Anfrage/);
+  // B 2700: bestätigter Preis ab 5.310 €. Die alten Staffeln 5.150 / 5.295 / 5.450 € bleiben draußen.
+  assert.match(data, /\{name:'B 2700',price:'5\.310'/);
+  assert.doesNotMatch(data, /5\.150|5\.295|5\.450/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge<\/td><td><strong>6,60 m<\/strong>/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Die maximale Bootslänge beträgt 6,60 m/);
+  const b2700 = jsonld(read('bootsanhaenger-b2700.html')).flatMap(nodes).find(n => types(n).includes('Product'));
+  assert.equal(b2700.offers.price, '5310.00');
+  assert.equal(b2700.additionalProperty.find(p => p.name === 'Max. Bootslänge').value, '6,60 m');
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
 });
 
@@ -289,7 +291,7 @@ test('Length surcharge: braked single-axle +155 €, tandem +209 € per 0,5 m e
   assert.match(read('konfigurator.html'), /const laengenRate = isTandem \? 209 : 155;/);
 });
 
-test('Configurator approval follows zGG and B 2700 shows no list price', () => {
+test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', () => {
   const html = read('konfigurator.html');
   const start = html.indexOf('const MODELLE');
   const end = html.indexOf('const SICHERHEITSFAKTOR');
@@ -300,8 +302,10 @@ test('Configurator approval follows zGG and B 2700 shows no list price', () => {
   assert.equal(ctx.zulassungLabel(byId('B2000')), 'Betriebserlaubnis (CoC)');
   assert.equal(ctx.zulassungLabel(byId('B2500')), 'TÜV-EG');
   assert.equal(ctx.zulassungLabel(byId('B2700')), 'TÜV-EG');
-  assert.equal(byId('B2700').preisMin, null);
-  assert.equal(ctx.angebotsPreis(byId('B2700'), 280), 'Preis auf Anfrage');
+  assert.equal(byId('B2700').preisMin, 5310);
+  assert.equal(byId('B2700').maxBootslaenge, '6,60 m');
+  assert.equal(ctx.angebotsPreis(byId('B2700'), 0), 'ab ca. 5.310 €');
+  assert.equal(ctx.angebotsPreis(byId('B2700'), 280), 'ab ca. 5.590 €');
   assert.equal(ctx.angebotsPreis(byId('B900'), 140), 'ab ca. 3.330 €');
   assert.equal(ctx.angebotsPreis(byId('B2000'), 280), 'ab ca. 4.935 €');
   assert.match(html, /if \(!modell\.gebremst\)/);
