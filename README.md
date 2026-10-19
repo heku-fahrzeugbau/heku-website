@@ -44,9 +44,9 @@ Artikelnummern bilden die URL `/artikel/NUMMER.html`. Bei SKU-Änderung oder Lö
 
 - Einzige Quelle für die Modellseiten `bootsanhaenger-b*.html` und den Modellblock auf `produkte.html`: `content/modelle/modelle.json`.
 - Generator: `scripts/generate-model-pages.mjs` mit Vorlage `scripts/templates/model-page.tpl`, aufgerufen von `node scripts/build-site.mjs`. Die generierten Seiten nicht von Hand bearbeiten.
-- `preisAb: null` bedeutet „Preis auf Anfrage“: Die Seite erhält dann bewusst kein Product/Offer-Markup (derzeit B 2700).
+- `preisAb: null` bedeutet „Preis auf Anfrage“: Die Seite erhält dann bewusst kein Product/Offer-Markup (derzeit B 2700). Dieselbe Angabe steht auf der Modellkarte, in den Klassentabellen und im Konfigurator; dort wird kein Eurobetrag genannt.
 - Der Generator bricht ab, wenn Zulassung (B 350–B 2000 CoC, ab B 2500 TÜV-EG), Tempo 100 (ungebremst serienmäßig, Einachser + 140 €, Tandem + 280 €), Preisformat oder Bilder nicht stimmen.
-- Die Kartenpreise in `produkte.html` (`modelData`) und die Modelltabellen der Klassenseiten werden noch von Hand gepflegt; `scripts/test-models.mjs` prüft, dass sie mit `modelle.json` übereinstimmen.
+- Die Kartenpreise in `produkte.html` (`modelData`) und die Modelltabellen der Klassenseiten werden noch von Hand gepflegt; `scripts/test-models.mjs` prüft, dass sie mit `modelle.json` übereinstimmen. Das Zulassungs-Label im Konfigurator folgt dem zGG (bis 2.000 kg Betriebserlaubnis (CoC), darüber TÜV-EG), nicht der Achszahl.
 
 ## Änderungen veröffentlichen
 

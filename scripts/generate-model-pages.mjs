@@ -71,6 +71,7 @@ export function models(root = ROOT) {
     if (m.title.length > 60) throw new Error(`${where}: Title länger als 60 Zeichen.`);
     if (m.description.length > 160) throw new Error(`${where}: Description länger als 160 Zeichen.`);
     if (m.preisAb !== null && !m.description.includes(euro(m.preisAb))) throw new Error(`${where}: Description nennt nicht den ab-Preis.`);
+    if (m.preisAb === null && (!m.description.includes('Preis auf Anfrage') || /\d[\d.]*\s*€/.test(m.description))) throw new Error(`${where}: ohne Preis nur „Preis auf Anfrage“, kein Eurobetrag in der Description.`);
     if (!Array.isArray(m.bootstypen) || !m.bootstypen.length) throw new Error(`${where}: bootstypen fehlt.`);
   }
   return records;
