@@ -183,6 +183,10 @@
     .result-model { font-family: var(--font-head); font-size: 36px; color: #fff; margin-bottom: 6px; }
     .result-price-range { font-size: 42px; font-weight: 300; color: var(--rot); margin-bottom: 12px; }
     .result-disclaimer { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.55; }
+    .result-photos { display: grid; gap: 12px; margin-top: 22px; }
+    .result-photos[hidden] { display: none; }
+    .result-photo { margin: 0; }
+    .result-photo img { width: 100%; height: auto; max-height: 320px; object-fit: contain; display: block; background: #fff; border-radius: 12px; }
     .result-specs { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
     .spec-card { background: var(--bg2); border-radius: 10px; padding: 20px; }
     .spec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
@@ -573,6 +577,7 @@
           <div class="result-model" id="resultModel">—</div>
           <div class="result-price-range" id="resultPrice">—</div>
           <div class="result-disclaimer">Unverbindliche Preisrange inkl. 19% MwSt. · Endpreis nach individueller Konfiguration</div>
+          <div class="result-photos" id="resultPhotos" hidden></div>
         </div>
 
         <div class="result-specs" id="resultSpecs"></div>
@@ -734,6 +739,14 @@
     { id:'B3500', name:'B 3500',  maxZuladung:2850, gebremst:true,  achse:'Tandem',    preisMin:6555, preisMax:6555  },
   ];
 
+  // Originalfotos je Modell. Erstes Bild ist das Hauptfoto.
+  const MODELL_FOTOS = {
+    B900: [
+      { src: 'assets/anhaenger/B900_M.jpg', webp: 'assets/anhaenger/B900_M.webp', alt: 'HEKU Bootsanhänger B 900 mit Kielrollen', width: 1200, height: 1143 },
+      { src: 'assets/anhaenger/B900_2.jpg', webp: 'assets/anhaenger/B900_2.webp', alt: 'HEKU Bootsanhänger B 900 mit Auflageböcken', width: 1600, height: 877 }
+    ]
+  };
+
   const SICHERHEITSFAKTOR = 1.25; // Bootsgewicht × 1.25 = Mindest-zGG
 
   // ─── STATE ─────────────────────────────────────────────────────────────────
@@ -863,6 +876,10 @@
     document.getElementById('resultModel').textContent = 'HEKU ' + modell.name;
     document.getElementById('resultPrice').textContent =
       `ab ca. ${pMin.toLocaleString('de-DE')} €`;
+    const photos = document.getElementById('resultPhotos');
+    const fotos = MODELL_FOTOS[modell.id] || [];
+    photos.hidden = fotos.length === 0;
+    photos.innerHTML = fotos.map((f, i) => `<figure class="result-photo"><picture><source srcset="${f.webp}" type="image/webp"><img src="${f.src}" alt="${f.alt}" width="${f.width}" height="${f.height}"${i ? ' loading="lazy"' : ''} decoding="async"></picture></figure>`).join('');
 
     // Specs
     const specsEl = document.getElementById('resultSpecs');

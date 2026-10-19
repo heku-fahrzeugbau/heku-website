@@ -63,6 +63,8 @@ export function models(root = ROOT) {
     for (const b of m.bilder) {
       if (!b.src || !b.alt || typeof b.beispiel !== 'boolean') throw new Error(`${where}: Bild unvollständig.`);
       if (!fs.existsSync(path.join(root, b.src))) throw new Error(`${where}: Bild fehlt: ${b.src}`);
+      if (b.webp != null && (typeof b.webp !== 'string' || !b.webp.endsWith('.webp') || !fs.existsSync(path.join(root, b.webp)))) throw new Error(`${where}: WebP fehlt: ${b.webp}`);
+      if ((b.width != null || b.height != null) && (!Number.isInteger(b.width) || !Number.isInteger(b.height) || b.width < 1 || b.height < 1)) throw new Error(`${where}: Bildmaße ungültig.`);
     }
     for (const key of ['title', 'h1', 'description', 'intro', 'abgrenzung']) {
       if (typeof m[key] !== 'string' || !m[key].trim()) throw new Error(`${where}: ${key} fehlt.`);
@@ -193,7 +195,15 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
           <li><a href="kielrollen-stuetzrollen.html">Kiel- und Stützrollen</a> und <a href="auflagen-polsterkissen.html">Auflagen und Polsterkissen</a></li>${m.klasse === 'ungebremst' ? '' : `\n          <li>Radstoßdämpfer für die Tempo-100-Konfiguration: <a href="${daempfer}">Radstoßdämpfer ${m.klasse === 'tandem' ? 'Tandem' : '1-achsig'}</a></li>`}
           <li><a href="artikel/50234.html">Gangway</a> und <a href="weiteres-bootsanhaenger-zubehoer.html">weiteres Zubehör</a></li>
         </ul>`;
-  const figures = m.bilder.map((b, i) => `<figure class="model-figure"><img src="${e(b.src)}" alt="${e(b.alt)}"${i ? ' loading="lazy"' : ''}>${b.beispiel ? `<figcaption>Beispielfoto: Für den ${e(m.name)} liegt noch kein eigenes Foto vor. Abbildungen können Zubehör gegen Aufpreis zeigen.</figcaption>` : '<figcaption>Abbildungen können Zubehör gegen Aufpreis zeigen.</figcaption>'}</figure>`);
+  const figures = m.bilder.map((b, i) => {
+    const dims = Number.isInteger(b.width) && Number.isInteger(b.height) ? ` width="${b.width}" height="${b.height}"` : '';
+    const img = `<img src="${e(b.src)}" alt="${e(b.alt)}"${dims}${i ? ' loading="lazy"' : ''}>`;
+    const media = b.webp ? `<picture><source srcset="${e(b.webp)}" type="image/webp">${img}</picture>` : img;
+    const caption = b.beispiel
+      ? `<figcaption>Beispielfoto: Für den ${e(m.name)} liegt noch kein eigenes Foto vor. Abbildungen können Zubehör gegen Aufpreis zeigen.</figcaption>`
+      : '<figcaption>Abbildungen können Zubehör gegen Aufpreis zeigen.</figcaption>';
+    return `<figure class="model-figure">${media}${caption}</figure>`;
+  });
   const faqHTML = faqs(m).map(([q, a]) => `        <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">${e(q)}<span class="faq-icon"></span></button>
           <div class="faq-answer"><div class="faq-answer-inner">${e(a)}</div></div>

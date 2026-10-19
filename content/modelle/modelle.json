@@ -54,7 +54,10 @@
     "title": "Bootsanhänger 900 kg gebremst – HEKU B 900 | HEKU",
     "h1": "HEKU B 900 – gebremster Bootsanhänger 900 kg",
     "description": "Gebremster Einachser, 900 kg zGG, ca. 660 kg Zuladung, Rückfahrautomatik, CoC. Tempo 100 optional. Ab 3.190 €, auf Bestellung in ca. 2 Wochen.",
-    "bilder": [{ "src": "assets/anhaenger/B1300.jpg", "alt": "HEKU B 1300 als Beispielfoto für den gebremsten Einachser B 900", "beispiel": true }],
+    "bilder": [
+      { "src": "assets/anhaenger/B900_M.jpg", "webp": "assets/anhaenger/B900_M.webp", "width": 1200, "height": 1143, "alt": "HEKU Bootsanhänger B 900 mit Kielrollen", "beispiel": false },
+      { "src": "assets/anhaenger/B900_2.jpg", "webp": "assets/anhaenger/B900_2.webp", "width": 1600, "height": 877, "alt": "HEKU Bootsanhänger B 900 mit Auflageböcken", "beispiel": false }
+    ],
     "leergewicht": null, "bereifung": null, "maxBootslaenge": null
   },
   {
