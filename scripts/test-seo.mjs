@@ -729,7 +729,7 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
     if(typeof node.availability==='string') {
      offers++; pageOffers++;
      assert.ok(itemAvailability.has(node.availability),`${file}: ${node.availability}`);
-     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/BackOrder',file);
      if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
     }
     for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
@@ -780,7 +780,7 @@ test('Every offer has availability and every product image is an absolute URL',(
      offers++;
      assert.equal(typeof node.availability,'string',`${file}: availability fehlt`);
      assert.match(node.availability,/^https:\/\/schema\.org\//,file);
-     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/MadeToOrder',file);
+     if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/BackOrder',file);
      if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
      assert.equal(node.priceValidUntil,undefined,`${file}: priceValidUntil`);
      assert.equal(node.validFrom,undefined,`${file}: validFrom`);
@@ -796,7 +796,9 @@ test('Every offer has availability and every product image is an absolute URL',(
       assert.equal(rp&&rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
       assert.equal(rp.applicableCountry,'DE',file);
       assert.equal(rp.merchantReturnLink,'https://heku-fahrzeugbau.de/agb.html#ausschluss-einzelanfertigung',file);
-      assert.equal(node.shippingDetails,undefined,`${file}: shippingDetails`);
+      // Anhänger: Abholung, kein Standardversand, kein (Gratis-)Versandpreis.
+      assert.deepEqual(node.shippingDetails,{'@type':'OfferShippingDetails',shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'},doesNotShip:true},`${file}: shippingDetails`);
+      assert.equal(node.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
       if(file==='index.html') {
        assert.notEqual(node.url,'https://heku-fahrzeugbau.de/');
        assert.notEqual(node.url,'https://heku-fahrzeugbau.de');
@@ -872,4 +874,55 @@ test('Dealer email subject omits empty parentheses and falls back to the city',(
  assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage – Firma (Nord)');
  assert.equal(subject('Firma','','Hamburg'),'Händleranfrage – Firma (Hamburg)');
  assert.equal(subject('Firma','',''),'Händleranfrage – Firma');
+});
+
+// GSC Händlereinträge (19.10.2026): nur von Google unterstützte availability-Werte, Rückgabe und Versand an jedem Angebot mit Preis.
+test('Merchant listings: Google-supported availability, image, return policy and shipping on every priced offer',()=>{
+ const googleAvailability=new Set(['BackOrder','Discontinued','InStock','InStoreOnly','LimitedAvailability','OnlineOnly','OutOfStock','PreOrder','PreSale','SoldOut'].map(v=>'https://schema.org/'+v));
+ const files=[...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')),...fs.readdirSync(path.join(ROOT,'artikel')).filter(f=>f.endsWith('.html')).map(f=>`artikel/${f}`)];
+ let priced=0, trailers=0, accessories=0;
+ for(const file of files){
+  assert.doesNotMatch(read(file),/schema\.org\/MadeToOrder/,file);
+  for(const block of read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){
+   const stack=[JSON.parse(block[1])];
+   while(stack.length){
+    const n=stack.pop();
+    if(!n||typeof n!=='object') continue;
+    if(Array.isArray(n)){stack.push(...n);continue;}
+    const t=[].concat(n['@type']||[]);
+    if(t.includes('Product')&&n.offers){
+     assert.ok([].concat(n.image||[]).length,`${file}: ${n.name} ohne image`);
+     for(const o of [].concat(n.offers)){
+      if(o.price==null) continue;
+      priced++;
+      assert.ok(Number(o.price)>0,`${file}: Preis > 0`);
+      assert.ok(googleAvailability.has(o.availability),`${file}: availability ${o.availability}`);
+      assert.equal(o.priceValidUntil,undefined,`${file}: Preise ohne Ablaufdatum`);
+      const rp=o.hasMerchantReturnPolicy; assert.ok(rp&&rp.applicableCountry==='DE',`${file}: Rückgabe fehlt`);
+      const sd=o.shippingDetails; assert.ok(sd&&sd.shippingDestination&&sd.shippingDestination.addressCountry==='DE',`${file}: Versand fehlt`);
+      if(file.startsWith('artikel/')){
+       accessories++;
+       assert.equal(o.availability,'https://schema.org/InStock',file);
+       assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnFiniteReturnWindow',file);
+       assert.equal(rp.merchantReturnDays,14,file);
+       assert.equal(rp.returnFees,'https://schema.org/ReturnFeesCustomerResponsibility',file);
+       assert.ok(Number(sd.shippingRate.value)>0,`${file}: nie Gratisversand`);
+       const d=sd.deliveryTime; assert.equal(d.handlingTime.minValue+d.transitTime.minValue,2,file); assert.equal(d.handlingTime.maxValue+d.transitTime.maxValue,5,file);
+      } else {
+       trailers++;
+       assert.equal(o.availability,'https://schema.org/BackOrder',file);
+       assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
+       assert.equal(sd.doesNotShip,true,file); assert.equal(sd.shippingRate,undefined,file);
+      }
+     }
+    }
+    for(const v of Object.values(n)) if(v&&typeof v==='object') stack.push(v);
+   }
+  }
+ }
+ assert.equal(accessories,55); assert.equal(trailers,28); assert.equal(priced,83);
+ // Organization-weite Rückgaberichtlinie hängt am selben Knoten wie das LocalBusiness (#organization).
+ const org=[...read('index.html').matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(b=>JSON.parse(b[1])).find(d=>d['@type']==='Organization');
+ assert.equal(org['@id'],'https://heku-fahrzeugbau.de/#organization');
+ assert.equal(org.hasMerchantReturnPolicy.merchantReturnDays,14);
 });

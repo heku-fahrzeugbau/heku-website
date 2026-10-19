@@ -43,11 +43,13 @@
     "url": "https://heku-fahrzeugbau.de/ruderbootanhaenger.html",
     "price": "8000.00",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/MadeToOrder",
+    "availability": "https://schema.org/BackOrder",
     "itemCondition": "https://schema.org/NewCondition",
     "seller": {
       "@id": "https://heku-fahrzeugbau.de/#organization"
     },
+    "shippingDetails": {"@type": "OfferShippingDetails", "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "DE"}, "doesNotShip": true},
+    "availableDeliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModePickUp",
     "availableAtOrFrom": {
       "@type": "Place",
       "name": "HEKU Fahrzeugbau GmbH",

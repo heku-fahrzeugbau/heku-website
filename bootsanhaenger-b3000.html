@@ -84,10 +84,19 @@
         "price": "5855.00",
         "priceCurrency": "EUR",
         "itemCondition": "https://schema.org/NewCondition",
-        "availability": "https://schema.org/MadeToOrder",
+        "availability": "https://schema.org/BackOrder",
         "seller": {
           "@id": "https://heku-fahrzeugbau.de/#organization"
         },
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "DE"
+          },
+          "doesNotShip": true
+        },
+        "availableDeliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModePickUp",
         "availableAtOrFrom": {
           "@type": "Place",
           "name": "HEKU Fahrzeugbau GmbH",
