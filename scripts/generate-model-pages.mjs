@@ -106,8 +106,12 @@ export function faqs(m) {
 const offerFor = (m, url) => ({
   '@type': 'Offer', url, price: m.preisAb, priceCurrency: 'EUR',
   itemCondition: 'https://schema.org/NewCondition',
-  availability: 'https://schema.org/MadeToOrder',
+  // Google unterstützt MadeToOrder für Händlereinträge nicht; BackOrder = jetzt bestellbar, Lieferung später (ca. 2 Wochen Fertigung).
+  availability: 'https://schema.org/BackOrder',
   seller: { '@id': ORG },
+  // Anhänger: kein Standardversand, Abholung im Werk Bielefeld (Frachtversand nur individuell vereinbart).
+  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' }, doesNotShip: true },
+  availableDeliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModePickUp',
   availableAtOrFrom: { '@type': 'Place', name: 'HEKU Fahrzeugbau GmbH', address: { '@type': 'PostalAddress', streetAddress: 'Bunzlauer Straße 6', addressLocality: 'Bielefeld', postalCode: '33719', addressRegion: 'Nordrhein-Westfalen', addressCountry: 'DE' } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'DE', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted', merchantReturnLink: BASE + '/agb.html#ausschluss-einzelanfertigung' }
 });

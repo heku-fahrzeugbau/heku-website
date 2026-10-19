@@ -66,12 +66,14 @@ test('Visible price, meta description and Offer agree; a model without price get
     const [p] = products, [o] = offers;
     assert.equal(p['@id'], `${BASE}/${m.slug}#product`);
     assert.equal(o.price, m.preisAb); assert.equal(o.priceCurrency, 'EUR');
-    assert.equal(o.availability, 'https://schema.org/MadeToOrder');
+    assert.equal(o.availability, 'https://schema.org/BackOrder');
     assert.equal(o.url, `${BASE}/${m.slug}`);
     assert.equal(o.availableAtOrFrom.address.streetAddress, 'Bunzlauer Straße 6');
     assert.equal(o.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
     assert.equal(o.hasMerchantReturnPolicy.merchantReturnLink, `${BASE}/agb.html#ausschluss-einzelanfertigung`);
-    for (const k of ['shippingDetails', 'priceValidUntil', 'validFrom']) assert.equal(o[k], undefined, k);
+    assert.deepEqual(o.shippingDetails, { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' }, doesNotShip: true });
+    assert.equal(o.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
+    for (const k of ['priceValidUntil', 'validFrom']) assert.equal(o[k], undefined, k);
     for (const img of [].concat(p.image)) assert.match(img, /^https:\/\/heku-fahrzeugbau\.de\//);
   }
 });
