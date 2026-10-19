@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import vm from 'node:vm';
 import { ROOT, BASE, attributes, exclusionReason, pages } from './generate-sitemap.mjs';
 import { models, generateModels, modelDataFile, faqs, expectedZulassung, GRUNDLAENGE, LAENGEN_ZUSCHLAG } from './generate-model-pages.mjs';
 
@@ -27,6 +28,8 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
     for (const b of m.bilder) assert.ok(fs.existsSync(path.join(ROOT, b.src)), b.src);
   }
   assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
+  assert.equal(all.find(m => m.name === 'B 2700').maxBootslaenge, '6,60 m');
+  for (const m of all) if (m.name !== 'B 2700') assert.equal(m.maxBootslaenge, null, m.name);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -96,7 +99,7 @@ test('Registration follows Robin: B 350–B 2000 CoC, from B 2500 TÜV-EG', () =
     else { assert.match(text, /TÜV-EG/, m.slug); assert.equal(m.zulassung, 'TÜV-EG'); }
     assert.equal(m.zulassung, expectedZulassung(m));
   }
-  const corrected = ['bootstrailer.html', 'motorbootanhaenger.html', 'segelbootanhaenger.html', 'jollenanhaenger.html', 'index.html', 'faq.html', 'bootsanhaenger-nach-mass.html', 'erfahrungen.html', 'produkte.html', '100kmh-regelung.html'];
+  const corrected = ['bootstrailer.html', 'motorbootanhaenger.html', 'segelbootanhaenger.html', 'jollenanhaenger.html', 'index.html', 'faq.html', 'bootsanhaenger-nach-mass.html', 'erfahrungen.html', 'produkte.html', '100kmh-regelung.html', 'konfigurator.html'];
   for (const file of corrected) assert.doesNotMatch(read(file), /KBA-Typprüfung|KBA-Zulassung|KBA-zugelassen|TÜV-Einzelabnahme|T&Uuml;V-Einzelabnahme|TÜV EG-Typgenehmigung|Ungebremst · KBA|Einachsig · TÜV EG/, file);
   assert.doesNotMatch(read('ratgeber-bootsanhaenger.html'), /<td>KBA-Typprüfung<\/td>/);
   for (const file of ['bootstrailer.html', 'motorbootanhaenger.html', 'segelbootanhaenger.html', 'jollenanhaenger.html']) {
@@ -140,9 +143,14 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
     }
   }
   assert.doesNotMatch(data, /name:'B 1100',price:'3\.490'/);
-  // Robins Tandem-Preisliste: B 2700 = 5.310 € (Art. 55533); die alten Werte 5.150/5.295/5.450 € dürfen nicht mehr auftauchen.
-  assert.doesNotMatch(data, /name:'B 2700',price:'5\.150'|5\.295 €|5\.450 €/);
-  assert.doesNotMatch(read('bootsanhaenger-b2700.html'), /5\.150 €/);
+  // B 2700: bestätigter Preis ab 5.310 €. Die alten Staffeln 5.150 / 5.295 / 5.450 € bleiben draußen.
+  assert.match(data, /\{name:'B 2700',price:'5\.310'/);
+  assert.doesNotMatch(data, /5\.150|5\.295|5\.450/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge<\/td><td><strong>6,60 m<\/strong>/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Die maximale Bootslänge beträgt 6,60 m/);
+  const b2700 = jsonld(read('bootsanhaenger-b2700.html')).flatMap(nodes).find(n => types(n).includes('Product'));
+  assert.equal(b2700.offers.price, '5310.00');
+  assert.equal(b2700.additionalProperty.find(p => p.name === 'Max. Bootslänge').value, '6,60 m');
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
 });
 
@@ -234,7 +242,8 @@ test('Braked models list only the 6,60 m length (model pages, produkte.html, cla
     assert.deepEqual(other, [], `${m.slug}: nur 6,60 m erlaubt`);
     assert.ok(lengthsIn(html).includes('6,60'), m.slug);
     const product = jsonld(html).flatMap(nodes).find(n => types(n).includes('Product'));
-    assert.ok(!/\d,\d0 ?–/.test(product.description), `${m.slug}: keine Längenspanne in der Description`);
+    if (m.preisAb === null) assert.equal(product, undefined, `${m.slug}: kein Product ohne Preis`);
+    else assert.ok(!/\d,\d0 ?–/.test(product.description), `${m.slug}: keine Längenspanne in der Description`);
     assert.ok(!nodes(jsonld(html)).some(n => types(n).includes('ProductGroup') || n.hasVariant), `${m.slug}: keine Varianten im JSON-LD`);
   }
   const produkte = read('produkte.html');
@@ -282,4 +291,28 @@ test('Length surcharge: braked single-axle +155 €, tandem +209 € per 0,5 m e
   assert.doesNotMatch(data.match(/ungebremst:\[[\s\S]*?\n      \]/)[0], /surcharge/);
   assert.match(read('produkte.html'), /Längere Ausführung: \+\$\{m\.surcharge\} € je 0,5 m/);
   assert.match(read('konfigurator.html'), /const laengenRate = isTandem \? 209 : 155;/);
+});
+
+test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', () => {
+  const html = read('konfigurator.html');
+  const start = html.indexOf('const MODELLE');
+  const end = html.indexOf('const SICHERHEITSFAKTOR');
+  assert.ok(start > 0 && end > start);
+  const ctx = vm.runInNewContext(`${html.slice(start, end)}\n({MODELLE, zulassungLabel, angebotsPreis})`);
+  const byId = id => ctx.MODELLE.find(m => m.id === id);
+  assert.equal(ctx.zulassungLabel(byId('B350')), 'Betriebserlaubnis (CoC)');
+  assert.equal(ctx.zulassungLabel(byId('B2000')), 'Betriebserlaubnis (CoC)');
+  assert.equal(ctx.zulassungLabel(byId('B2500')), 'TÜV-EG');
+  assert.equal(ctx.zulassungLabel(byId('B2700')), 'TÜV-EG');
+  assert.equal(byId('B2700').preisMin, 5310);
+  assert.equal(byId('B2700').maxBootslaenge, '6,60 m');
+  assert.equal(ctx.angebotsPreis(byId('B2700'), 0), 'ab ca. 5.310 €');
+  assert.equal(ctx.angebotsPreis(byId('B2700'), 280), 'ab ca. 5.590 €');
+  assert.equal(ctx.angebotsPreis(byId('B900'), 140), 'ab ca. 3.330 €');
+  assert.equal(ctx.angebotsPreis(byId('B2000'), 280), 'ab ca. 4.935 €');
+  assert.match(html, /if \(!modell\.gebremst\)/);
+  assert.match(html, /preis = isTandem \? 280 : 140/);
+  assert.doesNotMatch(html, /KBA-Typprüfung|TÜV EG-Typgen/);
+  assert.match(read('konfigurator.html'), /id="telefon"/);
+  assert.match(read('konfigurator.html'), /id="strasse"/);
 });

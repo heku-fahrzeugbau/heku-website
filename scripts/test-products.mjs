@@ -153,6 +153,8 @@ test('Confirmed B-Serie ab prices on produkte.html',()=>{
   assert.equal(row[1],price,name+' ab-Preis');
  }
  assert.match(block[0],/\{name:'B 500',price:'1\.575'[\s\S]*?variants:\[\['4,50 m','450 kg · 1\.575 €'\],\['5,00 m','445 kg · 1\.650 €'\]\]\}/,'B 500 Laengenvarianten');
+ assert.match(block[0],/\{name:'B 2700',price:'5\.310',[\s\S]*?variants:\[\['6,60 m','2\.150 kg · 5\.310 €'\]\],surcharge:209\}/,'B 2700 Preis und Länge');
+ assert.doesNotMatch(block[0],/5\.150|5\.295|5\.450/);
 });
 
 test('Every product page links to the official EU legal-guarantee notice',()=>{

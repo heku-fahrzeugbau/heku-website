@@ -238,7 +238,7 @@
       const chips=(m.chips||['Kielrollen','Polsterkissen','Langauflagen','Bugstütze']).map(chip=>`<span class="chip">${chip}</span>`).join('');
       return `<article class="model${index%2?' reverse':''}">
         <div class="visual-wrap"><div class="visual"><span class="visual-tag">${m.tag}</span><img class="gallery-main" src="${m.images[0][0]}" alt="${m.images[0][1]}"><div class="gallery-thumbs" aria-label="Weitere Bilder ${m.name}">${thumbs}</div></div><p class="image-note">* Produktabbildungen können Zubehör gegen Aufpreis beinhalten.</p></div>
-        <div class="content"><div class="model-kicker">${typeLabel}</div><h3>${m.name}</h3><div class="price">ab ${m.price} € <small>inkl. 19 % MwSt., ab Werk</small></div>${variants}${specs}
+        <div class="content"><div class="model-kicker">${typeLabel}</div><h3>${m.name}</h3><div class="price">${m.price?`ab ${m.price} € <small>inkl. 19 % MwSt., ab Werk</small>`:`Preis auf Anfrage <small>Fertigung auf Bestellung</small>`}</div>${variants}${specs}
           <p class="setup-label">${isRuderboot?'Ausstattung':'Mögliche Ausrüstung'}</p><div class="chips">${chips}</div><p class="setup-note">${m.note||'Auflagen, Rollen und Stützen werden passend zu Abmessungen, Gewicht und Rumpfform des Bootes zusammengestellt.'}</p>
           <div class="actions">${isRuderboot?'':`<a class="btn primary" href="konfigurator.html">${m.name} konfigurieren</a>`}${m.page?`<a class="btn secondary" href="${m.page}">Details ansehen</a>`:''}<a class="btn secondary" href="kontakt.html">Anfragen</a></div></div>
       </article>`;

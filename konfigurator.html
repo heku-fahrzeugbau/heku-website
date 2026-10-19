@@ -734,7 +734,7 @@
     // GEBREMST TANDEM – Längenvariabel (Basispreis)
     { id:'B2000', name:'B 2000',  maxZuladung:1610, gebremst:true,  achse:'Tandem',    preisMin:4655, preisMax:4655  },
     { id:'B2500', name:'B 2500',  maxZuladung:2000, gebremst:true,  achse:'Tandem',    preisMin:5110, preisMax:5110  },
-    { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:5310, preisMax:5310  },
+    { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:5310, preisMax:5310, maxBootslaenge:'6,60 m'  },
     { id:'B3000', name:'B 3000',  maxZuladung:2400, gebremst:true,  achse:'Tandem',    preisMin:5855, preisMax:5855  },
     { id:'B3500', name:'B 3500',  maxZuladung:2850, gebremst:true,  achse:'Tandem',    preisMin:6555, preisMax:6555  },
   ];
@@ -746,6 +746,17 @@
       { src: 'assets/anhaenger/B900_2.jpg', webp: 'assets/anhaenger/B900_2.webp', alt: 'HEKU Bootsanhänger B 900 mit Auflageböcken', width: 1600, height: 877 }
     ]
   };
+
+  // Zulassung nach zGG, nicht nach Achse: B 2000 ist Tandem und trotzdem CoC.
+  function zulassungLabel(modell) {
+    const zgg = Number(String(modell.name).replace(/\D/g, ''));
+    return zgg <= 2000 ? 'Betriebserlaubnis (CoC)' : 'TÜV-EG';
+  }
+
+  function angebotsPreis(modell, zubehoerAufpreis) {
+    if (modell.preisMin == null) return 'Preis auf Anfrage';
+    return `ab ca. ${(modell.preisMin + zubehoerAufpreis).toLocaleString('de-DE')} €`;
+  }
 
   const SICHERHEITSFAKTOR = 1.25; // Bootsgewicht × 1.25 = Mindest-zGG
 
@@ -858,8 +869,7 @@
     state.laengenAufpreis = laengenAufpreis;
 
     state.empfohlenesModell = modell;
-    const pMin = modell.preisMin + zubehoerAufpreis;
-    const pMax = modell.preisMax + zubehoerAufpreis;
+    const priceText = angebotsPreis(modell, zubehoerAufpreis);
 
     // Sidebar aktualisieren
     document.getElementById('srModel').textContent = '';
@@ -870,12 +880,11 @@
       if (boatEl) boatEl.textContent = state.bootsbezeichnung;
     }
     document.getElementById('srPrice').style.display = 'block';
-    document.getElementById('srPrice').textContent = `ab ca. ${pMin.toLocaleString('de-DE')} €`;
+    document.getElementById('srPrice').textContent = priceText;
 
     // Ergebnis-Seite füllen
     document.getElementById('resultModel').textContent = 'HEKU ' + modell.name;
-    document.getElementById('resultPrice').textContent =
-      `ab ca. ${pMin.toLocaleString('de-DE')} €`;
+    document.getElementById('resultPrice').textContent = priceText;
     const photos = document.getElementById('resultPhotos');
     const fotos = MODELL_FOTOS[modell.id] || [];
     photos.hidden = fotos.length === 0;
@@ -894,8 +903,8 @@
       </div>
       <div class="spec-card">
         <div class="spec-label">Zulassung</div>
-        <div class="spec-value">${modell.achse === 'Tandem' ? 'TÜV EG-Typgen.' : 'KBA-Typprüfung'}</div>
-      </div>`;
+        <div class="spec-value">${zulassungLabel(modell)}</div>
+      </div>${modell.maxBootslaenge ? `<div class="spec-card"><div class="spec-label">Max. Bootslänge</div><div class="spec-value">${modell.maxBootslaenge}</div></div>` : ''}`;
     
     // 100km/h Checkbox: Bei B350-B750 ausblenden (serienmäßig)
     const km100Checkbox = document.querySelector('[data-value="100kmh"]');
