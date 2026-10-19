@@ -189,7 +189,7 @@ test('Generator is idempotent, fails closed and updates only the changed model',
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'heku-models-'));
   try {
     for (const dir of ['content/modelle', 'scripts/templates', 'assets/anhaenger']) fs.mkdirSync(path.join(tmp, dir), { recursive: true });
-    for (const f of [modelDataFile, 'scripts/templates/model-page.tpl', 'produkte.html', ...all.map(m => m.slug), ...new Set(all.flatMap(m => m.bilder.map(b => b.src)))]) fs.copyFileSync(path.join(ROOT, f), path.join(tmp, f));
+    for (const f of [modelDataFile, 'scripts/templates/model-page.tpl', 'produkte.html', ...all.map(m => m.slug), ...new Set(all.flatMap(m => m.bilder.flatMap(b => [b.src, b.webp].filter(Boolean))))]) fs.copyFileSync(path.join(ROOT, f), path.join(tmp, f));
     assert.deepEqual(generateModels(tmp).changed, []);
     const data = JSON.parse(fs.readFileSync(path.join(tmp, modelDataFile), 'utf8'));
     const b750 = data.find(m => m.name === 'B 750');
