@@ -130,7 +130,13 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.doesNotMatch(custom.slice(custom.indexOf('Umbau und Nachrüstung'), custom.indexOf('TECHNISCHE BASIS')),/patentiert|seit 1959|65\+/i);
 
  const tempo=read('100kmh-regelung.html');
- assert.match(tempo,/<title>100 km\/h mit Anhänger: Plakette, Bußgeld, Autobahn \| HEKU<\/title>/);
+ assert.match(tempo,/<title>100-km\/h-Zulassung für Anhänger: Voraussetzungen \| HEKU<\/title>/);
+ // Snippet (19.10.2026): Title <= 60, Description <= 155 Zeichen, HEKU-Fakten Tempo 100 korrekt.
+ const tTitle=tempo.match(/<title>([^<]+)<\/title>/)[1], tDesc=tempo.match(/<meta name="description" content="([^"]+)">/)[1];
+ assert.ok(tTitle.length<=60,tTitle); assert.ok(tDesc.length<=155,tDesc);
+ assert.match(tDesc,/ungebremst Tempo 100 serienmäßig, gebremst optional \+140\/\+280 €/);
+ assert.equal(tempo.match(/<meta property="og:title" content="([^"]+)">/)[1],tTitle);
+ assert.equal(tempo.match(/<meta property="og:description" content="([^"]+)">/)[1],tDesc);
  assert.match(tempo,/id="kurzantwort"/);
  const box=tempo.slice(tempo.indexOf('id="kurzantwort"'), tempo.indexOf('class="lead-text"'));
  for(const fact of ['Tempo 80','Zeichen 330.1','Zeichen 331.1','Tempo-100-Plakette','Faktor 0,3','540 kg','Bußgeldkatalog']) assert.match(box, new RegExp(fact.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
