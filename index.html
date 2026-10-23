@@ -438,6 +438,21 @@
     .prod-desc { font-size: 13px; font-weight: 300; line-height: 1.65; color: var(--muted); margin-bottom: 18px; }
     .prod-lnk { font-size: 13px; font-weight: 600; color: var(--rot); display: flex; align-items: center; gap: 5px; }
 
+    /* BOOTSTYP → MODELLE → KONFIGURATOR */
+    .type-lead { max-width: 680px; }
+    .type-steps { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+    .type-step { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px; background: #fff; }
+    .type-step b { color: var(--rot); font-weight: 600; }
+    .type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 22px; }
+    .type-card { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px 18px; border: 1px solid var(--border); border-radius: 14px; background: #fff; min-height: 100%; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.2s; }
+    .type-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); border-color: var(--rot); }
+    .type-kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rot); }
+    .type-name { font-family: var(--font-head); font-size: 26px; font-weight: 400; color: var(--schwarz); line-height: 1.05; }
+    .type-desc { font-size: 13px; font-weight: 300; line-height: 1.65; color: var(--muted); }
+    .type-go { margin-top: auto; padding-top: 12px; font-size: 13px; font-weight: 600; color: var(--rot); }
+    .type-more { margin-top: 22px; font-size: 14px; font-weight: 400; color: var(--muted); }
+    .type-more a { color: var(--rot); font-weight: 600; }
+
     /* ENGINEER */
     .eng { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 80px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; position: relative; overflow: hidden; }
     .eng::after { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.72); z-index: 0; }
@@ -501,13 +516,14 @@
       .sec { padding: 64px 24px; }
       .usp-grid { grid-template-columns: 1fr 1fr; }
       .prod-grid { grid-template-columns: 1fr 1fr; }
+      .type-grid { grid-template-columns: 1fr 1fr; }
       .eng { grid-template-columns: 1fr; padding: 56px 24px; gap: 28px; }
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .ft { grid-template-columns: 1fr 1fr; }
       footer { padding: 52px 24px 28px; }
     }
     @media (max-width: 600px) {
-      .usp-grid, .prod-grid { grid-template-columns: 1fr; }
+      .usp-grid, .prod-grid, .type-grid { grid-template-columns: 1fr; }
       .ft { grid-template-columns: 1fr; }
       .hero-badge { display: none; }
       .hero-title { font-size: 36px; line-height: 1.08; }
@@ -594,6 +610,7 @@
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
           <a href="jollenanhaenger.html">Jollenanhänger</a>
+          <a href="ruderbootanhaenger.html">Ruderbootanhänger</a>
           <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
         </div>
       </div>
@@ -702,9 +719,47 @@
     </div>
   </section>
 
-  <!-- PRODUKTE -->
-  <section class="sec">
+  <!-- BOOTSTYP → MODELLE → KONFIGURATOR -->
+  <section class="sec" id="bootstyp">
     <div class="reveal">
+      <div class="lbl">Bootstyp · Modelle · Konfigurator</div>
+      <h2 class="h2">Zuerst der Bootstyp, dann das Modell</h2>
+      <p class="p type-lead">Wählen Sie den Bootstyp. Die Folgeseite zeigt die passenden Modelle mit Ab-Preis. Auflagen, Kielrollen und Seitenführungsrollen richten sich nach dem Boot. Die Ausstattung legen Sie danach im HEKU Engineer fest – jeder Anhänger bleibt Maßanfertigung, mit eigenentwickelter wasserdichter Radnabe.</p>
+    </div>
+    <div class="type-steps reveal" aria-label="Weg zum Anhänger">
+      <span class="type-step"><b>1</b> Bootstyp</span>
+      <span class="type-step"><b>2</b> Modelle</span>
+      <span class="type-step"><b>3</b> Konfigurator</span>
+    </div>
+    <div class="type-grid">
+      <a class="type-card reveal" href="segelbootanhaenger.html">
+        <div class="type-kicker">Segelboot</div>
+        <div class="type-name">Segelbootanhänger</div>
+        <p class="type-desc">Für Kielboote, mit Kielvertiefung. Ab 1.375 €.</p>
+        <div class="type-go">Zu den Segelbootanhängern →</div>
+      </a>
+      <a class="type-card reveal" href="motorbootanhaenger.html">
+        <div class="type-kicker">Motorboot</div>
+        <div class="type-name">Motorbootanhänger</div>
+        <p class="type-desc">Vom Schlauchboot bis zur Motoryacht. Ab 1.575 €.</p>
+        <div class="type-go">Zu den Motorbootanhängern →</div>
+      </a>
+      <a class="type-card reveal" href="jollenanhaenger.html">
+        <div class="type-kicker">Jolle</div>
+        <div class="type-name">Jollenanhänger</div>
+        <p class="type-desc">Optimist, Laser und 420er, ungebremst. Ab 1.375 €.</p>
+        <div class="type-go">Zu den Jollenanhängern →</div>
+      </a>
+      <a class="type-card reveal" href="ruderbootanhaenger.html">
+        <div class="type-kicker">Ruderboot</div>
+        <div class="type-name">Ruderbootanhänger</div>
+        <p class="type-desc">Mehrstock für Rudervereine. B 1300 ab 8.000 €.</p>
+        <div class="type-go">Zum Ruderbootanhänger →</div>
+      </a>
+    </div>
+    <p class="type-more reveal"><a href="produkte.html">Alle Modelle</a> · <a href="konfigurator.html">Konfigurator öffnen</a> · <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a> · <a href="bootstrailer.html">Bootstrailer</a></p>
+
+    <div class="reveal" style="margin-top:72px">
       <div class="lbl">Produktübersicht</div>
       <h2 class="h2">Bootsanhänger &amp; Bootstrailer – alle Modelle im Überblick</h2>
       <p class="p">Von der leichten Jolle bis zum schweren Sportboot — HEKU hat den passenden Anhänger.</p>
@@ -896,6 +951,8 @@
           <a href="bootstrailer.html">Bootstrailer</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
+          <a href="jollenanhaenger.html">Jollenanhänger</a>
+          <a href="ruderbootanhaenger.html">Ruderbootanhänger</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>
         </div>
