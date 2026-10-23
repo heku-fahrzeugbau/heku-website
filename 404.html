@@ -53,14 +53,52 @@
 
       // --- PDFs: Motorrad-Anhänger (eingestellt) → produkte.html ---
       "/wp-content/uploads/2017/01/Motorrad-Anhaenger-Preis-2017.pdf":         "/produkte.html",
-      "/wp-content/uploads/2018/02/HEKU_Motorrad-Anhaenger-18.pdf":            "/produkte.html"
+      "/wp-content/uploads/2018/02/HEKU_Motorrad-Anhaenger-18.pdf":            "/produkte.html",
+
+      // --- Produktübersicht: Slash und Großschreibung (GitHub Pages 404) ---
+      "/produkte/":                    "/produkte.html",
+      "/produkte":                     "/produkte.html"
 
     };
 
-    const path = window.location.pathname;
-    const target = redirects[path];
+    // Extensionless and trailing-slash forms of real pages. Lookup is
+    // case-insensitive, so /Produkte, /Produkte/ and /PRODUKTE.html match too.
+    // Legacy WordPress keys above win first (/bootsanhaenger/ stays on bootstrailer.html).
+    const htmlAliases = {
+      "/produkte": "/produkte.html",
+      "/shop": "/shop.html",
+      "/konfigurator": "/konfigurator.html",
+      "/segelbootanhaenger": "/segelbootanhaenger.html",
+      "/motorbootanhaenger": "/motorbootanhaenger.html",
+      "/jollenanhaenger": "/jollenanhaenger.html",
+      "/ruderbootanhaenger": "/ruderbootanhaenger.html",
+      "/bootstrailer": "/bootstrailer.html",
+      "/bootsanhaenger-nach-mass": "/bootsanhaenger-nach-mass.html",
+      "/bootsanhaenger-bielefeld": "/bootsanhaenger-bielefeld.html",
+      "/faq": "/faq.html",
+      "/dinghyanhaenger": "/jollenanhaenger.html"
+    };
 
-    if (target) {
+    function redirectTarget(pathname) {
+      if (redirects[pathname]) return redirects[pathname];
+      let value = pathname || "/";
+      try { value = decodeURIComponent(value); } catch (e) {}
+      if (redirects[value]) return redirects[value];
+      const lower = value.toLowerCase();
+      const stripped = lower.length > 1 ? lower.replace(/\/+$/, "") : lower;
+      for (const key of Object.keys(redirects)) {
+        const folded = key.toLowerCase();
+        const keyStripped = folded.length > 1 ? folded.replace(/\/+$/, "") : folded;
+        if (folded === lower || folded === stripped || keyStripped === stripped || keyStripped === lower) return redirects[key];
+      }
+      const bare = stripped.replace(/\.html$/, "");
+      return htmlAliases[bare] || null;
+    }
+
+    const path = window.location.pathname;
+    const target = redirectTarget(path);
+
+    if (target && target !== path) {
       window.location.replace(target);
     }
   </script>

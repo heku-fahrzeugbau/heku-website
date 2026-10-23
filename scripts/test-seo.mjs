@@ -926,3 +926,54 @@ test('Merchant listings: Google-supported availability, image, return policy and
  assert.equal(org['@id'],'https://heku-fahrzeugbau.de/#organization');
  assert.equal(org.hasMerchantReturnPolicy.merchantReturnDays,14);
 });
+
+test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()=>{
+ const blocks=[...read('404.html').matchAll(/<script>([\s\S]*?)<\/script>/g)];
+ assert.equal(blocks.length,1);
+ const cases={
+  '/produkte/':'/produkte.html',
+  '/produkte':'/produkte.html',
+  '/Produkte':'/produkte.html',
+  '/Produkte/':'/produkte.html',
+  '/PRODUKTE.html':'/produkte.html',
+  '/shop/':'/shop.html',
+  '/Konfigurator/':'/konfigurator.html',
+  '/segelbootanhaenger/':'/segelbootanhaenger.html',
+  '/motorbootanhaenger/':'/motorbootanhaenger.html',
+  '/jollenanhaenger/':'/jollenanhaenger.html',
+  '/ruderbootanhaenger/':'/ruderbootanhaenger.html',
+  '/dinghyanhaenger.html':'/jollenanhaenger.html',
+  '/dinghyanhaenger/':'/jollenanhaenger.html',
+  '/bootsanhaenger/':'/bootstrailer.html',
+  '/Bootsanhaenger/':'/bootstrailer.html',
+  '/anhaenger/':'/produkte.html',
+  '/kontakt/':'/kontakt.html',
+  '/wohnmobile/':'/wohnmobile.html',
+  '/gibt-es-nicht':'',
+  '/produkte.html':''
+ };
+ for(const [pathname,expected] of Object.entries(cases)){
+  const replaced=[];
+  vm.runInNewContext(blocks[0][1],{window:{location:{pathname,replace:url=>replaced.push(url)}}});
+  assert.deepEqual(replaced, expected?[expected]:[], pathname);
+ }
+ const stub=read('produkte/index.html');
+ assert.match(stub,/content="noindex"/);
+ assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/produkte\.html"/);
+ assert.match(stub,/url=\/produkte\.html/);
+ assert.equal(exclusionReason('index.html',stub),'noindex');
+ for(const file of ['index.html','produkte.html']){
+  const section=read(file).match(/id="bootstyp"[\s\S]*?<\/section>/)[0];
+  for(const href of ['segelbootanhaenger.html','motorbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','konfigurator.html']){
+   assert.ok(section.includes(`href="${href}"`), `${file} ${href}`);
+  }
+  assert.match(section,/Seitenführungsrollen/);
+  assert.match(section,/eigenentwickelt/);
+  assert.match(section,/Ab 1\.375 €/);
+  assert.match(section,/Ab 1\.575 €/);
+  assert.match(section,/B 1300 ab 8\.000 €/);
+  assert.doesNotMatch(section,/patentiert/i);
+ }
+ assert.equal((read('produkte.html').match(/<h1\b/g)||[]).length,1);
+ assert.equal((read('index.html').match(/<h1\b/g)||[]).length,1);
+});
