@@ -16,7 +16,7 @@ const categoryPages = {
  'weiteres-bootsanhaenger-zubehoer.html':'sonstiges'
 };
 
-test('Dealer finder uses local postcode data and keeps nine dealer websites unlinked',()=>{
+test('Dealer finder uses local postcode data',()=>{
  const page=read('haendler.html');
  const postcodeData=JSON.parse(read('assets/de-postcode-centroids.json'));
  assert.equal((page.match(/class="dealer-pin"/g)||[]).length,9);
@@ -25,9 +25,34 @@ test('Dealer finder uses local postcode data and keeps nine dealer websites unli
  assert.match(page,/id="dealerPostcode"/);
  assert.match(page,/assets\/de-postcode-centroids\.json/);
  assert.match(page,/slice\(0, 3\)/);
- assert.doesNotMatch(page,/https?:\/\/(?:www\.)?(?:gruendl|bootsservice-fette|bendix-pkw-anhaenger|kreusch|sailart|bootsbausager|fricke-dannhus|yachtservice-edersee|alu-force)\./i);
  assert.ok(Object.keys(postcodeData.postcodes).length>10000);
  assert.deepEqual(postcodeData.postcodes['33719'],[52.0107,8.5926]);
+});
+
+test('Each dealer contact card has an external website link with rel=noopener',()=>{
+ const page=read('haendler.html');
+ const expected={
+  'dealer-gruendl-contact':'https://www.gruendl.de/',
+  'dealer-sager-contact':'https://www.bootsbausager.de/',
+  'dealer-fricke-dannhus-contact':'https://www.fricke-dannhus.de/',
+  'dealer-edersee-contact':'https://www.yachtservice-edersee.com/',
+  'dealer-aluforce-contact':'https://alu-force.de/',
+  'dealer-fette-contact':'https://www.bootsservice-fette.de/',
+  'dealer-bendix-contact':'https://bendix-pkw-anhaenger.de/',
+  'dealer-kreusch-contact':'https://www.kreusch.de/',
+  'dealer-sailart-contact':'https://www.sailart.de/',
+ };
+ const cards=[...page.matchAll(/<div class="dealer-contact-card" id="([^"]+)">([\s\S]*?)\n {6}<\/div>/g)];
+ assert.deepEqual(cards.map(([,id])=>id),Object.keys(expected));
+ for(const [,id,body] of cards){
+  const websites=[...body.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].filter(([,attrs])=>/^https?:\/\//.test(attributes(attrs).href||''));
+  assert.equal(websites.length,1,id);
+  const attrs=attributes(websites[0][1]);
+  assert.equal(attrs.href,expected[id],id);
+  assert.equal(attrs.target,'_blank',id);
+  assert.equal(attrs.rel,'noopener',id);
+  assert.equal(websites[0][2].trim(),new URL(expected[id]).host,id);
+ }
 });
 
 test('Local Bielefeld landing page is indexable, useful and internally linked',()=>{
