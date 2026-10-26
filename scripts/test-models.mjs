@@ -6,6 +6,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, exclusionReason, pages } from './generate-sitemap.mjs';
 import { models, generateModels, modelDataFile, faqs, expectedZulassung, GRUNDLAENGE, LAENGEN_ZUSCHLAG } from './generate-model-pages.mjs';
+import { committedAvailabilityStarts } from './availability-starts.mjs';
 
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const all = models();
@@ -67,6 +68,8 @@ test('Visible price, meta description and Offer agree; a model without price get
     assert.equal(p['@id'], `${BASE}/${m.slug}#product`);
     assert.equal(o.price, m.preisAb); assert.equal(o.priceCurrency, 'EUR');
     assert.equal(o.availability, 'https://schema.org/BackOrder');
+    assert.equal(o.availabilityStarts, committedAvailabilityStarts());
+    assert.match(o.availabilityStarts, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/);
     assert.equal(o.url, `${BASE}/${m.slug}`);
     assert.equal(o.availableAtOrFrom.address.streetAddress, 'Bunzlauer Straße 6');
     assert.equal(o.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');

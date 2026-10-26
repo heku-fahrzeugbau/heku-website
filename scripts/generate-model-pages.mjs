@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT, BASE } from './generate-sitemap.mjs';
 import { escapeHTML } from './generate-product-pages.mjs';
+import { committedAvailabilityStarts } from './availability-starts.mjs';
 
 export const modelDataFile = 'content/modelle/modelle.json';
 export const modelTemplate = 'scripts/templates/model-page.tpl';
@@ -108,8 +109,11 @@ export function faqs(m) {
 const offerFor = (m, url) => ({
   '@type': 'Offer', url, price: m.preisAb, priceCurrency: 'EUR',
   itemCondition: 'https://schema.org/NewCondition',
-  // Google unterstützt MadeToOrder für Händlereinträge nicht; BackOrder = jetzt bestellbar, Lieferung später (ca. 2 Wochen Fertigung).
+  // Google unterstützt MadeToOrder für Händlereinträge nicht; BackOrder = jetzt bestellbar, Lieferung später.
+  // HEKU: 2–3 Wochen. availabilityStarts ist der committete Termin (heute + 21 Tage, Europe/Berlin),
+  // den scripts/update-availability-starts.mjs montags fortschreibt. Sichtbarer Text bleibt „ca. 2 Wochen“.
   availability: 'https://schema.org/BackOrder',
+  availabilityStarts: committedAvailabilityStarts(),
   seller: { '@id': ORG },
   // Anhänger: kein Standardversand, Abholung im Werk Bielefeld (Frachtversand nur individuell vereinbart).
   shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' }, doesNotShip: true },
