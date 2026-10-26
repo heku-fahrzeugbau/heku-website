@@ -42,7 +42,7 @@ test('Each dealer contact card has an external website link with rel=noopener',(
   'dealer-kreusch-contact':'https://www.kreusch.de/',
   'dealer-sailart-contact':'https://www.sailart.de/',
  };
- const cards=[...page.matchAll(/<div class="dealer-contact-card" id="([^"]+)">([\s\S]*?)<\/div>/g)];
+ const cards=[...page.matchAll(/<div class="dealer-contact-card" id="([^"]+)">([\s\S]*?)\n {6}<\/div>/g)];
  assert.deepEqual(cards.map(([,id])=>id),Object.keys(expected));
  for(const [,id,body] of cards){
   const websites=[...body.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].filter(([,attrs])=>/^https?:\/\//.test(attributes(attrs).href||''));
