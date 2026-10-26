@@ -5,6 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { createHash } from 'node:crypto';
 import { ROOT, BASE, urlForFile, exclusionReason, pages, render, attributes } from './generate-sitemap.mjs';
+import { applyBackOrderStarts, berlinAvailabilityStarts, committedAvailabilityStarts } from './availability-starts.mjs';
 const doc = head => '<!doctype html><html><head><title>Test</title>'+head+'</head><body></body></html>';
 const read = name => fs.readFileSync(path.join(ROOT,name),'utf8');
 const shopCards = () => [...read('shop.html').matchAll(/<article class="product-card"([^>]+)>([\s\S]*?)<\/article>/g)];
@@ -761,12 +762,9 @@ test('Every offer has availability and every product image is an absolute URL',(
     if(kind.includes('ItemList')) {
      const items=node.itemListElement;
      if(Array.isArray(items) && node.numberOfItems!=null) assert.equal(node.numberOfItems, items.length, file);
-     if(file==='motorbootanhaenger.html' || file==='segelbootanhaenger.html') {
+     if(['index.html','bootstrailer.html','jollenanhaenger.html','motorbootanhaenger.html','segelbootanhaenger.html'].includes(file)) {
       const productsInList=Array.isArray(items) && items.some(el=>el&&el.item&&types(el.item['@type']).includes('Product'));
-      if(productsInList) {
-       assert.equal(items.length,3,file);
-       assert.equal(node.numberOfItems,3,file);
-      }
+      assert.equal(productsInList,false,`${file}: Kategorie-ItemList ohne Product`);
      }
      if(file==='jollenanhaenger.html' || file==='bootstrailer.html') assert.equal(node.numberOfItems,undefined,file);
     }
@@ -780,6 +778,7 @@ test('Every offer has availability and every product image is an absolute URL',(
      offers++;
      assert.equal(typeof node.availability,'string',`${file}: availability fehlt`);
      assert.match(node.availability,/^https:\/\/schema\.org\//,file);
+     if(node.availability==='https://schema.org/BackOrder') assert.match(String(node.availabilityStarts),/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/,`${file}: BackOrder availabilityStarts`);
      if(trailers.has(file)) assert.equal(node.availability,'https://schema.org/BackOrder',file);
      if(file.startsWith('artikel/')) assert.equal(node.availability,'https://schema.org/InStock',file);
      assert.equal(node.priceValidUntil,undefined,`${file}: priceValidUntil`);
@@ -811,7 +810,7 @@ test('Every offer has availability and every product image is an absolute URL',(
   }
  }
  assert.ok(products>=55);
- assert.ok(offers>=70);
+ assert.ok(offers>=69);
  assert.match(read('agb.html'), /<p id="ausschluss-einzelanfertigung"><strong>Ausschluss des Widerrufsrechts:<\/strong>/);
  assert.match(read('scripts/generate-product-pages.mjs'),/p\.image\|\|p\.imagePath/);
 });
@@ -911,6 +910,7 @@ test('Merchant listings: Google-supported availability, image, return policy and
       } else {
        trailers++;
        assert.equal(o.availability,'https://schema.org/BackOrder',file);
+       assert.match(String(o.availabilityStarts),/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/,`${file}: BackOrder availabilityStarts`);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
        assert.equal(sd.doesNotShip,true,file); assert.equal(sd.shippingRate,undefined,file);
       }
@@ -920,11 +920,88 @@ test('Merchant listings: Google-supported availability, image, return policy and
    }
   }
  }
- assert.equal(accessories,55); assert.equal(trailers,28); assert.equal(priced,83);
+ assert.equal(accessories,55); assert.equal(trailers,14); assert.equal(priced,69);
  // Organization-weite Rückgaberichtlinie hängt am selben Knoten wie das LocalBusiness (#organization).
  const org=[...read('index.html').matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(b=>JSON.parse(b[1])).find(d=>d['@type']==='Organization');
  assert.equal(org['@id'],'https://heku-fahrzeugbau.de/#organization');
  assert.equal(org.hasMerchantReturnPolicy.merchantReturnDays,14);
+});
+
+test('Category pages list model URLs and do not repeat Product offers',()=>{
+ const expected={
+  'index.html':[
+   ['Bootsanhänger ungebremst','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+  ],
+  'bootstrailer.html':[
+   ['HEKU B 350 Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 1300 Bootsanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 3500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
+  ],
+  'jollenanhaenger.html':[
+   ['HEKU B 350 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html']
+  ],
+  'motorbootanhaenger.html':[
+   ['HEKU B 500 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 1300 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 2000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+  ],
+  'segelbootanhaenger.html':[
+   ['HEKU B 350 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 1100 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 2000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+  ]
+ };
+ for(const [file,rows] of Object.entries(expected)){
+  const blocks=[...read(file).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
+  const flat=JSON.stringify(blocks);
+  assert.doesNotMatch(flat,/"(?:Product|Offer|AggregateOffer)"/,file);
+  assert.doesNotMatch(flat,/bootsanhaenger\.jpg|konfigurator\.html/,file);
+  const lists=[];
+  const stack=[blocks];
+  while(stack.length){
+   const node=stack.pop();
+   if(!node||typeof node!=='object') continue;
+   if(Array.isArray(node)){ stack.push(...node); continue; }
+   if([].concat(node['@type']||[]).includes('ItemList') && Array.isArray(node.itemListElement) && node.itemListElement.some(el=>el&&String(el.url||'').includes('bootsanhaenger-b'))) lists.push(node);
+   for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
+  }
+  assert.equal(lists.length,1,file);
+  assert.deepEqual(lists[0].itemListElement.map(el=>[el.name,el.url]),rows,file);
+  for(const el of lists[0].itemListElement){
+   assert.equal(el['@type'],'ListItem',file);
+   assert.equal(el.item,undefined,file);
+   assert.match(el.url,/^https:\/\/heku-fahrzeugbau\.de\/bootsanhaenger-b\d+\.html$/);
+  }
+ }
+});
+
+test('BackOrder availabilityStarts is Berlin today plus 21 days and the Monday job commits it',()=>{
+ assert.equal(berlinAvailabilityStarts(new Date('2026-10-26T10:00:00Z')),'2026-11-16T00:00:00+01:00');
+ assert.equal(berlinAvailabilityStarts(new Date('2026-07-01T10:00:00Z')),'2026-07-22T00:00:00+02:00');
+ assert.equal(berlinAvailabilityStarts(new Date('2026-03-28T23:30:00Z')),'2026-04-19T00:00:00+02:00');
+ assert.equal(berlinAvailabilityStarts(new Date('2026-10-24T22:30:00Z')),'2026-11-15T00:00:00+01:00');
+ const iso=committedAvailabilityStarts();
+ assert.match(iso,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/);
+ const sample='{"@type":"Offer","price":"8000.00","availability":"https://schema.org/BackOrder"}';
+ const stamped=applyBackOrderStarts(sample,iso);
+ assert.match(stamped,/"price":"8000\.00"/);
+ assert.match(stamped,new RegExp('"availabilityStarts": "'+iso.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'"'));
+ const moved=applyBackOrderStarts(stamped,'2026-12-01T00:00:00+01:00');
+ assert.match(moved,/"price":"8000\.00"/);
+ assert.match(moved,/2026-12-01T00:00:00\+01:00/);
+ assert.doesNotMatch(moved,/2026-11-16T00:00:00/);
+ assert.equal(applyBackOrderStarts(read('ruderbootanhaenger.html'),iso),read('ruderbootanhaenger.html'));
+ const workflow=read('.github/workflows/availability-starts.yml');
+ assert.match(workflow,/cron: '0 6 \* \* 1'/);
+ assert.match(workflow,/node scripts\/update-availability-starts\.mjs/);
+ assert.match(workflow,/contents: write/);
+ assert.match(workflow,/git push/);
+ assert.doesNotMatch(workflow,/git push --force/);
+ assert.match(read('scripts/update-availability-starts.mjs'),/berlinAvailabilityStarts/);
+ assert.match(read('scripts/generate-model-pages.mjs'),/availabilityStarts: committedAvailabilityStarts\(\)/);
 });
 
 test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()=>{

@@ -1,0 +1,49 @@
+name: Lieferdatum BackOrder
+
+# Push auf main nutzt dasselbe contents:write-Muster wie der Sitemap-Workflow.
+# Scheduled Workflows starten erst nach dem Merge dieser Datei auf main.
+# Wenn Branch Protection den Bot-Push ablehnt: dem Actions-Bot denselben Bypass
+# geben oder den Job auf einen wöchentlichen Pull Request umstellen
+# (pull-requests: write, gh pr create) und den PR von Hand mergen.
+
+on:
+  schedule:
+    # Montags 06:00 UTC (07:00 MEZ / 08:00 MESZ). Läuft erst, wenn diese Datei auf main liegt.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: availability-starts
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: main auschecken
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: availabilityStarts auf heute plus 21 Tage setzen
+        run: node scripts/update-availability-starts.mjs
+      - name: Tests, bevor etwas committet wird
+        run: node --test scripts/test-seo.mjs scripts/test-products.mjs scripts/test-models.mjs
+      - name: Datum committen, falls es sich geändert hat
+        shell: bash
+        run: |
+          git add -- scripts/availability-starts.json bootsanhaenger-b*.html ruderbootanhaenger.html
+          if git diff --cached --quiet; then
+            echo "Lieferbeginn unverändert."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: Lieferbeginn BackOrder auf heute plus 21 Tage [skip ci]"
+          git push
