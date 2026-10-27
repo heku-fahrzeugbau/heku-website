@@ -474,7 +474,13 @@
     "name": "Seitenmarkierungsleuchte LED gelb",
     "description": "",
     "price": "20.25",
-    "image": "assets/produkte/produkt-54.jpg"
+    "image": "assets/produkte/produkt-54.jpg",
+    "technische_daten": [
+      { "bezeichnung": "Spannung", "wert": "12 V" },
+      { "bezeichnung": "Leistung", "wert": "0,6 W" },
+      { "bezeichnung": "IP-Schutzart", "wert": "IP 67" },
+      { "bezeichnung": "Lochabstand", "wert": "90 mm" }
+    ]
   },
   {
     "id": 56,

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
-import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, unitShippingEuro } from './generate-product-pages.mjs';
+import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, technicalData, unitShippingEuro } from './generate-product-pages.mjs';
 import { generateFeed } from './generate-merchant-feed.mjs';
 import { priceTableFiles, syncProductPriceTables } from './sync-product-price-tables.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
@@ -126,6 +126,57 @@ test('Catalog characters escaped in markup and JSON-LD',()=>{
   assert.equal(schema(s)['@graph'][0].name,p.name); assert.equal(schema(s)['@graph'][0].description,p.desc);
   assert.doesNotMatch(s,/<img src=x>/);
   assert.doesNotMatch(renderProductCard(p),/<script>|<img src=x>/);
+});
+test('Technical data renders only for articles that define it and extends Product JSON-LD',()=>{
+ const expected=[
+  {bezeichnung:'Spannung',wert:'12 V'},
+  {bezeichnung:'Leistung',wert:'0,6 W'},
+  {bezeichnung:'IP-Schutzart',wert:'IP 67'},
+  {bezeichnung:'Lochabstand',wert:'90 mm'}
+ ];
+ const lamp=all.find(p=>p.sku==='85027');
+ assert.deepEqual(lamp.specs,expected);
+ const html=read(filename(lamp));
+ const specsBlock=html.match(/<section class="detail-specs"[\s\S]*?<\/section>/);
+ assert.ok(specsBlock,'Abschnitt Technische Daten fehlt bei Art. 85027');
+ assert.match(specsBlock[0],/<h2 id="specsTitle">Technische Daten<\/h2>/);
+ for(const row of expected) assert.ok(specsBlock[0].includes(`<dt>${row.bezeichnung}</dt><dd>${row.wert}</dd>`),row.bezeichnung);
+ const hero=html.indexOf('class="detail-hero'), buy=html.indexOf('class="detail-buy"'), specsAt=html.indexOf('class="detail-specs"'), help=html.indexOf('class="detail-help"');
+ assert.ok(hero<buy&&buy<specsAt&&specsAt<help,'Technische Daten stehen hinter dem Bestell-Link und vor der Zuordnungshilfe');
+ const product=schema(html)['@graph'][0];
+ assert.equal(product['@type'],'Product');
+ assert.equal(product.offers.price,'20.25');
+ assert.equal(product.offers.availability,'https://schema.org/InStock');
+ assert.deepEqual(product.additionalProperty,expected.map(row=>({'@type':'PropertyValue',name:row.bezeichnung,value:row.wert})));
+ assert.equal(schema(html)['@graph'][1]['@type'],'BreadcrumbList');
+ for(const p of all.filter(x=>x.sku!=='85027')) {
+  assert.deepEqual(p.specs,[]);
+  const page=read(filename(p));
+  assert.doesNotMatch(page,/class="detail-specs"|id="specsTitle"/,p.sku);
+  assert.equal(schema(page)['@graph'][0].additionalProperty,undefined,p.sku);
+  assert.equal(schema(page)['@graph'][0].offers.availability,'https://schema.org/InStock',p.sku);
+ }
+ const shell=read('scripts/templates/product-page.tpl');
+ const nasty=renderProduct({...lamp,specs:[{bezeichnung:'Maß <script>',wert:'1 & 2'}]},[lamp],shell);
+ const nastySpecs=nasty.match(/<section class="detail-specs"[\s\S]*?<\/section>/)[0];
+ assert.match(nastySpecs,/<dt>Maß &lt;script&gt;<\/dt><dd>1 &amp; 2<\/dd>/);
+ assert.doesNotMatch(nastySpecs,/<script>/);
+ assert.match(nasty,/\\u003cscript>/);
+ assert.equal(schema(nasty)['@graph'][0].additionalProperty[0].name,'Maß <script>');
+ assert.equal(schema(nasty)['@graph'][0].additionalProperty[0].value,'1 & 2');
+ assert.equal(schema(nasty)['@graph'][0].offers.price,lamp.price);
+ const empty=renderProduct({...lamp,specs:[]},[lamp],shell);
+ assert.doesNotMatch(empty,/class="detail-specs"|id="specsTitle"/);
+ assert.equal(schema(empty)['@graph'][0].additionalProperty,undefined);
+ assert.deepEqual(technicalData({},'1'),[]);
+ assert.deepEqual(technicalData({technische_daten:null},'1'),[]);
+ assert.deepEqual(technicalData({technische_daten:[]},'1'),[]);
+ assert.throws(()=>technicalData({technische_daten:{bezeichnung:'a',wert:'b'}},'1'),/Liste/);
+ assert.throws(()=>technicalData({technische_daten:[{name:'Spannung',value:'12 V'}]},'1'),/bezeichnung und wert/);
+ assert.throws(()=>technicalData({technische_daten:[{bezeichnung:'Spannung',wert:'12 V',einheit:'V'}]},'1'),/bezeichnung und wert/);
+ assert.throws(()=>technicalData({technische_daten:[{bezeichnung:'',wert:'12 V'}]},'1'),/Leere/);
+ assert.throws(()=>technicalData({technische_daten:[{bezeichnung:'<b>Spannung</b>',wert:'12 V'}]},'1'),/Klartext/);
+ assert.throws(()=>technicalData({technische_daten:[expected[0],{bezeichnung:'Leistung',wert:0.6}]},'85027'),/Text sein/);
 });
 
 test('Confirmed B-Serie ab prices on produkte.html',()=>{
