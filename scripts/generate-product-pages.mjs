@@ -21,6 +21,21 @@ export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'produkte.html', 'e
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
 export const productDataFile = 'content/produkte/produkte.json';
 export const filename = p => `artikel/${p.sku}.html`;
+// Bewusst stillgelegte Artikel-URL: noindex, sofortiger Meta-Refresh und derselbe
+// location.replace wie bei produkte/index.html. Solche Dateien bleiben liegen;
+// der Generator löscht sie nicht und überschreibt sie nicht.
+export function isRetiredArticleRedirect(html) {
+  let noindex = false, target = '';
+  for (const tag of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const t = tag[0];
+    if (/\bname\s*=\s*["']robots["']/i.test(t) && /\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(t)) noindex = true;
+    const refresh = t.match(/\bhttp-equiv\s*=\s*["']refresh["'][^>]*\bcontent\s*=\s*["']([^"']*)["']/i)
+      || t.match(/\bcontent\s*=\s*["']([^"']*)["'][^>]*\bhttp-equiv\s*=\s*["']refresh["']/i);
+    const url = refresh && /^0;\s*url=(\/[^"'\s]+)$/i.exec(refresh[1]);
+    if (url) target = url[1];
+  }
+  return Boolean(noindex && target && html.includes(`location.replace("${target}")`));
+}
 export const escapeHTML = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 export function plain(s) {
   if (/<[^>]+>/.test(s)) throw new Error('Produkttext muss Klartext sein, kein HTML.');
@@ -176,7 +191,7 @@ export function generateProducts(root=ROOT) {
   if(legacy.length) throw new Error('Alte flache Artikel-URLs gefunden. Migration/Weiterleitungen bewusst planen: '+legacy.join(', '));
   const articleRoot=path.join(root,'artikel');
   const old=fs.existsSync(articleRoot)?fs.readdirSync(articleRoot).filter(x=>/\.html$/.test(x)).map(x=>'artikel/'+x):[];
-  const obsolete=old.filter(x=>!planned.has(x));
+  const obsolete=old.filter(x=>!planned.has(x)&&!isRetiredArticleRedirect(fs.readFileSync(path.join(root,x),'utf8')));
   if(obsolete.length) throw new Error('Entfernte/geänderte Artikelnummern: '+obsolete.join(', ')+'. Alte URLs zuerst bewusst stilllegen/weiterleiten; kein automatisches Löschen.');
   let shop=fs.readFileSync(path.join(root,'shop.html'),'utf8');
   const grid=/(      <div class="product-grid" id="productGrid">\r?\n)[\s\S]*?(      <\/div>\r?\n      <p id="shopEmpty")/;
