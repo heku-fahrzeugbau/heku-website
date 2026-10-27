@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
-import { catalog, categories, categoryHubs, filename, generateProducts, productDataFile, renderProduct, renderProductCard, technicalData, unitShippingEuro } from './generate-product-pages.mjs';
+import { catalog, categories, categoryHubs, filename, generateProducts, isRetiredArticleRedirect, productDataFile, renderProduct, renderProductCard, technicalData, unitShippingEuro } from './generate-product-pages.mjs';
 import { generateFeed } from './generate-merchant-feed.mjs';
 import { priceTableFiles, syncProductPriceTables } from './sync-product-price-tables.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
@@ -48,7 +48,10 @@ test('Every product has a canonical page, truthful visible price and Product/Off
   const p=all.find(x=>x.sku===sku); assert.ok(p&&!p.image,sku);
   assert.deepEqual(schema(read(filename(p)))['@graph'][0].image,[BASE+'/'+p.imagePath]);
  }
- assert.equal(fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>/^\d+\.html$/.test(x)).length,all.length);
+ const articleFiles=fs.readdirSync(path.join(ROOT,'artikel')).filter(x=>/^\d+\.html$/.test(x));
+ const retired=articleFiles.filter(x=>isRetiredArticleRedirect(read('artikel/'+x)));
+ assert.deepEqual(retired,['50238.html']);
+ assert.equal(articleFiles.length,all.length+retired.length);
 });
 test('Shop and category link every product; CTA uses a fragment and no second checkout',()=>{
  const shop=read('shop.html');
@@ -251,9 +254,10 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
     fs.mkdirSync(path.join(root,'artikel'),{recursive:true});
     fs.mkdirSync(path.join(root,'assets/produkte'),{recursive:true});
     fs.mkdirSync(path.join(root,'content/produkte'),{recursive:true});
-    for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl',...Object.values(categories).map(x=>x[0]),...categoryHubs,...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
+    for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl','artikel/50238.html',...Object.values(categories).map(x=>x[0]),...categoryHubs,...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
     for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.jpg$/.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
     assert.deepEqual(generateProducts(root).changed,[]);
+    assert.equal(fs.readFileSync(path.join(root,'artikel/50238.html'),'utf8'),fs.readFileSync(path.join(ROOT,'artikel/50238.html'),'utf8'));
     const file=path.join(root,productDataFile), p=all[0], source=JSON.parse(fs.readFileSync(file,'utf8'));
     source.find(x=>String(x.id)===p.id).price='299.00'; fs.writeFileSync(file,JSON.stringify(source,null,2)+'\n');
     const result=generateProducts(root); assert.ok(result.changed.includes(filename(p)));

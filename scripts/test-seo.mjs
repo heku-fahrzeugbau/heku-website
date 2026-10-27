@@ -184,12 +184,12 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  for(const [file,needles] of Object.entries(guides)) {
   const html=read(file);
   for(const needle of needles) assert.ok(html.includes(needle), file+' '+needle);
-  assert.doesNotMatch(html,/artikel\/50210\.html|patentiert/i, file);
+  assert.doesNotMatch(html,/artikel\/50210\.html|artikel\/50238\.html|patentiert/i, file);
   assert.equal((html.match(/<h1\b/g)||[]).length,1);
  }
  const sitemap=read('sitemap.xml');
  for(const sku of ['50201','50202','50203','50206','50218','50227','50235','85027']) assert.match(sitemap, new RegExp('/artikel/'+sku+'\\.html'));
- assert.doesNotMatch(sitemap,/artikel\/50210\.html/);
+ assert.doesNotMatch(sitemap,/artikel\/50210\.html|artikel\/50238\.html/);
 });
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
@@ -761,7 +761,7 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
     for(const value of Object.values(node)) if(value&&typeof value==='object') stack.push(value);
    }
   }
-  if(file.startsWith('artikel/')) assert.equal(pageOffers,1,file);
+  if(file.startsWith('artikel/') && exclusionReason(path.basename(file),read(file))!=='noindex') assert.equal(pageOffers,1,file);
  }
  assert.equal(videos,1);
  assert.equal((read('ruderbootanhaenger.html').match(/"uploadDate": "2026-10-09T12:00:00\+02:00"/g)||[]).length,1);
@@ -1052,7 +1052,10 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   '/kontakt/':'/kontakt.html',
   '/wohnmobile/':'/wohnmobile.html',
   '/gibt-es-nicht':'',
-  '/produkte.html':''
+  '/produkte.html':'',
+  '/artikel/50238.html':'/weiteres-bootsanhaenger-zubehoer.html',
+  '/Artikel/50238.HTML':'/weiteres-bootsanhaenger-zubehoer.html',
+  '/artikel/50238.html/':'/weiteres-bootsanhaenger-zubehoer.html'
  };
  for(const [pathname,expected] of Object.entries(cases)){
   const replaced=[];
@@ -1064,6 +1067,14 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/produkte\.html"/);
  assert.match(stub,/url=\/produkte\.html/);
  assert.equal(exclusionReason('index.html',stub),'noindex');
+ const retired=read('artikel/50238.html');
+ assert.match(retired,/content="noindex"/);
+ assert.match(retired,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/weiteres-bootsanhaenger-zubehoer\.html"/);
+ assert.match(retired,/url=\/weiteres-bootsanhaenger-zubehoer\.html/);
+ assert.match(retired,/location\.replace\("\/weiteres-bootsanhaenger-zubehoer\.html"\)/);
+ assert.equal(exclusionReason('50238.html',retired),'noindex');
+ assert.equal(pages().includes('artikel/50238.html'),false);
+ for(const file of pages()) assert.doesNotMatch(read(file),/artikel\/50238\.html/,file);
  for(const file of ['index.html','produkte.html']){
   const section=read(file).match(/id="bootstyp"[\s\S]*?<\/section>/)[0];
   for(const href of ['segelbootanhaenger.html','motorbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','konfigurator.html']){
