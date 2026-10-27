@@ -29,6 +29,8 @@ Artikelseiten verlinken den Shop über `shop.html#artikel-<id>`. Das Fragment w�
 
 Nur den passenden Datensatz in `content/produkte/produkte.json` bearbeiten. Namen und Beschreibungen sind Klartext. Artikelnummern (`sku`) und interne IDs müssen eindeutig bleiben. Preise werden als positive Zeichenkette mit genau zwei Nachkommastellen gepflegt, z.B. `"price": "75.00"`. Der sichtbare deutsche Preis wird daraus generiert; eine zweite manuelle Preisangabe gibt es nicht mehr. Ungültige oder doppelte Daten brechen den Build bewusst ab.
 
+Technische Daten eines Artikels stehen optional im selben Datensatz unter `technische_daten`. Das ist eine Liste von Einträgen mit den Klartextfeldern `bezeichnung` und `wert` (zum Beispiel Spannung und `12 V`). Der Build rendert daraus den Abschnitt „Technische Daten“ auf `/artikel/NUMMER.html` und gibt dieselben Paare als `additionalProperty` (`PropertyValue`) im Product-JSON-LD aus. Fehlt die Liste oder ist sie leer, erscheint kein Abschnitt und das JSON-LD bleibt ohne `additionalProperty`. HTML in Bezeichnung oder Wert sowie Einträge ohne genau diese beiden Felder brechen den Build ab. Die generierte Artikelseite nicht von Hand ergänzen.
+
 ```sh
 node scripts/build-site.mjs
 node --test scripts/test-seo.mjs scripts/test-products.mjs

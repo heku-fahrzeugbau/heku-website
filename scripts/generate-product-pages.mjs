@@ -29,6 +29,23 @@ export function plain(s) {
     return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' '}[e.toLowerCase()];
   }).trim();
 }
+// Optionale technische_daten je Artikel: Liste aus {bezeichnung, wert}.
+// Fehlende oder leere Liste: kein Abschnitt und kein additionalProperty.
+export function technicalData(record, sku) {
+  if(!record || record.technische_daten==null) return [];
+  const rows=record.technische_daten;
+  if(!Array.isArray(rows)) throw new Error('technische_daten muss eine Liste sein: '+sku);
+  return rows.map((row,index)=>{
+    const where=`${sku}, Eintrag ${index+1}`;
+    if(!row||typeof row!=='object'||Array.isArray(row)) throw new Error('Ungültiger Eintrag in technische_daten: '+where);
+    const keys=Object.keys(row);
+    if(keys.length!==2||!keys.includes('bezeichnung')||!keys.includes('wert')) throw new Error('technische_daten-Eintrag braucht genau bezeichnung und wert: '+where);
+    if(typeof row.bezeichnung!=='string'||typeof row.wert!=='string') throw new Error('Bezeichnung und Wert müssen Text sein: '+where);
+    const bezeichnung=plain(row.bezeichnung), wert=plain(row.wert);
+    if(!bezeichnung||!wert) throw new Error('Leere Bezeichnung oder leerer Wert: '+where);
+    return {bezeichnung,wert};
+  });
+}
 export function catalog(root=ROOT) {
   const source=path.join(root,productDataFile);
   let records;
@@ -47,7 +64,8 @@ export function catalog(root=ROOT) {
     const priceText=Number(price).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
     if(!new RegExp(`^assets/produkte/produkt-${id}\\.(jpg|jpeg|png|webp)$`,'i').test(src)||!fs.existsSync(path.join(root,src))) throw new Error('Ungültiges/fehlendes Artikelbild: '+sku);
     const hash=createHash('sha256').update(fs.readFileSync(path.join(root,src))).digest('hex');
-    return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src};
+    const specs=technicalData(record,sku);
+    return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src,specs};
   });
 }
 // Versandkosten fuer die Menge 1, gespiegelt aus calcVersand() in shop.html.
@@ -119,9 +137,12 @@ export function renderProduct(p, all, shell) {
   // als https://schema.org/MadeToOrder, nicht in diesem Katalog.
   // JSON-LD braucht ein Produktbild. Ohne Foto die vorhandene Platzhalterdatei
   // (HEKU-Logo) als absolute URL; das sichtbare Hinweis-Markup bleibt.
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
+  const specs=p.specs??[];
+  const additionalProperty=specs.map(row=>({'@type':'PropertyValue',name:row.bezeichnung,value:row.wert}));
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],...(additionalProperty.length?{additionalProperty}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
+  const specsHtml=specs.length?`\n    <section class="detail-specs" aria-labelledby="specsTitle"><h2 id="specsTitle">Technische Daten</h2><dl>\n${specs.map(row=>`      <div><dt>${e(row.bezeichnung)}</dt><dd>${e(row.wert)}</dd></div>`).join('\n')}\n    </dl></section>`:'';
   const main=`<main id="articleContent" class="detail-main">
     <div class="detail-breadcrumb" role="navigation" aria-label="Brotkrümelnavigation"><a href="/">HEKU</a><span aria-hidden="true">/</span><a href="shop.html">Shop</a><span aria-hidden="true">/</span><a href="${guide}">${e(categoryName)}</a><span aria-hidden="true">/</span><span aria-current="page">Art. ${p.sku}</span></div>
     <section class="detail-hero ${p.image?'has-photo':'no-photo'}" aria-labelledby="articleTitle">
@@ -131,7 +152,7 @@ export function renderProduct(p, all, shell) {
         ${!p.image?'<p class="detail-missing-photo">Für diesen Artikel ist derzeit kein Produktfoto hinterlegt.</p>':''}
       </div>
       ${p.image?`<figure class="detail-photo"><img src="${e(p.image)}" alt="${e(p.name)} – Art. ${p.sku}" decoding="async" fetchpriority="high"><figcaption>Artikel ${p.sku} aus dem HEKU-Shop.</figcaption></figure>`:''}
-    </section>
+    </section>${specsHtml}
     <section class="detail-help" aria-labelledby="fitTitle"><div><h2 id="fitTitle">Passt der Artikel zu Ihrem Anhänger?</h2><p>Wenn Sie bei der Zuordnung unsicher sind, nennen Sie uns die Artikelnummer ${p.sku} und die Bezeichnung Ihres Anhängers. Fotos der vorhandenen Baugruppe helfen bei der Anfrage.</p></div><div class="detail-help-links"><a href="kontakt.html">Zuordnung mit HEKU klären</a><a href="tel:+49521200066">0521 200066</a><a href="${guide}">Auswahlhilfe: ${e(categoryName)}</a></div></section>
     ${related.length?`<section class="detail-related"><h2>Weitere Artikel dieser Kategorie</h2><ul>${related.map(x=>`<li><a href="${filename(x)}"><span>${e(x.name)}</span><span class="detail-related-sku">Art. ${x.sku}${x.desc?' · '+e(x.desc):''}</span></a></li>`).join('')}</ul><a class="detail-all" href="${guide}#kategorie-artikel">Alle Artikel: ${e(categoryName)}</a></section>`:''}
   </main>`;
