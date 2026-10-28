@@ -174,7 +174,8 @@ test('Compliance and links on every model page', () => {
     assert.doesNotMatch(html, /patentiert/i, m.slug);
     assert.doesNotMatch(visibleText(html), /(?:\+49|\b0)\s*1[5-7]\d/, m.slug);
     assert.ok(html.includes('tel:+49521200066') && html.includes('0521 200066'), m.slug);
-    for (const needle of ['eigenentwickelt', 'ca. 2 Wochen', 'Bunzlauer Str']) assert.ok(html.includes(needle), `${m.slug} ${needle}`);
+    for (const needle of ['eigenentwickelt', 'ca. 2–3 Wochen', 'ca. 2–3<span> Wochen</span>', 'Bunzlauer Str']) assert.ok(html.includes(needle), `${m.slug} ${needle}`);
+    assert.doesNotMatch(html, /ca\. 2(?!–3)(?:<span>)?\s*Wochen/, m.slug);
     for (const href of ['technik-bootsanhaenger.html', 'konfigurator.html', 'kontakt.html', 'produkte.html', '100kmh-regelung.html', 'agb.html#ausschluss-einzelanfertigung']) assert.ok(html.includes(`href="${href}"`), `${m.slug} ${href}`);
     for (const tag of html.matchAll(/<(?:a|img)\b[^>]*>/gi)) {
       const a = attributes(tag[0]), url = a.href || a.src;
