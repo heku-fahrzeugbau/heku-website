@@ -128,6 +128,8 @@ test('Product overview and Bootstrailer money page have distinct search intents'
  assert.match(money,/<h1 class="page-title">Bootstrailer kaufen<br>vom Hersteller<\/h1>/);
  assert.match(money,/Kleiner Bootstrailer und leichter Bootsanhänger/);
  assert.match(money,/Bootstrailer 350 kg/);
+ assert.match(money,/Jollenanhängern ab 350 kg zGG \(B 350\)/);
+ assert.doesNotMatch(money,/Jollenanhängern ab 750 kg/);
  assert.match(money,/href="jollenanhaenger\.html"/);
  assert.match(money,/href="motorbootanhaenger\.html"/);
  assert.match(money,/ca\. 2–3 Wochen/);
@@ -195,7 +197,10 @@ test('Query-led pages state only catalog facts and link real accessory articles'
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
  const file='tuev-bootsanhaenger.html', s=read(file);
- assert.match(s,/<title>TÜV für Bootsanhänger: HU-Fristen &amp; Kosten \| HEKU<\/title>/);
+ assert.match(s,/<title>TÜV für Bootsanhänger: Fristen, Kosten &amp; Prüfpunkte \| HEKU<\/title>/);
+ assert.match(s,/<meta name="description" content="HU beim Bootsanhänger: Fristen bis 3,5 t, Kosten und Besonderheiten bei Bootstrailern – Korrosion nach dem Slippen, Radnabe, Bremse, Saisonkennzeichen\.">/);
+ assert.match(s,/<h2 class="section-title" id="besonderheiten-bootstrailer">Besonderheiten bei Bootstrailern/);
+ assert.doesNotMatch(s,/\[PRÜFEN/);
  assert.match(s,new RegExp(`<link rel="canonical" href="${BASE}/${file}">`));
  assert.equal((s.match(/<h1\b/g)||[]).length,1);
  assert.ok((s.match(/<h2\b/g)||[]).length>=7);
@@ -209,7 +214,17 @@ test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
  ]) assert.ok(s.includes(`href="${url}"`),url);
  const schemas=[...s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
  assert.deepEqual(schemas.map(x=>x['@type']),['Article','FAQPage','BreadcrumbList']);
- assert.equal(schemas[1].mainEntity.length,5);
+ assert.equal(schemas[1].mainEntity.length,9);
+ const neueFragen=[
+  'Was ist bei der HU eines Bootstrailers anders als bei einem normalen Anhänger?',
+  'Was passiert mit der HU, wenn mein Bootsanhänger ein Saisonkennzeichen hat?',
+  'Kann ich meinen Bootstrailer direkt nach dem Slippen zur HU bringen?',
+  'Muss ich die HEKU-Radnabe vor der HU warten?'
+ ];
+ for(const frage of neueFragen){
+  assert.ok(s.includes(frage),frage);
+  assert.ok(schemas[1].mainEntity.some(item=>item.name===frage),frage);
+ }
  assert.ok(pages().includes(file));
  for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
   if(/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
