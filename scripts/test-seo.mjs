@@ -130,7 +130,8 @@ test('Product overview and Bootstrailer money page have distinct search intents'
  assert.match(money,/Bootstrailer 350 kg/);
  assert.match(money,/href="jollenanhaenger\.html"/);
  assert.match(money,/href="motorbootanhaenger\.html"/);
- assert.match(money,/ca\. 2 Wochen/);
+ assert.match(money,/ca\. 2–3 Wochen/);
+ assert.doesNotMatch(money,/ca\. 2(?!–3)(?:<span>)?\s*Wochen/);
  assert.match(money,/href="produkte\.html" class="link-pill">&#8592; Technische Modellübersicht der B-Serie<\/a>/);
  for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
  assert.notEqual(overview.match(/<title>([^<]+)/)[1], money.match(/<title>([^<]+)/)[1]);

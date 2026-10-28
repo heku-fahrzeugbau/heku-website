@@ -98,7 +98,7 @@ export function faqs(m) {
     ? `Der ${m.name} ist serienmäßig für Tempo 100 zugelassen. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Zugfahrzeug ab: Faktor 0,3 der Leermasse, ABS/ABV, geeignete Reifen, richtige Stützlast und die Tempo-100-Plakette.`
     : `Tempo 100 ist beim ${m.name} optional und kostet mit dem Radstoßdämpfer-Paket ${m.tempo100.option} €. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Masseverhältnis zum Zugfahrzeug, ABS/ABV, geeigneten Reifen, der Stützlast und der Tempo-100-Plakette ab.`]);
   if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt.${m.maxBootslaenge ? ` Die maximale Bootslänge beträgt ${m.maxBootslaenge}.` : ''} ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
-  list.push([`Wie lange dauert die Lieferung des HEKU ${m.name}?`, `Jeder HEKU-Anhänger wird auf Bestellung gefertigt, die Lieferzeit liegt bei ca. 2 Wochen. Sie holen den Anhänger im Werk Bunzlauer Str. 6, 33719 Bielefeld ab (Mo–Fr 08:00–12:30 und 13:00–16:30 Uhr). Eine Anlieferung wird separat kalkuliert.`]);
+  list.push([`Wie lange dauert die Lieferung des HEKU ${m.name}?`, `Jeder HEKU-Anhänger wird auf Bestellung gefertigt, die Lieferzeit liegt bei ca. 2–3 Wochen. Sie holen den Anhänger im Werk Bunzlauer Str. 6, 33719 Bielefeld ab (Mo–Fr 08:00–12:30 und 13:00–16:30 Uhr). Eine Anlieferung wird separat kalkuliert.`]);
   list.push([`Kann ich den HEKU ${m.name} zurückgeben?`, `Nein. Jeder HEKU-Bootsanhänger wird nach Ihren Bootsdaten einzeln gefertigt; für Einzelanfertigungen besteht kein Widerrufsrecht. Die Einzelheiten stehen in unseren AGB.`]);
   list.push([`Wann muss der HEKU ${m.name} zur Hauptuntersuchung?`, m.klasse === 'ungebremst'
     ? `Anhänger bis 750 kg zulässiges Gesamtgewicht müssen erstmals nach 36 Monaten und danach alle 24 Monate zur Hauptuntersuchung.`
@@ -111,7 +111,7 @@ const offerFor = (m, url) => ({
   itemCondition: 'https://schema.org/NewCondition',
   // Google unterstützt MadeToOrder für Händlereinträge nicht; BackOrder = jetzt bestellbar, Lieferung später.
   // HEKU: 2–3 Wochen. availabilityStarts ist der committete Termin (heute + 21 Tage, Europe/Berlin),
-  // den scripts/update-availability-starts.mjs montags fortschreibt. Sichtbarer Text bleibt „ca. 2 Wochen“.
+  // den scripts/update-availability-starts.mjs montags fortschreibt. Sichtbarer Text: „ca. 2–3 Wochen“.
   availability: 'https://schema.org/BackOrder',
   availabilityStarts: committedAvailabilityStarts(),
   seller: { '@id': ORG },
@@ -243,7 +243,7 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
         <div class="stat"><div class="stat-num" data-model-price>${priceHTML}</div><div class="stat-lbl">${m.preisAb === null ? 'Fertigung auf Bestellung' : 'inkl. 19 % MwSt., ab Werk Bielefeld'}</div></div>
         <div class="stat"><div class="stat-num">${e(m.zgg.toLocaleString('de-DE'))}<span> kg</span></div><div class="stat-lbl">zulässiges Gesamtgewicht</div></div>
         <div class="stat"><div class="stat-num">${e(m.zuladung.toLocaleString('de-DE'))}<span> kg</span></div><div class="stat-lbl">Zuladung ca.</div></div>
-        <div class="stat"><div class="stat-num">ca. 2<span> Wochen</span></div><div class="stat-lbl">Lieferzeit, auf Bestellung</div></div>
+        <div class="stat"><div class="stat-num">ca. 2–3<span> Wochen</span></div><div class="stat-lbl">Lieferzeit, auf Bestellung</div></div>
       </div>
     </div>
   </div>
@@ -301,7 +301,7 @@ ${m.bootstypen.map(b => `        <li>${e(b)}</li>`).join('\n')}
     <div class="model-section">
       <div class="sec-eyebrow">Fertigung, Lieferung, Abholung</div>
       <h2 class="sec-title">Auf Bestellung gefertigt in Bielefeld</h2>
-      <p class="body-text">Der ${e(m.name)} wird nach Ihren Bootsdaten im Werk Bielefeld gefertigt und ist nach ca. 2 Wochen abholbereit. Abholung: HEKU Fahrzeugbau GmbH, Bunzlauer Str. 6, 33719 Bielefeld, Mo–Fr 08:00–12:30 und 13:00–16:30 Uhr. Eine Anlieferung wird separat kalkuliert. Für Einzelanfertigungen besteht kein Widerrufsrecht (<a href="agb.html#ausschluss-einzelanfertigung">AGB</a>).</p>
+      <p class="body-text">Der ${e(m.name)} wird nach Ihren Bootsdaten im Werk Bielefeld gefertigt und ist nach ca. 2–3 Wochen abholbereit. Abholung: HEKU Fahrzeugbau GmbH, Bunzlauer Str. 6, 33719 Bielefeld, Mo–Fr 08:00–12:30 und 13:00–16:30 Uhr. Eine Anlieferung wird separat kalkuliert. Für Einzelanfertigungen besteht kein Widerrufsrecht (<a href="agb.html#ausschluss-einzelanfertigung">AGB</a>).</p>
     </div>
 
     <div class="model-section">
