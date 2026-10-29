@@ -51,7 +51,7 @@
 
     /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo img { height: 30px; }
+    .nav-logo img { height: 30px; width: auto; max-width: none; }
     .nav-center { display: flex; align-items: baseline; gap: 32px; }
     .nav-center > a:not(.mobile-config), .nav-dropdown-toggle, .nav-right > .btn-nav { display: inline-flex; align-items: center; line-height: 1; }
     .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
@@ -283,7 +283,7 @@
 <body>
 
   <nav>
-    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <a href="/" class="nav-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></a>
     <div class="nav-center">
 
       <!-- Produkte Dropdown -->

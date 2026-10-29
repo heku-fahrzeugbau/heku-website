@@ -30,7 +30,7 @@
     body{font-family:var(--font-body);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
     a{text-decoration:none;color:inherit;}
     nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-    .nav-logo img{height:30px;}
+    .nav-logo img{height:30px;width:auto;max-width:none}
     .nav-back{font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;}
     .nav-back:hover{color:var(--text);}
     .page-header{margin-top:64px;background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;padding:72px 80px 60px;position:relative;overflow:hidden;}
@@ -84,7 +84,7 @@
 <body>
 
   <nav>
-    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <a href="/" class="nav-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></a>
     <a href="/" class="nav-back">← Zurück zur Startseite</a>
   </nav>
 
