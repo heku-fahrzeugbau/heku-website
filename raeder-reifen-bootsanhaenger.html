@@ -40,7 +40,7 @@
 
     /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-logo img { height: 30px; }
+    .nav-logo img { height: 30px; width: auto; max-width: none; }
     .nav-center { display: flex; align-items: baseline; gap: 32px; }
     .nav-center > a:not(.mobile-config), .nav-dropdown-toggle, .nav-right > .btn-nav { display: inline-flex; align-items: center; line-height: 1; }
     .nav-center a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
@@ -227,7 +227,7 @@
     footer::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.90);pointer-events:none;z-index:0;}
     footer>*{position:relative;z-index:1;}
     .ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px;}
-    .ft-logo img{height:26px;margin-bottom:18px;}
+    .ft-logo img{height:26px;margin-bottom:18px;width:auto;max-width:none}
     .ft-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.3);margin-bottom:20px;}
     .ft-contact{font-size:13px;color:rgba(255,255,255,0.35);line-height:2.1;}
     .ft-head{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:18px;}
@@ -307,7 +307,7 @@
     }
     @media (max-width: 600px) {
       nav { padding: 0 12px; gap: 8px; }
-      .nav-logo img { width: 82px; height: auto; }
+      .nav-logo img { height: 30px; width: auto; max-width: none; }
       .nav-right { margin-left: auto; gap: 0; }
       .nav-right > .btn-nav { display: none; }
       .cart-btn { padding: 8px 10px; gap: 6px; }
@@ -370,7 +370,7 @@ FORM: Präzise SEO-Erweiterung im Bestand, kein neuer Welt-/Concept-Seed erforde
 FINISH: 24 Tests und 28 responsive Breitenchecks; keine Echtgeld-/Live-Bestellung.
 -->
   <nav>
-    <a href="/" class="nav-logo"><img src="logo.svg" alt="HEKU Fahrzeugbau"></a>
+    <a href="/" class="nav-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></a>
     <div class="nav-center" id="shopNav">
       <a class="mobile-config" href="konfigurator.html">Konfigurator</a>
 
@@ -446,7 +446,7 @@ FINISH: 24 Tests und 28 responsive Breitenchecks; keine Echtgeld-/Live-Bestellun
 <footer>
     <div class="ft">
       <div>
-        <div class="ft-logo"><img src="logo.svg" alt="HEKU"></div>
+        <div class="ft-logo"><img src="assets/img/heku-logo-white.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></div>
         <p class="ft-desc">Familienunternehmen in der dritten Generation. Eigenentwickelte wasserdichte Radnabe. Einzelfertigung seit 1959.</p>
         <div class="ft-contact">Bunzlauer Str. 6 · 33719 Bielefeld<br>0521 200066<br>info@heku-fahrzeugbau.de</div>
         <div class="social-links">
