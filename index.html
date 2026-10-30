@@ -43,7 +43,7 @@
     "url": "https://heku-fahrzeugbau.de/",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": {"@type": "EntryPoint", "urlTemplate": "https://heku-fahrzeugbau.de/produkte.html?q={search_term_string}"},
+      "target": {"@type": "EntryPoint", "urlTemplate": "https://heku-fahrzeugbau.de/bootstrailer.html?q={search_term_string}"},
       "query-input": "required name=search_term_string"
     }
   }
@@ -234,6 +234,7 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+    .nav-dropdown-menu a.nav-split { font-weight: 600; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
     .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
@@ -485,15 +486,14 @@
 
       <!-- Produkte Dropdown -->
       <div class="nav-dropdown">
-        <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
+        <a href="bootstrailer.html" class="nav-dropdown-toggle">Produkte ▾</a>
         <div class="nav-dropdown-menu">
-          <a href="produkte.html">Alle Modelle</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="ruderbootanhaenger.html">Ruderbootanhänger</a>
-          <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
+          <a href="jollenanhaenger.html">Jolle</a>
+          <a href="segelbootanhaenger.html">Segelboot</a>
+          <a href="motorbootanhaenger.html">Motorboot</a>
+          <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="bootsanhaenger-nach-mass.html" class="nav-split">Nach Maß / Umbau</a>
         </div>
       </div>
 
@@ -545,7 +545,7 @@
       <p class="hero-body">Eigenentwickelte wasserdichte Radnabe. Einzelfertigung nach Maß. TÜV-geprüft bis 3.500 kg. Feuerverzinktes Fahrgestell nach DIN 1461.</p>
       <div class="hero-actions">
         <a href="konfigurator.html" class="btn-lg red">Anhänger konfigurieren <span class="btn-arr">→</span></a>
-        <a href="produkte.html" class="btn-lg ghost">Alle Produkte</a>
+        <a href="bootstrailer.html" class="btn-lg ghost">Alle Produkte</a>
       </div>
     </div>
     <div class="hero-badge">
@@ -639,7 +639,7 @@
         <div class="type-go">Zum Ruderbootanhänger →</div>
       </a>
     </div>
-    <p class="type-more reveal"><a href="produkte.html">Alle Modelle</a> · <a href="konfigurator.html">Konfigurator öffnen</a> · <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a> · <a href="bootstrailer.html">Bootstrailer</a></p>
+    <p class="type-more reveal"><a href="bootstrailer.html">Alle Bootsanhänger</a> · <a href="konfigurator.html">Konfigurator öffnen</a> · <a href="bootsanhaenger-nach-mass.html">Nach Maß / Umbau</a></p>
 
     <div class="reveal" style="margin-top:72px">
       <div class="lbl">Produktübersicht</div>
@@ -647,13 +647,13 @@
       <p class="p">Von der leichten Jolle bis zum schweren Sportboot — HEKU hat den passenden Anhänger.</p>
     </div>
     <div class="prod-grid">
-      <a href="produkte.html" class="prod-card reveal">
+      <a href="bootstrailer.html" class="prod-card reveal">
         <div class="prod-img"><img src="bootsanhaenger.jpg" alt="HEKU Bootsanhänger B-Serie 2026 – TÜV-geprüft und feuerverzinkt" loading="lazy" decoding="async"></div>
         <div class="prod-body">
           <div class="prod-tag">B-Serie 2026 · 25 Modelle</div>
           <div class="prod-name">Bootsanhänger</div>
           <p class="prod-desc">Ungebremst bis 750 kg, gebremst bis 3.500 kg. TÜV-geprüft, einzeln konfigurierbar.</p>
-          <div class="prod-lnk">Alle Modelle →</div>
+          <div class="prod-lnk">Alle Bootsanhänger →</div>
         </div>
       </a>
 
@@ -829,8 +829,7 @@
       <div>
         <div class="ft-head">Produkte</div>
         <div class="ft-links">
-          <a href="produkte.html">Bootsanhänger</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
           <a href="jollenanhaenger.html">Jollenanhänger</a>

@@ -1,5 +1,5 @@
 // content/modelle/modelle.json is the ONLY source of the public trailer model pages
-// (bootsanhaenger-b*.html) and of the generated model block on produkte.html.
+// (bootsanhaenger-b*.html) and of the generated model block on bootstrailer.html.
 // Fail-closed: invalid data or a missing image aborts the build before any file is written.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -9,7 +9,7 @@ import { committedAvailabilityStarts } from './availability-starts.mjs';
 
 export const modelDataFile = 'content/modelle/modelle.json';
 export const modelTemplate = 'scripts/templates/model-page.tpl';
-export const modelHub = 'produkte.html';
+export const modelHub = 'bootstrailer.html';
 export const klassen = {
   ungebremst: { label: 'Ungebremste Bootsanhänger', kurz: 'Ungebremst', achsen: 'Einachser', bremse: 'ungebremst' },
   einachser: { label: 'Gebremste Einachser', kurz: 'Gebremst', achsen: 'Einachser', bremse: 'Auflaufbremse mit Rückfahrautomatik' },
@@ -145,7 +145,7 @@ export function schemaFor(m) {
   });
   graph.push({ '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'HEKU Fahrzeugbau', item: BASE + '/' },
-    { '@type': 'ListItem', position: 2, name: 'Bootsanhänger', item: BASE + '/produkte.html' },
+    { '@type': 'ListItem', position: 2, name: 'Bootsanhänger', item: BASE + '/bootstrailer.html' },
     { '@type': 'ListItem', position: 3, name: `HEKU ${m.name}`, item: url }
   ] });
   graph.push({ '@type': 'FAQPage', mainEntity: faqs(m).map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
@@ -217,11 +217,11 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
         </div>`).join('\n');
   return `  <div class="page-header">
     <div class="page-header-inner">
-      <a href="produkte.html#modelle" class="nav-back" data-back-to-overview>&#8592; Zurück zur Modellübersicht</a>
+      <a href="bootstrailer.html#modelle" class="nav-back" data-back-to-overview>&#8592; Zurück zur Modellübersicht</a>
       <div class="breadcrumb">
         <a href="/">HEKU</a>
         <span>&#8250;</span>
-        <a href="produkte.html">Bootsanhänger</a>
+        <a href="bootstrailer.html">Bootsanhänger</a>
         <span>&#8250;</span>
         <span>HEKU ${e(m.name)}</span>
       </div>
@@ -322,7 +322,7 @@ ${faqHTML}
       <div class="internal-links-title">Nachbarmodelle und Übersicht</div>
       <div class="link-list">
 ${neighbors.map(n => `        <a href="${n.slug}" class="link-pill">HEKU ${e(n.name)} &#8594;</a>`).join('\n')}
-        <a href="produkte.html" class="link-pill">Alle Modelle der B-Serie &#8594;</a>
+        <a href="bootstrailer.html" class="link-pill">Alle Modelle der B-Serie &#8594;</a>
         <a href="100kmh-regelung.html" class="link-pill">100 km/h Regelung &#8594;</a>
         <a href="technik-bootsanhaenger.html" class="link-pill">Technische Daten &#8594;</a>
       </div>
@@ -361,11 +361,11 @@ export function renderHubSchema(all) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'ItemList', '@id': BASE + '/produkte.html#modelle', name: 'HEKU B-Serie Bootsanhänger', numberOfItems: all.length,
+      { '@type': 'ItemList', '@id': BASE + '/bootstrailer.html#modelle', name: 'HEKU B-Serie Bootsanhänger', numberOfItems: all.length,
         itemListElement: all.map((m, i) => ({ '@type': 'ListItem', position: i + 1, name: `HEKU ${m.name}`, url: pageUrl(m) })) },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'HEKU Fahrzeugbau', item: BASE + '/' },
-        { '@type': 'ListItem', position: 2, name: 'Bootsanhänger', item: BASE + '/produkte.html' }
+        { '@type': 'ListItem', position: 2, name: 'Bootsanhänger', item: BASE + '/bootstrailer.html' }
       ] }
     ]
   };

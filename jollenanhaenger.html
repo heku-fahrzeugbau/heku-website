@@ -23,7 +23,7 @@
   <meta name="twitter:description" content="HEKU Jollenanhänger – zerlegbar, feuerverzinkt, ab 1.375 €.">
   <meta name="twitter:image" content="https://heku-fahrzeugbau.de/bootsanhaenger.jpg">
 
-  <script type="application/ld+json">
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -104,10 +104,23 @@
 }
 </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"}, {"@type": "ListItem", "position": 2, "name": "Produkte", "item": "https://heku-fahrzeugbau.de/produkte.html"}, {"@type": "ListItem", "position": 3, "name": "Jollenanhänger", "item": "https://heku-fahrzeugbau.de/jollenanhaenger.html"}]}
+  {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "HEKU Fahrzeugbau", "item": "https://heku-fahrzeugbau.de/"}, {"@type": "ListItem", "position": 2, "name": "Produkte", "item": "https://heku-fahrzeugbau.de/bootstrailer.html"}, {"@type": "ListItem", "position": 3, "name": "Jollenanhänger", "item": "https://heku-fahrzeugbau.de/jollenanhaenger.html"}]}
   </script>
-
-  <link rel="stylesheet" href="/assets/css/fonts.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "HEKU Jollenanhänger – Modellübersicht",
+  "description": "Ungebremste Jollenanhänger B 350, B 500 und B 750.",
+  "url": "https://heku-fahrzeugbau.de/jollenanhaenger.html",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"HEKU B 350 Jollenanhänger","url":"https://heku-fahrzeugbau.de/bootsanhaenger-b350.html"},
+    {"@type":"ListItem","position":2,"name":"HEKU B 500 Jollenanhänger","url":"https://heku-fahrzeugbau.de/bootsanhaenger-b500.html"},
+    {"@type":"ListItem","position":3,"name":"HEKU B 750 Jollenanhänger","url":"https://heku-fahrzeugbau.de/bootsanhaenger-b750.html"}
+  ]
+}
+</script>
+<link rel="stylesheet" href="/assets/css/fonts.css">
   <style>
     :root { --rot:#E8000E;--rot-dark:#B8000B;--schwarz:#0A0A0A;--text:#2C2C2C;--muted:#6B6B6B;--border:#E8E8E8;--bg:#FFFFFF;--bg2:#F7F7F7;--bg3:#EFEFEF;--font-head:'DM Serif Display',serif;--font-body:'DM Sans',sans-serif;--ease:cubic-bezier(0.4,0,0.2,1); }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -138,6 +151,7 @@
     .nav-dropdown-menu a:hover{background:var(--bg2);color:var(--rot);}
     .nav-dropdown-menu a.active{color:var(--rot);font-weight:600;}
     .nav-dropdown-menu a:first-child{font-weight:600;border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:10px;}
+    .nav-dropdown-menu a.nav-split{font-weight:600;border-top:1px solid var(--border);margin-top:4px;padding-top:10px}
     .page-header{margin-top:0;background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;padding:72px 80px 56px;position:relative;overflow:hidden;}
     .page-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.88) 0%,rgba(10,10,10,0.72) 100%);z-index:0;}
     .page-header::after{content:'';position:absolute;top:-30%;right:-10%;width:50vw;height:50vw;background:radial-gradient(circle,rgba(232,0,14,0.12) 0%,transparent 65%);pointer-events:none;z-index:1;}
@@ -247,30 +261,7 @@
     .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   </style>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "HEKU Jollenanhänger – Modellübersicht",
-  "description": "Jollenanhänger von HEKU Fahrzeugbau GmbH. Ungebremst, zerlegbar in 4 Teile, wasserdichte Radnabe inklusive.",
-  "url": "https://heku-fahrzeugbau.de/jollenanhaenger.html",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "HEKU B 350 Jollenanhänger",
-      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b350.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "HEKU B 500 Jollenanhänger",
-      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b500.html"
-    }
-  ]
-}
-</script>
-</head>
+  </head>
 <body>
   <nav id="nav">
     <a href="/" class="nav-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></a>
@@ -278,14 +269,14 @@
 
       <!-- Produkte Dropdown -->
       <div class="nav-dropdown">
-        <a href="produkte.html" class="nav-dropdown-toggle active">Produkte ▾</a>
+        <a href="bootstrailer.html" class="nav-dropdown-toggle active">Produkte ▾</a>
         <div class="nav-dropdown-menu">
-          <a href="produkte.html">Alle Modelle</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html" class="active">Jollenanhänger</a>
-          <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
+          <a href="jollenanhaenger.html" class="active">Jolle</a>
+          <a href="segelbootanhaenger.html">Segelboot</a>
+          <a href="motorbootanhaenger.html">Motorboot</a>
+          <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="bootsanhaenger-nach-mass.html" class="nav-split">Nach Maß / Umbau</a>
         </div>
       </div>
 
@@ -325,12 +316,12 @@
     <div class="page-header-inner">
       <div class="breadcrumb">
         <a href="/">Startseite</a><span>›</span>
-        <a href="produkte.html">Produkte</a><span>›</span>
+        <a href="bootstrailer.html">Bootsanhänger</a><span>›</span>
         <span>Jollenanhänger</span>
       </div>
       <div class="page-eyebrow">Jollenanhänger · B-Serie 2026</div>
       <h1 class="page-title">Jollenanhänger kaufen –<br>passend für jede Jolle</h1>
-      <p class="page-sub">Für Optimist, Laser, 420er, 470er und alle weiteren Jollenklassen. Ungebremst bis 750 kg, zerlegbar in 4 Teile, feuerverzinkt, wasserdichte Radnabe. Einzelfertigung ab Werk Bielefeld seit über 72 Jahren.</p>
+      <p class="page-sub">Für Optimist, Laser, 420er und 470er. Ungebremst bis zum B 750, dem größten ungebremsten Modell. Zerlegbar bei B 350 und B 500, feuerverzinkt, eigenentwickelte wasserdichte und wartungsfreie Radnabe. Lieferzeit ca. 2–3 Wochen.</p>
       <div class="page-header-stats">
         <div><div class="stat-num">ab 1.375<span>,– €</span></div><div class="stat-lbl">Grundpreis inkl. MwSt.</div></div>
         <div><div class="stat-num">350<span> – 750 kg</span></div><div class="stat-lbl">zulässiges Gesamtgewicht (zGG)</div></div>
@@ -435,14 +426,10 @@
     <div class="reveal">
       <div class="sec-eyebrow">Jollenanhänger B-Serie 2026</div>
       <h2 class="sec-title">Alle Jollenanhänger-Modelle im Überblick</h2>
-      <p class="sec-text">Von der ungebremsten Jolle bis zum gebremsten Trailer für schwere Boote. Alle Preise inkl. 19% MwSt., ab Werk Bielefeld. Betriebserlaubnis (CoC) bis B 2000 bzw. TÜV-EG ab B 2500 inklusive.</p>
+      <p class="sec-text">Nur die ungebremsten Modelle bis B 750. Der B 750 ist der größte ungebremste Anhänger. Alle Preise inkl. 19 % MwSt., ab Werk Bielefeld, mit Betriebserlaubnis (CoC). Tempo 100 ist bei diesen Modellen serienmäßig. Gebremste Anhänger stehen in der <a href="bootstrailer.html#modelle">Übersicht</a>.</p>
     </div>
 
-    <div class="pl-serie reveal">
-      <div class="pl-row"><b>Serienausstattung ungebremst (B&nbsp;350 bis B&nbsp;750):</b> Kielauflage vorne &middot; Langauflage / Polsterkissen hinten &middot; ausziehbare Beleuchtung &middot; eigenentwickelte wasserdichte Radnabe &middot; 5 Jahre Garantie &middot; feuerverzinkt &middot; inkl. Betriebserlaubnis (CoC).</div>
-      <div class="pl-row"><b>Gebremste Einachser (B&nbsp;900 bis B&nbsp;1800):</b> zus&auml;tzlich R&uuml;ckfahrautomatik, Windenstand mit Sicherheitswinde, Einzelradfederung, St&uuml;tzrad, Kielrollen bzw. Rumpfst&uuml;tzen, 4 Verzurr&ouml;sen. Motorboot- oder Segelboot-Ausf&uuml;hrung je nach Bootstyp.</div>
-      <div class="pl-row"><b>Tandem (ab B&nbsp;2000):</b> Ausstattung wie gebremster Einachser, zus&auml;tzlich zweite Achse mit Einzelradfederung f&uuml;r ruhigen Lauf. B&nbsp;2000 inkl. Betriebserlaubnis (CoC), ab B&nbsp;2500 inkl. T&Uuml;V-EG.</div>
-    </div>
+    <div class="pl-serie reveal"><div class="pl-row"><b>Serienausstattung ungebremst (B 350 bis B 750):</b> Kielauflage vorne, Langauflage oder Polsterkissen hinten, ausziehbare Beleuchtung, eigenentwickelte wasserdichte und wartungsfreie Radnabe, 5 Jahre Garantie, feuerverzinkt, Betriebserlaubnis (CoC). Tempo 100 serienmäßig, ohne Radstoßdämpfer.</div></div>
 
     <div class="table-wrap reveal">
       <table class="model-table">
@@ -453,16 +440,11 @@
           <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 500</div><div class="model-sub">470er / größere Jolle</div></td><td>4,50 m</td><td>450 kg</td><td><span class="tag-ung">Ungebremst · CoC</span></td><td><div class="model-price">ab 1.575,– €</div></td></tr>
           <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 500</div><div class="model-sub">Schwerjolle / Zweihandjolle</div></td><td>5,00 m</td><td>445 kg</td><td><span class="tag-ung">Ungebremst · CoC</span></td><td><div class="model-price">ab 1.650,– €</div></td></tr>
           <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 750</div><div class="model-sub">Speedboot / Motorboot</div></td><td>5,00 m</td><td>620 kg</td><td><span class="tag-ung">Ungebremst · CoC</span></td><td><div class="model-price">ab 1.995,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 900</div><div class="model-sub">Motorboot / Kabinenboot</div></td><td>6,60 m</td><td>660 kg</td><td><span class="tag-ein">Einachsig · CoC</span></td><td><div class="model-price">ab 3.190,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 1100</div><div class="model-sub">Motorboot / Kielboot</div></td><td>6,60 m</td><td>815 kg</td><td><span class="tag-ein">Einachsig · CoC</span></td><td><div class="model-price">ab 3.390,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 1300</div><div class="model-sub">Motorboot / Kabinenboot</div></td><td>6,60 m</td><td>1.000 kg</td><td><span class="tag-ein">Einachsig · CoC</span></td><td><div class="model-price">ab 3.590,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 1500</div><div class="model-sub">Motorboot / Kabinenboot</div></td><td>6,60 m</td><td>1.175 kg</td><td><span class="tag-ein">Einachsig · CoC</span></td><td><div class="model-price">ab 3.850,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 1800</div><div class="model-sub">Motorboot / Motoryacht</div></td><td>6,60 m</td><td>1.450 kg</td><td><span class="tag-ein">Einachsig · CoC</span></td><td><div class="model-price">ab 3.995,– €</div></td></tr>
-          <tr onclick="window.location='konfigurator.html'"><td><div class="model-name">B 2000</div><div class="model-sub">Schwere Yacht</div></td><td>6,60 m</td><td>1.610 kg</td><td><span class="tag-tan">Tandem · CoC</span></td><td><div class="model-price">ab 4.655,– €</div></td></tr>
+          
         </tbody>
       </table>
     </div>
-    <p class="length-note" style="font-size:12px;color:var(--muted);margin:8px 0 32px;">Gebremste Modelle (B 900 bis B 2000) in 6,60&nbsp;m Grundlänge. Längere Ausführung: +155&nbsp;€ je 0,5&nbsp;m (Einachser B 900–B 1800), +209&nbsp;€ je 0,5&nbsp;m (Tandem B 2000).</p>
+    <p class="sec-text">Der B 750 ist auf der Modellseite den Bootstypen Speedboot und kleines Motorboot zugeordnet. Für schwere Jollen ist er die Obergrenze der ungebremsten Reihe: 750 kg zGG, ca. 620 kg Zuladung, 5,00 m, ab 1.995 €. B 350 und B 500 sind zerlegbar. Masthalter: <a href="artikel/50203.html">Art. 50203</a> und <a href="artikel/50205.html">Art. 50205</a>. Aufpreise: <a href="bootstrailer.html#zubehoer">Zubehörtabelle</a>.</p>
 
     <div class="reveal">
       <div class="sec-eyebrow">Wichtig zu wissen</div>
@@ -506,7 +488,7 @@
       <div class="internal-links-title">Verwandte Seiten</div>
       <div class="link-list">
         <a href="segelbootanhaenger.html" class="link-pill">← Alle Segelbootanhänger</a>
-        <a href="produkte.html" class="link-pill">← Alle Bootsanhänger-Modelle</a>
+        <a href="bootstrailer.html" class="link-pill">← Alle Bootsanhänger-Modelle</a>
         <a href="motorbootanhaenger.html" class="link-pill">Motorbootanhänger →</a>
         <a href="ruderbootanhaenger.html" class="link-pill">Ruderbootanhänger für Vereine →</a>
         <a href="ratgeber-bootsanhaenger.html" class="link-pill">Ratgeber: Welcher Anhänger passt? →</a>
@@ -530,8 +512,7 @@
       <div>
         <div class="ft-head">Produkte</div>
         <div class="ft-links">
-          <a href="produkte.html">Bootsanhänger</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
           <a href="motorbootanhaenger.html">Motorbootanhänger</a>
           <a href="segelbootanhaenger.html">Segelbootanhänger</a>
           <a href="jollenanhaenger.html">Jollenanhänger</a>

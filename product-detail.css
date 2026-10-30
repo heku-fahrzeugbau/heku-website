@@ -197,6 +197,7 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+    .nav-dropdown-menu a.nav-split { font-weight: 600; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
     footer{background:var(--schwarz);background-image:url('engineer-bg.jpg');background-size:cover;background-position:center;padding:68px 80px 32px;position:relative;}
     footer::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.90);pointer-events:none;z-index:0;}
     footer>*{position:relative;z-index:1;}

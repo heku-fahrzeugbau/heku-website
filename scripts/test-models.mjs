@@ -85,7 +85,7 @@ test('Breadcrumb has three levels and FAQPage equals the visible FAQ', () => {
   for (const m of all) {
     const html = read(m.slug), graph = jsonld(html)[0]['@graph'];
     const crumbs = graph.find(n => n['@type'] === 'BreadcrumbList').itemListElement;
-    assert.deepEqual(crumbs.map(c => c.item), [`${BASE}/`, `${BASE}/produkte.html`, `${BASE}/${m.slug}`]);
+    assert.deepEqual(crumbs.map(c => c.item), [`${BASE}/`, `${BASE}/bootstrailer.html`, `${BASE}/${m.slug}`]);
     const faq = graph.find(n => n['@type'] === 'FAQPage');
     const visible = [...html.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">([^<]+)<span class="faq-icon"><\/span><\/button>\s*<div class="faq-answer"><div class="faq-answer-inner">([^<]+)<\/div>/g)];
     const unescape = s => s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
@@ -112,7 +112,7 @@ test('Registration follows Robin: B 350–B 2000 CoC, from B 2500 TÜV-EG', () =
       assert.match(tag[1], Number(row[1]) <= 2000 ? /· CoC$/ : /· TÜV-EG$/, `${file} B ${row[1]}`);
     }
   }
-  const data = read('produkte.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
+  const data = read('bootstrailer.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
   for (const m of all) {
     const row = data.match(new RegExp(`\\{name:'${m.name}',[^\\n]*?approval:'([^']+)',page:'([^']+)'`));
     assert.ok(row, m.name); assert.equal(row[1], m.zulassung, m.name); assert.equal(row[2], m.slug, m.name);
@@ -136,7 +136,7 @@ test('Tempo 100 follows Robin: unbraked standard, braked optional 140 € / 280 
 });
 
 test('Prices agree across modelle.json, produkte.html and the class tables; no 3.490 € for B 1100', () => {
-  const data = read('produkte.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
+  const data = read('bootstrailer.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
   for (const m of all) {
     if (m.preisAb === null) continue;
     assert.ok(data.includes(`{name:'${m.name}',price:'${de(m.preisAb)}'`), m.name);
@@ -158,7 +158,7 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
 });
 
 test('produkte.html links all model pages statically and carries only an ItemList summary', () => {
-  const html = read('produkte.html'), outside = visibleText(html);
+  const html = read('bootstrailer.html'), outside = visibleText(html);
   for (const m of all) assert.ok(outside.includes(`href="${m.slug}"`), m.slug);
   assert.doesNotMatch(html, /href="#">Details ansehen/);
   assert.doesNotMatch(html, /UNgebremst/);
@@ -176,7 +176,7 @@ test('Compliance and links on every model page', () => {
     assert.ok(html.includes('tel:+49521200066') && html.includes('0521 200066'), m.slug);
     for (const needle of ['eigenentwickelt', 'ca. 2–3 Wochen', 'ca. 2–3<span> Wochen</span>', 'Bunzlauer Str']) assert.ok(html.includes(needle), `${m.slug} ${needle}`);
     assert.doesNotMatch(html, /ca\. 2(?!–3)(?:<span>)?\s*Wochen/, m.slug);
-    for (const href of ['technik-bootsanhaenger.html', 'konfigurator.html', 'kontakt.html', 'produkte.html', '100kmh-regelung.html', 'agb.html#ausschluss-einzelanfertigung']) assert.ok(html.includes(`href="${href}"`), `${m.slug} ${href}`);
+    for (const href of ['technik-bootsanhaenger.html', 'konfigurator.html', 'kontakt.html', 'bootstrailer.html', '100kmh-regelung.html', 'agb.html#ausschluss-einzelanfertigung']) assert.ok(html.includes(`href="${href}"`), `${m.slug} ${href}`);
     for (const tag of html.matchAll(/<(?:a|img)\b[^>]*>/gi)) {
       const a = attributes(tag[0]), url = a.href || a.src;
       if (!url || /^(?:https?:|mailto:|tel:|#)/.test(url)) continue;
@@ -193,13 +193,13 @@ test('Generator is idempotent, fails closed and updates only the changed model',
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'heku-models-'));
   try {
     for (const dir of ['content/modelle', 'scripts/templates', 'assets/anhaenger']) fs.mkdirSync(path.join(tmp, dir), { recursive: true });
-    for (const f of [modelDataFile, 'scripts/templates/model-page.tpl', 'produkte.html', ...all.map(m => m.slug), ...new Set(all.flatMap(m => m.bilder.flatMap(b => [b.src, b.webp].filter(Boolean))))]) fs.copyFileSync(path.join(ROOT, f), path.join(tmp, f));
+    for (const f of [modelDataFile, 'scripts/templates/model-page.tpl', 'bootstrailer.html', ...all.map(m => m.slug), ...new Set(all.flatMap(m => m.bilder.flatMap(b => [b.src, b.webp].filter(Boolean))))]) fs.copyFileSync(path.join(ROOT, f), path.join(tmp, f));
     assert.deepEqual(generateModels(tmp).changed, []);
     const data = JSON.parse(fs.readFileSync(path.join(tmp, modelDataFile), 'utf8'));
     const b750 = data.find(m => m.name === 'B 750');
     b750.preisAb = '2015.00'; b750.laengen[0].preis = '2015.00'; b750.description = b750.description.replace('1.995 €', '2.015 €');
     fs.writeFileSync(path.join(tmp, modelDataFile), JSON.stringify(data));
-    assert.deepEqual(generateModels(tmp).changed.sort(), ['bootsanhaenger-b750.html', 'produkte.html']);
+    assert.deepEqual(generateModels(tmp).changed.sort(), ['bootsanhaenger-b750.html', 'bootstrailer.html']);
     assert.match(fs.readFileSync(path.join(tmp, 'bootsanhaenger-b750.html'), 'utf8'), /"price": "2015.00"/);
     const broken = structuredClone(data); broken.find(m => m.name === 'B 2500').zulassung = 'CoC';
     fs.writeFileSync(path.join(tmp, modelDataFile), JSON.stringify(broken));
@@ -217,12 +217,12 @@ test('Generator is idempotent, fails closed and updates only the changed model',
 });
 
 test('Every model page has a visible back link to the model overview on produkte.html', () => {
-  assert.match(read('produkte.html'), /id="modelle"/);
+  assert.match(read('bootstrailer.html'), /id="modelle"/);
   for (const m of all) {
     const html = read(m.slug);
     const links = [...html.matchAll(/<a href="([^"]+)" class="nav-back" data-back-to-overview>([^<]+)<\/a>/g)];
     assert.equal(links.length, 1, m.slug);
-    assert.equal(links[0][1], 'produkte.html#modelle', m.slug);
+    assert.equal(links[0][1], 'bootstrailer.html#modelle', m.slug);
     assert.equal(links[0][2], '&#8592; Zurück zur Modellübersicht', m.slug);
     assert.ok(html.indexOf('data-back-to-overview>') < html.indexOf('<h1'), `${m.slug}: Zurück-Link steht über der H1`);
     assert.match(html, /\.nav-back \{[^}]*font-size: 13px/, m.slug);
@@ -250,7 +250,7 @@ test('Braked models list only the 6,60 m length (model pages, produkte.html, cla
     else assert.ok(!/\d,\d0 ?–/.test(product.description), `${m.slug}: keine Längenspanne in der Description`);
     assert.ok(!nodes(jsonld(html)).some(n => types(n).includes('ProductGroup') || n.hasVariant), `${m.slug}: keine Varianten im JSON-LD`);
   }
-  const produkte = read('produkte.html');
+  const produkte = read('bootstrailer.html');
   const data = produkte.match(/const modelData=\{[\s\S]*?\n    \};/)[0];
   for (const group of ['einachser', 'tandem']) {
     const block = data.match(new RegExp(group + ':\\[([\\s\\S]*?)\\n      \\]'))[1];
@@ -285,7 +285,7 @@ test('Length surcharge: braked single-axle +155 €, tandem +209 € per 0,5 m e
     for (const x of text.matchAll(/\+ ?(\d+) ?€ je 0,5 m/g)) assert.ok(['155', '209'].includes(x[1]), `${f}: ${x[0]}`);
     assert.doesNotMatch(text, /je 0,5 m \+ ?(?!155|209)\d+/, f);
   }
-  const data = read('produkte.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
+  const data = read('bootstrailer.html').match(/const modelData=\{[\s\S]*?\n    \};/)[0];
   for (const [group, rate] of [['einachser', 155], ['tandem', 209]]) {
     const block = data.match(new RegExp(group + ':\\[([\\s\\S]*?)\\n      \\]'))[1];
     const rows = block.split('\n').filter(r => r.includes('{name:'));
@@ -293,7 +293,7 @@ test('Length surcharge: braked single-axle +155 €, tandem +209 € per 0,5 m e
     for (const row of rows) assert.match(row, new RegExp(`surcharge:${rate}\\}`), row.slice(0, 40));
   }
   assert.doesNotMatch(data.match(/ungebremst:\[[\s\S]*?\n      \]/)[0], /surcharge/);
-  assert.match(read('produkte.html'), /Längere Ausführung: \+\$\{m\.surcharge\} € je 0,5 m/);
+  assert.match(read('bootstrailer.html'), /Längere Ausführung: \+\$\{m\.surcharge\} € je 0,5 m/);
   assert.match(read('konfigurator.html'), /const laengenRate = isTandem \? 209 : 155;/);
 });
 
