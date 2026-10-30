@@ -57,6 +57,7 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+    .nav-dropdown-menu a.nav-split { font-weight: 600; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .btn-nav { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px; transition: all 0.2s; }
     .btn-outline { border: 1.5px solid var(--border); color: var(--text); }
@@ -460,14 +461,14 @@
 
       <!-- Produkte Dropdown -->
       <div class="nav-dropdown">
-        <a href="produkte.html" class="nav-dropdown-toggle">Produkte ▾</a>
+        <a href="bootstrailer.html" class="nav-dropdown-toggle">Produkte ▾</a>
         <div class="nav-dropdown-menu">
-          <a href="produkte.html">Alle Modelle</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
+          <a href="jollenanhaenger.html">Jolle</a>
+          <a href="segelbootanhaenger.html">Segelboot</a>
+          <a href="motorbootanhaenger.html">Motorboot</a>
+          <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="bootsanhaenger-nach-mass.html" class="nav-split">Nach Maß / Umbau</a>
         </div>
       </div>
 
@@ -503,7 +504,7 @@
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
   <div class="nav-mobile" id="nav-mobile">
-    <a href="produkte.html">Produkte</a>
+    <a href="bootstrailer.html">Bootsanhänger</a>
     <a href="shop.html">Shop</a>
     <a href="ueber-uns.html">Über uns</a>
     <a href="haendler.html">Partner werden</a>

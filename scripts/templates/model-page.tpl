@@ -66,6 +66,7 @@
     .nav-dropdown-menu a { font-size: 13px; font-weight: 400; color: var(--text); padding: 9px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
     .nav-dropdown-menu a:hover { background: var(--bg2); color: var(--rot); }
     .nav-dropdown-menu a:first-child { font-weight: 600; border-bottom: 1px solid var(--border); margin-bottom: 4px; padding-bottom: 10px; }
+    .nav-dropdown-menu a.nav-split { font-weight: 600; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
 
     /* MARQUEE */
     .marquee-wrap { background: var(--rot); padding: 13px 0; overflow: hidden; width: 100%; }
@@ -311,14 +312,14 @@
 
       <!-- Produkte Dropdown -->
       <div class="nav-dropdown">
-        <a href="produkte.html" class="nav-dropdown-toggle active">Produkte ▾</a>
+        <a href="bootstrailer.html" class="nav-dropdown-toggle active">Produkte ▾</a>
         <div class="nav-dropdown-menu">
-          <a href="produkte.html">Alle Modelle</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
-          <a href="motorbootanhaenger.html">Motorbootanhänger</a>
-          <a href="segelbootanhaenger.html">Segelbootanhänger</a>
-          <a href="jollenanhaenger.html">Jollenanhänger</a>
-          <a href="bootsanhaenger-nach-mass.html">Bootsanhänger nach Maß</a>
+          <a href="bootstrailer.html" class="active">Alle Bootsanhänger</a>
+          <a href="jollenanhaenger.html">Jolle</a>
+          <a href="segelbootanhaenger.html">Segelboot</a>
+          <a href="motorbootanhaenger.html">Motorboot</a>
+          <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="bootsanhaenger-nach-mass.html" class="nav-split">Nach Maß / Umbau</a>
         </div>
       </div>
 
@@ -371,8 +372,12 @@
       <div>
         <div class="ft-head">Produkte</div>
         <div class="ft-links">
-          <a href="produkte.html">Bootsanhänger</a>
-          <a href="bootstrailer.html">Bootstrailer</a>
+          <a href="bootstrailer.html">Alle Bootsanhänger</a>
+          <a href="jollenanhaenger.html">Jolle</a>
+          <a href="segelbootanhaenger.html">Segelboot</a>
+          <a href="motorbootanhaenger.html">Motorboot</a>
+          <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="bootsanhaenger-nach-mass.html">Nach Maß / Umbau</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>
         </div>
@@ -521,8 +526,8 @@
 </script>
 
 <script>
-/* Zurück zur Modellübersicht: kam der Besucher von produkte.html, springt history.back() an die alte
-   Scrollposition. Ohne JS oder bei anderem Einstieg gilt das normale href (produkte.html#modelle). */
+/* Zurück zur Modellübersicht: kam der Besucher von bootstrailer.html, springt history.back() an die alte
+   Scrollposition. Ohne JS oder bei anderem Einstieg gilt das normale href (bootstrailer.html#modelle). */
 (function () {
   var link = document.querySelector('[data-back-to-overview]');
   if (!link) return;

@@ -93,7 +93,7 @@ test('Replacement-parts hub is indexable, cautious and links every category',()=
  assert.equal(schema['@graph'][2].mainEntity.length,4);
  assert.doesNotMatch(JSON.stringify(schema),/"(?:Product|Offer|AggregateRating)"/);
  for(const category of Object.keys(categoryPages)) assert.ok(s.includes(`href="${category}"`),category);
- for(const source of ['shop.html','ratgeber-bootsanhaenger.html','produkte.html',...Object.keys(categoryPages)]) assert.ok(read(source).includes(`href="${file}"`),source);
+ for(const source of ['shop.html','ratgeber-bootsanhaenger.html','bootstrailer.html',...Object.keys(categoryPages)]) assert.ok(read(source).includes(`href="${file}"`),source);
  assert.equal(exclusionReason(file,s),null);
  assert.ok(pages().includes(file));
  for(const [,href] of s.matchAll(/href="([^"]+)"/g)) {
@@ -113,30 +113,45 @@ test('Published opening hours include the confirmed lunch break',()=>{
  assert.equal((contact.match(/08:00 – 12:30 Uhr · 13:00 – 16:30 Uhr/g)||[]).length,5);
 });
 
-test('Product overview and Bootstrailer money page have distinct search intents',()=>{
- const overview=read('produkte.html'), money=read('bootstrailer.html');
- assert.match(overview,/<title>Bootsanhänger kaufen vom Hersteller \| HEKU B-Serie<\/title>/);
- assert.doesNotMatch(overview.match(/<title>[\s\S]*?<\/title>/)[0],/Bootstrailer|1\.375/);
- assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/Bootsanhänger kaufen vom Hersteller/);
- assert.match(overview.match(/<meta name="description"[^>]+>/)[0],/kleine Anhänger/);
- assert.match(overview,/<h1 class="page-title">Bootsanhänger kaufen<br>vom Hersteller<\/h1>/);
- assert.match(overview,/href="bootstrailer\.html"[^>]*>Bootsanhänger kaufen: Beratung &amp; Vorteile →<\/a>/);
- const introParas=[...overview.match(/<section class="intro">([\s\S]*?)<\/section>/)[1].matchAll(/<p(?: style="margin-top:18px")?>([\s\S]*?)<\/p>/g)].map(m=>m[1]).filter(x=>!x.includes('<a '));
- const words=introParas.join(' ').replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean);
- assert.ok(words.length>=100 && words.length<=150, 'intro words '+words.length);
- assert.match(money,/<title>Bootstrailer kaufen vom Hersteller \| ab 1\.375 € \| HEKU<\/title>/);
- assert.match(money,/<h1 class="page-title">Bootstrailer kaufen<br>vom Hersteller<\/h1>/);
+test('Bootstrailer is the single overview and produkte.html redirects to it',()=>{
+ const money=read('bootstrailer.html');
+ assert.match(money,/<title>Bootsanhänger und Bootstrailer kaufen \| HEKU<\/title>/);
+ assert.match(money,/<h1 class="page-title">Bootsanhänger und Bootstrailer<br>kaufen vom Hersteller<\/h1>/);
  assert.match(money,/Kleiner Bootstrailer und leichter Bootsanhänger/);
  assert.match(money,/Bootstrailer 350 kg/);
  assert.match(money,/Jollenanhängern ab 350 kg zGG \(B 350\)/);
  assert.doesNotMatch(money,/Jollenanhängern ab 750 kg/);
  assert.match(money,/href="jollenanhaenger\.html"/);
  assert.match(money,/href="motorbootanhaenger\.html"/);
+ assert.match(money,/href="segelbootanhaenger\.html"/);
+ assert.match(money,/href="ruderbootanhaenger\.html"/);
  assert.match(money,/ca\. 2–3 Wochen/);
  assert.doesNotMatch(money,/ca\. 2(?!–3)(?:<span>)?\s*Wochen/);
- assert.match(money,/href="produkte\.html" class="link-pill">&#8592; Technische Modellübersicht der B-Serie<\/a>/);
- for(const page of [overview,money]) assert.equal((page.match(/<h1\b/g)||[]).length,1);
- assert.notEqual(overview.match(/<title>([^<]+)/)[1], money.match(/<title>([^<]+)/)[1]);
+ assert.equal((money.match(/<h1\b/g)||[]).length,1);
+ assert.match(money,/id="modelle"/);
+ assert.match(money,/id="zubehoer"/);
+ assert.doesNotMatch(money,/gerichtlich bestätigt|kein anderer Hersteller|Alleinstellungsmerkmal|patentiert/i);
+ const stub=read('produkte.html');
+ assert.match(stub,/content="noindex"/);
+ assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/bootstrailer\.html"/);
+ assert.match(stub,/url=\/bootstrailer\.html/);
+ assert.match(stub,/location\.replace\("\/bootstrailer\.html"\)/);
+ assert.equal(exclusionReason('produkte.html',stub),'noindex');
+ assert.equal(pages().includes('produkte.html'),false);
+ const order=['Alle Bootsanhänger','Jolle','Segelboot','Motorboot','Ruderboot','Nach Maß / Umbau'];
+ for(const file of ['index.html','bootstrailer.html','jollenanhaenger.html','motorbootanhaenger.html','segelbootanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','shop.html','scripts/templates/model-page.tpl','scripts/templates/product-page.tpl']){
+  const html=read(file);
+  const block=html.match(/class="nav-dropdown-menu">([\s\S]*?)<\/div>/)[1];
+  let at=0;
+  for(const label of order){
+   const pos=block.indexOf(label);
+   assert.ok(pos>at, `${file} ${label}`);
+   at=pos;
+  }
+  assert.doesNotMatch(block,/Alle Modelle|>Bootstrailer</);
+  assert.match(block,/href="bootstrailer\.html"/);
+  assert.doesNotMatch(block,/href="produkte\.html"/);
+ }
 });
 
 test('Query-led pages state only catalog facts and link real accessory articles',()=>{
@@ -145,6 +160,8 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen –<br>Anhänger für Segelboot<\/h1>/);
  assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
+ assert.match(segel,/kielvertiefte Achse mit 150 mm Vertiefung/);
+ assert.match(segel,/Spanten unter den Rahmen geschraubt/);
  assert.equal((segel.match(/<h1\b/g)||[]).length,1);
 
  const custom=read('bootsanhaenger-nach-mass.html');
@@ -784,7 +801,7 @@ test('VideoObject uploadDate has a timezone and offer availability is a schema.o
  assert.match(read('scripts/generate-product-pages.mjs'),/availability:'https:\/\/schema\.org\/InStock'/);
 });
 test('Every offer has availability and every product image is an absolute URL',()=>{
- const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','produkte.html',...fs.readdirSync(ROOT).filter(file=>/^bootsanhaenger-b\d+\.html$/.test(file))]);
+ const trailers=new Set(['index.html','bootstrailer.html','motorbootanhaenger.html','segelbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html',...fs.readdirSync(ROOT).filter(file=>/^bootsanhaenger-b\d+\.html$/.test(file))]);
  const htmlFiles=[
   ...fs.readdirSync(ROOT).filter(file=>file.endsWith('.html')),
   ...fs.readdirSync(path.join(ROOT,'artikel')).filter(file=>file.endsWith('.html')).map(file=>`artikel/${file}`)
@@ -807,7 +824,7 @@ test('Every offer has availability and every product image is an absolute URL',(
       const productsInList=Array.isArray(items) && items.some(el=>el&&el.item&&types(el.item['@type']).includes('Product'));
       assert.equal(productsInList,false,`${file}: Kategorie-ItemList ohne Product`);
      }
-     if(file==='jollenanhaenger.html' || file==='bootstrailer.html') assert.equal(node.numberOfItems,undefined,file);
+     if(file==='jollenanhaenger.html') assert.equal(node.numberOfItems,undefined,file);
     }
     if(kind.includes('Product')) {
      products++;
@@ -976,23 +993,49 @@ test('Category pages list model URLs and do not repeat Product offers',()=>{
    ['Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
   ],
   'bootstrailer.html':[
-   ['HEKU B 350 Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
-   ['HEKU B 1300 Bootsanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
-   ['HEKU B 3500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
+   ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 1300','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ],
   'jollenanhaenger.html':[
    ['HEKU B 350 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
-   ['HEKU B 500 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html']
+   ['HEKU B 500 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html']
   ],
   'motorbootanhaenger.html':[
    ['HEKU B 500 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
    ['HEKU B 1300 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
-   ['HEKU B 2000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+   ['HEKU B 1500 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ],
   'segelbootanhaenger.html':[
-   ['HEKU B 350 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
    ['HEKU B 1100 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
-   ['HEKU B 2000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+   ['HEKU B 1300 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ]
  };
  for(const [file,rows] of Object.entries(expected)){
@@ -1049,11 +1092,11 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  const blocks=[...read('404.html').matchAll(/<script>([\s\S]*?)<\/script>/g)];
  assert.equal(blocks.length,1);
  const cases={
-  '/produkte/':'/produkte.html',
-  '/produkte':'/produkte.html',
-  '/Produkte':'/produkte.html',
-  '/Produkte/':'/produkte.html',
-  '/PRODUKTE.html':'/produkte.html',
+  '/produkte/':'/bootstrailer.html',
+  '/produkte':'/bootstrailer.html',
+  '/Produkte':'/bootstrailer.html',
+  '/Produkte/':'/bootstrailer.html',
+  '/PRODUKTE.html':'/bootstrailer.html',
   '/shop/':'/shop.html',
   '/Konfigurator/':'/konfigurator.html',
   '/segelbootanhaenger/':'/segelbootanhaenger.html',
@@ -1064,11 +1107,11 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   '/dinghyanhaenger/':'/jollenanhaenger.html',
   '/bootsanhaenger/':'/bootstrailer.html',
   '/Bootsanhaenger/':'/bootstrailer.html',
-  '/anhaenger/':'/produkte.html',
+  '/anhaenger/':'/bootstrailer.html',
   '/kontakt/':'/kontakt.html',
   '/wohnmobile/':'/wohnmobile.html',
   '/gibt-es-nicht':'',
-  '/produkte.html':'',
+  '/produkte.html':'/bootstrailer.html',
   '/artikel/50238.html':'/weiteres-bootsanhaenger-zubehoer.html',
   '/Artikel/50238.HTML':'/weiteres-bootsanhaenger-zubehoer.html',
   '/artikel/50238.html/':'/weiteres-bootsanhaenger-zubehoer.html'
@@ -1080,8 +1123,8 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  }
  const stub=read('produkte/index.html');
  assert.match(stub,/content="noindex"/);
- assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/produkte\.html"/);
- assert.match(stub,/url=\/produkte\.html/);
+ assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/bootstrailer\.html"/);
+ assert.match(stub,/url=\/bootstrailer\.html/);
  assert.equal(exclusionReason('index.html',stub),'noindex');
  const retired=read('artikel/50238.html');
  assert.match(retired,/content="noindex"/);
@@ -1091,7 +1134,7 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  assert.equal(exclusionReason('50238.html',retired),'noindex');
  assert.equal(pages().includes('artikel/50238.html'),false);
  for(const file of pages()) assert.doesNotMatch(read(file),/artikel\/50238\.html/,file);
- for(const file of ['index.html','produkte.html']){
+ for(const file of ['index.html','bootstrailer.html']){
   const section=read(file).match(/id="bootstyp"[\s\S]*?<\/section>/)[0];
   for(const href of ['segelbootanhaenger.html','motorbootanhaenger.html','jollenanhaenger.html','ruderbootanhaenger.html','konfigurator.html']){
    assert.ok(section.includes(`href="${href}"`), `${file} ${href}`);
@@ -1103,6 +1146,6 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   assert.match(section,/B 1300 ab 8\.000 €/);
   assert.doesNotMatch(section,/patentiert/i);
  }
- assert.equal((read('produkte.html').match(/<h1\b/g)||[]).length,1);
+ assert.equal((read('bootstrailer.html').match(/<h1\b/g)||[]).length,1);
  assert.equal((read('index.html').match(/<h1\b/g)||[]).length,1);
 });
