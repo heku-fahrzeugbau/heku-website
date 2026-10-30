@@ -160,6 +160,8 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen –<br>Anhänger für Segelboot<\/h1>/);
  assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
+ assert.match(segel,/kielvertiefte Achse mit 150 mm Vertiefung/);
+ assert.match(segel,/Spanten unter den Rahmen geschraubt/);
  assert.equal((segel.match(/<h1\b/g)||[]).length,1);
 
  const custom=read('bootsanhaenger-nach-mass.html');
