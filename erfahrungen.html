@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <title>HEKU Fahrzeugbau Erfahrungen: Bootsanhänger aus Bielefeld</title>
 <meta name="description" content="Erfahrungen mit HEKU Fahrzeugbau aus Bielefeld: Bootsanhänger und Bootstrailer nach Maß, Service, Ersatzteile und die eigenentwickelte wasserdichte Radnabe.">
@@ -21,7 +26,6 @@
   Bewertung erscheint ausschliesslich als sichtbarer Text mit Datum.
 -->
 
-<!-- image absichtlich weggelassen: reale Logo-URL nicht verifiziert. TODO: echte Bild-URL eintragen (z.B. https://heku-fahrzeugbau.de/<pfad>/logo.png). -->
 <!-- priceRange "ab 1.375 EUR" verifiziert gegen Haendler-Preisliste 2026 (B350) und Startseite heku-fahrzeugbau.de. -->
 <script type="application/ld+json">
 {
@@ -29,6 +33,7 @@
   "@type": "LocalBusiness",
   "name": "HEKU Fahrzeugbau GmbH",
   "url": "https://heku-fahrzeugbau.de/",
+  "logo": "https://heku-fahrzeugbau.de/assets/img/heku-logo.png",
   "description": "Hersteller von Bootsanhängern und Bootstrailern in Einzelfertigung nach Maß. Feuerverzinkt nach DIN 1461, Zulassung bis 3.500 kg, mit eigenentwickelter wasserdichter Radnabe.",
   "telephone": "+49 521 200066",
   "email": "info@heku-fahrzeugbau.de",
@@ -156,8 +161,9 @@
     display: flex; align-items: center; justify-content: space-between;
     padding-top: 18px; padding-bottom: 18px; flex-wrap: wrap; gap: 8px;
   }
-  .logo { font-family: Georgia, serif; font-weight: bold; font-size: 1.6rem; letter-spacing: .5px; }
-  .logo span { color: var(--rot); }
+  .nav-logo { display: inline-flex; line-height: 0; text-decoration: none; }
+  .nav-logo img { height: 30px; width: auto; max-width: none; display: block; }
+  .ft-logo img { height: 26px; width: auto; max-width: none; display: block; margin: 0 0 12px; }
   .kopfkontakt { font-size: .82rem; color: var(--grau); text-align: right; }
 
   .eyebrow {
@@ -213,7 +219,7 @@
 
 <header class="top">
   <div class="wrap">
-    <div class="logo"><span>H</span>EKU</div>
+    <a href="/" class="nav-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></a>
     <div class="kopfkontakt">
       Bunzlauer Straße 6, 33719 Bielefeld<br>
       Tel. 0521 200066, info@heku-fahrzeugbau.de
@@ -378,6 +384,7 @@
 
 <footer class="fuss">
   <div class="wrap">
+    <div class="ft-logo"><img src="assets/img/heku-logo.svg" alt="HEKU Fahrzeugbau" width="1705" height="400"></div>
     HEKU Fahrzeugbau GmbH, Bunzlauer Straße 6, 33719 Bielefeld.
     Tel. 0521 200066, info@heku-fahrzeugbau.de.
     Bootsanhänger und Bootstrailer in Einzelfertigung, feuerverzinkt, mit eigenentwickelter
