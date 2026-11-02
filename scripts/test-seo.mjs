@@ -162,6 +162,11 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
  assert.match(segel,/kielvertiefte Achse mit 150 mm Vertiefung/);
  assert.match(segel,/Spanten unter den Rahmen geschraubt/);
+ assert.match(segel,/Jeder HEKU-Anhänger lässt sich für Motor- oder Segelboote ausrüsten/);
+ assert.match(read('motorbootanhaenger.html'),/Jeder HEKU-Anhänger lässt sich für Motor- oder Segelboote ausrüsten/);
+ assert.match(segel,/class="model-name">B 350</);
+ assert.match(segel,/class="model-name">B 3500</);
+ assert.match(read('motorbootanhaenger.html'),/class="model-name">B 350</);
  assert.equal((segel.match(/<h1\b/g)||[]).length,1);
 
  const custom=read('bootsanhaenger-nach-mass.html');
@@ -1013,29 +1018,34 @@ test('Category pages list model URLs and do not repeat Product offers',()=>{
    ['HEKU B 750 Jollenanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html']
   ],
   'motorbootanhaenger.html':[
-   ['HEKU B 500 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
-   ['HEKU B 750 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
-   ['HEKU B 900 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
-   ['HEKU B 1100 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
-   ['HEKU B 1300 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
-   ['HEKU B 1500 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
-   ['HEKU B 1800 Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
-   ['HEKU B 2000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
-   ['HEKU B 2500 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
-   ['HEKU B 2700 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
-   ['HEKU B 3000 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
-   ['HEKU B 3500 Tandem-Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
+   ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 1300','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ],
   'segelbootanhaenger.html':[
-   ['HEKU B 1100 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
-   ['HEKU B 1300 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
-   ['HEKU B 1500 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
-   ['HEKU B 1800 Segelbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
-   ['HEKU B 2000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
-   ['HEKU B 2500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
-   ['HEKU B 2700 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
-   ['HEKU B 3000 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
-   ['HEKU B 3500 Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
+   ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 1300','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ]
  };
  for(const [file,rows] of Object.entries(expected)){
