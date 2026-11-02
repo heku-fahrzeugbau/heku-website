@@ -115,7 +115,9 @@ test('Published opening hours include the confirmed lunch break',()=>{
 
 test('Bootstrailer is the single overview and produkte.html redirects to it',()=>{
  const money=read('bootstrailer.html');
- assert.match(money,/<title>Bootsanhänger und Bootstrailer kaufen \| HEKU<\/title>/);
+ assert.match(money,/<title>Bootstrailer &amp; Bootsanhänger ab 1\.375 € \| HEKU<\/title>/);
+ assert.match(money,/Alle HEKU Bootstrailer von B 350 bis B 3500 ab 1\.375 €\. Gebaut in Bielefeld, für Motor- oder Segelboote ausrüstbar\. Wasserdichte Radnabe serienmäßig\./);
+ assert.doesNotMatch(read('produkte.html'),/heku-consent/);
  assert.match(money,/<h1 class="page-title">Bootsanhänger und Bootstrailer<br>kaufen vom Hersteller<\/h1>/);
  assert.match(money,/Kleiner Bootstrailer und leichter Bootsanhänger/);
  assert.match(money,/Bootstrailer 350 kg/);
@@ -563,8 +565,8 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
    assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
- // 94 bestehende Seiten + 13 generierte Modellseiten (bootsanhaenger-b*.html)
- assert.equal(managedPages,107);
+ // Seiten mit Consent-Skript, ohne die reine Weiterleitung produkte.html.
+ assert.equal(managedPages,106);
 
  const privacy=read('datenschutz.html');
  assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
