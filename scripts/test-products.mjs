@@ -354,7 +354,7 @@ test('Shipping shown on article pages matches the cart calculation for one unit'
   assert.equal(rp.returnFees,'https://schema.org/ReturnFeesCustomerResponsibility');
   assert.equal(rp.merchantReturnLink,BASE+'/widerruf.html');
   const product=schema(page)['@graph'][0];
-  assert.equal(product.brand,undefined);
+  assert.deepEqual(product.brand,{ '@type':'Brand', name:'HEKU' });
   assert.equal(product.gtin,undefined);
   assert.equal(product.mpn,undefined);
   assert.equal(offer.gtin,undefined);
@@ -400,6 +400,17 @@ test('Every indexable page has canonical, description and viewport',()=>{
  assert.match(read('404.html'),/name="viewport"/,'404.html braucht ebenfalls ein Viewport-Meta');
 });
 
+test('Every article Product names brand HEKU and invents no GTIN or MPN',()=>{
+ for(const p of all) {
+  const product=schema(read(filename(p)))['@graph'][0];
+  assert.deepEqual(product.brand,{ '@type':'Brand', name:'HEKU' });
+  assert.equal(product.gtin,undefined);
+  assert.equal(product.mpn,undefined);
+  assert.equal(product.offers.gtin,undefined);
+  assert.equal(product.offers.mpn,undefined);
+  assert.equal(product.offers.availability,'https://schema.org/InStock');
+ }
+});
 test('Merchant feed lists every accessory once and omits trailers',()=>{
  const xml=read('merchant-feed.xml');
  assert.match(xml,/xmlns:g="http:\/\/base\.google\.com\/ns\/1\.0"/);
@@ -407,7 +418,8 @@ test('Merchant feed lists every accessory once and omits trailers',()=>{
  const ids=[...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map(m=>m[1]);
  assert.deepEqual(ids, all.map(p=>p.sku));
  assert.equal(ids.length,55);
- assert.doesNotMatch(xml,/<g:brand>|<g:gtin>|<g:mpn>|<g:sale_price>/);
+ assert.doesNotMatch(xml,/<g:gtin>|<g:mpn>|<g:sale_price>/);
+ assert.equal((xml.match(/<g:brand>HEKU<\/g:brand>/g)||[]).length,55);
  assert.equal((xml.match(/<g:identifier_exists>no<\/g:identifier_exists>/g)||[]).length,55);
  assert.doesNotMatch(xml,/bootstrailer\.html|motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html|bootsanhaenger-b\d+\.html/);
  const shop=read('shop.html');
@@ -422,6 +434,8 @@ test('Merchant feed lists every accessory once and omits trailers',()=>{
   assert.match(item, new RegExp(`<g:shipping>[\\s\\S]*<g:country>DE</g:country>[\\s\\S]*<g:price>${unitShippingEuro(p).toFixed(2)} EUR</g:price>`));
   assert.equal(unitShippingEuro(p), calcVersand([{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}]));
   assert.match(item, /<g:availability>in_stock<\/g:availability>/);
+  assert.match(item, /<g:brand>HEKU<\/g:brand>/);
+  assert.match(item, /<g:identifier_exists>no<\/g:identifier_exists>/);
   assert.match(item, /<g:condition>new<\/g:condition>/);
   assert.match(item, new RegExp(`<g:link>${BASE}/artikel/${p.sku}\\.html</g:link>`));
   assert.match(item, new RegExp(`<g:image_link>${BASE}/`));

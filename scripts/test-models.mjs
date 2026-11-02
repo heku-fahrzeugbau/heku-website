@@ -320,3 +320,23 @@ test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', 
   assert.match(read('konfigurator.html'), /id="telefon"/);
   assert.match(read('konfigurator.html'), /id="strasse"/);
 });
+
+test('Model and rowing-trailer Product JSON-LD names the brand HEKU', () => {
+  const expectBrand = product => {
+    assert.deepEqual(product.brand, { '@type': 'Brand', name: 'HEKU' });
+    assert.equal(product.gtin, undefined);
+    assert.equal(product.mpn, undefined);
+    assert.equal(product.offers.gtin, undefined);
+    assert.equal(product.offers.mpn, undefined);
+    assert.equal(product.offers.availability, 'https://schema.org/BackOrder');
+    assert.equal(product.offers.shippingDetails.doesNotShip, true);
+  };
+  for (const m of all) {
+    const product = jsonld(read(m.slug)).flatMap(nodes).find(n => types(n).includes('Product'));
+    assert.ok(product, m.slug);
+    expectBrand(product);
+  }
+  const ruder = jsonld(read('ruderbootanhaenger.html')).flatMap(nodes).find(n => types(n).includes('Product'));
+  assert.ok(ruder, 'ruderbootanhaenger.html');
+  expectBrand(ruder);
+});

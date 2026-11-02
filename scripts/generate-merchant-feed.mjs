@@ -31,6 +31,7 @@ export function renderFeed(products) {
       `      <g:price>${e(p.price)} EUR</g:price>`,
       '      <g:condition>new</g:condition>',
       '      <g:identifier_exists>no</g:identifier_exists>',
+      '      <g:brand>HEKU</g:brand>',
       '      <g:shipping>',
       '        <g:country>DE</g:country>',
       `        <g:price>${ship} EUR</g:price>`,

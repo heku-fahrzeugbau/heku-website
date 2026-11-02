@@ -541,8 +541,19 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
    assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
- // 94 bestehende Seiten + 13 generierte Modellseiten (bootsanhaenger-b*.html)
- assert.equal(managedPages,107);
+ // Root-HTML, Artikel und das Produkt-Template. 404.html ist bewusst nicht dabei.
+ assert.equal(managedPages,108);
+ for(const file of ['erfahrungen.html','karriere.html']) {
+  assert.match(read(file),/src="\/heku-consent-v2\.js\?v=20261009-ga4"/,file);
+ }
+ assert.doesNotMatch(read('404.html'),/heku-consent-v2|googletagmanager|gtag\(/);
+ const trackedSources=[...htmlFiles,'scripts/templates/product-page.tpl','scripts/templates/model-page.tpl'];
+ for(const file of trackedSources) {
+  const source=read(file);
+  if(!source.includes('function hekuTrack')) continue;
+  assert.match(source,/data\.page_location = location\.href/,file);
+  assert.match(source,/data\.page_title = document\.title/,file);
+ }
 
  const privacy=read('datenschutz.html');
  assert.match(privacy,/Ohne Ihre Einwilligung wird das Google-Analytics-Skript nicht geladen/);
@@ -579,6 +590,11 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
  const undecided=consentHarness(null);
  assert.equal(undecided.appended.filter(node=>node.tagName==='SCRIPT').length,0);
  assert.equal(typeof undecided.context.window.gtag,'undefined');
+ assert.equal(typeof undecided.context.window.hekuTrack,'function');
+ undecided.context.location.href='https://heku-fahrzeugbau.de/erfahrungen.html';
+ undecided.context.document.title='Erfahrungen';
+ undecided.context.window.hekuTrack('qualify_lead',{lead_type:'phone_click'});
+ assert.deepEqual([...undecided.context.window.dataLayer].map(args=>args[0]),['consent','js','config']);
 
  const denied=consentHarness(false);
  assert.equal(denied.appended.filter(node=>node.tagName==='SCRIPT').length,0);
@@ -590,6 +606,16 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
  assert.equal(scripts[0].src,'https://www.googletagmanager.com/gtag/js?id=G-W97K9YN3YJ');
  assert.equal(typeof granted.context.window.gtag,'function');
  assert.deepEqual([...granted.context.window.dataLayer].map(args=>args[0]),['consent','js','config','consent']);
+ granted.context.location.href='https://heku-fahrzeugbau.de/kontakt.html?q=1';
+ granted.context.document.title='Kontakt | HEKU';
+ granted.context.window.hekuTrack('qualify_lead',{lead_type:'phone_click',page_location:'https://example.invalid/alt'});
+ const hit=[...granted.context.window.dataLayer].at(-1);
+ assert.equal(hit[0],'event');
+ assert.equal(hit[1],'qualify_lead');
+ assert.equal(hit[2].lead_type,'phone_click');
+ assert.equal(hit[2].page_location,'https://heku-fahrzeugbau.de/kontakt.html?q=1');
+ assert.equal(hit[2].page_title,'Kontakt | HEKU');
+ assert.equal(granted.appended.filter(node=>node.tagName==='SCRIPT').length,1);
 
  const accepted=consentHarness(null);
  accepted.listeners.click({target:{closest(){return {getAttribute(){return 'allow';}};}}});

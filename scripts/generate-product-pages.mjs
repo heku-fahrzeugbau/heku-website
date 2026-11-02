@@ -154,7 +154,7 @@ export function renderProduct(p, all, shell) {
   // (HEKU-Logo) als absolute URL; das sichtbare Hinweis-Markup bleibt.
   const specs=p.specs??[];
   const additionalProperty=specs.map(row=>({'@type':'PropertyValue',name:row.bezeichnung,value:row.wert}));
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],...(additionalProperty.length?{additionalProperty}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,brand:{'@type':'Brand',name:'HEKU'},...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],...(additionalProperty.length?{additionalProperty}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
   const specsHtml=specs.length?`\n    <section class="detail-specs" aria-labelledby="specsTitle"><h2 id="specsTitle">Technische Daten</h2><dl>\n${specs.map(row=>`      <div><dt>${e(row.bezeichnung)}</dt><dd>${e(row.wert)}</dd></div>`).join('\n')}\n    </dl></section>`:'';
