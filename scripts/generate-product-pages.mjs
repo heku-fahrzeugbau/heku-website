@@ -17,7 +17,7 @@ export const categories = {
 // gets a different hash automatically, including when its filename stays the same.
 // Seiten, die auf alle Kategorieseiten verlinken. Ohne sie erreicht Google die
 // Kategorie- und Artikelseiten nur ueber shop.html.
-export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'produkte.html', 'ersatzteile-bootsanhaenger.html'];
+export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'bootstrailer.html', 'ersatzteile-bootsanhaenger.html'];
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
 export const productDataFile = 'content/produkte/produkte.json';
 export const filename = p => `artikel/${p.sku}.html`;
@@ -213,7 +213,7 @@ export function generateProducts(root=ROOT) {
   }
   // Ohne diesen Block haengt der gesamte Shop-Zweig allein an shop.html: die sieben
   // Kategorieseiten sind sonst von keiner Hauptseite aus verlinkt. Zeilenenden der
-  // Zielseite werden bewusst beibehalten - produkte.html liegt mit CRLF im Repo.
+  // Zielseite werden bewusst beibehalten.
   for(const file of categoryHubs) {
     const original=fs.readFileSync(path.join(root,file),'utf8');
     const eol=original.includes('\r\n')?'\r\n':'\n';
