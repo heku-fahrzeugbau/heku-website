@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT } from './generate-sitemap.mjs';
 import { generateModels } from './generate-model-pages.mjs';
+import { generateFeed } from './generate-merchant-feed.mjs';
 import { applyBackOrderStarts, berlinAvailabilityStarts, writeCommittedAvailabilityStarts } from './availability-starts.mjs';
 
 const ruderFile = 'ruderbootanhaenger.html';
@@ -22,6 +23,7 @@ export function updateAvailabilityStarts(root = ROOT, now = new Date()) {
     fs.writeFileSync(ruderPath, after);
     changed.push(ruderFile);
   }
+  for (const file of generateFeed(root).changed) if (!changed.includes(file)) changed.push(file);
   return { iso, changed };
 }
 

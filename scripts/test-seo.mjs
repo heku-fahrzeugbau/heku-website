@@ -888,7 +888,8 @@ test('Every offer has availability and every product image is an absolute URL',(
       assert.equal(rp.applicableCountry,'DE',file);
       assert.equal(rp.merchantReturnLink,'https://heku-fahrzeugbau.de/agb.html#ausschluss-einzelanfertigung',file);
       // Anhänger: Abholung, kein Standardversand, kein (Gratis-)Versandpreis.
-      assert.deepEqual(node.shippingDetails,{'@type':'OfferShippingDetails',shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'},doesNotShip:true},`${file}: shippingDetails`);
+      assert.deepEqual(node.shippingDetails,{'@type':'OfferShippingDetails',shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'}},`${file}: shippingDetails`);
+      assert.equal(node.shippingDetails.doesNotShip,undefined,`${file}: doesNotShip`);
       assert.equal(node.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
       if(file==='index.html') {
        assert.notEqual(node.url,'https://heku-fahrzeugbau.de/');
@@ -1004,7 +1005,7 @@ test('Merchant listings: Google-supported availability, image, return policy and
        assert.equal(o.availability,'https://schema.org/BackOrder',file);
        assert.match(String(o.availabilityStarts),/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/,`${file}: BackOrder availabilityStarts`);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
-       assert.equal(sd.doesNotShip,true,file); assert.equal(sd.shippingRate,undefined,file);
+       assert.equal(sd.doesNotShip,undefined,file); assert.equal(sd.shippingRate,undefined,file);
       }
      }
     }

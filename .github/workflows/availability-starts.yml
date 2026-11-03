@@ -38,7 +38,7 @@ jobs:
       - name: Datum committen, falls es sich geändert hat
         shell: bash
         run: |
-          git add -- scripts/availability-starts.json bootsanhaenger-b*.html ruderbootanhaenger.html
+          git add -- scripts/availability-starts.json bootsanhaenger-b*.html ruderbootanhaenger.html merchant-feed.xml
           if git diff --cached --quiet; then
             echo "Lieferbeginn unverändert."
             exit 0

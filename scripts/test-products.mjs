@@ -5,7 +5,9 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { ROOT, BASE, attributes, generate, pages, render, urlForFile } from './generate-sitemap.mjs';
 import { catalog, categories, categoryHubs, filename, generateProducts, isRetiredArticleRedirect, productDataFile, renderProduct, renderProductCard, technicalData, unitShippingEuro } from './generate-product-pages.mjs';
-import { generateFeed } from './generate-merchant-feed.mjs';
+import { generateFeed, PICKUP_LABEL } from './generate-merchant-feed.mjs';
+import { models } from './generate-model-pages.mjs';
+import { committedAvailabilityStarts } from './availability-starts.mjs';
 import { priceTableFiles, syncProductPriceTables } from './sync-product-price-tables.mjs';
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const all=catalog();
@@ -31,7 +33,8 @@ test('Every product has a canonical page, truthful visible price and Product/Off
   assert.equal(product.offers.url,BASE+'/'+filename(p));
   assert.equal(product.offers.availability,'https://schema.org/InStock');
   assert.ok(s.includes(`<data value="${p.price}">${p.priceText}</data>`));
-  assert.ok(!product.aggregateRating&&!product.gtin&&!product.mpn);
+  assert.ok(!product.aggregateRating&&!product.gtin);
+  assert.equal(product.mpn,p.sku);
   if(p.image) assert.deepEqual(product.image,[BASE+'/'+p.image]);
   else {
    assert.deepEqual(product.image,[BASE+'/'+p.imagePath]);
@@ -356,7 +359,7 @@ test('Shipping shown on article pages matches the cart calculation for one unit'
   const product=schema(page)['@graph'][0];
   assert.deepEqual(product.brand,{ '@type':'Brand', name:'HEKU' });
   assert.equal(product.gtin,undefined);
-  assert.equal(product.mpn,undefined);
+  assert.equal(product.mpn,p.sku);
   assert.equal(offer.gtin,undefined);
   assert.equal(offer.mpn,undefined);
  }
@@ -400,47 +403,82 @@ test('Every indexable page has canonical, description and viewport',()=>{
  assert.match(read('404.html'),/name="viewport"/,'404.html braucht ebenfalls ein Viewport-Meta');
 });
 
-test('Every article Product names brand HEKU and invents no GTIN or MPN',()=>{
+test('Every article Product names brand HEKU, uses the article number as MPN and has no GTIN',()=>{
  for(const p of all) {
   const product=schema(read(filename(p)))['@graph'][0];
-  assert.deepEqual(product.brand,{ '@type':'Brand', name:'HEKU' });
+  assert.deepEqual(product.brand,{ '@type':'Brand', name:p.brand });
+  assert.equal(product.mpn,p.sku);
   assert.equal(product.gtin,undefined);
-  assert.equal(product.mpn,undefined);
   assert.equal(product.offers.gtin,undefined);
   assert.equal(product.offers.mpn,undefined);
   assert.equal(product.offers.availability,'https://schema.org/InStock');
  }
 });
-test('Merchant feed lists every accessory once and omits trailers',()=>{
+test('Merchant feed shipping matches calcVersand and trailers are pickup only',()=>{
  const xml=read('merchant-feed.xml');
+ const trailers=models().filter(m=>m.preisAb!==null);
  assert.match(xml,/xmlns:g="http:\/\/base\.google\.com\/ns\/1\.0"/);
  assert.match(xml,/<rss version="2.0"/);
  const ids=[...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map(m=>m[1]);
- assert.deepEqual(ids, all.map(p=>p.sku));
- assert.equal(ids.length,55);
- assert.doesNotMatch(xml,/<g:gtin>|<g:mpn>|<g:sale_price>/);
- assert.equal((xml.match(/<g:brand>HEKU<\/g:brand>/g)||[]).length,55);
- assert.equal((xml.match(/<g:identifier_exists>no<\/g:identifier_exists>/g)||[]).length,55);
- assert.doesNotMatch(xml,/bootstrailer\.html|motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html|bootsanhaenger-b\d+\.html/);
+ const items=[...xml.matchAll(/<item>[\s\S]*?<\/item>/g)].map(m=>m[0]);
+ const itemById=id=>items.find(block=>block.includes(`<g:id>${id}</g:id>`));
+ assert.deepEqual(ids, [...all.map(p=>p.sku), ...trailers.map(m=>m.name.replace(/\s+/g,''))]);
+ assert.equal(ids.length,68);
+ assert.doesNotMatch(xml,/<g:gtin>|<g:sale_price>/);
+ assert.equal((xml.match(/<g:mpn>[^<]+<\/g:mpn>/g)||[]).length,68);
+ assert.equal((xml.match(/<g:identifier_exists>no<\/g:identifier_exists>/g)||[]).length,68);
+ assert.doesNotMatch(xml,/motorbootanhaenger\.html|segelbootanhaenger\.html|jollenanhaenger\.html|ruderbootanhaenger\.html|index\.html/);
  const shop=read('shop.html');
  const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
  assert.ok(src,'calcVersand nicht in shop.html gefunden');
  const calcVersand=vm.runInNewContext('('+src[0]+')');
+ const ships=new Set();
  for(const p of all) {
-  const block=xml.match(new RegExp(`<item>[\\s\\S]*?<g:id>${p.sku}</g:id>[\\s\\S]*?</item>`));
-  assert.ok(block, p.sku);
-  const item=block[0];
+  const item=itemById(p.sku);
+  assert.ok(item, p.sku);
+  const expectedShip=calcVersand([{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}]);
   assert.match(item, new RegExp(`<g:price>${p.price} EUR</g:price>`));
-  assert.match(item, new RegExp(`<g:shipping>[\\s\\S]*<g:country>DE</g:country>[\\s\\S]*<g:price>${unitShippingEuro(p).toFixed(2)} EUR</g:price>`));
-  assert.equal(unitShippingEuro(p), calcVersand([{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}]));
+  assert.match(item, new RegExp(`<g:shipping>[\\s\\S]*<g:country>DE</g:country>[\\s\\S]*<g:price>${expectedShip.toFixed(2)} EUR</g:price>`));
+  assert.equal(unitShippingEuro(p), expectedShip);
+  ships.add(expectedShip);
   assert.match(item, /<g:availability>in_stock<\/g:availability>/);
-  assert.match(item, /<g:brand>HEKU<\/g:brand>/);
+  assert.match(item, new RegExp(`<g:brand>${p.brand}</g:brand>`));
+  assert.match(item, new RegExp(`<g:mpn>${p.sku}</g:mpn>`));
   assert.match(item, /<g:identifier_exists>no<\/g:identifier_exists>/);
+  assert.doesNotMatch(item, /<g:gtin>/);
   assert.match(item, /<g:condition>new<\/g:condition>/);
   assert.match(item, new RegExp(`<g:link>${BASE}/artikel/${p.sku}\\.html</g:link>`));
   assert.match(item, new RegExp(`<g:image_link>${BASE}/`));
   const image=item.match(/<g:image_link>([^<]+)<\/g:image_link>/)[1];
   assert.ok(fs.existsSync(path.join(ROOT, image.slice((BASE+'/').length))), image);
+  const page=read(filename(p));
+  if(!page.includes('noindex') && page.includes('"@type":"Product"')) assert.match(xml, new RegExp(`<g:id>${p.sku}</g:id>`));
+ }
+ assert.ok(ships.size>1,'Versand ist nicht ein Pauschalpreis');
+ assert.ok([...ships].every(v=>v>=7&&v<=40));
+ const ready=committedAvailabilityStarts();
+ for(const m of trailers) {
+  const id=m.name.replace(/\s+/g,'');
+  const item=itemById(id);
+  assert.ok(item, m.name);
+  assert.match(item, new RegExp(`<g:price>${m.preisAb} EUR</g:price>`));
+  assert.match(item, new RegExp(`<g:link>${BASE}/${m.slug}</g:link>`));
+  assert.match(item, /<g:availability>preorder<\/g:availability>/);
+  assert.match(item, new RegExp(`<g:availability_date>${ready.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}</g:availability_date>`));
+  assert.match(item, /<g:brand>HEKU<\/g:brand>/);
+  assert.match(item, new RegExp(`<g:mpn>${m.name}</g:mpn>`));
+  assert.match(item, /<g:identifier_exists>no<\/g:identifier_exists>/);
+  assert.match(item, new RegExp(`<g:shipping_label>${PICKUP_LABEL}</g:shipping_label>`));
+  assert.match(item, /<g:pickup_sla>multi-week<\/g:pickup_sla>/);
+  assert.doesNotMatch(item, /<g:shipping>|<g:gtin>/);
+  const image=item.match(/<g:image_link>([^<]+)<\/g:image_link>/)[1];
+  assert.equal(image, `${BASE}/${m.bilder[0].src}`);
+  assert.ok(fs.existsSync(path.join(ROOT, m.bilder[0].src)), image);
+ }
+ for(const file of fs.readdirSync(path.join(ROOT,'artikel')).filter(f=>f.endsWith('.html'))) {
+  const page=read('artikel/'+file);
+  if(page.includes('noindex') || !page.includes('"@type":"Product"')) continue;
+  assert.match(xml, new RegExp(`<g:id>${file.replace(/\.html$/,'')}</g:id>`), file);
  }
  assert.doesNotMatch(read('sitemap.xml'), /merchant-feed/);
  const robots=read('robots.txt');
