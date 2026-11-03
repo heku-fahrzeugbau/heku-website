@@ -4,8 +4,7 @@ import { ROOT } from './generate-sitemap.mjs';
 import { catalog } from './generate-product-pages.mjs';
 
 export const priceTableFiles = [
-  'motorbootanhaenger.html',
-  'segelbootanhaenger.html'
+  'bootstrailer.html'
 ];
 
 const rowPattern = /<tr data-catalog-sku="(\d+)"><td class="pl-art">[^<]*<\/td><td>([\s\S]*?)<\/td><td class="pl-r pl-netto">[\s\S]*?<\/td><td class="pl-r pl-brutto">[\s\S]*?<\/td><\/tr>/g;
