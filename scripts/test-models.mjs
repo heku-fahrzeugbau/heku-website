@@ -74,7 +74,8 @@ test('Visible price, meta description and Offer agree; a model without price get
     assert.equal(o.availableAtOrFrom.address.streetAddress, 'Bunzlauer Straße 6');
     assert.equal(o.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
     assert.equal(o.hasMerchantReturnPolicy.merchantReturnLink, `${BASE}/agb.html#ausschluss-einzelanfertigung`);
-    assert.deepEqual(o.shippingDetails, { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' }, doesNotShip: true });
+    assert.deepEqual(o.shippingDetails, { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } });
+    assert.equal(o.shippingDetails.doesNotShip, undefined);
     assert.equal(o.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
     for (const k of ['priceValidUntil', 'validFrom']) assert.equal(o[k], undefined, k);
     for (const img of [].concat(p.image)) assert.match(img, /^https:\/\/heku-fahrzeugbau\.de\//);
@@ -185,7 +186,7 @@ test('Compliance and links on every model page', () => {
     }
   }
   assert.ok(read('bootsanhaenger-b1300.html').includes('href="ruderbootanhaenger.html"'));
-  assert.ok(!read('merchant-feed.xml').includes('bootsanhaenger-b'));
+  for (const m of all) assert.ok(read('merchant-feed.xml').includes(`${BASE}/${m.slug}`), m.slug);
 });
 
 test('Generator is idempotent, fails closed and updates only the changed model', () => {
@@ -319,4 +320,25 @@ test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', 
   assert.doesNotMatch(html, /KBA-Typprüfung|TÜV EG-Typgen/);
   assert.match(read('konfigurator.html'), /id="telefon"/);
   assert.match(read('konfigurator.html'), /id="strasse"/);
+});
+
+test('Model and rowing-trailer Product JSON-LD names the brand HEKU', () => {
+  const expectBrand = product => {
+    assert.deepEqual(product.brand, { '@type': 'Brand', name: 'HEKU' });
+    assert.equal(product.gtin, undefined);
+    assert.equal(product.offers.gtin, undefined);
+    assert.equal(product.offers.mpn, undefined);
+    assert.equal(product.offers.availability, 'https://schema.org/BackOrder');
+    assert.equal(product.offers.shippingDetails.doesNotShip, undefined);
+    assert.equal(product.offers.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
+  };
+  for (const m of all) {
+    const product = jsonld(read(m.slug)).flatMap(nodes).find(n => types(n).includes('Product'));
+    assert.ok(product, m.slug);
+    expectBrand(product);
+    assert.equal(product.mpn, m.name);
+  }
+  const ruder = jsonld(read('ruderbootanhaenger.html')).flatMap(nodes).find(n => types(n).includes('Product'));
+  assert.ok(ruder, 'ruderbootanhaenger.html');
+  expectBrand(ruder);
 });

@@ -1,6 +1,7 @@
 // content/produkte/produkte.json is the ONLY source of public product data.
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { createHash } from 'node:crypto';
 import { ROOT, BASE } from './generate-sitemap.mjs';
 
@@ -80,28 +81,27 @@ export function catalog(root=ROOT) {
     if(!new RegExp(`^assets/produkte/produkt-${id}\\.(jpg|jpeg|png|webp)$`,'i').test(src)||!fs.existsSync(path.join(root,src))) throw new Error('Ungültiges/fehlendes Artikelbild: '+sku);
     const hash=createHash('sha256').update(fs.readFileSync(path.join(root,src))).digest('hex');
     const specs=technicalData(record,sku);
-    return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src,specs};
+        let brand='HEKU';
+    if(Object.prototype.hasOwnProperty.call(record,'brand')||Object.prototype.hasOwnProperty.call(record,'hersteller')) {
+      const named=record.brand??record.hersteller;
+      if(typeof named!=='string') throw new Error('Marke muss Text sein: '+sku);
+      brand=plain(named);
+      if(!brand) throw new Error('Leere Marke: '+sku);
+    }
+    return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src,specs,brand};
   });
 }
-// Versandkosten fuer die Menge 1, gespiegelt aus calcVersand() in shop.html.
-// Der Warenkorb bleibt die massgebliche Berechnung; hier steht nur der Einzelstueckpreis
-// fuer die Artikelseite und das Offer-Schema. scripts/test-products.mjs prueft beide
-// Quellen bei jedem Lauf gegeneinander, damit sie nicht auseinanderlaufen.
-export function unitShippingEuro(p) {
-  if(p.sku==='50261') return 7;
-  if(p.sku==='83011') return 10;
-  const name=p.name.toLowerCase();
-  switch(p.category) {
-    case 'winden': return name.includes('winde') ? 30 : 15;
-    case 'raeder': return 30;
-    case 'stuetzraeder': return 20;
-    case 'rollen': return 20;
-    case 'beleuchtung': return 10;
-    default: return 15;
-  }
+// Menge 1 aus calcVersand() in shop.html. Dieselbe Funktion wie der Warenkorb,
+// keine zweite Preisliste. Artikel- und Feed-Versand bleiben dadurch gleich.
+export function calcShopVersand(cartItems, root=ROOT) {
+  const shop=fs.readFileSync(path.join(root,'shop.html'),'utf8');
+  const src=shop.match(/function calcVersand\(cartItems\) \{[\s\S]*?return versand;[\s\S]*?\}/);
+  if(!src) throw new Error('calcVersand nicht in shop.html gefunden');
+  return vm.runInNewContext('('+src[0]+')')(cartItems);
 }
-// 2-5 Werktage gesamt, aufgeteilt in 1-2 Tage Bearbeitung und 1-3 Tage Versand.
-// Die Aufteilung ordnet die genannte Spanne zu; sie ist keine gemessene Trennung.
+export function unitShippingEuro(p, root=ROOT) {
+  return calcShopVersand([{cat:p.category,qty:1,name:p.name,artnr:Number(p.sku)}], root);
+}
 export const shippingSchema = value => ({'@type':'OfferShippingDetails',
   shippingRate:{'@type':'MonetaryAmount',value:value.toFixed(2),currency:'EUR'},
   shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'},
@@ -130,9 +130,10 @@ export function renderProductCard(p) {
       </article>`;
 }
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c');
-export function renderProduct(p, all, shell) {
+export function renderProduct(p, all, shell, root=ROOT) {
   const e=escapeHTML, [guide,categoryName]=categories[p.category], url=BASE+'/'+filename(p);
-  const shipText=unitShippingEuro(p).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+  const ship=unitShippingEuro(p, root);
+  const shipText=ship.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
   const title=`${p.name} – Art. ${p.sku} | HEKU`;
   // Suchergebnisse schneiden Descriptions bei rund 160 Zeichen ab. Erst die knappe
   // Fassung versuchen, sonst den Produktnamen an einer Wortgrenze kuerzen.
@@ -154,7 +155,7 @@ export function renderProduct(p, all, shell) {
   // (HEKU-Logo) als absolute URL; das sichtbare Hinweis-Markup bleibt.
   const specs=p.specs??[];
   const additionalProperty=specs.map(row=>({'@type':'PropertyValue',name:row.bezeichnung,value:row.wert}));
-  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],...(additionalProperty.length?{additionalProperty}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(unitShippingEuro(p)),hasMerchantReturnPolicy:accessoryReturnPolicy}};
+  const product={'@type':'Product','@id':url+'#product',url,name:p.name,sku:p.sku,mpn:p.sku,brand:{'@type':'Brand',name:p.brand},...(p.desc?{description:p.desc}:{}),image:[BASE+'/'+(p.image||p.imagePath)],...(additionalProperty.length?{additionalProperty}:{}),offers:{'@type':'Offer',url,price:p.price,priceCurrency:'EUR',availability:'https://schema.org/InStock',shippingDetails:shippingSchema(ship),hasMerchantReturnPolicy:accessoryReturnPolicy}};
   const schema={'@context':'https://schema.org','@graph':[product,{'@type':'BreadcrumbList',itemListElement:[['HEKU',BASE+'/'],['Shop',BASE+'/shop.html'],[categoryName,BASE+'/'+guide],[p.name,url]].map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))}]};
   const related=all.filter(x=>x.category===p.category&&x.sku!==p.sku).slice(0,3);
   const specsHtml=specs.length?`\n    <section class="detail-specs" aria-labelledby="specsTitle"><h2 id="specsTitle">Technische Daten</h2><dl>\n${specs.map(row=>`      <div><dt>${e(row.bezeichnung)}</dt><dd>${e(row.wert)}</dd></div>`).join('\n')}\n    </dl></section>`:'';
@@ -186,7 +187,7 @@ export function renderProduct(p, all, shell) {
 }
 export function generateProducts(root=ROOT) {
   const all=catalog(root), shell=fs.readFileSync(path.join(root,'scripts/templates/product-page.tpl'),'utf8');
-  const planned=new Map(all.map(p=>[filename(p),renderProduct(p,all,shell)]));
+  const planned=new Map(all.map(p=>[filename(p),renderProduct(p,all,shell,root)]));
   const legacy=fs.readdirSync(root).filter(x=>/^shop-artikel-\d+\.html$/.test(x));
   if(legacy.length) throw new Error('Alte flache Artikel-URLs gefunden. Migration/Weiterleitungen bewusst planen: '+legacy.join(', '));
   const articleRoot=path.join(root,'artikel');

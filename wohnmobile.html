@@ -170,8 +170,20 @@
     "use strict";
     function hekuTrack(eventName, params) {
       try {
+        var track = window.hekuTrack;
+        if (typeof track === "function" && track !== hekuTrack) {
+          track(eventName, params);
+          return;
+        }
         if (typeof window.gtag === "function") {
-          window.gtag("event", eventName, params || {});
+          var data = {};
+          var source = params || {};
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) data[key] = source[key];
+          }
+          data.page_location = location.href;
+          data.page_title = document.title;
+          window.gtag("event", eventName, data);
         }
       } catch (e) { /* still */ }
     }

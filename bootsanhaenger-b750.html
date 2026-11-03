@@ -41,6 +41,7 @@
         "@type": "Brand",
         "name": "HEKU"
       },
+      "mpn": "B 750",
       "manufacturer": {
         "@id": "https://heku-fahrzeugbau.de/#organization"
       },
@@ -94,8 +95,7 @@
           "shippingDestination": {
             "@type": "DefinedRegion",
             "addressCountry": "DE"
-          },
-          "doesNotShip": true
+          }
         },
         "availableDeliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModePickUp",
         "availableAtOrFrom": {
@@ -835,13 +835,25 @@
   // Sicherer gtag-Wrapper: schluckt Fehler, wenn gtag fehlt/geblockt ist.
   function hekuTrack(eventName, params) {
     try {
+      var track = window.hekuTrack;
+      if (typeof track === "function" && track !== hekuTrack) {
+        track(eventName, params);
+        return;
+      }
       if (typeof window.gtag === "function") {
-        window.gtag("event", eventName, params || {});
+        var data = {};
+        var source = params || {};
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) data[key] = source[key];
+        }
+        data.page_location = location.href;
+        data.page_title = document.title;
+        window.gtag("event", eventName, data);
       }
     } catch (e) { /* absichtlich still */ }
   }
   // Global verfuegbar machen (fuer Formular-Erfolg in kontakt/konfigurator/shop)
-  window.hekuTrack = hekuTrack;
+  if (typeof window.hekuTrack !== "function") window.hekuTrack = hekuTrack;
 
   var path = (location && location.pathname) ? location.pathname : "";
 

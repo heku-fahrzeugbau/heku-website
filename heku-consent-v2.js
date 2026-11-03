@@ -24,6 +24,25 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
 
+  // Zentrale Event-Hilfe. Seitenkopien delegieren hierher, solange diese
+  // Funktion schon gesetzt ist. page_location und page_title haengen an
+  // jedem Event, damit GA4 die Landingpage nicht als "(not set)" fuehrt.
+  // window.gtag gibt es erst nach Einwilligung; vorher passiert nichts.
+  function hekuTrack(eventName, params) {
+    try {
+      if (typeof window.gtag !== "function") return;
+      var data = {};
+      var source = params || {};
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) data[key] = source[key];
+      }
+      data.page_location = location.href;
+      data.page_title = document.title;
+      window.gtag("event", eventName, data);
+    } catch (e) { /* absichtlich still */ }
+  }
+  window.hekuTrack = hekuTrack;
+
   gtag("consent", "default", {
     ad_storage: "denied",
     ad_user_data: "denied",

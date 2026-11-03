@@ -115,8 +115,9 @@ const offerFor = (m, url) => ({
   availability: 'https://schema.org/BackOrder',
   availabilityStarts: committedAvailabilityStarts(),
   seller: { '@id': ORG },
-  // Anhänger: kein Standardversand, Abholung im Werk Bielefeld (Frachtversand nur individuell vereinbart).
-  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' }, doesNotShip: true },
+  // Abholung im Werk. Kein Versandpreis und kein doesNotShip: der Merchant-Feed
+  // nennt dieselbe Abholung ohne Versandkosten, sonst widersprechen sich Feed und JSON-LD.
+  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } },
   availableDeliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModePickUp',
   availableAtOrFrom: { '@type': 'Place', name: 'HEKU Fahrzeugbau GmbH', address: { '@type': 'PostalAddress', streetAddress: 'Bunzlauer Straße 6', addressLocality: 'Bielefeld', postalCode: '33719', addressRegion: 'Nordrhein-Westfalen', addressCountry: 'DE' } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'DE', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted', merchantReturnLink: BASE + '/agb.html#ausschluss-einzelanfertigung' }
@@ -131,6 +132,7 @@ export function schemaFor(m) {
     image: m.bilder.map(b => `${BASE}/${b.src}`),
     description: m.description,
     brand: { '@type': 'Brand', name: 'HEKU' },
+    mpn: m.name,
     manufacturer: { '@id': ORG },
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Zulässiges Gesamtgewicht', value: m.zgg, unitCode: 'KGM' },
