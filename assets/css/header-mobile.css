@@ -1,0 +1,47 @@
+/* Mobile-Header (geladen über fonts.css).
+   Unter 768px zeigt der Header nur Logo und Burger, sobald die Sticky-Leiste
+   Anfrage und Konfigurator schon anbietet. Desktop ab 769px bleibt unverändert.
+   Seiten ohne .heku-sticky-cta, insbesondere bootstrailer.html, werden nicht angefasst. */
+
+@media (max-width: 768px) {
+  /* Jobs rechts im Header: .nav-right > .btn-nav { display: inline-flex }
+     (Spezifität 0,2,0, und im Seiten-<style> nach diesem Sheet) schlägt
+     .btn-jobs { display: none } (0,1,0). Der Link im Burger (.nav-center)
+     hat die Klasse btn-jobs nicht und bleibt erreichbar. */
+  .nav-right > a.btn-nav.btn-jobs,
+  .nav-right > a.btn-jobs,
+  #nav .nav-right > a.btn-jobs,
+  .nav-right > a.btn-nav[href="karriere.html"],
+  .nav-right > a.btn-nav[href="/karriere.html"] {
+    display: none !important;
+  }
+
+  /* Anfrage und Konfigurator nur ausblenden, wenn die Leiste im DOM liegt.
+     Dieselbe Schwelle wie .heku-sticky-cta (max-width: 768px). */
+  body:has(.heku-sticky-cta) .nav-right > a.btn-nav.btn-outline,
+  body:has(.heku-sticky-cta) .nav-right > a.btn-nav.btn-red,
+  body:has(.heku-sticky-cta) #nav .nav-right > a.btn-outline,
+  body:has(.heku-sticky-cta) #nav .nav-right > a.btn-red {
+    display: none !important;
+  }
+
+  /* Logo nicht stauchen. Nur auf Seiten mit Leiste, damit die Header-Optik
+     von bootstrailer.html (Konfigurator bleibt sichtbar) gleich bleibt. */
+  body:has(.heku-sticky-cta) .nav-logo,
+  body:has(.heku-sticky-cta) #nav .nav-logo {
+    flex-shrink: 0;
+  }
+
+  body:has(.heku-sticky-cta) .nav-logo img,
+  body:has(.heku-sticky-cta) #nav .nav-logo img {
+    height: 30px;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+  }
+
+  body:has(.heku-sticky-cta) .nav-burger,
+  body:has(.heku-sticky-cta) #nav .nav-burger {
+    flex-shrink: 0;
+  }
+}
