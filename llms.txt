@@ -8,6 +8,7 @@ HEKU fertigt jeden Anhänger individuell nach Bootslänge, Breite, Gewicht und T
 
 - [Startseite](https://heku-fahrzeugbau.de/): Überblick, Modelle und Technik
 - [Alle Bootsanhänger](https://heku-fahrzeugbau.de/bootstrailer.html): Modellübersicht
+- [Kanuanhänger und Kajakanhänger](https://heku-fahrzeugbau.de/kanuanhaenger-kajakanhaenger.html): Anhänger für Kanus und Kajaks
 - [Konfigurator](https://heku-fahrzeugbau.de/konfigurator.html): HEKU Engineer
 - [Shop für Zubehör und Ersatzteile](https://heku-fahrzeugbau.de/shop.html)
 - [Wasserdichte Radnabe](https://heku-fahrzeugbau.de/wasserdichte-radnabe.html)
