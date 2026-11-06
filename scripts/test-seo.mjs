@@ -566,7 +566,7 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
   }
  }
  // Root- und Artikel-HTML plus Produkt-Template. 404.html und die Weiterleitung produkte.html laden den Manager nicht.
- assert.equal(managedPages,107);
+ assert.equal(managedPages,108);
  for(const file of ['erfahrungen.html','karriere.html']) {
   assert.match(read(file),/src="\/heku-consent-v2\.js\?v=20261009-ga4"/,file);
  }
