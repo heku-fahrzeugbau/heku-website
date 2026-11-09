@@ -1183,7 +1183,7 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   assert.match(section,/eigenentwickelt/);
   assert.match(section,/Ab 1\.375 €/);
   assert.match(section,/Ab 1\.575 €/);
-  assert.match(section,/B 1300 ab 8\.000 €/);
+  assert.match(section,/B 1300 ab 9\.000 €/);
   assert.doesNotMatch(section,/patentiert/i);
  }
  assert.equal((read('bootstrailer.html').match(/<h1\b/g)||[]).length,1);
