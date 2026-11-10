@@ -125,7 +125,7 @@
     "h1": "HEKU B 2000 – Tandem-Bootsanhänger 2.000 kg",
     "description": "Tandem-Bootsanhänger, 2.000 kg zGG, bis 1.610 kg Zuladung, 6,60 m, CoC. Tempo 100 optional. Ab 4.655 €, Fertigung auf Bestellung.",
     "bilder": [
-      { "src": "assets/anhaenger/B2000_1.jpg", "alt": "HEKU B 2000 Tandem-Bootsanhänger mit Rollen im Originalfoto", "beispiel": false },
+      { "src": "assets/anhaenger/B2000_1.webp", "alt": "HEKU B 2000 Tandem-Bootsanhänger mit Rollen im Originalfoto", "beispiel": false },
       { "src": "assets/anhaenger/B2000_Segelboot.jpg", "alt": "HEKU B 2000 mit Segelboot-Ausstattung im Originalfoto", "beispiel": false },
       { "src": "assets/anhaenger/B2000.jpg", "alt": "HEKU B 2000 mit Rollen und Windenstand im Originalfoto", "beispiel": false }
     ],
