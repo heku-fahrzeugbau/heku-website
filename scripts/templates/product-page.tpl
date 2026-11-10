@@ -37,6 +37,12 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
           <a href="segelbootanhaenger.html">Segelboot</a>
           <a href="motorbootanhaenger.html">Motorboot</a>
           <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="anhaenger-rettungsboote-behoerden.html">Rettung</a>
+          <a href="schlauchbootanhaenger-rib.html">Schlauchboot</a>
+          <a href="jetski-anhaenger.html">Jet-Ski</a>
+          <a href="katamarananhaenger.html">Katamaran</a>
+          <a href="mehrstockanhaenger-optimisten-jollen.html">Optimisten</a>
+          <a href="anhaenger-mehrzweckboote-arbeitsboote.html">Arbeitsboot</a>
           <a href="bootsanhaenger-nach-mass.html" class="nav-split">Nach Maß / Umbau</a>
         </div>
       </div>
@@ -95,6 +101,12 @@ GENERATED: scripts/generate-product-pages.mjs; Produktdaten ausschließlich in s
           <a href="segelbootanhaenger.html">Segelboot</a>
           <a href="motorbootanhaenger.html">Motorboot</a>
           <a href="ruderbootanhaenger.html">Ruderboot</a>
+          <a href="anhaenger-rettungsboote-behoerden.html">Rettung</a>
+          <a href="schlauchbootanhaenger-rib.html">Schlauchboot</a>
+          <a href="jetski-anhaenger.html">Jet-Ski</a>
+          <a href="katamarananhaenger.html">Katamaran</a>
+          <a href="mehrstockanhaenger-optimisten-jollen.html">Optimisten</a>
+          <a href="anhaenger-mehrzweckboote-arbeitsboote.html">Arbeitsboot</a>
           <a href="bootsanhaenger-nach-mass.html">Nach Maß / Umbau</a>
           <a href="shop.html">Zubehör &amp; Shop</a>
           <a href="konfigurator.html">HEKU Engineer</a>

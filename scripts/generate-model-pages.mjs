@@ -16,6 +16,16 @@ export const klassen = {
   tandem: { label: 'Tandem-Bootsanhänger', kurz: 'Gebremst', achsen: 'Tandem (2 Achsen)', bremse: 'Auflaufbremse mit Rückfahrautomatik' }
 };
 export const zulassungLabel = { 'CoC': 'Betriebserlaubnis (CoC)', 'TÜV-EG': 'TÜV-EG' };
+function kategorieHinweis(m) {
+  const text = {
+    'B 500': 'Für Schlauchboote und RIBs gibt es die Seite <a href="schlauchbootanhaenger-rib.html">Schlauchbootanhänger</a>. Rettungsboote beschreibt <a href="anhaenger-rettungsboote-behoerden.html">Anhänger für Rettungsboote</a>.',
+    'B 750': 'Jet-Ski und leichtere Schlauchboote werden nach Gewicht eingeordnet, nicht nach einem festen Modell. Siehe <a href="jetski-anhaenger.html">Jet-Ski-Anhänger</a> und <a href="schlauchbootanhaenger-rib.html">Schlauchbootanhänger</a>.',
+    'B 900': 'Schlauchboote, RIBs und Rettungsboote können auf diesem Fahrgestell aufgebaut werden. Siehe <a href="schlauchbootanhaenger-rib.html">Schlauchbootanhänger</a>.',
+    'B 2000': 'Ein Tandem kommt unter anderem für Rettungsboote und Arbeitsboote in Frage. Siehe <a href="anhaenger-rettungsboote-behoerden.html">Rettungsboote</a> und <a href="anhaenger-mehrzweckboote-arbeitsboote.html">Arbeitsboote</a>.',
+    'B 3500': 'Auch schwere Rettungs- oder Arbeitsboote bleiben eine Frage von Gewicht und Auflage, nicht einer festen Bootsklasse. Siehe <a href="anhaenger-mehrzweckboote-arbeitsboote.html">Arbeitsboote</a>.'
+  }[m.name];
+  return text ? `\n      <p class="page-sub">${text}</p>` : '';
+}
 const ORG = BASE + '/#organization';
 const kg = n => n.toLocaleString('de-DE') + ' kg';
 const euro = p => Number(p).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';
@@ -229,7 +239,7 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
       </div>
       <div class="page-eyebrow">${e(k.label)} · B-Serie 2026 · Made in Germany</div>
       <h1 class="page-title">${e(m.h1)}</h1>
-      <p class="page-sub">${e(m.intro)}</p>
+      <p class="page-sub">${e(m.intro)}</p>${kategorieHinweis(m)}
       <div class="badge-row">
         <span class="badge">${m.klasse === 'ungebremst' ? 'Ungebremst' : 'Gebremst'}</span>
         <span class="badge">${m.klasse === 'tandem' ? 'Tandem' : 'Einachser'}</span>
@@ -282,7 +292,7 @@ ${figures.join('\n')}
       <ul>
 ${m.bootstypen.map(b => `        <li>${e(b)}</li>`).join('\n')}
       </ul>
-      <p class="body-text" style="margin-top:16px;">Entscheidend ist das Gesamtgewicht des Bootes von höchstens ca. ${e(kg(m.zuladung))}. ${e(m.abgrenzung)}${m.name === 'B 1300' ? ' Für Rudervereine gibt es den <a href="ruderbootanhaenger.html">Ruderbootanhänger auf Basis B 1300</a>.' : ''}</p>
+      <p class="body-text" style="margin-top:16px;">Entscheidend ist das Gesamtgewicht des Bootes von höchstens ca. ${e(kg(m.zuladung))}. ${e(m.abgrenzung)}${m.name === 'B 1300' ? ' Für Rudervereine gibt es den <a href="ruderbootanhaenger.html">Ruderbootanhänger auf Basis B 1300</a>. Mehrere Optimisten oder Jollen stehen auf der Seite <a href="mehrstockanhaenger-optimisten-jollen.html">Mehrstockanhänger</a>.' : ''}</p>
     </div>
 
     <div class="model-section">
