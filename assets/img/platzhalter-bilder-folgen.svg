@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-labelledby="platzhalterTitel">
+  <title id="platzhalterTitel">Platzhalter, Bilder folgen</title>
+  <rect width="960" height="640" fill="#ffffff"/>
+  <text x="480" y="78" text-anchor="middle" fill="#2C2C2C" font-family="DM Sans, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="0.5">Bilder folgen</text>
+  <g fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M150 392h70"/>
+    <circle cx="138" cy="392" r="11"/>
+    <path d="M220 392h70l18-46h430"/>
+    <path d="M308 346h470"/>
+    <path d="M318 372h430"/>
+    <path d="M778 346v46"/>
+    <path d="M250 346v46"/>
+    <path d="M292 300v92"/>
+    <circle cx="292" cy="286" r="14"/>
+    <path d="M278 286h28"/>
+    <path d="M330 318l70 28M620 318l-46 28"/>
+    <path d="M360 300c70-58 210-70 340-18 18 8 28 22 24 36-70 8-210 16-330 4-28-4-46-12-34-22z"/>
+    <path d="M392 286c40-16 120-18 190-4"/>
+    <path d="M700 312v-36"/>
+    <circle cx="430" cy="430" r="46"/>
+    <circle cx="430" cy="430" r="16"/>
+    <circle cx="640" cy="430" r="46"/>
+    <circle cx="640" cy="430" r="16"/>
+    <path d="M384 430h92M594 430h92"/>
+    <path d="M360 392v28M700 392v28"/>
+  </g>
+  <path d="M318 360h430" fill="none" stroke="#E8000E" stroke-width="3.2" stroke-linecap="round"/>
+  <circle cx="430" cy="430" r="7" fill="#E8000E" stroke="none"/>
+  <circle cx="640" cy="430" r="7" fill="#E8000E" stroke="none"/>
+  <text x="480" y="548" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="1.5">
+    <tspan fill="#E8000E">H</tspan><tspan fill="#111111">EKU</tspan>
+  </text>
+</svg>
