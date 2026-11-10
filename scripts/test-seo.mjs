@@ -565,13 +565,18 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
    assert.ok(source.includes('src="/heku-consent-v2.js?v=20261009-ga4"'),`${file}: event tracking without consent manager`);
   }
  }
- // Root- und Artikel-HTML plus Produkt-Template. 404.html und die Weiterleitung produkte.html laden den Manager nicht.
- assert.equal(managedPages,108);
- for(const file of ['erfahrungen.html','karriere.html']) {
-  assert.match(read(file),/src="\/heku-consent-v2\.js\?v=20261009-ga4"/,file);
- }
+ // Root- und Artikel-HTML plus Produkt-Template. 404.html und die Weiterleitungen produkte.html und karriere.html laden den Manager nicht.
+ assert.equal(managedPages,107);
+ assert.match(read('erfahrungen.html'),/src="\/heku-consent-v2\.js\?v=20261009-ga4"/);
  assert.doesNotMatch(read('404.html'),/heku-consent-v2|googletagmanager|gtag\(/);
  assert.doesNotMatch(read('produkte.html'),/heku-consent-v2/);
+ const jobs=read('karriere.html');
+ assert.match(jobs,/content="noindex"/);
+ assert.match(jobs,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/kontakt\.html"/);
+ assert.match(jobs,/url=\/kontakt\.html/);
+ assert.match(jobs,/location\.replace\("\/kontakt\.html"\)/);
+ assert.doesNotMatch(jobs,/heku-consent-v2/);
+ assert.equal(pages().includes('karriere.html'),false);
  const trackedSources=[...htmlFiles,'scripts/templates/product-page.tpl','scripts/templates/model-page.tpl'];
  for(const file of trackedSources) {
   const source=read(file);
@@ -1149,6 +1154,9 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   '/Bootsanhaenger/':'/bootstrailer.html',
   '/anhaenger/':'/bootstrailer.html',
   '/kontakt/':'/kontakt.html',
+  '/karriere':'/kontakt.html',
+  '/karriere/':'/kontakt.html',
+  '/Karriere.html':'/kontakt.html',
   '/wohnmobile/':'/wohnmobile.html',
   '/gibt-es-nicht':'',
   '/produkte.html':'/bootstrailer.html',

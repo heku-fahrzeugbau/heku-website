@@ -4,18 +4,6 @@
    Seiten ohne .heku-sticky-cta, insbesondere bootstrailer.html, werden nicht angefasst. */
 
 @media (max-width: 768px) {
-  /* Jobs rechts im Header: .nav-right > .btn-nav { display: inline-flex }
-     (Spezifität 0,2,0, und im Seiten-<style> nach diesem Sheet) schlägt
-     .btn-jobs { display: none } (0,1,0). Der Link im Burger (.nav-center)
-     hat die Klasse btn-jobs nicht und bleibt erreichbar. */
-  .nav-right > a.btn-nav.btn-jobs,
-  .nav-right > a.btn-jobs,
-  #nav .nav-right > a.btn-jobs,
-  .nav-right > a.btn-nav[href="karriere.html"],
-  .nav-right > a.btn-nav[href="/karriere.html"] {
-    display: none !important;
-  }
-
   /* Anfrage und Konfigurator nur ausblenden, wenn die Leiste im DOM liegt.
      Dieselbe Schwelle wie .heku-sticky-cta (max-width: 768px). */
   body:has(.heku-sticky-cta) .nav-right > a.btn-nav.btn-outline,
