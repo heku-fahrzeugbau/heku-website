@@ -260,7 +260,9 @@
     @media(max-width:1024px){.page-header{padding-top:84px;}.page-header-grid{grid-template-columns:1fr;gap:32px;}}
     @media(max-width:600px){.option-grid,.ref-specs{grid-template-columns:1fr;}.ref-box{padding:24px 20px;}.hero-actions .btn-cta,.hero-actions .btn-hero-ghost{width:100%;justify-content:center;}}
   
-    .hero-figure{background:#fff;}
+    .hero-figure{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 40px;min-height:280px;}
+    .hero-figure img{width:min(72%,340px);height:auto;max-height:none;}
+    .hero-placeholder-caption{margin:0;font-size:14px;font-weight:500;letter-spacing:0.04em;color:var(--text);text-align:center;}
     .yard-figure{margin:8px 0 48px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;}
     .yard-figure img{width:100%;height:auto;}
     .yard-figure figcaption{font-size:13px;line-height:1.5;color:var(--muted);padding:12px 16px;background:var(--bg2);}
@@ -332,7 +334,8 @@
       </div>
         <!-- Platzhalter, gegen Werkstattfoto tauschen -->
         <figure class="hero-figure">
-          <img src="assets/img/platzhalter-bilder-folgen.svg" width="960" height="640" alt="Platzhalter, Bilder folgen">
+          <img src="assets/img/heku-logo.svg" width="1705" height="400" alt="Platzhalter, Bilder folgen">
+          <p class="hero-placeholder-caption">Bilder folgen</p>
         </figure>
     </div>
   </div>
