@@ -258,7 +258,7 @@ test('Generator idempotence, price update, lastmod and fail-closed invalid/remov
     fs.mkdirSync(path.join(root,'assets/produkte'),{recursive:true});
     fs.mkdirSync(path.join(root,'content/produkte'),{recursive:true});
     for(const f of ['shop.html','sitemap.xml',productDataFile,'scripts/templates/product-page.tpl','artikel/50238.html',...Object.values(categories).map(x=>x[0]),...categoryHubs,...all.map(filename)]) fs.copyFileSync(path.join(ROOT,f),path.join(root,f));
-    for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.jpg$/.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
+    for(const f of fs.readdirSync(path.join(ROOT,'assets/produkte')).filter(x=>/^produkt-\d+\.(?:jpg|jpeg|png|webp)$/i.test(x))) fs.copyFileSync(path.join(ROOT,'assets/produkte',f),path.join(root,'assets/produkte',f));
     assert.deepEqual(generateProducts(root).changed,[]);
     assert.equal(fs.readFileSync(path.join(root,'artikel/50238.html'),'utf8'),fs.readFileSync(path.join(ROOT,'artikel/50238.html'),'utf8'));
     const file=path.join(root,productDataFile), p=all[0], source=JSON.parse(fs.readFileSync(file,'utf8'));

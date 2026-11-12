@@ -372,7 +372,7 @@ test('Shop images exist, are lazy-loaded and product buttons match their IDs',()
  for(const [,a,body] of shopCards()) {
   const id=attributes(a)['data-id'];
   const img=attributes(body.match(/<img\b[^>]*>/)[0]);
-  assert.equal(img.src,`assets/produkte/produkt-${id}.jpg`); assert.equal(img.loading,'lazy'); assert.ok(img.alt);
+  assert.match(img.src, new RegExp('^assets/produkte/produkt-'+id+'\\.(?:jpg|jpeg|png|webp)$','i')); assert.equal(img.loading,'lazy'); assert.ok(img.alt);
   assert.ok(fs.existsSync(path.join(ROOT,img.src)));
   assert.match(body,new RegExp('id="btn-'+id+'" onclick="addToCart\\('+id+'\\)"'));
  }
