@@ -62,8 +62,8 @@ test('Local Bielefeld landing page is indexable, useful and internally linked',(
  assert.equal((s.match(/<h1\b/g)||[]).length,1);
  assert.ok((s.match(/<h2\b/g)||[]).length>=4);
  assert.match(s,/Bunzlauer Straße 6/);
- assert.match(s,/08:00–12:30 Uhr/);
- assert.match(s,/13:00–16:30 Uhr/);
+ assert.match(s,/08:00 bis 12:30 Uhr/);
+ assert.match(s,/13:00 bis 16:30 Uhr/);
  assert.match(s,/https:\/\/maps\.app\.goo\.gl\/PUWT9g3SxmCnEfsR7/);
  assert.equal(exclusionReason(file,s),null);
  assert.ok(pages().includes(file));
@@ -110,7 +110,7 @@ test('Published opening hours include the confirmed lunch break',()=>{
   assert.match(s,/"opens": "13:00",\s*"closes": "16:30"/);
  }
  const contact=read('kontakt.html');
- assert.equal((contact.match(/08:00 – 12:30 Uhr · 13:00 – 16:30 Uhr/g)||[]).length,5);
+ assert.equal((contact.match(/08:00 bis 12:30 Uhr · 13:00 bis 16:30 Uhr/g)||[]).length,5);
 });
 
 test('Bootstrailer is the single overview and produkte.html redirects to it',()=>{
@@ -127,7 +127,7 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
  assert.match(money,/href="motorbootanhaenger\.html"/);
  assert.match(money,/href="segelbootanhaenger\.html"/);
  assert.match(money,/href="ruderbootanhaenger\.html"/);
- assert.match(money,/ca\. 2–3 Wochen/);
+ assert.match(money,/ca\. 2 bis 3 Wochen/);
  assert.doesNotMatch(money,/ca\. 2(?!–3)(?:<span>)?\s*Wochen/);
  assert.equal((money.match(/<h1\b/g)||[]).length,1);
  assert.match(money,/id="modelle"/);
@@ -159,7 +159,7 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
 test('Query-led pages state only catalog facts and link real accessory articles',()=>{
  const segel=read('segelbootanhaenger.html');
  assert.match(segel,/<title>Segelboot Anhänger kaufen \| Anhänger für Segelboot \| HEKU<\/title>/);
- assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen –<br>Anhänger für Segelboot<\/h1>/);
+ assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen: <br>Anhänger für Segelboot<\/h1>/);
  assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
  assert.match(segel,/kielvertiefte Achse mit 150 mm Vertiefung/);
@@ -173,7 +173,7 @@ test('Query-led pages state only catalog facts and link real accessory articles'
 
  const custom=read('bootsanhaenger-nach-mass.html');
  assert.match(custom,/<title>Bootsanhänger nach Maß \| maßgeschneiderter Anhänger \| HEKU<\/title>/);
- assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß –<br>maßgeschneiderter Anhänger<\/h1>/);
+ assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß: <br>maßgeschneiderter Anhänger<\/h1>/);
  assert.match(custom,/Umbau und Nachrüstung bestehender Trailer/);
  assert.match(custom,/Rollen statt Gummischiene/);
  assert.match(custom,/bessere Zentrierung/);
@@ -222,7 +222,7 @@ test('Query-led pages state only catalog facts and link real accessory articles'
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
  const file='tuev-bootsanhaenger.html', s=read(file);
  assert.match(s,/<title>TÜV für Bootsanhänger: Fristen, Kosten &amp; Prüfpunkte \| HEKU<\/title>/);
- assert.match(s,/<meta name="description" content="HU beim Bootsanhänger: Fristen bis 3,5 t, Kosten und Besonderheiten bei Bootstrailern – Korrosion nach dem Slippen, Radnabe, Bremse, Saisonkennzeichen\.">/);
+ assert.match(s,/<meta name="description" content="HU beim Bootsanhänger: Fristen bis 3,5 t, Kosten und Besonderheiten bei Bootstrailern, Korrosion nach dem Slippen, Radnabe, Bremse, Saisonkennzeichen\.">/);
  assert.match(s,/<h2 class="section-title" id="besonderheiten-bootstrailer">Besonderheiten bei Bootstrailern/);
  assert.doesNotMatch(s,/\[PRÜFEN/);
  assert.match(s,new RegExp(`<link rel="canonical" href="${BASE}/${file}">`));
@@ -675,7 +675,7 @@ test('P0 traffic-law statements use the correct registration fields and complete
  }
 
  assert.doesNotMatch(guide,/>100 km\/h-Zulassung – (?:Einachsig|Tandem)</);
- assert.match(guide,/Radstoßdämpfer-Paket für Tempo-100-Konfiguration – Einachsig/);
+ assert.match(guide,/Radstoßdämpfer-Paket für Tempo-100-Konfiguration: Einachsig/);
  assert.match(custom,/Radstoßdämpfer-Paket: 280 €/);
  assert.match(custom,/Radstoßdämpfer-Paket: 140 € \(Einachser\)/);
 });
