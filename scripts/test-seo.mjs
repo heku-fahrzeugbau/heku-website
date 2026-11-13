@@ -1158,6 +1158,10 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
   '/karriere/':'/kontakt.html',
   '/Karriere.html':'/kontakt.html',
   '/wohnmobile/':'/wohnmobile.html',
+  '/haendler/':'/haendler.html',
+  '/Haendler/':'/haendler.html',
+  '/vor-der-fahrt/':'/ladungssicherung.html',
+  '/Vor-der-Fahrt/':'/ladungssicherung.html',
   '/gibt-es-nicht':'',
   '/produkte.html':'/bootstrailer.html',
   '/artikel/50238.html':'/weiteres-bootsanhaenger-zubehoer.html',
@@ -1174,6 +1178,18 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  assert.match(stub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/bootstrailer\.html"/);
  assert.match(stub,/url=\/bootstrailer\.html/);
  assert.equal(exclusionReason('index.html',stub),'noindex');
+ const haendlerStub=read('haendler/index.html');
+ assert.match(haendlerStub,/content="noindex"/);
+ assert.match(haendlerStub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/haendler\.html"/);
+ assert.match(haendlerStub,/url=\/haendler\.html/);
+ assert.match(haendlerStub,/location\.replace\("\/haendler\.html"\)/);
+ assert.equal(exclusionReason('index.html',haendlerStub),'noindex');
+ const fahrtStub=read('vor-der-fahrt/index.html');
+ assert.match(fahrtStub,/content="noindex"/);
+ assert.match(fahrtStub,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/ladungssicherung\.html"/);
+ assert.match(fahrtStub,/url=\/ladungssicherung\.html/);
+ assert.match(fahrtStub,/location\.replace\("\/ladungssicherung\.html"\)/);
+ assert.equal(exclusionReason('index.html',fahrtStub),'noindex');
  const retired=read('artikel/50238.html');
  assert.match(retired,/content="noindex"/);
  assert.match(retired,/rel="canonical" href="https:\/\/heku-fahrzeugbau\.de\/weiteres-bootsanhaenger-zubehoer\.html"/);
