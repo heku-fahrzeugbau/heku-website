@@ -121,10 +121,10 @@ export function renderProductCard(p) {
           <p class="product-cat">${e(cardCategoryLabels[p.category])} <span class="product-artnr">Art. ${p.sku}</span></p>
           <h2 class="product-name">${e(p.name)}</h2>
           <p class="product-desc">${e(p.desc)}</p>
-          <!-- product-detail-link --><a class="product-details-link" href="${filename(p)}" aria-label="Details: ${e(p.name)} – Art. ${p.sku}">Artikeldetails ansehen</a><!-- /product-detail-link -->
+          <!-- product-detail-link --><a class="product-details-link" href="${filename(p)}" aria-label="Details: ${e(p.name)}, Art. ${p.sku}">Artikeldetails ansehen</a><!-- /product-detail-link -->
           <div class="product-footer">
             <data class="product-price" value="${p.price}">${e(p.priceText)}</data>
-            <button type="button" class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})" aria-label="${e(p.name)} – Art. ${p.sku} in den Warenkorb" disabled>+ Warenkorb</button>
+            <button type="button" class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})" aria-label="${e(p.name)}, Art. ${p.sku} in den Warenkorb" disabled>+ Warenkorb</button>
           </div>
         </div>
       </article>`;
@@ -134,11 +134,11 @@ export function renderProduct(p, all, shell, root=ROOT) {
   const e=escapeHTML, [guide,categoryName]=categories[p.category], url=BASE+'/'+filename(p);
   const ship=unitShippingEuro(p, root);
   const shipText=ship.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
-  const title=`${p.name} – Art. ${p.sku} | HEKU`;
+  const title=`${p.name} | Art. ${p.sku} | HEKU`;
   // Suchergebnisse schneiden Descriptions bei rund 160 Zeichen ab. Erst die knappe
   // Fassung versuchen, sonst den Produktnamen an einer Wortgrenze kuerzen.
   const descTail=`Art. ${p.sku}: ${p.priceText} inkl. MwSt. Im HEKU-Shop bestellen.`;
-  const descFull=`${p.name}${p.desc?' – '+p.desc:''}. ${descTail}`;
+  const descFull=`${p.name}${p.desc?'. '+p.desc:''}. ${descTail}`;
   const descShort=`${p.name}. ${descTail}`;
   const clampName=limit=>{
     const room=limit-descTail.length-3;
@@ -167,7 +167,7 @@ export function renderProduct(p, all, shell, root=ROOT) {
         <div class="detail-purchase"><p class="detail-price"><data value="${p.price}">${e(p.priceText)}</data></p><p class="detail-tax">Inkl. 19 % MwSt., zzgl. ${shipText} Versand innerhalb Deutschlands bei Einzelbestellung. Bei mehreren Artikeln berechnet der <a href="${shop}">Warenkorb</a> die tatsächlichen Versandkosten; Einzelheiten in den <a href="agb.html">AGB</a>.</p><a class="detail-buy" href="${shop}">Im Shop bestellen</a><p class="detail-handoff">Öffnet diesen Artikel im Shop. Menge und Versandkosten sehen Sie im Warenkorb.</p><button type="button" class="detail-guarantee" onclick="openGuaranteeNotice()" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4.5 5v5.8c0 5 3.2 9.2 7.5 11.2 4.3-2 7.5-6.2 7.5-11.2V5L12 2Zm0 2.2 5.5 2.2v4.4c0 3.9-2.2 7.3-5.5 9.1-3.3-1.8-5.5-5.2-5.5-9.1V6.4L12 4.2Z"/></svg> GESETZLICHE GEWÄHRLEISTUNG</button></div>
         ${!p.image?'<p class="detail-missing-photo">Für diesen Artikel ist derzeit kein Produktfoto hinterlegt.</p>':''}
       </div>
-      ${p.image?`<figure class="detail-photo"><img src="${e(p.image)}" alt="${e(p.name)} – Art. ${p.sku}" decoding="async" fetchpriority="high"><figcaption>Artikel ${p.sku} aus dem HEKU-Shop.</figcaption></figure>`:''}
+      ${p.image?`<figure class="detail-photo"><img src="${e(p.image)}" alt="${e(p.name)}, Art. ${p.sku}" decoding="async" fetchpriority="high"><figcaption>Artikel ${p.sku} aus dem HEKU-Shop.</figcaption></figure>`:''}
     </section>${specsHtml}
     <section class="detail-help" aria-labelledby="fitTitle"><div><h2 id="fitTitle">Passt der Artikel zu Ihrem Anhänger?</h2><p>Wenn Sie bei der Zuordnung unsicher sind, nennen Sie uns die Artikelnummer ${p.sku} und die Bezeichnung Ihres Anhängers. Fotos der vorhandenen Baugruppe helfen bei der Anfrage.</p></div><div class="detail-help-links"><a href="kontakt.html">Zuordnung mit HEKU klären</a><a href="tel:+49521200066">0521 200066</a><a href="${guide}">Auswahlhilfe: ${e(categoryName)}</a></div></section>
     ${related.length?`<section class="detail-related"><h2>Weitere Artikel dieser Kategorie</h2><ul>${related.map(x=>`<li><a href="${filename(x)}"><span>${e(x.name)}</span><span class="detail-related-sku">Art. ${x.sku}${x.desc?' · '+e(x.desc):''}</span></a></li>`).join('')}</ul><a class="detail-all" href="${guide}#kategorie-artikel">Alle Artikel: ${e(categoryName)}</a></section>`:''}
@@ -205,7 +205,7 @@ export function generateProducts(root=ROOT) {
     .replace(/(<div class="shop-count" id="shopCount" role="status" aria-live="polite">)[^<]*(<\/div>)/,`$1${all.length} Artikel$2`);
   planned.set('shop.html',shop);
   for(const [key,[file,label]] of Object.entries(categories)) {
-    const links=all.filter(p=>p.category===key).map(p=>`<li><a href="${filename(p)}">${escapeHTML(p.name)} — Art. ${p.sku}${p.desc?' · '+escapeHTML(p.desc):''}</a></li>`).join('\n');
+    const links=all.filter(p=>p.category===key).map(p=>`<li><a href="${filename(p)}">${escapeHTML(p.name)}, Art. ${p.sku}${p.desc?' · '+escapeHTML(p.desc):''}</a></li>`).join('\n');
     const block=`<!-- generated-product-links -->\n<section class="category-related" id="kategorie-artikel"><h2>Artikel: ${escapeHTML(label)}</h2><ul>${links}</ul></section>\n<!-- /generated-product-links -->`;
     let s=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n');
     s=s.replace(/\s*<!-- generated-product-links -->[\s\S]*?<!-- \/generated-product-links -->/g,'');
@@ -220,7 +220,7 @@ export function generateProducts(root=ROOT) {
     const eol=original.includes('\r\n')?'\r\n':'\n';
     const links=Object.entries(categories).map(([key,[target,label]])=>{
       const count=all.filter(p=>p.category===key).length;
-      return `<li><a href="${target}">${escapeHTML(label)}</a> — ${count} ${count===1?'Artikel':'Artikel'}</li>`;
+      return `<li><a href="${target}">${escapeHTML(label)}</a>: ${count} ${count===1?'Artikel':'Artikel'}</li>`;
     }).join('');
     const body=file==='ersatzteile-bootsanhaenger.html'
       ? `<h2>Ersatzteile nach Baugruppe auswählen</h2><p>Wählen Sie zuerst die Baugruppe. Auf jeder Kategorieseite finden Sie Auswahlhinweise und die zugehörigen Artikel.</p><ul>${links}</ul><div class="category-actions"><a class="category-primary" href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></div>`
