@@ -140,7 +140,7 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
  assert.match(stub,/location\.replace\("\/bootstrailer\.html"\)/);
  assert.equal(exclusionReason('produkte.html',stub),'noindex');
  assert.equal(pages().includes('produkte.html'),false);
- const order=['Alle Bootsanhänger','Jolle','Segelboot','Motorboot','Ruderboot','Nach Maß / Umbau'];
+ const order=['Alle Bootsanhänger','Jolle','Segelboot','Motorboot','Ruderboot','Kanu / Kajak','Nach Maß / Umbau'];
  for(const file of ['index.html','bootstrailer.html','jollenanhaenger.html','motorbootanhaenger.html','segelbootanhaenger.html','ruderbootanhaenger.html','bootsanhaenger-nach-mass.html','shop.html','scripts/templates/model-page.tpl','scripts/templates/product-page.tpl']){
   const html=read(file);
   const block=html.match(/class="nav-dropdown-menu">([\s\S]*?)<\/div>/)[1];
@@ -152,8 +152,10 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
   }
   assert.doesNotMatch(block,/Alle Modelle|>Bootstrailer</);
   assert.match(block,/href="bootstrailer\.html"/);
+  assert.match(block,/href="kanuanhaenger-kajakanhaenger\.html"/);
   assert.doesNotMatch(block,/href="produkte\.html"/);
  }
+ assert.match(read('kanuanhaenger-kajakanhaenger.html'),/href="kanuanhaenger-kajakanhaenger\.html" class="active">Kanu \/ Kajak<\/a>/);
 });
 
 test('Query-led pages state only catalog facts and link real accessory articles',()=>{
