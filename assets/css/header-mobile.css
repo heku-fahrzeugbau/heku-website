@@ -1,9 +1,38 @@
 /* Mobile-Header (geladen über fonts.css).
-   Unter 768px zeigt der Header nur Logo und Burger, sobald die Sticky-Leiste
-   Anfrage und Konfigurator schon anbietet. Desktop ab 769px bleibt unverändert.
-   Seiten ohne .heku-sticky-cta, insbesondere bootstrailer.html, werden nicht angefasst. */
+   Unter 768px bleibt der Burger als eigener Bedienbereich klar vom
+   Konfigurator getrennt. Wenn eine Sticky-Leiste beide CTAs anbietet, zeigt
+   der Header nur Logo und Burger. Desktop ab 769px bleibt unverändert. */
 
 @media (max-width: 768px) {
+  /* Auf schmalen Displays passt die Kombination aus Logo, zwei CTAs und
+     Burger nicht sauber in eine Zeile. Die Anfrage bleibt auf der Seite bzw.
+     in der Sticky-Leiste erreichbar; im Header bleibt der wichtigere
+     Konfigurator als eigener Button neben dem klar getrennten Burger. */
+  #nav .nav-right > a.btn-nav.btn-outline,
+  #nav .nav-right > a.btn-outline {
+    display: none !important;
+  }
+
+  #nav .nav-right {
+    margin-left: auto !important;
+    gap: 0 !important;
+  }
+
+  #nav .nav-right > a.btn-nav.btn-red,
+  #nav .nav-right > a.btn-red {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+  }
+
+  #nav .nav-burger {
+    width: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    margin-left: 10px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+  }
   /* Anfrage und Konfigurator nur ausblenden, wenn die Leiste im DOM liegt.
      Dieselbe Schwelle wie .heku-sticky-cta (max-width: 768px). */
   body:has(.heku-sticky-cta) .nav-right > a.btn-nav.btn-outline,
