@@ -1215,3 +1215,10 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
  assert.equal((read('bootstrailer.html').match(/<h1\b/g)||[]).length,1);
  assert.equal((read('index.html').match(/<h1\b/g)||[]).length,1);
 });
+test('Mobile header keeps the burger separate from the configurator CTA',()=>{
+ const css=read('assets/css/header-mobile.css');
+ assert.match(css,/@media \(max-width: 768px\)/);
+ assert.match(css,/#nav \.nav-right > a\.btn-outline[\s\S]*?display: none !important/);
+ assert.match(css,/#nav \.nav-burger[\s\S]*?min-width: 42px[\s\S]*?margin-left: 10px[\s\S]*?padding: 10px/);
+ assert.match(css,/#nav \.nav-right > a\.btn-red[\s\S]*?padding-left: 13px[\s\S]*?padding-right: 13px/);
+});
