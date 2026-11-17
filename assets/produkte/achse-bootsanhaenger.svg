@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Bootsanhänger-Achse</title>
+  <desc id="desc">Technische Illustration einer einzelnen Achse mit Radnaben</desc>
+  <rect width="800" height="600" fill="#f4f4f2"/>
+  <g fill="none" stroke="#151515" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M165 300h470" stroke-width="34"/>
+    <path d="M210 250v100M590 250v100" stroke-width="18"/>
+    <circle cx="165" cy="300" r="70" fill="#fff" stroke-width="24"/>
+    <circle cx="165" cy="300" r="24" fill="#e8000e" stroke-width="12"/>
+    <circle cx="635" cy="300" r="70" fill="#fff" stroke-width="24"/>
+    <circle cx="635" cy="300" r="24" fill="#e8000e" stroke-width="12"/>
+    <path d="M325 285h150v30H325z" fill="#fff" stroke-width="12"/>
+    <path d="M210 365c75 54 305 54 380 0" stroke="#e8000e" stroke-width="12"/>
+  </g>
+  <text x="400" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#151515">HEKU Bootsanhänger-Achse</text>
+  <text x="400" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#666">Modellbezogen · Preis auf Anfrage</text>
+</svg>

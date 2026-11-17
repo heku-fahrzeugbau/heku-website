@@ -21,6 +21,7 @@ export const categories = {
 export const categoryHubs = ['ratgeber-bootsanhaenger.html', 'bootstrailer.html', 'ersatzteile-bootsanhaenger.html'];
 export const placeholderHash = '0264856e2beb5e286d719e2520c0897f8a607620f1ee8873a24d1242999ddde8';
 export const productDataFile = 'content/produkte/produkte.json';
+export const inquiryDataFile = 'content/produkte/anfrageprodukte.json';
 export const filename = p => `artikel/${p.sku}.html`;
 // Bewusst stillgelegte Artikel-URL: noindex, sofortiger Meta-Refresh und derselbe
 // location.replace wie bei produkte/index.html. Solche Dateien bleiben liegen;
@@ -91,6 +92,27 @@ export function catalog(root=ROOT) {
     return {id,sku,category,name,desc,price,priceText,imagePath:src,image:hash===placeholderHash?null:src,specs,brand};
   });
 }
+export function inquiryCatalog(root=ROOT) {
+  const source=path.join(root,inquiryDataFile);
+  let records;
+  try { records=JSON.parse(fs.readFileSync(source,'utf8')); }
+  catch(error) { throw new Error(`Anfrageprodukte konnten nicht gelesen werden (${inquiryDataFile}): ${error.message}`); }
+  if(!Array.isArray(records)||!records.length) throw new Error('Anfrageprodukte müssen eine nicht-leere Liste sein.');
+  const ids=new Set(), codes=new Set(), models=new Set();
+  return records.map((record,index)=>{
+    if(!record||typeof record!=='object'||Array.isArray(record)) throw new Error(`Ungültiges Anfrageprodukt an Position ${index+1}.`);
+    const id=String(record.id??''), code=String(record.code??''), model=plain(String(record.model??''));
+    if(!/^\d+$/.test(id)||!/^achse-b\d+$/.test(code)||!/^B \d+$/.test(model)||ids.has(id)||codes.has(code)||models.has(model)) throw new Error('Ungültige/doppelte ID, Code oder Modell beim Anfrageprodukt: '+code);
+    if(typeof record.name!=='string'||typeof record.description!=='string'||typeof record.braked!=='boolean') throw new Error('Anfrageproduktfelder haben einen ungültigen Datentyp: '+code);
+    const name=plain(record.name), desc=plain(record.description);
+    if(!name||!desc) throw new Error('Name oder Beschreibung fehlt beim Anfrageprodukt: '+code);
+    if(record.braked!==!['B 350','B 500','B 750'].includes(model)) throw new Error('Bremsstatus passt nicht zum HEKU-Modell: '+model);
+    const brakeText='inklusive Edelstahl Bremsseil';
+    if(record.braked!==desc.includes(brakeText)) throw new Error('Hinweis zum Edelstahl Bremsseil ist falsch: '+model);
+    ids.add(id); codes.add(code); models.add(model);
+    return {id,code,model,braked:record.braked,name,desc,category:'achsen',inquiry:true,imagePath:'assets/produkte/achse-bootsanhaenger.svg'};
+  });
+}
 // Menge 1 aus calcVersand() in shop.html. Dieselbe Funktion wie der Warenkorb,
 // keine zweite Preisliste. Artikel- und Feed-Versand bleiben dadurch gleich.
 export function calcShopVersand(cartItems, root=ROOT) {
@@ -125,6 +147,21 @@ export function renderProductCard(p) {
           <div class="product-footer">
             <data class="product-price" value="${p.price}">${e(p.priceText)}</data>
             <button type="button" class="btn-add" id="btn-${p.id}" onclick="addToCart(${p.id})" aria-label="${e(p.name)}, Art. ${p.sku} in den Warenkorb" disabled>+ Warenkorb</button>
+          </div>
+        </div>
+      </article>`;
+}
+export function renderInquiryCard(p) {
+  const e=escapeHTML, href=`kontakt.html?produkt=${encodeURIComponent(p.code)}#formWrap`;
+  return `      <article class="product-card product-card-inquiry" id="artikel-${p.id}" data-id="${p.id}" data-code="${e(p.code)}" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="${e(p.imagePath)}" alt="${e(p.name)}" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für ${e(p.model)}</span></p>
+          <h2 class="product-name">${e(p.name)}</h2>
+          <p class="product-desc">${e(p.desc)}</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="${href}" aria-label="Preis anfragen: ${e(p.name)}">Preis auf Anfrage</a>
           </div>
         </div>
       </article>`;
@@ -186,7 +223,7 @@ export function renderProduct(p, all, shell, root=ROOT) {
     .replace(/[ \t]+$/gm,'');
 }
 export function generateProducts(root=ROOT) {
-  const all=catalog(root), shell=fs.readFileSync(path.join(root,'scripts/templates/product-page.tpl'),'utf8');
+  const all=catalog(root), inquiries=inquiryCatalog(root), shell=fs.readFileSync(path.join(root,'scripts/templates/product-page.tpl'),'utf8');
   const planned=new Map(all.map(p=>[filename(p),renderProduct(p,all,shell,root)]));
   const legacy=fs.readdirSync(root).filter(x=>/^shop-artikel-\d+\.html$/.test(x));
   if(legacy.length) throw new Error('Alte flache Artikel-URLs gefunden. Migration/Weiterleitungen bewusst planen: '+legacy.join(', '));
@@ -198,11 +235,11 @@ export function generateProducts(root=ROOT) {
   const grid=/(      <div class="product-grid" id="productGrid">\r?\n)[\s\S]*?(      <\/div>\r?\n      <p id="shopEmpty")/;
   if(!grid.test(shop)) throw new Error('Produktbereich in shop.html nicht gefunden. Abbruch statt unvollständigem Katalog.');
   const eol=shop.includes('\r\n')?'\r\n':'\n';
-  const cards=all.map(renderProductCard).join('\n').replace(/\n/g,eol)
+  const cards=[...all.map(renderProductCard),...inquiries.map(renderInquiryCard)].join('\n').replace(/\n/g,eol)
     // Preserve the established mixed line ending before generated detail links.
     .replace(/(<p class="product-desc">[^<]*<\/p>)\r\n/g,'$1\n');
   shop=shop.replace(grid,`$1${cards}${eol}$2`)
-    .replace(/(<div class="shop-count" id="shopCount" role="status" aria-live="polite">)[^<]*(<\/div>)/,`$1${all.length} Artikel$2`);
+    .replace(/(<div class="shop-count" id="shopCount" role="status" aria-live="polite">)[^<]*(<\/div>)/,`$1${all.length+inquiries.length} Artikel$2`);
   planned.set('shop.html',shop);
   for(const [key,[file,label]] of Object.entries(categories)) {
     const links=all.filter(p=>p.category===key).map(p=>`<li><a href="${filename(p)}">${escapeHTML(p.name)}, Art. ${p.sku}${p.desc?' · '+escapeHTML(p.desc):''}</a></li>`).join('\n');
@@ -221,10 +258,10 @@ export function generateProducts(root=ROOT) {
     const links=Object.entries(categories).map(([key,[target,label]])=>{
       const count=all.filter(p=>p.category===key).length;
       return `<li><a href="${target}">${escapeHTML(label)}</a>: ${count} ${count===1?'Artikel':'Artikel'}</li>`;
-    }).join('');
+    }).join('')+`<li><a href="shop.html?kategorie=achsen#shopContent">Achsen für Bootsanhänger</a>: ${inquiries.length} Artikel</li>`;
     const body=file==='ersatzteile-bootsanhaenger.html'
-      ? `<h2>Ersatzteile nach Baugruppe auswählen</h2><p>Wählen Sie zuerst die Baugruppe. Auf jeder Kategorieseite finden Sie Auswahlhinweise und die zugehörigen Artikel.</p><ul>${links}</ul><div class="category-actions"><a class="category-primary" href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></div>`
-      : `<h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul>${links}</ul><p><a href="shop.html">Alle ${all.length} Artikel im HEKU-Shop ansehen</a></p><p><a href="ersatzteile-bootsanhaenger.html">Ersatzteil-Ratgeber und alle Kategorien im Überblick</a></p>`;
+      ? `<h2>Ersatzteile nach Baugruppe auswählen</h2><p>Wählen Sie zuerst die Baugruppe. Auf jeder Kategorieseite finden Sie Auswahlhinweise und die zugehörigen Artikel.</p><ul>${links}</ul><div class="category-actions"><a class="category-primary" href="shop.html">Alle ${all.length+inquiries.length} Artikel im HEKU-Shop ansehen</a></div>`
+      : `<h2>Ersatzteile und Zubehör für Bootsanhänger</h2><ul>${links}</ul><p><a href="shop.html">Alle ${all.length+inquiries.length} Artikel im HEKU-Shop ansehen</a></p><p><a href="ersatzteile-bootsanhaenger.html">Ersatzteil-Ratgeber und alle Kategorien im Überblick</a></p>`;
     const block=[
       '<!-- generated-category-links -->',
       `<section class="category-hub" id="ersatzteile-kategorien">${body}</section>`,
@@ -243,5 +280,5 @@ export function generateProducts(root=ROOT) {
     const target=path.join(root,file);
     if(!fs.existsSync(target)||fs.readFileSync(target,'utf8')!==content) { fs.mkdirSync(path.dirname(target),{recursive:true}); fs.writeFileSync(target,content); changed.push(file); }
   }
-  return {products:all,changed};
+  return {products:all,inquiries,changed};
 }

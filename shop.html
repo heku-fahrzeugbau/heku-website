@@ -121,6 +121,8 @@
     .btn-add { display: flex; align-items: center; gap: 6px; background: var(--rot); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease); white-space: nowrap; font-family: var(--font-body); }
     .btn-add:hover { background: var(--rot-dark); transform: translateY(-1px); }
     .btn-add.added { background: #15803d; }
+    .btn-inquiry { text-decoration: none; justify-content: center; }
+    .product-price-inquiry { font-size: 15px; line-height: 1.25; }
 
     /* CART DRAWER */
     .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -475,6 +477,7 @@
         <option value="raeder">Räder & Reifen</option>
         <option value="sonstiges">Sonstiges</option>
         <option value="beleuchtung">Beleuchtung</option>
+        <option value="achsen">Achsen für Bootsanhänger</option>
       </select></div>
       <div class="filter-list" id="filterList" role="group" aria-label="Produktkategorie">
         <button type="button" class="filter-item active" data-cat="alle" aria-pressed="true" onclick="filterCat(this)">Alle Produkte</button>
@@ -485,6 +488,7 @@
         <button type="button" class="filter-item" data-cat="raeder" aria-pressed="false" onclick="filterCat(this)">Räder & Reifen</button>
         <button type="button" class="filter-item" data-cat="sonstiges" aria-pressed="false" onclick="filterCat(this)">Sonstiges</button>
         <button type="button" class="filter-item" data-cat="beleuchtung" aria-pressed="false" onclick="filterCat(this)">Beleuchtung</button>
+        <button type="button" class="filter-item" data-cat="achsen" aria-pressed="false" onclick="filterCat(this)">Achsen für Bootsanhänger</button>
       </div>
     </div>
 
@@ -497,9 +501,10 @@
 <li><a href="auflagen-polsterkissen.html">Auflagen &amp; Kissen</a></li>
 <li><a href="raeder-reifen-bootsanhaenger.html">Räder &amp; Reifen</a></li>
 <li><a href="beleuchtung-bootsanhaenger.html">Beleuchtung</a></li>
-<li><a href="weiteres-bootsanhaenger-zubehoer.html">Weiteres Zubehör</a></li></ul></details>
+<li><a href="weiteres-bootsanhaenger-zubehoer.html">Weiteres Zubehör</a></li>
+<li><a href="shop.html?kategorie=achsen#shopContent">Achsen für Bootsanhänger</a></li></ul></details>
       <div class="shop-header">
-        <div class="shop-count" id="shopCount" role="status" aria-live="polite">55 Artikel</div>
+        <div class="shop-count" id="shopCount" role="status" aria-live="polite">68 Artikel</div>
         <div class="shop-search" data-shop-enhancement hidden>
           <label for="shopSearch">Artikel suchen</label>
           <input id="shopSearch" type="search" placeholder="Name oder Artikelnummer" oninput="renderProducts(currentCat)">
@@ -1222,6 +1227,162 @@
           </div>
         </div>
       </article>
+      <article class="product-card product-card-inquiry" id="artikel-1001" data-id="1001" data-code="achse-b350" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 350" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 350</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 350</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 350.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b350#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 350">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1002" data-id="1002" data-code="achse-b500" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 500</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 500</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 500.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b500#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 500">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1003" data-id="1003" data-code="achse-b750" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 750" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 750</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 750</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 750.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b750#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 750">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1004" data-id="1004" data-code="achse-b900" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 900" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 900</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 900</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 900, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b900#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 900">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1005" data-id="1005" data-code="achse-b1100" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 1100" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 1100</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 1100</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 1100, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b1100#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 1100">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1006" data-id="1006" data-code="achse-b1300" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 1300" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 1300</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 1300</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 1300, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b1300#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 1300">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1007" data-id="1007" data-code="achse-b1500" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 1500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 1500</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 1500</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 1500, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b1500#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 1500">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1008" data-id="1008" data-code="achse-b1800" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 1800" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 1800</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 1800</h2>
+          <p class="product-desc">Einzelachse passend für den HEKU Bootsanhänger B 1800, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b1800#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 1800">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1009" data-id="1009" data-code="achse-b2000" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 2000" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 2000</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 2000</h2>
+          <p class="product-desc">Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2000, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b2000#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 2000">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1010" data-id="1010" data-code="achse-b2500" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 2500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 2500</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 2500</h2>
+          <p class="product-desc">Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2500, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b2500#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 2500">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1011" data-id="1011" data-code="achse-b2700" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 2700" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 2700</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 2700</h2>
+          <p class="product-desc">Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2700, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b2700#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 2700">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1012" data-id="1012" data-code="achse-b3000" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 3000" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 3000</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 3000</h2>
+          <p class="product-desc">Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 3000, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b3000#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 3000">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card-inquiry" id="artikel-1013" data-id="1013" data-code="achse-b3500" data-cat="achsen" data-inquiry="true">
+        <div class="product-img"><img src="assets/produkte/achse-bootsanhaenger.svg" alt="Achse für HEKU Bootsanhänger B 3500" loading="lazy" decoding="async"></div>
+        <div class="product-body">
+          <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für B 3500</span></p>
+          <h2 class="product-name">Achse für HEKU Bootsanhänger B 3500</h2>
+          <p class="product-desc">Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 3500, inklusive Edelstahl Bremsseil.</p>
+          <div class="product-footer">
+            <span class="product-price product-price-inquiry">Preis auf Anfrage</span>
+            <a class="btn-add btn-inquiry" href="kontakt.html?produkt=achse-b3500#formWrap" aria-label="Preis anfragen: Achse für HEKU Bootsanhänger B 3500">Preis auf Anfrage</a>
+          </div>
+        </div>
+      </article>
       </div>
       <p id="shopEmpty" hidden>Keine passenden Artikel. Suchbegriff ändern oder eine andere Kategorie wählen.</p>
     </div>
@@ -1409,10 +1570,11 @@
   // Laufzeitquelle: der aus content/produkte/produkte.json generierte, ohne JavaScript lesbare HTML-Katalog.
   const productCards = [...document.querySelectorAll('#productGrid .product-card')];
   const PRODUKTE = productCards.map(card => ({
-    id: Number(card.dataset.id), artnr: Number(card.dataset.artnr), cat: card.dataset.cat,
+    id: Number(card.dataset.id), artnr: card.dataset.artnr ? Number(card.dataset.artnr) : null, cat: card.dataset.cat,
+    inquiry: card.dataset.inquiry === 'true', code: card.dataset.code || '',
     name: card.querySelector('.product-name').textContent.trim(),
     desc: card.querySelector('.product-desc').textContent.trim(),
-    preis: Number(card.querySelector('.product-price').value)
+    preis: card.querySelector('data.product-price') ? Number(card.querySelector('data.product-price').value) : null
   }));
 
   // ─── STATE ──────────────────────────────────────────────────────────────────
@@ -1427,7 +1589,7 @@
       return saved.flatMap(item => {
         if (!item || !Number.isSafeInteger(item.id) || !Number.isSafeInteger(item.qty) || item.qty <= 0 || seen.has(item.id)) return [];
         const product = PRODUKTE.find(p => p.id === item.id);
-        if (!product || !Number.isFinite(product.preis * item.qty)) return [];
+        if (!product || product.inquiry || !Number.isFinite(product.preis * item.qty)) return [];
         seen.add(item.id);
         return [{ ...product, qty: item.qty }];
       });
@@ -1450,7 +1612,7 @@
     productCards.forEach((card, index) => {
       const p = PRODUKTE[index];
       const matches = (cat === 'alle' || p.cat === cat) &&
-        (p.name + ' ' + p.desc + ' ' + p.artnr).toLocaleLowerCase('de').includes(query);
+        (p.name + ' ' + p.desc + ' ' + (p.artnr || '') + ' ' + p.code).toLocaleLowerCase('de').includes(query);
       card.hidden = !matches;
       if (matches) count++;
     });
@@ -1459,7 +1621,7 @@
   }
 
   function catLabel(cat) {
-    const m = { winden:'Winden & Ständer', stuetzraeder:'Stützräder', rollen:'Kiel- & Stützrollen', auflagen:'Auflagen & Kissen', raeder:'Räder & Reifen', sonstiges:'Sonstiges', beleuchtung:'Beleuchtung' };
+    const m = { winden:'Winden & Ständer', stuetzraeder:'Stützräder', rollen:'Kiel- & Stützrollen', auflagen:'Auflagen & Kissen', raeder:'Räder & Reifen', sonstiges:'Sonstiges', beleuchtung:'Beleuchtung', achsen:'Achsen für Bootsanhänger' };
     return m[cat] || cat;
   }
 
@@ -1551,6 +1713,7 @@
   // ─── WARENKORB ───────────────────────────────────────────────────────────────
   function addToCart(id) {
     const p = PRODUKTE.find(x => x.id === id);
+    if (!p || p.inquiry) return;
     const existing = cart.find(x => x.id === id);
     if (existing) { existing.qty++; } else { cart.push({ ...p, qty: 1 }); }
     updateCartUI();

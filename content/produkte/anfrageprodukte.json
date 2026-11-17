@@ -1,0 +1,15 @@
+[
+  { "id": 1001, "code": "achse-b350", "model": "B 350", "braked": false, "name": "Achse für HEKU Bootsanhänger B 350", "description": "Einzelachse passend für den HEKU Bootsanhänger B 350." },
+  { "id": 1002, "code": "achse-b500", "model": "B 500", "braked": false, "name": "Achse für HEKU Bootsanhänger B 500", "description": "Einzelachse passend für den HEKU Bootsanhänger B 500." },
+  { "id": 1003, "code": "achse-b750", "model": "B 750", "braked": false, "name": "Achse für HEKU Bootsanhänger B 750", "description": "Einzelachse passend für den HEKU Bootsanhänger B 750." },
+  { "id": 1004, "code": "achse-b900", "model": "B 900", "braked": true, "name": "Achse für HEKU Bootsanhänger B 900", "description": "Einzelachse passend für den HEKU Bootsanhänger B 900, inklusive Edelstahl Bremsseil." },
+  { "id": 1005, "code": "achse-b1100", "model": "B 1100", "braked": true, "name": "Achse für HEKU Bootsanhänger B 1100", "description": "Einzelachse passend für den HEKU Bootsanhänger B 1100, inklusive Edelstahl Bremsseil." },
+  { "id": 1006, "code": "achse-b1300", "model": "B 1300", "braked": true, "name": "Achse für HEKU Bootsanhänger B 1300", "description": "Einzelachse passend für den HEKU Bootsanhänger B 1300, inklusive Edelstahl Bremsseil." },
+  { "id": 1007, "code": "achse-b1500", "model": "B 1500", "braked": true, "name": "Achse für HEKU Bootsanhänger B 1500", "description": "Einzelachse passend für den HEKU Bootsanhänger B 1500, inklusive Edelstahl Bremsseil." },
+  { "id": 1008, "code": "achse-b1800", "model": "B 1800", "braked": true, "name": "Achse für HEKU Bootsanhänger B 1800", "description": "Einzelachse passend für den HEKU Bootsanhänger B 1800, inklusive Edelstahl Bremsseil." },
+  { "id": 1009, "code": "achse-b2000", "model": "B 2000", "braked": true, "name": "Achse für HEKU Bootsanhänger B 2000", "description": "Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2000, inklusive Edelstahl Bremsseil." },
+  { "id": 1010, "code": "achse-b2500", "model": "B 2500", "braked": true, "name": "Achse für HEKU Bootsanhänger B 2500", "description": "Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2500, inklusive Edelstahl Bremsseil." },
+  { "id": 1011, "code": "achse-b2700", "model": "B 2700", "braked": true, "name": "Achse für HEKU Bootsanhänger B 2700", "description": "Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 2700, inklusive Edelstahl Bremsseil." },
+  { "id": 1012, "code": "achse-b3000", "model": "B 3000", "braked": true, "name": "Achse für HEKU Bootsanhänger B 3000", "description": "Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 3000, inklusive Edelstahl Bremsseil." },
+  { "id": 1013, "code": "achse-b3500", "model": "B 3500", "braked": true, "name": "Achse für HEKU Bootsanhänger B 3500", "description": "Eine einzelne Achse passend für den HEKU Tandem-Bootsanhänger B 3500, inklusive Edelstahl Bremsseil." }
+]

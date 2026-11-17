@@ -614,6 +614,22 @@
       if (tr.cells[0]?.textContent === today) tr.classList.add('hours-today');
     });
 
+    // Anfrage-Schaltflächen aus dem Shop dürfen nur bekannte Achsmodelle
+    // vorausfüllen. Freier Query-Text wird bewusst nicht in das Formular übernommen.
+    const axleInquiryModels = {
+      'achse-b350':'B 350', 'achse-b500':'B 500', 'achse-b750':'B 750',
+      'achse-b900':'B 900', 'achse-b1100':'B 1100', 'achse-b1300':'B 1300',
+      'achse-b1500':'B 1500', 'achse-b1800':'B 1800', 'achse-b2000':'B 2000',
+      'achse-b2500':'B 2500', 'achse-b2700':'B 2700', 'achse-b3000':'B 3000',
+      'achse-b3500':'B 3500'
+    };
+    const requestedProduct = new URLSearchParams(window.location.search).get('produkt');
+    const requestedModel = axleInquiryModels[requestedProduct];
+    if (requestedModel) {
+      document.getElementById('betreff').value = 'Anfrage Zubehör / Ersatzteile';
+      document.getElementById('nachricht').value = `Ich interessiere mich für eine einzelne Achse für meinen HEKU Bootsanhänger ${requestedModel}. Bitte senden Sie mir ein Angebot.`;
+    }
+
     // Formular absenden
     async function submitKontakt(event) {
       if (event) event.preventDefault();
