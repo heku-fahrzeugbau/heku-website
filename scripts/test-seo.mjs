@@ -1217,6 +1217,9 @@ test('Unknown produkte paths resolve to produkte.html, legacy slugs stay put',()
 });
 test('Mobile header keeps the burger separate from the configurator CTA',()=>{
  const css=read('assets/css/header-mobile.css');
+ for(const file of ['index.html','bootstrailer.html','kanuanhaenger-kajakanhaenger.html','motorbootanhaenger.html','konfigurator.html']){
+  assert.match(read(file),/href="\/assets\/css\/header-mobile\.css\?v=20261117-mobile-header"/,file);
+ }
  assert.match(css,/@media \(max-width: 768px\)/);
  assert.match(css,/#nav \.nav-right > a\.btn-outline[\s\S]*?display: none !important/);
  assert.match(css,/#nav \.nav-burger[\s\S]*?min-width: 42px[\s\S]*?margin-left: 10px[\s\S]*?padding: 10px/);
