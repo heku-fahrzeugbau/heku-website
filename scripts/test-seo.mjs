@@ -19,9 +19,9 @@ const categoryPages = {
 test('Dealer finder uses local postcode data',()=>{
  const page=read('haendler.html');
  const postcodeData=JSON.parse(read('assets/de-postcode-centroids.json'));
- assert.equal((page.match(/class="dealer-pin"/g)||[]).length,9);
- assert.equal((page.match(/data-lat="/g)||[]).length,9);
- assert.equal((page.match(/data-lon="/g)||[]).length,9);
+ assert.equal((page.match(/class="dealer-pin"/g)||[]).length,10);
+ assert.equal((page.match(/data-lat="/g)||[]).length,10);
+ assert.equal((page.match(/data-lon="/g)||[]).length,10);
  assert.match(page,/id="dealerPostcode"/);
  assert.match(page,/assets\/de-postcode-centroids\.json/);
  assert.match(page,/slice\(0, 3\)/);
@@ -41,6 +41,7 @@ test('Each dealer contact card has an external website link with rel=noopener',(
   'dealer-bendix-contact':'https://bendix-pkw-anhaenger.de/',
   'dealer-kreusch-contact':'https://www.kreusch.de/',
   'dealer-sailart-contact':'https://www.sailart.de/',
+  'dealer-plata-marine-contact':'https://www.platamarine.com/',
  };
  const cards=[...page.matchAll(/<div class="dealer-contact-card" id="([^"]+)">([\s\S]*?)\n {6}<\/div>/g)];
  assert.deepEqual(cards.map(([,id])=>id),Object.keys(expected));
