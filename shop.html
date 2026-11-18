@@ -1408,6 +1408,7 @@
         <span style="font-size:15px;font-weight:600;color:var(--schwarz)" id="cartVersand">-</span>
       </div>
       <div class="cart-mwst">Inkl. 19% MwSt. · Versand nach Deutschland</div>
+      <p class="cart-mwst">Für Zubehör-Bestellungen aus dem Online-Shop gilt eine Lieferzeit von in der Regel 3 bis 7 Werktagen nach Zahlungseingang.</p>
       <button class="btn-checkout" id="checkoutBtn" onclick="openCheckout()" disabled>Zur Bestellung →</button>
     </div>
   </div>
@@ -1428,7 +1429,7 @@
 
           <div class="vorkasse-box">
             <div class="vorkasse-title">Zahlung per Vorkasse</div>
-            <div class="vorkasse-text">Nach Eingang Ihrer Bestellung erhalten Sie unsere Bankdaten automatisch per E-Mail. Bitte überweisen Sie den Betrag nach Erhalt der Bestellbestätigung. Wir versenden die Ware nach Zahlungseingang.</div>
+            <div class="vorkasse-text">Der Kaufvertrag kommt erst mit unserer ausdrücklichen Auftragsbestätigung zustande. Eine automatische Eingangsbestätigung ist keine Auftragsbestätigung. Bankdaten und der verbindliche Betrag kommen mit der Auftragsbestätigung. Für Zubehör-Bestellungen aus dem Online-Shop gilt eine Lieferzeit von in der Regel 3 bis 7 Werktagen nach Zahlungseingang. Die Lieferung erfolgt nach vollständigem Zahlungseingang.</div>
           </div>
 
           <div class="modal-section">
@@ -1494,14 +1495,15 @@
           <div class="consent-row">
             <input type="checkbox" class="consent-check" id="co-consent" name="co-consent" required>
             <label class="consent-text" for="co-consent">
-              Ich akzeptiere die <a href="agb.html" target="_blank">AGB</a> und habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> sowie die <a href="widerruf.html" target="_blank">Widerrufsbelehrung</a> zur Kenntnis genommen. Ich bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Bestellung verwendet werden.
+              Ich habe die <a href="agb.html" target="_blank">AGB</a> und die <a href="widerruf.html" target="_blank">Widerrufsbelehrung</a> zur Kenntnis genommen.
             </label>
           </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;">Informationen zur Verarbeitung Ihrer Daten finden Sie in der <a href="datenschutz.html" target="_blank" style="color:var(--rot);">Datenschutzerklärung</a>. Für die Bestellung ist keine gesonderte Einwilligung erforderlich.</p>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;">Als Verbraucher haben Sie ein gesetzliches <a href="widerruf.html" target="_blank" style="color:var(--rot);">Widerrufsrecht von 14 Tagen</a> ab Erhalt der Ware.</p>
 
           <div class="form-error" id="co-error" role="alert"></div>
           <button type="button" class="guarantee-checkout" onclick="openGuaranteeNotice()" aria-haspopup="dialog">ⓘ Gesetzliche Gewährleistung: Informationen anzeigen</button>
-          <button class="btn-order" id="orderBtn" onclick="submitOrder()">Bestellung verbindlich absenden →</button>
+          <button class="btn-order" id="orderBtn" onclick="submitOrder()">Zahlungspflichtig bestellen</button>
         </div>
       </div>
 
@@ -1512,7 +1514,7 @@
         <div class="success-title" id="orderSuccessTitle" tabindex="-1">Bestellung eingegangen!</div>
         <p class="success-text" id="orderMailStatus" role="status" aria-live="polite"></p>
         <div class="success-ref" id="orderRef"></div>
-        <p class="success-text" style="margin-top:20px">Bei Fragen erreichen Sie uns unter <a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a> oder <a href="tel:+49521200066">0521 200066</a>. Bitte nennen Sie Ihre Bestellnummer.</p>
+        <p class="success-text" style="margin-top:20px">Bei Fragen erreichen Sie uns unter <a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a> oder <a href="tel:+49521200066">0521 200066</a>. Bitte nennen Sie Ihre Bestellnummer. Einen Vertrag können Sie über <a href="widerruf.html#vertrag-widerrufen">Vertrag widerrufen</a> widerrufen.</p>
         <button type="button" class="btn-checkout" onclick="closeCheckout()">Zurück zum Shop</button>
       </div>
     </div>
@@ -1561,7 +1563,7 @@
     </div>
     <div class="ft-bottom">
       <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal" style="flex-wrap:wrap;gap:8px;"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a><a href="#" onclick="document.getElementById('widerrufsModal').classList.add('show');return false;" style="color:var(--rot);font-weight:600;">Widerruf einlegen</a></div>
+      <div class="ft-legal" style="flex-wrap:wrap;gap:8px;"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html">Widerruf</a><a href="widerruf.html#vertrag-widerrufen" style="color:var(--rot);font-weight:600;">Vertrag widerrufen</a></div>
     </div>
   </footer>
 
@@ -1802,7 +1804,7 @@
     if (orderSubmitting || cart.length === 0) return;
     const orderBtn = document.getElementById('orderBtn');
     orderBtn.disabled = false;
-    orderBtn.textContent = 'Bestellung verbindlich absenden →';
+    orderBtn.textContent = 'Zahlungspflichtig bestellen';
     document.getElementById('co-error').classList.remove('show');
     const total = cart.reduce((s, i) => s + i.preis * i.qty, 0);
     const versand = calcVersand(cart);
@@ -1904,7 +1906,7 @@
       const consentEl = document.getElementById('co-consent');
       consentEl.setAttribute('aria-invalid', 'true');
       consentEl.focus();
-      errEl.textContent = 'Bitte akzeptieren Sie die AGB und Datenschutzerklärung.'; errEl.classList.add('show'); return;
+      errEl.textContent = 'Bitte bestätigen Sie, dass Sie die AGB und die Widerrufsbelehrung zur Kenntnis genommen haben.'; errEl.classList.add('show'); return;
     }
     errEl.classList.remove('show');
 
@@ -1940,7 +1942,7 @@
       });
       if (!res.ok) throw new Error('Bestellannahme: HTTP ' + res.status);
     } catch {
-      btn.disabled = false; btn.textContent = 'Bestellung verbindlich absenden →';
+      btn.disabled = false; btn.textContent = 'Zahlungspflichtig bestellen';
       errEl.textContent = 'Die Übermittlung konnte nicht bestätigt werden. Bitte kontaktieren Sie uns vor einem erneuten Absenden unter info@heku-fahrzeugbau.de und nennen Sie die Bestellnummer ' + ref + '.';
       errEl.classList.add('show');
       return;
@@ -1993,10 +1995,10 @@
           console.error('HEKU Bestätigungsmail: HTTP', mailRes.status, await mailRes.text());
           throw new Error('EmailJS HTTP ' + mailRes.status);
         }
-        setMailStatus('Ihre Bestellung ist eingegangen. Der E-Mail-Dienst hat die Bestätigung an ' + email + ' zum Versand angenommen. Bitte prüfen Sie auch Ihren Spam-Ordner. Überweisen Sie erst nach Erhalt unserer Bankdaten und geben Sie Ihre Bestellnummer als Verwendungszweck an.');
+        setMailStatus('Ihre Bestellung ist eingegangen. Der E-Mail-Dienst hat die Eingangsbestätigung an ' + email + ' zum Versand angenommen. Bitte prüfen Sie auch Ihren Spam-Ordner. Diese Eingangsbestätigung ist keine Auftragsbestätigung. Bankdaten und der verbindliche Betrag kommen mit der Auftragsbestätigung.');
     } catch (error) {
       console.error('HEKU Bestätigungsmail:', error);
-      setMailStatus('Ihre Bestellung ist eingegangen, aber der E-Mail-Versand konnte nicht bestätigt werden. Bitte bestellen Sie nicht erneut. Falls keine E-Mail ankommt, kontaktieren Sie uns mit Ihrer Bestellnummer, damit wir Ihnen die Bestätigung und Bankdaten senden können.');
+      setMailStatus('Ihre Bestellung ist eingegangen, aber der E-Mail-Versand konnte nicht bestätigt werden. Bitte bestellen Sie nicht erneut. Falls keine E-Mail ankommt, kontaktieren Sie uns mit Ihrer Bestellnummer. Bankdaten und der verbindliche Betrag kommen mit der Auftragsbestätigung.');
     } finally {
       clearTimeout(mailTimeout);
     }
@@ -2091,16 +2093,25 @@
   <div id="widerrufsModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,10,10,0.85);align-items:center;justify-content:center;">
     <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:40px;max-width:480px;width:90%;position:relative;">
       <button onclick="document.getElementById('widerrufsModal').classList.remove('show');" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;">✕</button>
-      <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin:0 0 8px;">Widerruf einlegen</h2>
-      <p style="color:#aaa;font-size:14px;margin:0 0 24px;">Geben Sie Ihre Bestellnummer und E-Mail-Adresse an. Wir bestätigen Ihren Widerruf umgehend.</p>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin:0 0 8px;">Vertrag widerrufen</h2>
+      <p style="color:#aaa;font-size:14px;margin:0 0 24px;">Geben Sie Name, Bestellnummer und E-Mail-Adresse an. Wir bestätigen Ihren Widerruf umgehend.</p>
       <div id="widerrufsError" style="display:none;background:rgba(232,0,14,0.15);border:1px solid var(--rot);color:var(--rot);padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:16px;"></div>
       <div id="widerrufsSuccess" style="display:none;background:rgba(0,180,80,0.12);border:1px solid #00b450;color:#00b450;padding:16px;border-radius:8px;text-align:center;font-size:14px;line-height:1.6;"></div>
       <div id="widerrufsForm">
-        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;">Bestellnummer *</label>
-        <input id="wid_bestellnr" type="text" placeholder="z. B. HK-2026-0042" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
-        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;">Ihre E-Mail-Adresse *</label>
-        <input id="wid_email" type="email" placeholder="ihre@email.de" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:24px;">
-        <button id="wid_btn" onclick="submitWiderruf()" style="width:100%;background:var(--rot);color:#fff;border:none;border-radius:6px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.3px;">Jetzt widerrufen</button>
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;" for="wid_name">Name *</label>
+        <input id="wid_name" type="text" autocomplete="name" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;" for="wid_bestellnr">Bestellnummer *</label>
+        <input id="wid_bestellnr" type="text" autocomplete="off" placeholder="Ihre Bestellnummer" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;" for="wid_email">E-Mail *</label>
+        <input id="wid_email" type="email" autocomplete="email" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;" for="wid_umfang">Umfang *</label>
+        <select id="wid_umfang" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:16px;">
+          <option value="gesamte Bestellung">Gesamte Bestellung</option>
+          <option value="einzelne Artikel">Nur einzelne Artikel</option>
+        </select>
+        <label style="display:block;color:#ccc;font-size:13px;margin-bottom:6px;" for="wid_artikel">Artikel beim Teilwiderruf</label>
+        <input id="wid_artikel" type="text" placeholder="Nur ausfüllen, wenn Sie einzelne Artikel widerrufen" style="width:100%;box-sizing:border-box;background:#111;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px 14px;color:#fff;font-size:14px;margin-bottom:24px;">
+        <button id="wid_btn" onclick="submitWiderruf()" style="width:100%;background:var(--rot);color:#fff;border:none;border-radius:6px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.3px;">Widerruf bestätigen</button>
         <p style="color:#666;font-size:11px;margin-top:12px;line-height:1.5;">Mit dem Absenden erklären Sie verbindlich den Widerruf Ihres Kaufvertrags gemäß § 356a BGB. Sie erhalten eine Bestätigung per E-Mail.</p>
       </div>
     </div>
@@ -2114,16 +2125,24 @@
   document.getElementById('widerrufsModal').style.display = 'none';
 
   async function submitWiderruf() {
+    const name = document.getElementById('wid_name').value.trim();
     const bestellnr = document.getElementById('wid_bestellnr').value.trim();
-    const email     = document.getElementById('wid_email').value.trim();
-    const errEl     = document.getElementById('widerrufsError');
-    const sucEl     = document.getElementById('widerrufsSuccess');
-    const btn       = document.getElementById('wid_btn');
+    const email = document.getElementById('wid_email').value.trim();
+    const umfang = document.getElementById('wid_umfang').value;
+    const artikel = document.getElementById('wid_artikel').value.trim();
+    const errEl = document.getElementById('widerrufsError');
+    const sucEl = document.getElementById('widerrufsSuccess');
+    const btn = document.getElementById('wid_btn');
     errEl.style.display = 'none';
-    sucEl.style.display  = 'none';
+    sucEl.style.display = 'none';
+    sucEl.textContent = '';
 
-    if (!bestellnr || !email) {
-      errEl.textContent = 'Bitte füllen Sie alle Felder aus.';
+    if (!name || !bestellnr || !email) {
+      errEl.textContent = 'Bitte füllen Sie Name, Bestellnummer und E-Mail aus.';
+      errEl.style.display = 'block'; return;
+    }
+    if (umfang === 'einzelne Artikel' && !artikel) {
+      errEl.textContent = 'Bitte nennen Sie die Artikel, die Sie widerrufen möchten.';
       errEl.style.display = 'block'; return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -2131,26 +2150,27 @@
       errEl.style.display = 'block'; return;
     }
 
-    btn.disabled = true; btn.textContent = 'Wird übermittelt …';
+    btn.disabled = true; btn.textContent = 'Wird übermittelt...';
     const zeitpunkt = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
+    const umfangText = umfang === 'einzelne Artikel' ? ('einzelne Artikel: ' + artikel) : 'gesamte Bestellung';
 
     try {
-      // 1) Interne Mail an HEKU via Web3Forms
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           access_key: '324e7405-8550-47b8-a9c8-bd4aac27bcc7',
-          subject: `Widerruf eingegangen: Bestellnummer ${bestellnr}`,
-          from_name: 'HEKU Shop Widerruf',
+          subject: 'Widerruf eingegangen: Bestellnummer ' + bestellnr,
+          from_name: name,
           bestellnummer: bestellnr,
           kunde_email: email,
+          kunde_name: name,
+          umfang: umfangText,
           zeitpunkt: zeitpunkt
         })
       });
       if (!res.ok) throw new Error();
 
-      // 2) Bestätigungsmail an Kunden via EmailJS template_6jm794t
       fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2160,25 +2180,24 @@
           user_id: 'uxnGyFrCsW9OCTzcw',
           template_params: {
             email: email,
-            anrede: 'Damen und Herren,',
-            vorname: '',
+            anrede: 'Guten Tag ' + name + ',',
+            vorname: name,
             nachname: '',
-            modell: `Wir bestätigen den Eingang Ihrer Widerrufserklärung für Bestellnummer ${bestellnr} vom ${zeitpunkt}. Wir melden uns zeitnah bei Ihnen.`
+            modell: 'Wir bestätigen den Eingang Ihrer Widerrufserklärung für Bestellnummer ' + bestellnr + ' vom ' + zeitpunkt + '. Umfang: ' + umfangText + '. Wir melden uns zeitnah bei Ihnen.'
           }
         })
       }).catch(() => {});
 
       document.getElementById('widerrufsForm').style.display = 'none';
-      sucEl.innerHTML = `Ihr Widerruf für Bestellnummer <strong>${bestellnr}</strong> wurde erfolgreich übermittelt.<br><br>Sie erhalten in Kürze eine Bestätigung an <strong>${email}</strong>.`;
+      sucEl.textContent = 'Ihr Widerruf für Bestellnummer ' + bestellnr + ' wurde erfolgreich übermittelt. Sie erhalten in Kürze eine Bestätigung an ' + email + '.';
       sucEl.style.display = 'block';
-
     } catch {
-      btn.disabled = false; btn.textContent = 'Widerrufen';
+      btn.disabled = false; btn.textContent = 'Widerruf bestätigen';
       errEl.textContent = 'Fehler beim Übermitteln. Bitte schreiben Sie uns direkt an info@heku-fahrzeugbau.de.';
       errEl.style.display = 'block';
     }
   }
-  </script>
+</script>
 
 
 <!-- ============================================================
