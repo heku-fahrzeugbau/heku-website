@@ -430,7 +430,7 @@
     <div class="dealer-map-shell" id="dealerMap" aria-label="Zoombare Weltkarte mit HEKU Händlerstandorten">
       <svg class="world-map" id="dealerMapSvg" viewBox="0 0 1200 600" role="img" aria-labelledby="dealer-map-title dealer-map-description">
         <title id="dealer-map-title">HEKU Händler weltweit</title>
-        <desc id="dealer-map-description">Zoombare Weltkarte mit Ländergrenzen und neun HEKU Händlerstandorten in Deutschland.</desc>
+        <desc id="dealer-map-description">Zoombare Weltkarte mit Ländergrenzen und zehn HEKU Händlerstandorten in Deutschland und Spanien.</desc>
         <rect width="1200" height="600" fill="#eef4f7" />
         <use href="assets/world-map-countries.svg#countries" />
       </svg>
@@ -514,6 +514,15 @@
         <a href="tel:+492235463252">+49 (0)2235 / 46 32 52</a>
         <a href="mailto:info@sailart.de">info@sailart.de</a>
         <a href="https://www.sailart.de/" target="_blank" rel="noopener">www.sailart.de</a>
+      </div>
+      <button class="dealer-pin" type="button" data-map-x="607.04" data-map-y="161.54" data-lat="41.5380" data-lon="2.1109" aria-expanded="false" aria-controls="dealer-plata-marine-contact" aria-label="Kontaktdaten von Plata Marine anzeigen" onclick="toggleDealerContact(event, this)">
+        <span class="sr-only">Plata Marine</span>
+      </button>
+      <div class="dealer-contact-card" id="dealer-plata-marine-contact">
+        <div class="dealer-contact-name">Plata Marine</div>
+        <a href="tel:+34633742973">+34 633 742 973</a>
+        <a href="mailto:juan@platamarine.com">juan@platamarine.com</a>
+        <a href="https://www.platamarine.com/" target="_blank" rel="noopener">www.platamarine.com</a>
       </div>
       <div class="map-controls" aria-label="Kartensteuerung">
         <button class="map-control" type="button" onclick="zoomDealerMap(1)" aria-label="Karte vergrößern">+</button>
