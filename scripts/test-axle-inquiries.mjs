@@ -22,6 +22,7 @@ for(const axle of axles) {
   assert.ok(card,`Shopkarte fehlt: ${axle.model}`);
   assert.match(card,/data-cat="achsen" data-inquiry="true"/);
   assert.match(card,/>Preis auf Anfrage<\/a>/);
+  assert.ok(card.includes(`src="assets/produkte/${axle.braked?'achse-gebremst':'achse-ungebremst'}.jpg"`),`Achsbild falsch: ${axle.model}`);
   assert.doesNotMatch(card,/addToCart|product-price" value=|Warenkorb/);
   assert.ok(contact.includes(`'${axle.code}':'${axle.model}'`),`Kontakt-Vorbelegung fehlt: ${axle.model}`);
 }

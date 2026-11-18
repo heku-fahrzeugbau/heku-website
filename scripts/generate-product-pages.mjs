@@ -110,7 +110,10 @@ export function inquiryCatalog(root=ROOT) {
     const brakeText='inklusive Edelstahl Bremsseil';
     if(record.braked!==desc.includes(brakeText)) throw new Error('Hinweis zum Edelstahl Bremsseil ist falsch: '+model);
     ids.add(id); codes.add(code); models.add(model);
-    return {id,code,model,braked:record.braked,name,desc,category:'achsen',inquiry:true,imagePath:'assets/produkte/achse-bootsanhaenger.svg'};
+    // Dummy-Bilder: ungebremste Achse (B 350 bis B 750) und gebremste Achse mit Bremstrommeln (übrige Modelle).
+    const imagePath=record.braked?'assets/produkte/achse-gebremst.jpg':'assets/produkte/achse-ungebremst.jpg';
+    const imageAlt=(record.braked?'Gebremste Achse mit Bremstrommeln für HEKU Bootsanhänger ':'Ungebremste Achse für HEKU Bootsanhänger ')+model+', Beispielbild';
+    return {id,code,model,braked:record.braked,name,desc,category:'achsen',inquiry:true,imagePath,imageAlt};
   });
 }
 // Menge 1 aus calcVersand() in shop.html. Dieselbe Funktion wie der Warenkorb,
@@ -154,7 +157,7 @@ export function renderProductCard(p) {
 export function renderInquiryCard(p) {
   const e=escapeHTML, href=`kontakt.html?produkt=${encodeURIComponent(p.code)}#formWrap`;
   return `      <article class="product-card product-card-inquiry" id="artikel-${p.id}" data-id="${p.id}" data-code="${e(p.code)}" data-cat="achsen" data-inquiry="true">
-        <div class="product-img"><img src="${e(p.imagePath)}" alt="${e(p.name)}" loading="lazy" decoding="async"></div>
+        <div class="product-img"><img src="${e(p.imagePath)}" alt="${e(p.imageAlt)}" width="800" height="600" loading="lazy" decoding="async"></div>
         <div class="product-body">
           <p class="product-cat">Achsen für Bootsanhänger <span class="product-artnr">Passend für ${e(p.model)}</span></p>
           <h2 class="product-name">${e(p.name)}</h2>
