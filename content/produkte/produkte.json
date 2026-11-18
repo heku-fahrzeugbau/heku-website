@@ -312,7 +312,8 @@
     "name": "Laufsteg (Gangway)",
     "description": "",
     "price": "349.00",
-    "image": "assets/produkte/produkt-35.jpg"
+    "image": "assets/produkte/produkt-35.jpg",
+    "imageAlt": "Laufsteg aus Riffelblech, Artikel 50234"
   },
   {
     "id": 36,
