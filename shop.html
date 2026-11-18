@@ -110,7 +110,7 @@
     .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .product-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); display: flex; flex-direction: column; }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
-    .product-img { aspect-ratio: 4/3; background: var(--bg2); display: flex; align-items: center; justify-content: center; }
+    .product-img { aspect-ratio: 4/3; background: #fff; display: flex; align-items: center; justify-content: center; }
     .product-img svg { opacity: 0.2; }
     .product-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
     .product-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rot); margin-bottom: 5px; }
@@ -139,7 +139,7 @@
     .cart-empty-text { font-size: 15px; color: var(--muted); }
     .cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
     .cart-item:last-child { border-bottom: none; }
-    .cart-item-img { width: 56px; height: 56px; border-radius: 8px; background: var(--bg2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cart-item-img { width: 56px; height: 56px; border-radius: 8px; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .cart-item-img svg { opacity: 0.25; }
     .cart-item-info { flex: 1; }
     .cart-item-name { font-size: 14px; font-weight: 600; color: var(--schwarz); margin-bottom: 3px; line-height: 1.4; }
@@ -1514,7 +1514,7 @@
         <div class="success-title" id="orderSuccessTitle" tabindex="-1">Bestellung eingegangen!</div>
         <p class="success-text" id="orderMailStatus" role="status" aria-live="polite"></p>
         <div class="success-ref" id="orderRef"></div>
-        <p class="success-text" style="margin-top:20px">Bei Fragen erreichen Sie uns unter <a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a> oder <a href="tel:+49521200066">0521 200066</a>. Bitte nennen Sie Ihre Bestellnummer. Einen Vertrag können Sie über <a href="widerruf.html#vertrag-widerrufen">Vertrag widerrufen</a> widerrufen.</p>
+        <p class="success-text" style="margin-top:20px">Bei Fragen erreichen Sie uns unter <a href="mailto:info@heku-fahrzeugbau.de">info@heku-fahrzeugbau.de</a> oder <a href="tel:+49521200066">0521 200066</a>. Bitte nennen Sie Ihre Bestellnummer. Einen Vertrag können Sie über den Link <a href="widerruf.html#vertrag-widerrufen">„Vertrag widerrufen“</a> widerrufen.</p>
         <button type="button" class="btn-checkout" onclick="closeCheckout()">Zurück zum Shop</button>
       </div>
     </div>
