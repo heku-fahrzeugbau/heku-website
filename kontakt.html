@@ -272,9 +272,6 @@
     .social-link svg{width:16px;height:16px;fill:rgba(255,255,255,0.45);transition:fill 0.2s;}
     .social-link:hover svg{fill:var(--rot);}
   </style>
-  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
-  <script>UPLOADCARE_PUBLIC_KEY = "0d2323b7a1fca5d707bd";</script>
-  <script>UPLOADCARE_LOCALE = "de";</script>
 </head>
 <body>
 
@@ -449,7 +446,10 @@
               data-multiple="true"
               data-preview-step="true"
               style="display:none">
-            <div id="uploadPlaceholder" style="padding:12px 16px;border:1.5px dashed var(--border);border-radius:8px;background:var(--bg2);font-size:13px;color:var(--muted);">Widget wird geladen…</div>
+            <div id="uploadGate" style="padding:12px 16px;border:1.5px dashed var(--border);border-radius:8px;background:var(--bg2);">
+              <p style="font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 10px;">Fotos werden erst geladen, wenn Sie zustimmen. Dabei verbindet sich Ihr Browser mit Uploadcare in den USA und übermittelt Ihre IP-Adresse sowie die Datei.</p>
+              <button type="button" id="uploadConsentBtn" class="btn-submit" style="width:auto;padding:10px 16px;">Fotos anhängen</button>
+            </div>
           </div>
         </div>
 
@@ -596,15 +596,30 @@
     </div>
     <div class="ft-bottom">
       <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div>
+      <div class="ft-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html#vertrag-widerrufen">Vertrag widerrufen</a></div>
     </div>
   </footer>
 
   <script>
-    // Uploadcare: Widget initialisieren
-    document.addEventListener('DOMContentLoaded', () => {
-      const placeholder = document.getElementById('uploadPlaceholder');
-      if (placeholder) placeholder.style.display = 'none';
+    document.getElementById('uploadConsentBtn').addEventListener('click', function () {
+      const btn = this;
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.textContent = 'Widget wird geladen...';
+      window.UPLOADCARE_PUBLIC_KEY = '0d2323b7a1fca5d707bd';
+      window.UPLOADCARE_LOCALE = 'de';
+      const script = document.createElement('script');
+      script.src = 'https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js';
+      script.charset = 'utf-8';
+      script.onload = function () {
+        const gate = document.getElementById('uploadGate');
+        if (gate) gate.hidden = true;
+      };
+      script.onerror = function () {
+        btn.disabled = false;
+        btn.textContent = 'Fotos anhängen';
+      };
+      document.head.appendChild(script);
     });
 
     // Heutigen Tag hervorheben

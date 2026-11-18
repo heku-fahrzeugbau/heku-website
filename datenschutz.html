@@ -111,13 +111,16 @@
     <p><strong>Rechtsgrundlage:</strong> Bei vertragsbezogenen Anfragen Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen), im Übrigen Art. 6 Abs. 1 lit. a DSGVO (Ihre Einwilligung durch Absenden des Formulars).</p>
     <p>An der Verarbeitung Ihrer Formulardaten sind folgende Dienstleister als Auftragsverarbeiter beteiligt:</p>
     <ul>
-      <li><strong>Web3Forms</strong> (Web3Forms, weltweit tätig): Übermittlung der Formularinhalte an unser Postfach. Verarbeitet werden die von Ihnen eingegebenen Daten sowie Ihre IP-Adresse.</li>
-      <li><strong>EmailJS</strong> (EmailJS Ltd.): Versand automatischer Bestätigungs-E-Mails an die von Ihnen angegebene Adresse.</li>
+      <li><strong>Web3Forms</strong> (Web3Forms, weltweit tätig): Übermittlung der Formularinhalte an unser Postfach, unter anderem aus Kontakt, Konfigurator, Händleranfrage und Widerruf. Verarbeitet werden die von Ihnen eingegebenen Daten sowie Ihre IP-Adresse. Soweit eine Übermittlung in ein Drittland stattfindet, stützt sie sich auf die Standardvertragsklauseln der EU-Kommission.</li>
+      <li><strong>EmailJS</strong> (EmailJS Ltd.): Versand automatischer Bestätigungs-E-Mails an die von Ihnen angegebene Adresse, unter anderem nach Shop-Bestellungen, Kontakt- und Händleranfragen, Konfigurator-Anfragen und einem Widerruf. Soweit EmailJS Daten außerhalb der EU verarbeitet, erfolgt die Übermittlung auf Grundlage der Standardvertragsklauseln der EU-Kommission.</li>
       <li><strong>HubSpot</strong> (HubSpot Ireland Limited, 1 Sir John Rogerson's Quay, Dublin 2, Irland): Erfassung und Verwaltung von Anfragen in unserem Kundenverwaltungssystem. Verarbeitet werden Name, E-Mail-Adresse, Telefonnummer, Anschrift (Straße, PLZ, Ort), Nachrichteninhalt sowie die Herkunft der Anfrage.</li>
       <li><strong>n8n</strong> (n8n GmbH, Berlin): Automatisierte Weiterverarbeitung eingehender Anfragen.</li>
       <li><strong>Google Sheets</strong> (Google Ireland Limited): Interne Zusammenführung der Anfragen zur Bearbeitung.</li>
+      <li><strong>Formspree</strong> (Formspree Inc., USA): Übermittlung jeder Shop-Bestellung und, soweit das Formular diesen Dienst nutzt, weiterer Formulardaten. Verarbeitet werden die eingegebenen Felder, der Warenkorb, Versandkosten, Gesamtbetrag und die IP-Adresse. Die Übermittlung in die USA stützt sich auf die Standardvertragsklauseln der EU-Kommission. Rechtsgrundlage für Bestellungen ist Art. 6 Abs. 1 lit. b DSGVO.</li>
+      <li><strong>Uploadcare</strong> (Uploadcare, Inc., USA): optionale Fotos im Kontaktformular. Das Skript wird erst geladen, wenn Sie auf "Fotos anhängen" klicken. Dann werden Ihre IP-Adresse und die Datei an Uploadcare in den USA übermittelt. Rechtsgrundlage ist Ihre Einwilligung durch diesen Klick, Art. 6 Abs. 1 lit. a DSGVO.</li>
     </ul>
     <p>Mit allen Auftragsverarbeitern bestehen Verträge nach Art. 28 DSGVO. Soweit Daten in Drittländer übermittelt werden, geschieht dies auf Grundlage der Standardvertragsklauseln der EU-Kommission.</p>
+    <p><strong>Shop-Bestellungen.</strong> Wenn Sie im Shop bestellen, verarbeiten wir Anrede, Name, E-Mail, Telefon, Lieferadresse, eine optionale Anmerkung, die Artikel mit Menge, die Versandkosten, den Gesamtbetrag und die Bestellnummer, um den Kaufvertrag zu erfüllen. Pflichtangaben sind im Formular gekennzeichnet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Eine Einwilligung ist dafür nicht erforderlich. Bankdaten und der verbindliche Betrag teilen wir mit der Auftragsbestätigung mit. Zur Vertragserfüllung können Daten an das mit der Überweisung befasste Kreditinstitut und an den Versanddienstleister weitergegeben werden. Wir speichern diese Daten für die Dauer der gesetzlichen handels- und steuerrechtlichen Aufbewahrungsfristen.</p>
     <p><strong>Speicherdauer:</strong> Anfragedaten löschen wir, sobald sie für den Zweck nicht mehr erforderlich sind, spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen. Für geschäftliche Korrespondenz gelten in der Regel sechs Jahre (§ 257 HGB), für steuerrelevante Unterlagen zehn Jahre (§ 147 AO).</p>
 
     <hr>
@@ -126,6 +129,7 @@
     <ul>
       <li><strong>heku_consent_v1</strong> (lokaler Speicher, 6 Monate): speichert Ihre Entscheidung zum Cookie-Hinweis. Technisch notwendig, damit wir Sie nicht bei jedem Besuch erneut fragen. Rechtsgrundlage: § 25 Abs. 2 Nr. 2 TDDDG.</li>
       <li><strong>popupSeen</strong> (Sitzungsspeicher): verhindert, dass ein Hinweisfenster mehrfach pro Sitzung erscheint. Wird beim Schließen des Browsers gelöscht. Technisch notwendig.</li>
+      <li><strong>heku-shop-cart-v1</strong> (Sitzungsspeicher, sessionStorage): speichert im Shop nur die Artikel-ID und die Menge. Name, Adresse und Telefon werden dort nicht gespeichert. Der Eintrag endet mit dem Schließen des Browsers. Technisch notwendig für den Warenkorb. Rechtsgrundlage: § 25 Abs. 2 Nr. 2 TDDDG.</li>
       <li><strong>Google-Analytics-Cookies</strong> (_ga, _ga_*, bis 24 Monate): werden ausschließlich nach Ihrer Einwilligung gesetzt.</li>
     </ul>
 
@@ -161,12 +165,12 @@
     <h3>12. Änderungen dieser Erklärung</h3>
     <p>Wir passen diese Datenschutzerklärung an, wenn sich die Rechtslage oder die auf dieser Website eingesetzten Dienste ändern.</p>
 
-    <p style="margin-top:32px;font-size:13px;color:var(--muted);">Stand: 9. Oktober 2026 · HEKU Fahrzeugbau GmbH</p>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted);">Stand: 18. November 2026 · HEKU Fahrzeugbau GmbH</p>
   </div>
   <footer>
     <div class="ft-bottom">
       <span class="ft-copy">© 2026 HEKU Fahrzeugbau GmbH</span>
-      <div class="ft-legal"><a href="technik-bootsanhaenger.html">Technische Daten</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div>
+      <div class="ft-legal"><a href="technik-bootsanhaenger.html">Technische Daten</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a><a href="widerruf.html#vertrag-widerrufen">Vertrag widerrufen</a></div>
     </div>
   </footer>
 </body>
