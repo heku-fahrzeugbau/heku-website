@@ -342,3 +342,16 @@ test('Model and rowing-trailer Product JSON-LD names the brand HEKU', () => {
   assert.ok(ruder, 'ruderbootanhaenger.html');
   expectBrand(ruder);
 });
+
+test('Model inquiry CTAs carry a supported model to contact without a new indexable URL', () => {
+  const contact = read('kontakt.html');
+  for (const m of all) {
+    const html = read(m.slug);
+    const code = m.slug.slice('bootsanhaenger-'.length, -5);
+    const href = 'kontakt.html#modell-' + code;
+    for (const cls of ['btn-hero-ghost', 'btn-cta', 'hsc-btn hsc-inquiry', 'btn-nav btn-outline']) {
+      assert.ok(html.includes('href="' + (cls.startsWith('hsc') ? '/' : '') + href + '" class="' + cls + '"'), m.name + ' ' + cls);
+    }
+    assert.ok(contact.includes("'achse-" + code + "':'" + m.name + "'"), m.name + ' supported by contact');
+  }
+});

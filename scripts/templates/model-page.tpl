@@ -353,7 +353,7 @@
 
     </div>
     <div class="nav-right">
-      <a href="kontakt.html" class="btn-nav btn-outline">Anfrage</a>
+      <a href="{{INQUIRY_URL}}" class="btn-nav btn-outline">Anfrage</a>
       <a href="konfigurator.html" class="btn-nav btn-red">Konfigurator</a>
     </div>
     <div class="nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
@@ -405,7 +405,7 @@
       <div>
         <div class="ft-head">Service</div>
         <div class="ft-links">
-          <a href="kontakt.html">Anfrage stellen</a>
+          <a href="{{INQUIRY_URL}}">Anfrage stellen</a>
           <a href="faq.html">FAQ</a>
           <a href="ratgeber-bootsanhaenger.html">Ratgeber</a>
           <a href="wasserdichte-radnabe.html">Wasserdichte Radnabe</a>
@@ -458,7 +458,7 @@
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.2.2 2.4.56 3.5a1 1 0 01-.24 1z"/></svg>
     <span>Anrufen</span>
   </a>
-  <a href="/kontakt.html" class="hsc-btn hsc-inquiry">
+  <a href="/{{INQUIRY_URL}}" class="hsc-btn hsc-inquiry">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1zm8 7L4.5 6.3 4 7l8 5 8-5-.5-.7z"/></svg>
     <span>Anfrage</span>
   </a>

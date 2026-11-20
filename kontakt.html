@@ -363,6 +363,7 @@
 
     <!-- FORMULAR -->
     <div class="contact-form-wrap">
+      <p id="modelInquiryContext" hidden></p>
       <form id="formWrap" onsubmit="submitKontakt(event)" novalidate>
         <div class="form-title">Schreiben Sie uns</div>
         <p class="form-sub">Alle mit <span style="color:var(--rot)">*</span> markierten Felder sind Pflichtfelder. Für Rückfragen und ein passendes Angebot benötigen wir Ihre vollständige Anschrift und eine Telefonnummer. Wir antworten in der Regel innerhalb von 1 bis 2 Werktagen.</p>
@@ -639,7 +640,17 @@
       'achse-b3500':'B 3500'
     };
     const requestedProduct = new URLSearchParams(window.location.search).get('produkt');
-    const requestedModel = axleInquiryModels[requestedProduct];
+    const requestedModel = Object.hasOwn(axleInquiryModels, requestedProduct) ? axleInquiryModels[requestedProduct] : null;
+    // Nur bekannte Modellcodes übernehmen; kein freier URL-Text im Formular.
+    const modelCode = location.hash.match(/^#modell-(b[0-9]+)$/)?.[1];
+    const trailerModel = !requestedModel && modelCode ? axleInquiryModels['achse-' + modelCode] : null;
+    const modelSource = trailerModel ? 'bootsanhaenger-' + modelCode + '.html' : '';
+    if (trailerModel) {
+      const hint = document.getElementById('modelInquiryContext');
+      hint.textContent = 'Ihre Anfrage zum HEKU ' + trailerModel;
+      hint.hidden = false;
+      document.getElementById('betreff').value = 'Anfrage Bootsanhänger';
+    }
     if (requestedModel) {
       document.getElementById('betreff').value = 'Anfrage Zubehör / Ersatzteile';
       document.getElementById('nachricht').value = `Ich interessiere mich für eine einzelne Achse für meinen HEKU Bootsanhänger ${requestedModel}. Bitte senden Sie mir ein Angebot.`;
@@ -745,6 +756,10 @@
         formData.append('ort', ort);
         formData.append('strasse', strasse);
         formData.append('betreff', betreff);
+        if (trailerModel) {
+          formData.append('modell', trailerModel);
+          formData.append('modellseite', modelSource);
+        }
         formData.append('nachricht', nachricht);
         formData.append('replyto', email);
         const fileUrl = document.getElementById('uploadedFileUrl').value;
@@ -778,7 +793,7 @@
               }
             })
           }).catch(() => {});
-          createHubSpotContact({ vorname, nachname, email, telefon, strasse, plz, ort, quelle: 'Kontaktformular', notiz: 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
+          createHubSpotContact({ vorname, nachname, email, telefon, strasse, plz, ort, quelle: 'Kontaktformular', notiz: (trailerModel ? 'Modell: ' + trailerModel + ' | Modellseite: ' + modelSource + ' | ' : '') + 'Betreff: ' + betreff + ' | Nachricht: ' + nachricht });
           window.location.href = '/danke.html';
         } else {
           throw new Error(result && result.message ? result.message : 'Web3Forms hat die Anfrage nicht bestätigt.');
