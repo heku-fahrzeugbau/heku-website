@@ -248,7 +248,7 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
       </div>
       <div class="header-cta-row">
         <a href="konfigurator.html" class="btn-hero-red">${e(m.name)} konfigurieren &#8594;</a>
-        <a href="kontakt.html" class="btn-hero-ghost">Anfrage senden</a>
+        <a href="kontakt.html#modell-b${m.name.slice(2)}" class="btn-hero-ghost">${e(m.name)} anfragen</a>
         <a href="tel:+49521200066" class="btn-hero-ghost">0521 200066</a>
       </div>
       <div class="page-header-stats">
@@ -344,7 +344,7 @@ ${neighbors.map(n => `        <a href="${n.slug}" class="link-pill">HEKU ${e(n.n
       <div class="cta-title">HEKU ${e(m.name)} anfragen</div>
       <p class="cta-sub">Bootsdaten in den Konfigurator eingeben oder direkt anrufen: 0521 200066.</p>
       <a href="konfigurator.html" class="btn-cta">Zum Konfigurator &#8594;</a>
-      <a href="kontakt.html" class="btn-cta" style="margin-left:10px;">Anfrage senden</a>
+      <a href="kontakt.html#modell-b${m.name.slice(2)}" class="btn-cta" style="margin-left:10px;">${e(m.name)} anfragen</a>
     </div>
 
   </div><!-- end content-wrap -->`;
@@ -353,7 +353,7 @@ ${neighbors.map(n => `        <a href="${n.slug}" class="link-pill">HEKU ${e(n.n
 export function renderModelPage(m, all, shell) {
   const body = renderBody(m, all);
   if (/\b(?:null|undefined|NaN)\b|k\. A\./.test(body)) throw new Error(`${m.slug}: leere Angabe im HTML.`);
-  const fill = { TITLE: escapeHTML(m.title), DESCRIPTION: escapeHTML(m.description), CANONICAL: pageUrl(m), OG_IMAGE: `${BASE}/${m.bilder[0].src}`, JSONLD: jsonForScript(schemaFor(m)), BODY: body };
+  const fill = { INQUIRY_URL: 'kontakt.html#modell-b' + m.name.slice(2), TITLE: escapeHTML(m.title), DESCRIPTION: escapeHTML(m.description), CANONICAL: pageUrl(m), OG_IMAGE: `${BASE}/${m.bilder[0].src}`, JSONLD: jsonForScript(schemaFor(m)), BODY: body };
   const html = shell.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
     if (!(key in fill)) throw new Error(`Unbekannter Platzhalter {{${key}}} in ${modelTemplate}.`);
     return fill[key];
