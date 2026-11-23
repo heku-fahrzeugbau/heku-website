@@ -489,3 +489,23 @@ test('Merchant feed shipping matches calcVersand and trailers are pickup only',(
  assert.match(read('scripts/build-site.mjs'), /generateFeed/);
  assert.deepEqual(generateFeed().changed, []);
 });
+test('Every accessory Product JSON-LD has a non-empty description',()=>{
+ for(const p of all) {
+  const product=schema(read(filename(p)))['@graph'][0];
+  assert.equal(product['@type'],'Product',p.sku);
+  assert.equal(typeof product.description,'string',p.sku);
+  assert.ok(product.description.trim(),p.sku);
+  assert.equal(product.description,p.desc,p.sku);
+  assert.doesNotMatch(product.description,/PRÜFEN|patentiert/i,p.sku);
+ }
+ const articleFiles=fs.readdirSync(path.join(ROOT,'artikel')).filter(f=>f.endsWith('.html'));
+ for(const file of articleFiles) {
+  const page=read('artikel/'+file);
+  if(page.includes('noindex')||!page.includes('"@type":"Product"')) continue;
+  const product=schema(page)['@graph'][0];
+  assert.equal(product['@type'],'Product',file);
+  assert.equal(typeof product.description,'string',file);
+  assert.ok(product.description.trim(),file);
+  assert.doesNotMatch(product.description,/PRÜFEN|patentiert/i,file);
+ }
+});
