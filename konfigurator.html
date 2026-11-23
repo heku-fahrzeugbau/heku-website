@@ -87,8 +87,6 @@
     .step-item.active .step-dot span { color: #fff; }
     .step-item.done .step-dot { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
     .step-item.done .step-dot span { color: rgba(255,255,255,0.6); }
-    .step-item.done .step-dot::after { content: '✓'; font-size: 13px; color: rgba(255,255,255,0.8); }
-    .step-item.done .step-dot span { display: none; }
     .step-info { padding-top: 4px; }
     .step-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.3); transition: color 0.3s; }
     .step-item.active .step-label { color: #fff; }
@@ -405,22 +403,18 @@
           <div class="form-label" style="margin-bottom:12px">Bootstyp <span>*</span></div>
           <div class="card-grid" id="bootstypGrid">
             <div class="select-card" data-value="segelboot" onclick="selectCard(this,'bootstyp')">
-              <div class="card-icon">⛵</div>
               <div class="card-label">Segelboot</div>
               <div class="card-sub">Kielboot, Jolle</div>
             </div>
             <div class="select-card" data-value="motorboot" onclick="selectCard(this,'bootstyp')">
-              <div class="card-icon">🚤</div>
               <div class="card-label">Motorboot</div>
               <div class="card-sub">Außen- / Innenborder</div>
             </div>
             <div class="select-card" data-value="sportboot" onclick="selectCard(this,'bootstyp')">
-              <div class="card-icon">🏎️</div>
               <div class="card-label">Sportboot</div>
               <div class="card-sub">Schnellboot, Bowrider</div>
             </div>
             <div class="select-card" data-value="schlauchboot" onclick="selectCard(this,'bootstyp')">
-              <div class="card-icon">🛥️</div>
               <div class="card-label">Schlauchboot</div>
               <div class="card-sub">RIB, Festrumpf</div>
             </div>
@@ -486,22 +480,18 @@
           <div class="form-label" style="margin-bottom:12px">Antriebsart <span>*</span></div>
           <div class="card-grid two" id="antriebGrid">
             <div class="select-card" data-value="aussenbord" onclick="selectCard(this,'antrieb')">
-              <div class="card-icon">⚙️</div>
               <div class="card-label">Außenbordmotor</div>
               <div class="card-sub">Motor am Heck</div>
             </div>
             <div class="select-card" data-value="innenbord" onclick="selectCard(this,'antrieb')">
-              <div class="card-icon">🔧</div>
               <div class="card-label">Innenbordmotor</div>
               <div class="card-sub">Motor im Rumpf</div>
             </div>
             <div class="select-card" data-value="wellenantrieb" onclick="selectCard(this,'antrieb')">
-              <div class="card-icon">🌀</div>
               <div class="card-label">Wellenantrieb</div>
               <div class="card-sub">Durchgehende Welle</div>
             </div>
             <div class="select-card" data-value="kein" onclick="selectCard(this,'antrieb')">
-              <div class="card-icon">🌬️</div>
               <div class="card-label">Kein Antrieb</div>
               <div class="card-sub">Segelboot / Jolle</div>
             </div>
