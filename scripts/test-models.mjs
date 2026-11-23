@@ -73,8 +73,7 @@ test('Visible price, meta description and Offer agree; a model without price get
     assert.equal(o.availableAtOrFrom.address.streetAddress, 'Bunzlauer Straße 6');
     assert.equal(o.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
     assert.equal(o.hasMerchantReturnPolicy.merchantReturnLink, `${BASE}/agb.html#ausschluss-einzelanfertigung`);
-    assert.deepEqual(o.shippingDetails, { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } });
-    assert.equal(o.shippingDetails.doesNotShip, undefined);
+    assert.equal(o.shippingDetails, undefined);
     assert.equal(o.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
     for (const k of ['priceValidUntil', 'validFrom']) assert.equal(o[k], undefined, k);
     for (const img of [].concat(p.image)) assert.match(img, /^https:\/\/heku-fahrzeugbau\.de\//);
@@ -331,7 +330,7 @@ test('Model and rowing-trailer Product JSON-LD names the brand HEKU', () => {
     assert.equal(product.offers.gtin, undefined);
     assert.equal(product.offers.mpn, undefined);
     assert.equal(product.offers.availability, 'https://schema.org/BackOrder');
-    assert.equal(product.offers.shippingDetails.doesNotShip, undefined);
+    assert.equal(product.offers.shippingDetails, undefined);
     assert.equal(product.offers.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
   };
   for (const m of all) {

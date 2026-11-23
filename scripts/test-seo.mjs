@@ -902,9 +902,8 @@ test('Every offer has availability and every product image is an absolute URL',(
       assert.equal(rp&&rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
       assert.equal(rp.applicableCountry,'DE',file);
       assert.equal(rp.merchantReturnLink,'https://heku-fahrzeugbau.de/agb.html#ausschluss-einzelanfertigung',file);
-      // Anhänger: Abholung, kein Standardversand, kein (Gratis-)Versandpreis.
-      assert.deepEqual(node.shippingDetails,{'@type':'OfferShippingDetails',shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'}},`${file}: shippingDetails`);
-      assert.equal(node.shippingDetails.doesNotShip,undefined,`${file}: doesNotShip`);
+      // Anhänger: Abholung, kein shippingDetails (A-038). Kein shippingRate 0, kein doesNotShip.
+      assert.equal(node.shippingDetails,undefined,`${file}: shippingDetails`);
       assert.equal(node.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
       if(file==='index.html') {
        assert.notEqual(node.url,'https://heku-fahrzeugbau.de/');
@@ -1006,9 +1005,9 @@ test('Merchant listings: Google-supported availability, image, return policy and
       assert.ok(googleAvailability.has(o.availability),`${file}: availability ${o.availability}`);
       assert.equal(o.priceValidUntil,undefined,`${file}: Preise ohne Ablaufdatum`);
       const rp=o.hasMerchantReturnPolicy; assert.ok(rp&&rp.applicableCountry==='DE',`${file}: Rückgabe fehlt`);
-      const sd=o.shippingDetails; assert.ok(sd&&sd.shippingDestination&&sd.shippingDestination.addressCountry==='DE',`${file}: Versand fehlt`);
       if(file.startsWith('artikel/')){
        accessories++;
+       const sd=o.shippingDetails; assert.ok(sd&&sd.shippingDestination&&sd.shippingDestination.addressCountry==='DE',`${file}: Versand fehlt`);
        assert.equal(o.availability,'https://schema.org/InStock',file);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnFiniteReturnWindow',file);
        assert.equal(rp.merchantReturnDays,14,file);
@@ -1017,10 +1016,11 @@ test('Merchant listings: Google-supported availability, image, return policy and
        const d=sd.deliveryTime; assert.equal(d.handlingTime.minValue+d.transitTime.minValue,2,file); assert.equal(d.handlingTime.maxValue+d.transitTime.maxValue,5,file);
       } else {
        trailers++;
+       assert.equal(o.shippingDetails,undefined,`${file}: kein shippingDetails (Abholung, A-038)`);
+       assert.equal(o.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
        assert.equal(o.availability,'https://schema.org/BackOrder',file);
        assert.match(String(o.availabilityStarts),/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/,`${file}: BackOrder availabilityStarts`);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
-       assert.equal(sd.doesNotShip,undefined,file); assert.equal(sd.shippingRate,undefined,file);
       }
      }
     }

@@ -126,9 +126,11 @@ const offerFor = (m, url) => ({
   availability: 'https://schema.org/BackOrder',
   availabilityStarts: committedAvailabilityStarts(),
   seller: { '@id': ORG },
-  // Abholung im Werk. Kein Versandpreis und kein doesNotShip: der Merchant-Feed
-  // nennt dieselbe Abholung ohne Versandkosten, sonst widersprechen sich Feed und JSON-LD.
-  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } },
+  // Abholung im Werk. shippingDetails entfällt (A-038): das unvollständige Objekt
+  // nur mit Ziel DE löste die GSC-Warnung „Feld shippingRate fehlt“ aus.
+  // Kein shippingRate 0 (wirkte wie Gratisversand), kein doesNotShip plus Ziel DE.
+  // Pickup und availableAtOrFrom bleiben. Der Merchant-Feed nennt dieselbe
+  // Abholung (Label abholung-bielefeld) ohne Versandkosten.
   availableDeliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModePickUp',
   availableAtOrFrom: { '@type': 'Place', name: 'HEKU Fahrzeugbau GmbH', address: { '@type': 'PostalAddress', streetAddress: 'Bunzlauer Straße 6', addressLocality: 'Bielefeld', postalCode: '33719', addressRegion: 'Nordrhein-Westfalen', addressCountry: 'DE' } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'DE', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted', merchantReturnLink: BASE + '/agb.html#ausschluss-einzelanfertigung' }
