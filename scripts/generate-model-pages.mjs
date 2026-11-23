@@ -85,7 +85,8 @@ export function models(root = ROOT) {
     if (m.description.length > 160) throw new Error(`${where}: Description länger als 160 Zeichen.`);
     if (m.preisAb !== null && !m.description.includes(euro(m.preisAb))) throw new Error(`${where}: Description nennt nicht den ab-Preis.`);
     if (m.preisAb === null && (!m.description.includes('Preis auf Anfrage') || /\d[\d.]*\s*€/.test(m.description))) throw new Error(`${where}: ohne Preis nur „Preis auf Anfrage“, kein Eurobetrag in der Description.`);
-    if (m.maxBootslaenge !== null && !/^\d,\d{2} m$/.test(m.maxBootslaenge)) throw new Error(`${where}: ungültige maximale Bootslänge.`);
+    // Robin 17.11.2026, A-008: keine maximale Bootslänge angeben.
+    if (m.maxBootslaenge != null) throw new Error(`${where}: maximale Bootslänge nicht angeben. Nur Anhängerlänge bzw. Grundlänge; weitere Maße auf Anfrage.`);
     if (!Array.isArray(m.bootstypen) || !m.bootstypen.length) throw new Error(`${where}: bootstypen fehlt.`);
   }
   return records;
@@ -107,7 +108,7 @@ export function faqs(m) {
   list.push([`Darf ich mit dem HEKU ${m.name} 100 km/h fahren?`, m.tempo100.serie
     ? `Der ${m.name} ist serienmäßig für Tempo 100 zugelassen. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Zugfahrzeug ab: Faktor 0,3 der Leermasse, ABS/ABV, geeignete Reifen, richtige Stützlast und die Tempo-100-Plakette.`
     : `Tempo 100 ist beim ${m.name} optional und kostet mit dem Radstoßdämpfer-Paket ${m.tempo100.option} €. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Masseverhältnis zum Zugfahrzeug, ABS/ABV, geeigneten Reifen, der Stützlast und der Tempo-100-Plakette ab.`]);
-  if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt.${m.maxBootslaenge ? ` Die maximale Bootslänge beträgt ${m.maxBootslaenge}.` : ''} ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
+  if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt.${m.name === 'B 2700' ? ' Weitere Maße auf Anfrage.' : ''} ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
   list.push([`Wie lange dauert die Lieferung des HEKU ${m.name}?`, `Jeder HEKU-Anhänger wird auf Bestellung gefertigt, die Lieferzeit liegt bei ca. 2 bis 3 Wochen. Sie holen den Anhänger im Werk Bunzlauer Str. 6, 33719 Bielefeld ab (Mo bis Fr 08:00 bis 12:30 und 13:00 bis 16:30 Uhr). Eine Anlieferung wird separat kalkuliert.`]);
   list.push([`Kann ich den HEKU ${m.name} zurückgeben?`, `Nein. Jeder HEKU-Bootsanhänger wird nach Ihren Bootsdaten einzeln gefertigt; für Einzelanfertigungen besteht kein Widerrufsrecht. Die Einzelheiten stehen in unseren AGB.`]);
   list.push([`Wann muss der HEKU ${m.name} zur Hauptuntersuchung?`, m.klasse === 'ungebremst'
@@ -147,7 +148,6 @@ export function schemaFor(m) {
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Zulässiges Gesamtgewicht', value: m.zgg, unitCode: 'KGM' },
       { '@type': 'PropertyValue', name: 'Zuladung ca.', value: m.zuladung, unitCode: 'KGM' },
-      ...(m.maxBootslaenge ? [{ '@type': 'PropertyValue', name: 'Max. Bootslänge', value: m.maxBootslaenge }] : []),
       { '@type': 'PropertyValue', name: 'Bremse', value: k.bremse },
       { '@type': 'PropertyValue', name: 'Achsen', value: k.achsen },
       { '@type': 'PropertyValue', name: 'Zulassung', value: zulassungLabel[m.zulassung] },
@@ -179,7 +179,7 @@ function renderBody(m, all) {
     ['Bremse', k.bremse],
     ['Zulassung', zulassungLabel[m.zulassung]],
     ['Tempo 100', m.tempo100.serie ? 'serienmäßig zugelassen' : `optional, Radstoßdämpfer-Paket + ${m.tempo100.option} €`],
-    ['Leergewicht', m.leergewicht], ['Bereifung', m.bereifung], ['Max. Bootslänge', m.maxBootslaenge]
+    ['Leergewicht', m.leergewicht], ['Bereifung', m.bereifung]
   ].filter(r => r && r[1] !== null && r[1] !== undefined);
   const variants = m.laengen.length > 1 || (m.laengen.length === 1 && m.klasse !== 'einachser') ? `
       <div class="table-wrap">

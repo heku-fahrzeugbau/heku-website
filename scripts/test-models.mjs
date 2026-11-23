@@ -29,8 +29,7 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
     for (const b of m.bilder) assert.ok(fs.existsSync(path.join(ROOT, b.src)), b.src);
   }
   assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
-  assert.equal(all.find(m => m.name === 'B 2700').maxBootslaenge, '6,60 m');
-  for (const m of all) if (m.name !== 'B 2700') assert.equal(m.maxBootslaenge, null, m.name);
+  for (const m of all) assert.equal(m.maxBootslaenge, null, m.name);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -150,11 +149,13 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
   // B 2700: bestätigter Preis ab 5.310 €. Die alten Staffeln 5.150 / 5.295 / 5.450 € bleiben draußen.
   assert.match(data, /\{name:'B 2700',price:'5\.310'/);
   assert.doesNotMatch(data, /5\.150|5\.295|5\.450/);
-  assert.match(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge<\/td><td><strong>6,60 m<\/strong>/);
-  assert.match(read('bootsanhaenger-b2700.html'), /Die maximale Bootslänge beträgt 6,60 m/);
+  assert.doesNotMatch(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge|Die maximale Bootslänge beträgt|Boot bis 6,60 m/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Weitere Maße auf Anfrage/);
   const b2700 = jsonld(read('bootsanhaenger-b2700.html')).flatMap(nodes).find(n => types(n).includes('Product'));
   assert.equal(b2700.offers.price, '5310.00');
-  assert.equal(b2700.additionalProperty.find(p => p.name === 'Max. Bootslänge').value, '6,60 m');
+  assert.ok(!b2700.additionalProperty.some(p => p.name === 'Max. Bootslänge'));
+  assert.match(b2700.description, /6,60 m/);
+  assert.doesNotMatch(b2700.description, /Boot bis/);
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
 });
 
@@ -310,7 +311,8 @@ test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', 
   assert.equal(ctx.zulassungLabel(byId('B2500')), 'TÜV-EG');
   assert.equal(ctx.zulassungLabel(byId('B2700')), 'TÜV-EG');
   assert.equal(byId('B2700').preisMin, 5310);
-  assert.equal(byId('B2700').maxBootslaenge, '6,60 m');
+  assert.equal(byId('B2700').maxBootslaenge, undefined);
+  assert.doesNotMatch(html, /Max\. Bootslänge/);
   assert.equal(ctx.angebotsPreis(byId('B2700'), 0), 'ab ca. 5.310 €');
   assert.equal(ctx.angebotsPreis(byId('B2700'), 280), 'ab ca. 5.590 €');
   assert.equal(ctx.angebotsPreis(byId('B900'), 140), 'ab ca. 3.330 €');
