@@ -779,7 +779,14 @@ test('Ruderbootanhänger FAQ reveals its answer and the video stays within nativ
  const questions=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">/g)];
  const items=[...page.matchAll(/<div class="faq-item">/g)];
  assert.equal(questions.length, items.length);
- assert.ok(questions.length>=4);
+ // A-078 in A-081 entfernt die Lieferzeit-FAQ auf Typseiten bewusst; sichtbar und JSON-LD gleich, mindestens 3 Fragen.
+ assert.ok(questions.length>=3);
+ const visible=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">([\s\S]*?)<span class="faq-icon"><\/span><\/button>\s*<div class="faq-answer"><div class="faq-answer-inner">([\s\S]*?)<\/div><\/div>/g)];
+ assert.equal(visible.length, questions.length);
+ const faq=[...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1])).find(s=>s['@type']==='FAQPage');
+ assert.equal(faq.mainEntity.length, visible.length);
+ assert.deepEqual(faq.mainEntity.map(q=>q.name), visible.map(m=>m[1].trim()));
+ assert.deepEqual(faq.mainEntity.map(q=>q.acceptedAnswer.text), visible.map(m=>m[2].trim()));
  assert.match(page,/function toggleFaq\(btn\)/);
  assert.match(page,/width="576" height="1024"/);
  assert.match(page,/grid-template-columns:minmax\(0,1fr\) 320px/);
