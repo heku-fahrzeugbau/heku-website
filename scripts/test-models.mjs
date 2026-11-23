@@ -30,6 +30,13 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
   }
   assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
   for (const m of all) assert.equal(m.maxBootslaenge, null, m.name);
+  for (const m of all) {
+    assert.ok(Number.isInteger(m.leergewicht) && m.leergewicht > 0, m.name);
+    assert.equal(m.laengen[0].leergewicht, m.leergewicht, m.name);
+    for (const l of m.laengen) assert.ok(Number.isInteger(l.leergewicht) && l.leergewicht > 0, `${m.name} ${l.laenge}`);
+  }
+  assert.equal(all.find(m => m.name === 'B 350').laengen[1].leergewicht, 85);
+  assert.equal(all.find(m => m.name === 'B 500').laengen[1].leergewicht, 55);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -158,6 +165,36 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
 });
 
+test('Each model page shows Leergewicht with a tilde in the tech table and JSON-LD, never Product.weight', () => {
+  const leerKg = n => '~' + n.toLocaleString('de-DE') + ' kg';
+  for (const m of all) {
+    const html = read(m.slug);
+    const zelle = m.laengen.length > 1 ? m.laengen.map(l => leerKg(l.leergewicht)).join(' / ') : leerKg(m.leergewicht);
+    assert.match(html, new RegExp(`<tr><td>Leergewicht</td><td><strong>${zelle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</strong></td></tr>`), m.slug);
+    assert.doesNotMatch(html, /Leergewicht ca\./, m.slug);
+    const product = jsonld(html).flatMap(nodes).find(n => types(n).includes('Product'));
+    if (m.preisAb === null) continue;
+    const props = product.additionalProperty;
+    const zIdx = props.findIndex(p => p.name === 'Zuladung ca.');
+    assert.ok(zIdx >= 0, m.slug);
+    assert.equal(props[zIdx + 1].name, 'Leergewicht', m.slug);
+    assert.equal(props[zIdx + 1].value, m.leergewicht, m.slug);
+    assert.equal(props[zIdx + 1].unitCode, 'KGM', m.slug);
+    assert.equal(typeof props[zIdx + 1].value, 'number', m.slug);
+    assert.equal(product.weight, undefined, m.slug);
+    const hasTable = m.laengen.length > 1 || (m.laengen.length === 1 && m.klasse !== 'einachser');
+    if (hasTable) {
+      assert.match(html, /<th>Länge<\/th><th>Zuladung ca.<\/th><th>Leergewicht<\/th><th>Preis<\/th>/, m.slug);
+      for (const l of m.laengen) assert.ok(html.includes(`>${leerKg(l.leergewicht)}<`), `${m.slug} ${l.laenge}`);
+    } else {
+      assert.doesNotMatch(html, /class="model-table"/, m.slug);
+    }
+  }
+  assert.match(read('bootsanhaenger-b350.html'), /<td>Leergewicht<\/td><td><strong>~75 kg \/ ~85 kg<\/strong><\/td>/);
+  assert.match(read('bootsanhaenger-b500.html'), /<td>Leergewicht<\/td><td><strong>~50 kg \/ ~55 kg<\/strong><\/td>/);
+  assert.doesNotMatch(read('ruderbootanhaenger.html'), /Leergewicht/);
+});
+
 test('produkte.html links all model pages statically and carries only an ItemList summary', () => {
   const html = read('bootstrailer.html'), outside = visibleText(html);
   for (const m of all) assert.ok(outside.includes(`href="${m.slug}"`), m.slug);
@@ -240,7 +277,7 @@ test('Braked models list only the 6,60 m length (model pages, produkte.html, cla
   const braked = all.filter(m => m.klasse !== 'ungebremst');
   assert.deepEqual(braked.map(m => m.name), ['B 900', 'B 1100', 'B 1300', 'B 1500', 'B 1800', 'B 2000', 'B 2500', 'B 2700', 'B 3000', 'B 3500']);
   for (const m of braked) {
-    assert.deepEqual(m.laengen, [{ laenge: '6,60 m', zuladung: m.zuladung, preis: m.preisAb }], m.name);
+    assert.deepEqual(m.laengen, [{ laenge: '6,60 m', zuladung: m.zuladung, leergewicht: m.leergewicht, preis: m.preisAb }], m.name);
     const html = read(m.slug);
     // Erlaubt: Grundlänge 6,60 m, Lichtleiste + 1,55 m, Zuschlagsschritt 0,5 m.
     const other = lengthsIn(html).filter(l => !['6,60', '1,55', '0,5'].includes(l));
