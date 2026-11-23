@@ -198,14 +198,14 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
           <li>Kielauflage vorne, Langauflage bzw. Polsterkissen hinten</li>
           <li>ausziehbare Beleuchtung</li>
           <li>eigenentwickelte wasserdichte Radnabe mit 5 Jahren Garantie (<a href="wasserdichte-radnabe.html">mehr zur Radnabe</a>)</li>
-          <li>feuerverzinkt nach DIN 1461</li>
+          <li>feuerverzinkt nach DIN EN ISO 1461</li>
           <li>Betriebserlaubnis (CoC)</li>${m.zgg <= 500 ? '\n          <li>zerlegbar</li>' : ''}
         </ul>`
     : `<ul>
           <li><strong>Motorboot-Ausführung:</strong> Rückfahrautomatik, Kielrollen, Langauflagen mit Gewindespindeln, Stützrad, Windenstand mit Sicherheitswinde (horizontal und vertikal verstellbar), Einzelradfederung, 4 Verzurrösen</li>
           <li><strong>Segelboot-Ausführung:</strong> Rückfahrautomatik, Stützrad, verstellbare Bugstütze, 4 verstellbare Rumpfstützen, Kielauflage in Achshöhe, 4 Verzurrösen</li>
           <li>eigenentwickelte wasserdichte Radnabe mit 5 Jahren Garantie (<a href="wasserdichte-radnabe.html">mehr zur Radnabe</a>)</li>
-          <li>feuerverzinkt nach DIN 1461</li>
+          <li>feuerverzinkt nach DIN EN ISO 1461</li>
           <li>${e(zulassungLabel[m.zulassung])}</li>
         </ul>`;
   const daempfer = m.klasse === 'tandem' ? 'artikel/50249.html' : 'artikel/50248.html';

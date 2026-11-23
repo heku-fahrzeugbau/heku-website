@@ -710,35 +710,35 @@
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN EN ISO 1461 <div class="marquee-dot"></div></div>
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
       <div class="marquee-item">WASSERDICHTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN EN ISO 1461 <div class="marquee-dot"></div></div>
     </div>
   </div>
 
 
   <script>
   // ─── DATENBASIS ────────────────────────────────────────────────────────────
-  // B-Serie 2026 — Modelle mit Gewichtsgrenzen und Preisranges
+  // B-Serie 2026: Modelle mit Gewichtsgrenzen und Preisranges
   const MODELLE = [
-    // UNGEBREMST – Fixlängen
-    { id:'B350',  name:'B 350',   maxZuladung:275,  gebremst:false, achse:'–',        preisMin:1375, preisMax:1475  },
-    { id:'B500',  name:'B 500',   maxZuladung:450,  gebremst:false, achse:'–',        preisMin:1575, preisMax:1650  },
-    { id:'B750',  name:'B 750',   maxZuladung:620,  gebremst:false, achse:'–',        preisMin:1995, preisMax:1995  },
+    // UNGEBREMST: Fixlängen
+    { id:'B350',  name:'B 350',   maxZuladung:275,  gebremst:false, achse:'-',        preisMin:1375, preisMax:1475  },
+    { id:'B500',  name:'B 500',   maxZuladung:450,  gebremst:false, achse:'-',        preisMin:1575, preisMax:1650  },
+    { id:'B750',  name:'B 750',   maxZuladung:620,  gebremst:false, achse:'-',        preisMin:1995, preisMax:1995  },
     
-    // GEBREMST EINACHSER – Längenvariabel (Basispreis)
+    // GEBREMST EINACHSER: Längenvariabel (Basispreis)
     { id:'B900',  name:'B 900',   maxZuladung:660,  gebremst:true,  achse:'Einachser', preisMin:3190, preisMax:3190  },
     { id:'B1100', name:'B 1100',  maxZuladung:815,  gebremst:true,  achse:'Einachser', preisMin:3390, preisMax:3390  },
     { id:'B1300', name:'B 1300',  maxZuladung:1000, gebremst:true,  achse:'Einachser', preisMin:3590, preisMax:3590  },
     { id:'B1500', name:'B 1500',  maxZuladung:1175, gebremst:true,  achse:'Einachser', preisMin:3850, preisMax:3850  },
     { id:'B1800', name:'B 1800',  maxZuladung:1450, gebremst:true,  achse:'Einachser', preisMin:3995, preisMax:3995  },
     
-    // GEBREMST TANDEM – Längenvariabel (Basispreis)
+    // GEBREMST TANDEM: Längenvariabel (Basispreis)
     { id:'B2000', name:'B 2000',  maxZuladung:1610, gebremst:true,  achse:'Tandem',    preisMin:4655, preisMax:4655  },
     { id:'B2500', name:'B 2500',  maxZuladung:2000, gebremst:true,  achse:'Tandem',    preisMin:5110, preisMax:5110  },
     { id:'B2700', name:'B 2700',  maxZuladung:2150, gebremst:true,  achse:'Tandem',    preisMin:5310, preisMax:5310, maxBootslaenge:'6,60 m'  },
@@ -1036,20 +1036,20 @@
     const nameLine = [anrede, vorname, nachname].filter(Boolean).join(' ');
     const ortLine = [plz, ort].filter(Boolean).join(' ');
     const adressBlock = [strasse, ortLine].filter(Boolean).join('\n');
-    const betreff = `HEKU Engineer Anfrage: ${nameLine} – ${modell ? 'HEKU '+modell.name : 'Sonderanfrage'}`;
+    const betreff = `HEKU Engineer Anfrage: ${nameLine} | ${modell ? 'HEKU '+modell.name : 'Sonderanfrage'}`;
     const nachrichtFull = `
 HEKU Engineer Konfiguration:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-Boot:         ${state.bootsbezeichnung || '–'}
+Boot:         ${state.bootsbezeichnung || '-'}
 Bootstyp:     ${state.bootstyp}
 Länge:        ${state.laenge} m
 Breite:       ${state.breite} m
-Tiefgang:     ${state.tiefgang || '–'} m
+Tiefgang:     ${state.tiefgang || '-'} m
 Gewicht:      ${state.gewicht} kg
 Antrieb:      ${state.antrieb}
 Zubehör:      ${zubehoerText}
 
-Empfohlenes Modell: HEKU ${modell?.name || '–'}
+Empfohlenes Modell: HEKU ${modell?.name || '-'}
 ${state.laengenSchritte ? `Rahmenverlängerung: +${(state.laengenSchritte * 0.5).toLocaleString('de-DE')} m (${state.laengenSchritte} x 0,5 m) = +${state.laengenAufpreis.toLocaleString('de-DE')} €\n` : ''}${(state.bootstyp === 'segelboot' && state.tiefgang > 0.7) ? `Kielbootanhänger-Aufpreis (Tiefgang > 0,7 m): +180 €\n` : ''}
 Kundendaten:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1080,7 +1080,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
       formData.append('gewicht', state.gewicht ?? '');
       formData.append('antrieb', state.antrieb || '');
       formData.append('zubehoer', zubehoerText);
-      formData.append('modell', modell ? 'HEKU ' + modell.name : '–');
+      formData.append('modell', modell ? 'HEKU ' + modell.name : '-');
       formData.append('nachricht', nachrichtFull);
       formData.append('replyto', email);
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -1104,7 +1104,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
               anrede: anrede,
               vorname: vorname,
               nachname: nachname,
-              modell: modell ? 'HEKU ' + modell.name : '–'
+              modell: modell ? 'HEKU ' + modell.name : '-'
             }
           })
         }).catch(() => {});
@@ -1125,7 +1125,7 @@ ${nachricht ? '\nAnmerkung:\n' + nachricht : ''}
           plz: plz,
           ort: ort,
           quelle: 'Konfigurator-Anfrage',
-          notiz: 'Modell: ' + (modell ? modell.name : '–') + ' | Boot: ' + (state.bootsbezeichnung || '–') + ' | Gewicht: ' + (state.gewicht || '–') + ' kg | Nachricht: ' + (nachricht || '–')
+          notiz: 'Modell: ' + (modell ? modell.name : '-') + ' | Boot: ' + (state.bootsbezeichnung || '-') + ' | Gewicht: ' + (state.gewicht || '-') + ' kg | Nachricht: ' + (nachricht || '-')
         });
       } else {
         throw new Error(result && result.message ? result.message : 'Web3Forms hat die Anfrage nicht bestätigt.');

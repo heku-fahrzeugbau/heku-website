@@ -971,9 +971,9 @@ test('Inquiry forms require phone and full address',()=>{
 test('Dealer email subject omits empty parentheses and falls back to the city',()=>{
  const line=read('haendler.html').match(/formData\.append\('subject', ([\s\S]*?)\);/)[1];
  const subject=(firma,region,ort)=>vm.runInNewContext('('+line+')',{firma,region,ort});
- assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage – Firma (Nord)');
- assert.equal(subject('Firma','','Hamburg'),'Händleranfrage – Firma (Hamburg)');
- assert.equal(subject('Firma','',''),'Händleranfrage – Firma');
+ assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage: Firma (Nord)');
+ assert.equal(subject('Firma','','Hamburg'),'Händleranfrage: Firma (Hamburg)');
+ assert.equal(subject('Firma','',''),'Händleranfrage: Firma');
 });
 
 // GSC Händlereinträge (19.10.2026): nur von Google unterstützte availability-Werte, Rückgabe und Versand an jedem Angebot mit Preis.
