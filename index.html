@@ -166,25 +166,85 @@
   "@type": "ItemList",
   "name": "HEKU B-Serie 2026",
   "url": "https://heku-fahrzeugbau.de/",
-  "numberOfItems": 3,
+  "numberOfItems": 13,
   "itemListElement": [
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "Bootsanhänger ungebremst",
+      "name": "HEKU B 350",
       "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b350.html"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Motorbootanhänger",
-      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b900.html"
+      "name": "HEKU B 500",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b500.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Tandem-Bootstrailer",
+      "name": "HEKU B 750",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b750.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "HEKU B 900",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b900.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "HEKU B 1100",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "name": "HEKU B 1300",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "name": "HEKU B 1500",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "name": "HEKU B 1800",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "name": "HEKU B 2000",
       "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 10,
+      "name": "HEKU B 2500",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 11,
+      "name": "HEKU B 2700",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 12,
+      "name": "HEKU B 3000",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 13,
+      "name": "HEKU B 3500",
+      "url": "https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html"
     }
   ]
 }
@@ -335,6 +395,17 @@
     .type-more { margin-top: 22px; font-size: 14px; font-weight: 400; color: var(--muted); }
     .type-more a { color: var(--rot); font-weight: 600; }
 
+    /* Modellseiten der B-Serie */
+    .model-links { margin-top: 28px; }
+    .model-links-group { margin-top: 18px; }
+    .model-links-group:first-child { margin-top: 0; }
+    .model-links-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rot); margin-bottom: 8px; }
+    .model-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .model-link { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: #fff; min-height: 44px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .model-link:hover, .model-link:focus-visible { border-color: var(--rot); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .model-link-name { font-family: var(--font-head); font-size: 18px; font-weight: 400; color: var(--schwarz); line-height: 1.2; }
+    .model-link-meta { font-size: 13px; font-weight: 300; line-height: 1.5; color: var(--muted); }
+
     /* ENGINEER */
     .eng { background: var(--schwarz); background-image: url('engineer-bg.jpg'); background-size: cover; background-position: center; padding: 80px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; position: relative; overflow: hidden; }
     .eng::after { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.72); z-index: 0; }
@@ -399,13 +470,14 @@
       .usp-grid { grid-template-columns: 1fr 1fr; }
       .prod-grid { grid-template-columns: 1fr 1fr; }
       .type-grid { grid-template-columns: 1fr 1fr; }
+      .model-links-grid { grid-template-columns: 1fr 1fr; }
       .eng { grid-template-columns: 1fr; padding: 56px 24px; gap: 28px; }
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .ft { grid-template-columns: 1fr 1fr; }
       footer { padding: 52px 24px 28px; }
     }
     @media (max-width: 600px) {
-      .usp-grid, .prod-grid, .type-grid { grid-template-columns: 1fr; }
+      .usp-grid, .prod-grid, .type-grid, .model-links-grid { grid-template-columns: 1fr; }
       .ft { grid-template-columns: 1fr; }
       .hero-badge { display: none; }
       .hero-title { font-size: 36px; line-height: 1.08; }
@@ -644,6 +716,75 @@
       <div class="lbl">Produktübersicht</div>
       <h2 class="h2">Bootsanhänger &amp; Bootstrailer: alle Modelle im Überblick</h2>
       <p class="p">Von der leichten Jolle bis zum schweren Sportboot, HEKU hat den passenden Anhänger.</p>
+      <div class="model-links reveal">
+        <div class="model-links-group">
+          <div class="model-links-label">Ungebremst</div>
+          <div class="model-links-grid">
+            <a href="bootsanhaenger-b350.html" class="model-link">
+              <span class="model-link-name">HEKU B 350</span>
+              <span class="model-link-meta">350 kg zGG, ca. 275 kg Zuladung, ab 1.375 €</span>
+            </a>
+            <a href="bootsanhaenger-b500.html" class="model-link">
+              <span class="model-link-name">HEKU B 500</span>
+              <span class="model-link-meta">500 kg zGG, ca. 450 kg Zuladung, ab 1.575 €</span>
+            </a>
+            <a href="bootsanhaenger-b750.html" class="model-link">
+              <span class="model-link-name">HEKU B 750</span>
+              <span class="model-link-meta">750 kg zGG, ca. 620 kg Zuladung, ab 1.995 €</span>
+            </a>
+          </div>
+        </div>
+        <div class="model-links-group">
+          <div class="model-links-label">Gebremste Einachser</div>
+          <div class="model-links-grid">
+            <a href="bootsanhaenger-b900.html" class="model-link">
+              <span class="model-link-name">HEKU B 900</span>
+              <span class="model-link-meta">900 kg zGG, ca. 660 kg Zuladung, ab 3.190 €</span>
+            </a>
+            <a href="bootsanhaenger-b1100.html" class="model-link">
+              <span class="model-link-name">HEKU B 1100</span>
+              <span class="model-link-meta">1.100 kg zGG, ca. 815 kg Zuladung, ab 3.390 €</span>
+            </a>
+            <a href="bootsanhaenger-b1300.html" class="model-link">
+              <span class="model-link-name">HEKU B 1300</span>
+              <span class="model-link-meta">1.300 kg zGG, ca. 1.000 kg Zuladung, ab 3.590 €</span>
+            </a>
+            <a href="bootsanhaenger-b1500.html" class="model-link">
+              <span class="model-link-name">HEKU B 1500</span>
+              <span class="model-link-meta">1.500 kg zGG, ca. 1.175 kg Zuladung, ab 3.850 €</span>
+            </a>
+            <a href="bootsanhaenger-b1800.html" class="model-link">
+              <span class="model-link-name">HEKU B 1800</span>
+              <span class="model-link-meta">1.800 kg zGG, ca. 1.450 kg Zuladung, ab 3.995 €</span>
+            </a>
+          </div>
+        </div>
+        <div class="model-links-group">
+          <div class="model-links-label">Tandem</div>
+          <div class="model-links-grid">
+            <a href="bootsanhaenger-b2000.html" class="model-link">
+              <span class="model-link-name">HEKU B 2000</span>
+              <span class="model-link-meta">2.000 kg zGG, ca. 1.610 kg Zuladung, ab 4.655 €</span>
+            </a>
+            <a href="bootsanhaenger-b2500.html" class="model-link">
+              <span class="model-link-name">HEKU B 2500</span>
+              <span class="model-link-meta">2.500 kg zGG, ca. 2.000 kg Zuladung, ab 5.110 €</span>
+            </a>
+            <a href="bootsanhaenger-b2700.html" class="model-link">
+              <span class="model-link-name">HEKU B 2700</span>
+              <span class="model-link-meta">2.700 kg zGG, ca. 2.150 kg Zuladung, ab 5.310 €</span>
+            </a>
+            <a href="bootsanhaenger-b3000.html" class="model-link">
+              <span class="model-link-name">HEKU B 3000</span>
+              <span class="model-link-meta">3.000 kg zGG, ca. 2.400 kg Zuladung, ab 5.855 €</span>
+            </a>
+            <a href="bootsanhaenger-b3500.html" class="model-link">
+              <span class="model-link-name">HEKU B 3500</span>
+              <span class="model-link-meta">3.500 kg zGG, ca. 2.850 kg Zuladung, ab 6.555 €</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="prod-grid">
       <a href="bootstrailer.html" class="prod-card reveal">

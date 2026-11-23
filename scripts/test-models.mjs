@@ -217,7 +217,7 @@ test('Generator is idempotent, fails closed and updates only the changed model',
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 
-test('Every model page has a visible back link to the model overview on produkte.html', () => {
+test('Every model page has a visible back link to the model overview on bootstrailer.html', () => {
   assert.match(read('bootstrailer.html'), /id="modelle"/);
   for (const m of all) {
     const html = read(m.slug);

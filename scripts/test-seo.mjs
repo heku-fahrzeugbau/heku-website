@@ -1031,9 +1031,19 @@ test('Merchant listings: Google-supported availability, image, return policy and
 test('Category pages list model URLs and do not repeat Product offers',()=>{
  const expected={
   'index.html':[
-   ['Bootsanhänger ungebremst','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
-   ['Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
-   ['Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+   ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 1300','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ],
   'bootstrailer.html':[
    ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
