@@ -29,8 +29,14 @@ test('Model data: 13 models, unique slugs, valid prices, existing images', () =>
     for (const b of m.bilder) assert.ok(fs.existsSync(path.join(ROOT, b.src)), b.src);
   }
   assert.deepEqual(all.filter(m => m.preisAb === null).map(m => m.name), []);
-  assert.equal(all.find(m => m.name === 'B 2700').maxBootslaenge, '6,60 m');
-  for (const m of all) if (m.name !== 'B 2700') assert.equal(m.maxBootslaenge, null, m.name);
+  for (const m of all) assert.equal(m.maxBootslaenge, null, m.name);
+  for (const m of all) {
+    assert.ok(Number.isInteger(m.leergewicht) && m.leergewicht > 0, m.name);
+    assert.equal(m.laengen[0].leergewicht, m.leergewicht, m.name);
+    for (const l of m.laengen) assert.ok(Number.isInteger(l.leergewicht) && l.leergewicht > 0, `${m.name} ${l.laenge}`);
+  }
+  assert.equal(all.find(m => m.name === 'B 350').laengen[1].leergewicht, 85);
+  assert.equal(all.find(m => m.name === 'B 500').laengen[1].leergewicht, 55);
 });
 
 test('Every model page is generated, indexable, unique and in the sitemap', () => {
@@ -74,8 +80,7 @@ test('Visible price, meta description and Offer agree; a model without price get
     assert.equal(o.availableAtOrFrom.address.streetAddress, 'Bunzlauer Straße 6');
     assert.equal(o.hasMerchantReturnPolicy.returnPolicyCategory, 'https://schema.org/MerchantReturnNotPermitted');
     assert.equal(o.hasMerchantReturnPolicy.merchantReturnLink, `${BASE}/agb.html#ausschluss-einzelanfertigung`);
-    assert.deepEqual(o.shippingDetails, { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } });
-    assert.equal(o.shippingDetails.doesNotShip, undefined);
+    assert.equal(o.shippingDetails, undefined);
     assert.equal(o.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
     for (const k of ['priceValidUntil', 'validFrom']) assert.equal(o[k], undefined, k);
     for (const img of [].concat(p.image)) assert.match(img, /^https:\/\/heku-fahrzeugbau\.de\//);
@@ -150,12 +155,44 @@ test('Prices agree across modelle.json, produkte.html and the class tables; no 3
   // B 2700: bestätigter Preis ab 5.310 €. Die alten Staffeln 5.150 / 5.295 / 5.450 € bleiben draußen.
   assert.match(data, /\{name:'B 2700',price:'5\.310'/);
   assert.doesNotMatch(data, /5\.150|5\.295|5\.450/);
-  assert.match(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge<\/td><td><strong>6,60 m<\/strong>/);
-  assert.match(read('bootsanhaenger-b2700.html'), /Die maximale Bootslänge beträgt 6,60 m/);
+  assert.doesNotMatch(read('bootsanhaenger-b2700.html'), /Max\. Bootslänge|Die maximale Bootslänge beträgt|Boot bis 6,60 m/);
+  assert.match(read('bootsanhaenger-b2700.html'), /Weitere Maße auf Anfrage/);
   const b2700 = jsonld(read('bootsanhaenger-b2700.html')).flatMap(nodes).find(n => types(n).includes('Product'));
   assert.equal(b2700.offers.price, '5310.00');
-  assert.equal(b2700.additionalProperty.find(p => p.name === 'Max. Bootslänge').value, '6,60 m');
+  assert.ok(!b2700.additionalProperty.some(p => p.name === 'Max. Bootslänge'));
+  assert.match(b2700.description, /6,60 m/);
+  assert.doesNotMatch(b2700.description, /Boot bis/);
   for (const file of ['produkte.html', ...all.map(m => m.slug)]) assert.doesNotMatch(read(file), /3\.490/, file);
+});
+
+test('Each model page shows Leergewicht with a tilde in the tech table and JSON-LD, never Product.weight', () => {
+  const leerKg = n => '~' + n.toLocaleString('de-DE') + ' kg';
+  for (const m of all) {
+    const html = read(m.slug);
+    const zelle = m.laengen.length > 1 ? m.laengen.map(l => leerKg(l.leergewicht)).join(' / ') : leerKg(m.leergewicht);
+    assert.match(html, new RegExp(`<tr><td>Leergewicht</td><td><strong>${zelle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</strong></td></tr>`), m.slug);
+    assert.doesNotMatch(html, /Leergewicht ca\./, m.slug);
+    const product = jsonld(html).flatMap(nodes).find(n => types(n).includes('Product'));
+    if (m.preisAb === null) continue;
+    const props = product.additionalProperty;
+    const zIdx = props.findIndex(p => p.name === 'Zuladung ca.');
+    assert.ok(zIdx >= 0, m.slug);
+    assert.equal(props[zIdx + 1].name, 'Leergewicht', m.slug);
+    assert.equal(props[zIdx + 1].value, m.leergewicht, m.slug);
+    assert.equal(props[zIdx + 1].unitCode, 'KGM', m.slug);
+    assert.equal(typeof props[zIdx + 1].value, 'number', m.slug);
+    assert.equal(product.weight, undefined, m.slug);
+    const hasTable = m.laengen.length > 1 || (m.laengen.length === 1 && m.klasse !== 'einachser');
+    if (hasTable) {
+      assert.match(html, /<th>Länge<\/th><th>Zuladung ca.<\/th><th>Leergewicht<\/th><th>Preis<\/th>/, m.slug);
+      for (const l of m.laengen) assert.ok(html.includes(`>${leerKg(l.leergewicht)}<`), `${m.slug} ${l.laenge}`);
+    } else {
+      assert.doesNotMatch(html, /class="model-table"/, m.slug);
+    }
+  }
+  assert.match(read('bootsanhaenger-b350.html'), /<td>Leergewicht<\/td><td><strong>~75 kg \/ ~85 kg<\/strong><\/td>/);
+  assert.match(read('bootsanhaenger-b500.html'), /<td>Leergewicht<\/td><td><strong>~50 kg \/ ~55 kg<\/strong><\/td>/);
+  assert.doesNotMatch(read('ruderbootanhaenger.html'), /Leergewicht/);
 });
 
 test('produkte.html links all model pages statically and carries only an ItemList summary', () => {
@@ -217,7 +254,7 @@ test('Generator is idempotent, fails closed and updates only the changed model',
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 
-test('Every model page has a visible back link to the model overview on produkte.html', () => {
+test('Every model page has a visible back link to the model overview on bootstrailer.html', () => {
   assert.match(read('bootstrailer.html'), /id="modelle"/);
   for (const m of all) {
     const html = read(m.slug);
@@ -240,7 +277,7 @@ test('Braked models list only the 6,60 m length (model pages, produkte.html, cla
   const braked = all.filter(m => m.klasse !== 'ungebremst');
   assert.deepEqual(braked.map(m => m.name), ['B 900', 'B 1100', 'B 1300', 'B 1500', 'B 1800', 'B 2000', 'B 2500', 'B 2700', 'B 3000', 'B 3500']);
   for (const m of braked) {
-    assert.deepEqual(m.laengen, [{ laenge: '6,60 m', zuladung: m.zuladung, preis: m.preisAb }], m.name);
+    assert.deepEqual(m.laengen, [{ laenge: '6,60 m', zuladung: m.zuladung, leergewicht: m.leergewicht, preis: m.preisAb }], m.name);
     const html = read(m.slug);
     // Erlaubt: Grundlänge 6,60 m, Lichtleiste + 1,55 m, Zuschlagsschritt 0,5 m.
     const other = lengthsIn(html).filter(l => !['6,60', '1,55', '0,5'].includes(l));
@@ -310,7 +347,8 @@ test('Configurator approval follows zGG and B 2700 lists 5.310 € and 6,60 m', 
   assert.equal(ctx.zulassungLabel(byId('B2500')), 'TÜV-EG');
   assert.equal(ctx.zulassungLabel(byId('B2700')), 'TÜV-EG');
   assert.equal(byId('B2700').preisMin, 5310);
-  assert.equal(byId('B2700').maxBootslaenge, '6,60 m');
+  assert.equal(byId('B2700').maxBootslaenge, undefined);
+  assert.doesNotMatch(html, /Max\. Bootslänge/);
   assert.equal(ctx.angebotsPreis(byId('B2700'), 0), 'ab ca. 5.310 €');
   assert.equal(ctx.angebotsPreis(byId('B2700'), 280), 'ab ca. 5.590 €');
   assert.equal(ctx.angebotsPreis(byId('B900'), 140), 'ab ca. 3.330 €');
@@ -329,7 +367,7 @@ test('Model and rowing-trailer Product JSON-LD names the brand HEKU', () => {
     assert.equal(product.offers.gtin, undefined);
     assert.equal(product.offers.mpn, undefined);
     assert.equal(product.offers.availability, 'https://schema.org/BackOrder');
-    assert.equal(product.offers.shippingDetails.doesNotShip, undefined);
+    assert.equal(product.offers.shippingDetails, undefined);
     assert.equal(product.offers.availableDeliveryMethod, 'http://purl.org/goodrelations/v1#DeliveryModePickUp');
   };
   for (const m of all) {

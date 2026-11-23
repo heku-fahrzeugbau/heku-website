@@ -117,7 +117,7 @@
     .usp-title { font-size: 14px; font-weight: 600; color: var(--schwarz); margin-bottom: 8px; }
     .usp-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
 
-    /* PRODUCT NAV – interne Links prominent oben */
+    /* PRODUCT NAV: interne Links prominent oben */
     .product-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 0 56px; }
     .product-nav-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; transition: all 0.2s; }
     .product-nav-card:hover { border-color: var(--rot); background: #fff; box-shadow: 0 4px 16px rgba(232,0,14,0.08); }

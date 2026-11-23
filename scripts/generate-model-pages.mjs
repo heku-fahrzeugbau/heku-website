@@ -28,6 +28,8 @@ function kategorieHinweis(m) {
 }
 const ORG = BASE + '/#organization';
 const kg = n => n.toLocaleString('de-DE') + ' kg';
+const leerKg = n => '~' + n.toLocaleString('de-DE') + ' kg';
+const leergewichtZelle = m => m.laengen.length > 1 ? m.laengen.map(l => leerKg(l.leergewicht)).join(' / ') : leerKg(m.leergewicht);
 const euro = p => Number(p).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';
 const pageUrl = m => `${BASE}/${m.slug}`;
 // Robin (15.10.2026): gebremste Modelle nur in 6,60 m; längere Ausführung je 0,5 m: Einachser + 155 €, Tandem + 209 €.
@@ -56,6 +58,7 @@ export function models(root = ROOT) {
     if (!klassen[m.klasse]) throw new Error(`${where}: unbekannte Klasse ${m.klasse}.`);
     if (!Number.isInteger(m.zgg) || m.zgg !== Number(m.name.slice(2))) throw new Error(`${where}: zGG passt nicht zum Modellnamen.`);
     if (!Number.isInteger(m.zuladung) || m.zuladung <= 0 || m.zuladung >= m.zgg) throw new Error(`${where}: ungültige Zuladung.`);
+    if (!Number.isInteger(m.leergewicht) || m.leergewicht <= 0) throw new Error(`${where}: ungültiges Leergewicht.`);
     if ((m.klasse === 'ungebremst') !== (m.zgg <= 750)) throw new Error(`${where}: Klasse passt nicht zum zGG.`);
     if (m.preisAb !== null && !/^\d+\.\d{2}$/.test(String(m.preisAb))) throw new Error(`${where}: ungültiger Preis ${m.preisAb}.`);
     if (m.zulassung !== expectedZulassung(m)) throw new Error(`${where}: Zulassung muss ${expectedZulassung(m)} sein.`);
@@ -64,12 +67,14 @@ export function models(root = ROOT) {
     for (const l of m.laengen) {
       if (!/^\d,\d0 m$/.test(l.laenge || '')) throw new Error(`${where}: ungültige Länge.`);
       if (!Number.isInteger(l.zuladung)) throw new Error(`${where}: ungültige Zuladung je Länge.`);
+      if (!Number.isInteger(l.leergewicht) || l.leergewicht <= 0) throw new Error(`${where}: ungültiges Leergewicht je Länge.`);
       if (l.preis !== null && !/^\d+\.\d{2}$/.test(String(l.preis))) throw new Error(`${where}: ungültiger Längenpreis.`);
       if (m.preisAb === null && l.preis !== null) throw new Error(`${where}: Längenpreis ohne ab-Preis.`);
     }
     if (m.klasse !== 'ungebremst' && (m.laengen.length !== 1 || m.laengen[0].laenge !== GRUNDLAENGE || m.laengen[0].preis !== m.preisAb || m.laengen[0].zuladung !== m.zuladung)) throw new Error(`${where}: gebremste Modelle nur mit einer Länge (${GRUNDLAENGE}) zum ab-Preis.`);
     const prices = m.laengen.map(l => l.preis).filter(Boolean);
     if (prices.length && m.preisAb !== prices[0]) throw new Error(`${where}: ab-Preis muss dem Preis der Grundlänge entsprechen.`);
+    if (m.laengen[0].leergewicht !== m.leergewicht) throw new Error(`${where}: Leergewicht im JSON-LD muss dem Wert der ersten (kürzeren) Variante entsprechen.`);
     if (!Array.isArray(m.bilder) || !m.bilder.length) throw new Error(`${where}: mindestens ein Bild nötig.`);
     for (const b of m.bilder) {
       if (!b.src || !b.alt || typeof b.beispiel !== 'boolean') throw new Error(`${where}: Bild unvollständig.`);
@@ -85,7 +90,8 @@ export function models(root = ROOT) {
     if (m.description.length > 160) throw new Error(`${where}: Description länger als 160 Zeichen.`);
     if (m.preisAb !== null && !m.description.includes(euro(m.preisAb))) throw new Error(`${where}: Description nennt nicht den ab-Preis.`);
     if (m.preisAb === null && (!m.description.includes('Preis auf Anfrage') || /\d[\d.]*\s*€/.test(m.description))) throw new Error(`${where}: ohne Preis nur „Preis auf Anfrage“, kein Eurobetrag in der Description.`);
-    if (m.maxBootslaenge !== null && !/^\d,\d{2} m$/.test(m.maxBootslaenge)) throw new Error(`${where}: ungültige maximale Bootslänge.`);
+    // Robin 17.11.2026, A-008: keine maximale Bootslänge angeben.
+    if (m.maxBootslaenge != null) throw new Error(`${where}: maximale Bootslänge nicht angeben. Nur Anhängerlänge bzw. Grundlänge; weitere Maße auf Anfrage.`);
     if (!Array.isArray(m.bootstypen) || !m.bootstypen.length) throw new Error(`${where}: bootstypen fehlt.`);
   }
   return records;
@@ -107,7 +113,7 @@ export function faqs(m) {
   list.push([`Darf ich mit dem HEKU ${m.name} 100 km/h fahren?`, m.tempo100.serie
     ? `Der ${m.name} ist serienmäßig für Tempo 100 zugelassen. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Zugfahrzeug ab: Faktor 0,3 der Leermasse, ABS/ABV, geeignete Reifen, richtige Stützlast und die Tempo-100-Plakette.`
     : `Tempo 100 ist beim ${m.name} optional und kostet mit dem Radstoßdämpfer-Paket ${m.tempo100.option} €. Ob das Gespann 100 km/h fahren darf, hängt zusätzlich vom Masseverhältnis zum Zugfahrzeug, ABS/ABV, geeigneten Reifen, der Stützlast und der Tempo-100-Plakette ab.`]);
-  if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt.${m.maxBootslaenge ? ` Die maximale Bootslänge beträgt ${m.maxBootslaenge}.` : ''} ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
+  if (m.klasse !== 'ungebremst') list.push([`Welche Länge hat der HEKU ${m.name}?`, `Der ${m.name} wird in ${GRUNDLAENGE} Grundlänge gefertigt.${m.name === 'B 2700' ? ' Weitere Maße auf Anfrage.' : ''} ${laengenZuschlagText(m)} (inkl. MwSt.).`]);
   list.push([`Wie lange dauert die Lieferung des HEKU ${m.name}?`, `Jeder HEKU-Anhänger wird auf Bestellung gefertigt, die Lieferzeit liegt bei ca. 2 bis 3 Wochen. Sie holen den Anhänger im Werk Bunzlauer Str. 6, 33719 Bielefeld ab (Mo bis Fr 08:00 bis 12:30 und 13:00 bis 16:30 Uhr). Eine Anlieferung wird separat kalkuliert.`]);
   list.push([`Kann ich den HEKU ${m.name} zurückgeben?`, `Nein. Jeder HEKU-Bootsanhänger wird nach Ihren Bootsdaten einzeln gefertigt; für Einzelanfertigungen besteht kein Widerrufsrecht. Die Einzelheiten stehen in unseren AGB.`]);
   list.push([`Wann muss der HEKU ${m.name} zur Hauptuntersuchung?`, m.klasse === 'ungebremst'
@@ -125,9 +131,11 @@ const offerFor = (m, url) => ({
   availability: 'https://schema.org/BackOrder',
   availabilityStarts: committedAvailabilityStarts(),
   seller: { '@id': ORG },
-  // Abholung im Werk. Kein Versandpreis und kein doesNotShip: der Merchant-Feed
-  // nennt dieselbe Abholung ohne Versandkosten, sonst widersprechen sich Feed und JSON-LD.
-  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'DE' } },
+  // Abholung im Werk. shippingDetails entfällt (A-038): das unvollständige Objekt
+  // nur mit Ziel DE löste die GSC-Warnung „Feld shippingRate fehlt“ aus.
+  // Kein shippingRate 0 (wirkte wie Gratisversand), kein doesNotShip plus Ziel DE.
+  // Pickup und availableAtOrFrom bleiben. Der Merchant-Feed nennt dieselbe
+  // Abholung (Label abholung-bielefeld) ohne Versandkosten.
   availableDeliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModePickUp',
   availableAtOrFrom: { '@type': 'Place', name: 'HEKU Fahrzeugbau GmbH', address: { '@type': 'PostalAddress', streetAddress: 'Bunzlauer Straße 6', addressLocality: 'Bielefeld', postalCode: '33719', addressRegion: 'Nordrhein-Westfalen', addressCountry: 'DE' } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'DE', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted', merchantReturnLink: BASE + '/agb.html#ausschluss-einzelanfertigung' }
@@ -147,7 +155,7 @@ export function schemaFor(m) {
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Zulässiges Gesamtgewicht', value: m.zgg, unitCode: 'KGM' },
       { '@type': 'PropertyValue', name: 'Zuladung ca.', value: m.zuladung, unitCode: 'KGM' },
-      ...(m.maxBootslaenge ? [{ '@type': 'PropertyValue', name: 'Max. Bootslänge', value: m.maxBootslaenge }] : []),
+      { '@type': 'PropertyValue', name: 'Leergewicht', value: m.leergewicht, unitCode: 'KGM' },
       { '@type': 'PropertyValue', name: 'Bremse', value: k.bremse },
       { '@type': 'PropertyValue', name: 'Achsen', value: k.achsen },
       { '@type': 'PropertyValue', name: 'Zulassung', value: zulassungLabel[m.zulassung] },
@@ -173,20 +181,21 @@ function renderBody(m, all) {
   const rows = [
     ['Zulässiges Gesamtgewicht', kg(m.zgg)],
     ['Zuladung ca.', kg(m.zuladung)],
+    ['Leergewicht', leergewichtZelle(m)],
     m.laengen.length ? ['Länge', m.laengen.map(l => l.laenge).join(' / ')] : null,
     m.lichtleiste ? ['Lichtleiste', m.lichtleiste] : null,
     ['Achsen', k.achsen],
     ['Bremse', k.bremse],
     ['Zulassung', zulassungLabel[m.zulassung]],
     ['Tempo 100', m.tempo100.serie ? 'serienmäßig zugelassen' : `optional, Radstoßdämpfer-Paket + ${m.tempo100.option} €`],
-    ['Leergewicht', m.leergewicht], ['Bereifung', m.bereifung], ['Max. Bootslänge', m.maxBootslaenge]
+    ['Bereifung', m.bereifung]
   ].filter(r => r && r[1] !== null && r[1] !== undefined);
   const variants = m.laengen.length > 1 || (m.laengen.length === 1 && m.klasse !== 'einachser') ? `
       <div class="table-wrap">
         <table class="model-table">
-          <thead><tr><th>Länge</th><th>Zuladung ca.</th><th>Preis</th></tr></thead>
+          <thead><tr><th>Länge</th><th>Zuladung ca.</th><th>Leergewicht</th><th>Preis</th></tr></thead>
           <tbody>
-${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}</div></td><td>${e(kg(l.zuladung))}</td><td><div class="model-price">${l.preis ? 'ab ' + e(euro(l.preis)) : 'auf Anfrage'}</div></td></tr>`).join('\n')}
+${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}</div></td><td>${e(kg(l.zuladung))}</td><td>${e(leerKg(l.leergewicht))}</td><td><div class="model-price">${l.preis ? 'ab ' + e(euro(l.preis)) : 'auf Anfrage'}</div></td></tr>`).join('\n')}
           </tbody>
         </table>
       </div>` : '';
@@ -198,14 +207,14 @@ ${m.laengen.map(l => `            <tr><td><div class="model-name">${e(l.laenge)}
           <li>Kielauflage vorne, Langauflage bzw. Polsterkissen hinten</li>
           <li>ausziehbare Beleuchtung</li>
           <li>eigenentwickelte wasserdichte Radnabe mit 5 Jahren Garantie (<a href="wasserdichte-radnabe.html">mehr zur Radnabe</a>)</li>
-          <li>feuerverzinkt nach DIN 1461</li>
+          <li>feuerverzinkt nach DIN EN ISO 1461</li>
           <li>Betriebserlaubnis (CoC)</li>${m.zgg <= 500 ? '\n          <li>zerlegbar</li>' : ''}
         </ul>`
     : `<ul>
           <li><strong>Motorboot-Ausführung:</strong> Rückfahrautomatik, Kielrollen, Langauflagen mit Gewindespindeln, Stützrad, Windenstand mit Sicherheitswinde (horizontal und vertikal verstellbar), Einzelradfederung, 4 Verzurrösen</li>
           <li><strong>Segelboot-Ausführung:</strong> Rückfahrautomatik, Stützrad, verstellbare Bugstütze, 4 verstellbare Rumpfstützen, Kielauflage in Achshöhe, 4 Verzurrösen</li>
           <li>eigenentwickelte wasserdichte Radnabe mit 5 Jahren Garantie (<a href="wasserdichte-radnabe.html">mehr zur Radnabe</a>)</li>
-          <li>feuerverzinkt nach DIN 1461</li>
+          <li>feuerverzinkt nach DIN EN ISO 1461</li>
           <li>${e(zulassungLabel[m.zulassung])}</li>
         </ul>`;
   const daempfer = m.klasse === 'tandem' ? 'artikel/50249.html' : 'artikel/50248.html';

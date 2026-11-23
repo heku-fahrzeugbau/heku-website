@@ -78,6 +78,8 @@ export function catalog(root=ROOT) {
     if(typeof record.name!=='string'||typeof record.description!=='string'||typeof record.price!=='string'||typeof record.image!=='string') throw new Error('Produktfelder haben einen ungültigen Datentyp: '+sku);
     const name=plain(record.name??''), desc=plain(record.description??''), price=String(record.price??''), src=String(record.image??'');
     if(!name||!/^\d+\.\d{2}$/.test(price)||Number(price)<=0) throw new Error('Fehlender Name oder ungültiger Preis: '+sku);
+    if(!desc) throw new Error('Beschreibung fehlt: '+sku);
+    if(/PRÜFEN|patentiert/i.test(desc)) throw new Error('Beschreibung enthält unzulässige Wörter: '+sku);
     const priceText=Number(price).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
     if(!new RegExp(`^assets/produkte/produkt-${id}\\.(jpg|jpeg|png|webp)$`,'i').test(src)||!fs.existsSync(path.join(root,src))) throw new Error('Ungültiges/fehlendes Artikelbild: '+sku);
     const hash=createHash('sha256').update(fs.readFileSync(path.join(root,src))).digest('hex');

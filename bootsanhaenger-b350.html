@@ -60,6 +60,12 @@
         },
         {
           "@type": "PropertyValue",
+          "name": "Leergewicht",
+          "value": 75,
+          "unitCode": "KGM"
+        },
+        {
+          "@type": "PropertyValue",
           "name": "Bremse",
           "value": "ungebremst"
         },
@@ -89,13 +95,6 @@
         "availabilityStarts": "2026-12-07T00:00:00+01:00",
         "seller": {
           "@id": "https://heku-fahrzeugbau.de/#organization"
-        },
-        "shippingDetails": {
-          "@type": "OfferShippingDetails",
-          "shippingDestination": {
-            "@type": "DefinedRegion",
-            "addressCountry": "DE"
-          }
         },
         "availableDeliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModePickUp",
         "availableAtOrFrom": {
@@ -288,7 +287,7 @@
     .usp-title { font-size: 14px; font-weight: 600; color: var(--schwarz); margin-bottom: 8px; }
     .usp-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
 
-    /* PRODUCT NAV – interne Links prominent oben */
+    /* PRODUCT NAV: interne Links prominent oben */
     .product-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 0 56px; }
     .product-nav-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; transition: all 0.2s; }
     .product-nav-card:hover { border-color: var(--rot); background: #fff; box-shadow: 0 4px 16px rgba(232,0,14,0.08); }
@@ -573,6 +572,7 @@
           <tbody>
             <tr><td>Zulässiges Gesamtgewicht</td><td><strong>350 kg</strong></td></tr>
             <tr><td>Zuladung ca.</td><td><strong>275 kg</strong></td></tr>
+            <tr><td>Leergewicht</td><td><strong>~75 kg / ~85 kg</strong></td></tr>
             <tr><td>Länge</td><td><strong>3,80 m / 4,80 m</strong></td></tr>
             <tr><td>Lichtleiste</td><td><strong>+ 0,70 m</strong></td></tr>
             <tr><td>Achsen</td><td><strong>Einachser</strong></td></tr>
@@ -594,10 +594,10 @@
       <p class="body-text">Grundpreis 1.375 € inkl. 19 % MwSt., ab Werk Bielefeld. Jeder Anhänger wird auf Bestellung gefertigt; Auflagen, Rollen und Stützen richten sich nach Ihrem Boot.</p>
       <div class="table-wrap">
         <table class="model-table">
-          <thead><tr><th>Länge</th><th>Zuladung ca.</th><th>Preis</th></tr></thead>
+          <thead><tr><th>Länge</th><th>Zuladung ca.</th><th>Leergewicht</th><th>Preis</th></tr></thead>
           <tbody>
-            <tr><td><div class="model-name">3,80 m</div></td><td>275 kg</td><td><div class="model-price">ab 1.375 €</div></td></tr>
-            <tr><td><div class="model-name">4,80 m</div></td><td>265 kg</td><td><div class="model-price">ab 1.475 €</div></td></tr>
+            <tr><td><div class="model-name">3,80 m</div></td><td>275 kg</td><td>~75 kg</td><td><div class="model-price">ab 1.375 €</div></td></tr>
+            <tr><td><div class="model-name">4,80 m</div></td><td>265 kg</td><td>~85 kg</td><td><div class="model-price">ab 1.475 €</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -625,7 +625,7 @@
           <li>Kielauflage vorne, Langauflage bzw. Polsterkissen hinten</li>
           <li>ausziehbare Beleuchtung</li>
           <li>eigenentwickelte wasserdichte Radnabe mit 5 Jahren Garantie (<a href="wasserdichte-radnabe.html">mehr zur Radnabe</a>)</li>
-          <li>feuerverzinkt nach DIN 1461</li>
+          <li>feuerverzinkt nach DIN EN ISO 1461</li>
           <li>Betriebserlaubnis (CoC)</li>
           <li>zerlegbar</li>
         </ul>

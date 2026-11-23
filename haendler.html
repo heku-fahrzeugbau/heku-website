@@ -596,14 +596,14 @@
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN EN ISO 1461 <div class="marquee-dot"></div></div>
       <div class="marquee-item">MADE IN GERMANY <div class="marquee-dot"></div></div>
       <div class="marquee-item">EIGENENTWICKELTE RADNABE <div class="marquee-dot"></div></div>
       <div class="marquee-item">TÜV-GEPRÜFT <div class="marquee-dot"></div></div>
       <div class="marquee-item">EINZELFERTIGUNG <div class="marquee-dot"></div></div>
       <div class="marquee-item">5 JAHRE GARANTIE <div class="marquee-dot"></div></div>
       <div class="marquee-item">AB WERK BIELEFELD <div class="marquee-dot"></div></div>
-      <div class="marquee-item">FEUERVERZINKT DIN 1461 <div class="marquee-dot"></div></div>
+      <div class="marquee-item">FEUERVERZINKT DIN EN ISO 1461 <div class="marquee-dot"></div></div>
     </div>
   </div>
 
@@ -626,7 +626,7 @@
         <div class="why-card reveal reveal-delay-2">
           <div class="why-card-num">02</div>
           <div class="why-card-title">Qualität die Kunden empfehlen</div>
-          <div class="why-card-text">Tauchbad feuerverzinktes Fahrgestell nach DIN 1461, Edelstahlbremsseile, TÜV-Typgenehmigung bis 3.500 kg. Kunden die HEKU kaufen, kommen wieder.</div>
+          <div class="why-card-text">Tauchbad feuerverzinktes Fahrgestell nach DIN EN ISO 1461, Edelstahlbremsseile, TÜV-Typgenehmigung bis 3.500 kg. Kunden die HEKU kaufen, kommen wieder.</div>
         </div>
         <div class="why-card reveal reveal-delay-3">
           <div class="why-card-num">03</div>
@@ -788,7 +788,7 @@
             <div class="kontakt-info-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rot)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
-            <span>info@heku-fahrzeugbau.de</span>
+            <span><a href="mailto:info@heku-fahrzeugbau.de" style="color:inherit">info@heku-fahrzeugbau.de</a></span>
           </div>
           <div class="kontakt-info-item">
             <div class="kontakt-info-icon">
@@ -1258,7 +1258,7 @@
       try {
         const formData = new FormData();
         formData.append('access_key', '324e7405-8550-47b8-a9c8-bd4aac27bcc7');
-        formData.append('subject', (region || ort) ? `Händleranfrage – ${firma} (${region || ort})` : `Händleranfrage – ${firma}`);
+        formData.append('subject', (region || ort) ? `Händleranfrage: ${firma} (${region || ort})` : `Händleranfrage: ${firma}`);
         formData.append('anrede', anrede);
         formData.append('firma', firma);
         formData.append('vorname', vorname);
@@ -1289,7 +1289,7 @@
               user_id: 'uxnGyFrCsW9OCTzcw',
               template_params: {
                 email, anrede, vorname, nachname,
-                modell: 'Händler-Partnerschaftsanfrage – ' + firma
+                modell: 'Händler-Partnerschaftsanfrage: ' + firma
               }
             })
           }).catch(() => {});

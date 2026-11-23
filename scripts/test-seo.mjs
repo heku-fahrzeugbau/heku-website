@@ -161,7 +161,7 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
 
 test('Query-led pages state only catalog facts and link real accessory articles',()=>{
  const segel=read('segelbootanhaenger.html');
- assert.match(segel,/<title>Segelboot Anhänger kaufen \| Anhänger für Segelboot \| HEKU<\/title>/);
+ assert.match(segel,/<title>Segelboot Anhänger vom Hersteller: B 350 bis B 3500 \| HEKU<\/title>/);
  assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen: <br>Anhänger für Segelboot<\/h1>/);
  assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
@@ -175,7 +175,7 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.equal((segel.match(/<h1\b/g)||[]).length,1);
 
  const custom=read('bootsanhaenger-nach-mass.html');
- assert.match(custom,/<title>Bootsanhänger nach Maß \| maßgeschneiderter Anhänger \| HEKU<\/title>/);
+ assert.match(custom,/<title>Maßgeschneiderter Anhänger: Bootsanhänger nach Maß \| HEKU<\/title>/);
  assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß: <br>maßgeschneiderter Anhänger<\/h1>/);
  assert.match(custom,/Umbau und Nachrüstung bestehender Trailer/);
  assert.match(custom,/Rollen statt Gummischiene/);
@@ -186,11 +186,11 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.doesNotMatch(custom.slice(custom.indexOf('Umbau und Nachrüstung'), custom.indexOf('TECHNISCHE BASIS')),/patentiert|seit 1959|65\+/i);
 
  const tempo=read('100kmh-regelung.html');
- assert.match(tempo,/<title>100-km\/h-Zulassung für Anhänger: Voraussetzungen \| HEKU<\/title>/);
+ assert.match(tempo,/<title>100 km\/h Zulassung Anhänger: 750 kg, Reifen, Bußgeld \| HEKU<\/title>/);
  // Snippet (19.10.2026): Title <= 60, Description <= 155 Zeichen, HEKU-Fakten Tempo 100 korrekt.
  const tTitle=tempo.match(/<title>([^<]+)<\/title>/)[1], tDesc=tempo.match(/<meta name="description" content="([^"]+)">/)[1];
  assert.ok(tTitle.length<=60,tTitle); assert.ok(tDesc.length<=155,tDesc);
- assert.match(tDesc,/ungebremst Tempo 100 serienmäßig, gebremst optional \+140\/\+280 €/);
+ assert.equal(tDesc,'Tempo 100 mit Anhänger: Zulassung für 750-kg-Anhänger, Reifen mit Index L unter 6 Jahren, Plakette und Bußgeld laut BKatV. Mit Rechenbeispiel.');
  assert.equal(tempo.match(/<meta property="og:title" content="([^"]+)">/)[1],tTitle);
  assert.equal(tempo.match(/<meta property="og:description" content="([^"]+)">/)[1],tDesc);
  assert.match(tempo,/id="kurzantwort"/);
@@ -224,8 +224,8 @@ test('Query-led pages state only catalog facts and link real accessory articles'
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
  const file='tuev-bootsanhaenger.html', s=read(file);
- assert.match(s,/<title>TÜV für Bootsanhänger: Fristen, Kosten &amp; Prüfpunkte \| HEKU<\/title>/);
- assert.match(s,/<meta name="description" content="HU beim Bootsanhänger: Fristen bis 3,5 t, Kosten und Besonderheiten bei Bootstrailern, Korrosion nach dem Slippen, Radnabe, Bremse, Saisonkennzeichen\.">/);
+ assert.match(s,/<title>Bootstrailer HU: Besonderheiten, Fristen, Kosten \| HEKU<\/title>/);
+ assert.match(s,/<meta name="description" content="HU beim Bootstrailer und Bootsanhänger bis 3,5 t: Fristen, Kosten und Besonderheiten wie Korrosion nach dem Slippen, Bremse und Saisonkennzeichen\.">/);
  assert.match(s,/<h2 class="section-title" id="besonderheiten-bootstrailer">Besonderheiten bei Bootstrailern/);
  assert.doesNotMatch(s,/\[PRÜFEN/);
  assert.match(s,new RegExp(`<link rel="canonical" href="${BASE}/${file}">`));
@@ -779,7 +779,14 @@ test('Ruderbootanhänger FAQ reveals its answer and the video stays within nativ
  const questions=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">/g)];
  const items=[...page.matchAll(/<div class="faq-item">/g)];
  assert.equal(questions.length, items.length);
- assert.ok(questions.length>=4);
+ // A-078 in A-081 entfernt die Lieferzeit-FAQ auf Typseiten bewusst; sichtbar und JSON-LD gleich, mindestens 3 Fragen.
+ assert.ok(questions.length>=3);
+ const visible=[...page.matchAll(/<button class="faq-question" onclick="toggleFaq\(this\)">([\s\S]*?)<span class="faq-icon"><\/span><\/button>\s*<div class="faq-answer"><div class="faq-answer-inner">([\s\S]*?)<\/div><\/div>/g)];
+ assert.equal(visible.length, questions.length);
+ const faq=[...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1])).find(s=>s['@type']==='FAQPage');
+ assert.equal(faq.mainEntity.length, visible.length);
+ assert.deepEqual(faq.mainEntity.map(q=>q.name), visible.map(m=>m[1].trim()));
+ assert.deepEqual(faq.mainEntity.map(q=>q.acceptedAnswer.text), visible.map(m=>m[2].trim()));
  assert.match(page,/function toggleFaq\(btn\)/);
  assert.match(page,/width="576" height="1024"/);
  assert.match(page,/grid-template-columns:minmax\(0,1fr\) 320px/);
@@ -895,9 +902,8 @@ test('Every offer has availability and every product image is an absolute URL',(
       assert.equal(rp&&rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
       assert.equal(rp.applicableCountry,'DE',file);
       assert.equal(rp.merchantReturnLink,'https://heku-fahrzeugbau.de/agb.html#ausschluss-einzelanfertigung',file);
-      // Anhänger: Abholung, kein Standardversand, kein (Gratis-)Versandpreis.
-      assert.deepEqual(node.shippingDetails,{'@type':'OfferShippingDetails',shippingDestination:{'@type':'DefinedRegion',addressCountry:'DE'}},`${file}: shippingDetails`);
-      assert.equal(node.shippingDetails.doesNotShip,undefined,`${file}: doesNotShip`);
+      // Anhänger: Abholung, kein shippingDetails (A-038). Kein shippingRate 0, kein doesNotShip.
+      assert.equal(node.shippingDetails,undefined,`${file}: shippingDetails`);
       assert.equal(node.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
       if(file==='index.html') {
        assert.notEqual(node.url,'https://heku-fahrzeugbau.de/');
@@ -971,9 +977,9 @@ test('Inquiry forms require phone and full address',()=>{
 test('Dealer email subject omits empty parentheses and falls back to the city',()=>{
  const line=read('haendler.html').match(/formData\.append\('subject', ([\s\S]*?)\);/)[1];
  const subject=(firma,region,ort)=>vm.runInNewContext('('+line+')',{firma,region,ort});
- assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage – Firma (Nord)');
- assert.equal(subject('Firma','','Hamburg'),'Händleranfrage – Firma (Hamburg)');
- assert.equal(subject('Firma','',''),'Händleranfrage – Firma');
+ assert.equal(subject('Firma','Nord','Hamburg'),'Händleranfrage: Firma (Nord)');
+ assert.equal(subject('Firma','','Hamburg'),'Händleranfrage: Firma (Hamburg)');
+ assert.equal(subject('Firma','',''),'Händleranfrage: Firma');
 });
 
 // GSC Händlereinträge (19.10.2026): nur von Google unterstützte availability-Werte, Rückgabe und Versand an jedem Angebot mit Preis.
@@ -999,9 +1005,9 @@ test('Merchant listings: Google-supported availability, image, return policy and
       assert.ok(googleAvailability.has(o.availability),`${file}: availability ${o.availability}`);
       assert.equal(o.priceValidUntil,undefined,`${file}: Preise ohne Ablaufdatum`);
       const rp=o.hasMerchantReturnPolicy; assert.ok(rp&&rp.applicableCountry==='DE',`${file}: Rückgabe fehlt`);
-      const sd=o.shippingDetails; assert.ok(sd&&sd.shippingDestination&&sd.shippingDestination.addressCountry==='DE',`${file}: Versand fehlt`);
       if(file.startsWith('artikel/')){
        accessories++;
+       const sd=o.shippingDetails; assert.ok(sd&&sd.shippingDestination&&sd.shippingDestination.addressCountry==='DE',`${file}: Versand fehlt`);
        assert.equal(o.availability,'https://schema.org/InStock',file);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnFiniteReturnWindow',file);
        assert.equal(rp.merchantReturnDays,14,file);
@@ -1010,10 +1016,11 @@ test('Merchant listings: Google-supported availability, image, return policy and
        const d=sd.deliveryTime; assert.equal(d.handlingTime.minValue+d.transitTime.minValue,2,file); assert.equal(d.handlingTime.maxValue+d.transitTime.maxValue,5,file);
       } else {
        trailers++;
+       assert.equal(o.shippingDetails,undefined,`${file}: kein shippingDetails (Abholung, A-038)`);
+       assert.equal(o.availableDeliveryMethod,'http://purl.org/goodrelations/v1#DeliveryModePickUp',file);
        assert.equal(o.availability,'https://schema.org/BackOrder',file);
        assert.match(String(o.availabilityStarts),/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/,`${file}: BackOrder availabilityStarts`);
        assert.equal(rp.returnPolicyCategory,'https://schema.org/MerchantReturnNotPermitted',file);
-       assert.equal(sd.doesNotShip,undefined,file); assert.equal(sd.shippingRate,undefined,file);
       }
      }
     }
@@ -1031,9 +1038,19 @@ test('Merchant listings: Google-supported availability, image, return policy and
 test('Category pages list model URLs and do not repeat Product offers',()=>{
  const expected={
   'index.html':[
-   ['Bootsanhänger ungebremst','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
-   ['Motorbootanhänger','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
-   ['Tandem-Bootstrailer','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html']
+   ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],
+   ['HEKU B 500','https://heku-fahrzeugbau.de/bootsanhaenger-b500.html'],
+   ['HEKU B 750','https://heku-fahrzeugbau.de/bootsanhaenger-b750.html'],
+   ['HEKU B 900','https://heku-fahrzeugbau.de/bootsanhaenger-b900.html'],
+   ['HEKU B 1100','https://heku-fahrzeugbau.de/bootsanhaenger-b1100.html'],
+   ['HEKU B 1300','https://heku-fahrzeugbau.de/bootsanhaenger-b1300.html'],
+   ['HEKU B 1500','https://heku-fahrzeugbau.de/bootsanhaenger-b1500.html'],
+   ['HEKU B 1800','https://heku-fahrzeugbau.de/bootsanhaenger-b1800.html'],
+   ['HEKU B 2000','https://heku-fahrzeugbau.de/bootsanhaenger-b2000.html'],
+   ['HEKU B 2500','https://heku-fahrzeugbau.de/bootsanhaenger-b2500.html'],
+   ['HEKU B 2700','https://heku-fahrzeugbau.de/bootsanhaenger-b2700.html'],
+   ['HEKU B 3000','https://heku-fahrzeugbau.de/bootsanhaenger-b3000.html'],
+   ['HEKU B 3500','https://heku-fahrzeugbau.de/bootsanhaenger-b3500.html']
   ],
   'bootstrailer.html':[
    ['HEKU B 350','https://heku-fahrzeugbau.de/bootsanhaenger-b350.html'],

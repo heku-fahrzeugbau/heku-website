@@ -49,7 +49,7 @@
     "sku": "50205",
     "category": "winden",
     "name": "Bugstütze mit Masthalter",
-    "description": "",
+    "description": "Bugstütze mit Masthalter, stützt den Bug und nimmt den Mast beim Transport auf",
     "price": "135.00",
     "image": "assets/produkte/produkt-6.jpg"
   },
@@ -85,7 +85,7 @@
     "sku": "50209",
     "category": "winden",
     "name": "Stahlseil verz. mit Haken",
-    "description": "",
+    "description": "Stahlseil verz. mit Haken als Seilzubehör für die Winde",
     "price": "35.00",
     "image": "assets/produkte/produkt-10.jpg"
   },
@@ -130,7 +130,7 @@
     "sku": "50216",
     "category": "rollen",
     "name": "Seitenstützrolle 120×75",
-    "description": "",
+    "description": "Seitenstützrolle 120×75, Kategorie Kiel- und Stützrollen",
     "price": "23.00",
     "image": "assets/produkte/produkt-16.jpg"
   },
@@ -157,7 +157,7 @@
     "sku": "50219",
     "category": "rollen",
     "name": "Kielrolle Ø 90×200 mit U-Halter",
-    "description": "",
+    "description": "Kielrolle Ø 90×200 mit U-Halter, Kategorie Kiel- und Stützrollen",
     "price": "55.00",
     "image": "assets/produkte/produkt-19.jpg"
   },
@@ -175,7 +175,7 @@
     "sku": "50221",
     "category": "rollen",
     "name": "Kielrolle Ø 80×130",
-    "description": "",
+    "description": "Kielrolle Ø 80×130, einzelne Rolle ohne Halter, Kategorie Kiel- und Stützrollen",
     "price": "27.00",
     "image": "assets/produkte/produkt-21.jpg"
   },
@@ -184,7 +184,7 @@
     "sku": "50222",
     "category": "rollen",
     "name": "Kielrolle Ø 90×200",
-    "description": "",
+    "description": "Kielrolle Ø 90×200, Kategorie Kiel- und Stützrollen",
     "price": "30.00",
     "image": "assets/produkte/produkt-22.jpg"
   },
@@ -193,7 +193,7 @@
     "sku": "50223",
     "category": "rollen",
     "name": "POLY-Kielrolle Ø 90×200",
-    "description": "",
+    "description": "POLY-Kielrolle mit den Maßen Ø 90×200 für die Kielauflage des Bootsanhängers",
     "price": "39.00",
     "image": "assets/produkte/produkt-23.jpg"
   },
@@ -202,7 +202,7 @@
     "sku": "50224",
     "category": "rollen",
     "name": "3 Hecksliprollen mit V-Einführung höhenverstellbar",
-    "description": "",
+    "description": "Drei Hecksliprollen mit V-Einführung, höhenverstellbar, Kategorie Kiel- und Stützrollen",
     "price": "295.00",
     "image": "assets/produkte/produkt-24.jpg"
   },
@@ -211,7 +211,7 @@
     "sku": "50225",
     "category": "rollen",
     "name": "Heck-V-Einführung 60 □",
-    "description": "",
+    "description": "Heck-V-Einführung 60 □ zur Führung des Boots beim Slippen",
     "price": "120.00",
     "image": "assets/produkte/produkt-25.jpg"
   },
@@ -238,7 +238,7 @@
     "sku": "50226",
     "category": "auflagen",
     "name": "Langauflage mit U-Halter 60 cm",
-    "description": "",
+    "description": "Langauflage mit U-Halter, Länge 60 cm, Kategorie Auflagen und Kissen",
     "price": "49.00",
     "image": "assets/produkte/produkt-28.jpg"
   },
@@ -247,7 +247,7 @@
     "sku": "50227",
     "category": "auflagen",
     "name": "Langauflage mit U-Halter 90 cm",
-    "description": "",
+    "description": "Langauflage mit U-Halter, Länge 90 cm, Kategorie Auflagen und Kissen",
     "price": "69.00",
     "image": "assets/produkte/produkt-29.jpg"
   },
@@ -256,7 +256,7 @@
     "sku": "50228",
     "category": "auflagen",
     "name": "Polsterkissen mit U-Halter",
-    "description": "",
+    "description": "Polsterkissen mit U-Halter, Kategorie Auflagen und Kissen",
     "price": "48.00",
     "image": "assets/produkte/produkt-30.jpg"
   },
@@ -265,7 +265,7 @@
     "sku": "83011",
     "category": "auflagen",
     "name": "Polsterkissen",
-    "description": "",
+    "description": "Polsterkissen ohne U-Halter, Kategorie Auflagen und Kissen",
     "price": "35.00",
     "image": "assets/produkte/produkt-53.jpg"
   },
@@ -274,7 +274,7 @@
     "sku": "50229",
     "category": "auflagen",
     "name": "Kielauflage, klappbar mit Halter",
-    "description": "",
+    "description": "Klappbare Kielauflage mit Halter, Kategorie Auflagen und Kissen",
     "price": "110.00",
     "image": "assets/produkte/produkt-31.jpg"
   },
@@ -283,7 +283,7 @@
     "sku": "50230",
     "category": "auflagen",
     "name": "Kielauflage mit Polsterkissen für Schlauchboot",
-    "description": "",
+    "description": "Kielauflage mit Polsterkissen für Schlauchboot, Kategorie Auflagen und Kissen",
     "price": "135.00",
     "image": "assets/produkte/produkt-32.jpg"
   },
@@ -310,7 +310,7 @@
     "sku": "50234",
     "category": "auflagen",
     "name": "Laufsteg (Gangway)",
-    "description": "",
+    "description": "Laufsteg (Gangway), bis 6,50 m Fahrgestelllänge, Kategorie Auflagen und Kissen",
     "price": "349.00",
     "image": "assets/produkte/produkt-35.jpg",
     "imageAlt": "Laufsteg aus Riffelblech, Artikel 50234"
@@ -320,7 +320,7 @@
     "sku": "50239",
     "category": "raeder",
     "name": "Komplettrad 145 R 10",
-    "description": "",
+    "description": "Komplettrad in der Größe 145 R 10, im Shop als Reserverad geführt",
     "price": "90.00",
     "image": "assets/produkte/produkt-36.webp"
   },
@@ -329,7 +329,7 @@
     "sku": "50240",
     "category": "raeder",
     "name": "Komplettrad 155 R-13",
-    "description": "",
+    "description": "Komplettrad in der Größe 155 R-13, im Shop als Reserverad geführt",
     "price": "120.00",
     "image": "assets/produkte/produkt-37.jpg"
   },
@@ -338,7 +338,7 @@
     "sku": "50241",
     "category": "raeder",
     "name": "Komplettrad 185 R-14C 8 PR",
-    "description": "",
+    "description": "Komplettrad 185 R-14C 8 PR, in der Preisliste als Reserverad geführt",
     "price": "172.00",
     "image": "assets/produkte/produkt-38.jpg"
   },
@@ -347,7 +347,7 @@
     "sku": "50242",
     "category": "raeder",
     "name": "Komplettrad 195 R-14C 8 PR",
-    "description": "",
+    "description": "Komplettrad in der Größe 195 R-14C 8 PR, im Shop als Reserverad geführt",
     "price": "192.00",
     "image": "assets/produkte/produkt-55.jpg"
   },
@@ -356,7 +356,7 @@
     "sku": "50243",
     "category": "raeder",
     "name": "Reserveradhalter",
-    "description": "",
+    "description": "Reserveradhalter, eigener Artikel in der Kategorie Räder und Reifen",
     "price": "49.00",
     "image": "assets/produkte/produkt-39.jpg"
   },
@@ -383,7 +383,7 @@
     "sku": "50235",
     "category": "sonstiges",
     "name": "Kasten-Sicherungsschloss",
-    "description": "",
+    "description": "Kasten-Sicherungsschloss, Kategorie Weiteres Zubehör",
     "price": "40.00",
     "image": "assets/produkte/produkt-42.jpg"
   },
@@ -392,7 +392,7 @@
     "sku": "50236",
     "category": "sonstiges",
     "name": "V-Gummi für Buganschlag bis Typ 500",
-    "description": "",
+    "description": "V-Gummi als Anlage am Buganschlag, Ausführung bis Typ 500",
     "price": "20.00",
     "image": "assets/produkte/produkt-43.jpg"
   },
@@ -401,7 +401,7 @@
     "sku": "50237",
     "category": "sonstiges",
     "name": "V-Gummi für Buganschlag bis Typ 3500",
-    "description": "",
+    "description": "V-Gummi als Anlage am Buganschlag, Ausführung bis Typ 3500",
     "price": "28.00",
     "image": "assets/produkte/produkt-44.jpg"
   },
@@ -446,7 +446,7 @@
     "sku": "50250",
     "category": "sonstiges",
     "name": "2 Luftsliprollen mit vorderer Gewindespindel",
-    "description": "",
+    "description": "Zwei Luftsliprollen mit vorderer Gewindespindel, Kategorie Weiteres Zubehör",
     "price": "410.00",
     "image": "assets/produkte/produkt-50.jpg"
   },
@@ -455,7 +455,7 @@
     "sku": "50251",
     "category": "sonstiges",
     "name": "4 Luftsliprollen mit vorderer Gewindespindel",
-    "description": "",
+    "description": "Vier Luftsliprollen mit vorderer Gewindespindel, Kategorie Weiteres Zubehör",
     "price": "475.00",
     "image": "assets/produkte/produkt-51.jpg"
   },
@@ -464,7 +464,7 @@
     "sku": "50252",
     "category": "sonstiges",
     "name": "6 Luftsliprollen mit vorderer Gewindespindel",
-    "description": "",
+    "description": "Sechs Luftsliprollen mit vorderer Gewindespindel, Kategorie Weiteres Zubehör",
     "price": "595.00",
     "image": "assets/produkte/produkt-52.jpg"
   },
@@ -473,7 +473,7 @@
     "sku": "85027",
     "category": "beleuchtung",
     "name": "Seitenmarkierungsleuchte LED gelb",
-    "description": "",
+    "description": "LED-Seitenmarkierungsleuchte in Gelb, 12 V, 0,6 W, Schutzart IP 67, Lochabstand 90 mm",
     "price": "20.25",
     "image": "assets/produkte/produkt-54.jpg",
     "technische_daten": [
@@ -488,7 +488,7 @@
     "sku": "85028",
     "category": "beleuchtung",
     "name": "Begrenzungsleuchte LED weiß",
-    "description": "",
+    "description": "Weiße LED-Begrenzungsleuchte für den Bootsanhänger",
     "price": "20.95",
     "image": "assets/produkte/produkt-56.jpg"
   },
@@ -497,7 +497,7 @@
     "sku": "50261",
     "category": "rollen",
     "name": "Kielrolle Ø 60×100",
-    "description": "",
+    "description": "Kielrolle Ø 60×100, Kategorie Kiel- und Stützrollen",
     "price": "10.00",
     "image": "assets/produkte/produkt-57.jpg"
   }
