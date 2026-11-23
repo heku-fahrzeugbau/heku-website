@@ -161,7 +161,7 @@ test('Bootstrailer is the single overview and produkte.html redirects to it',()=
 
 test('Query-led pages state only catalog facts and link real accessory articles',()=>{
  const segel=read('segelbootanhaenger.html');
- assert.match(segel,/<title>Segelboot Anhänger kaufen \| Anhänger für Segelboot \| HEKU<\/title>/);
+ assert.match(segel,/<title>Segelboot Anhänger vom Hersteller: B 350 bis B 3500 \| HEKU<\/title>/);
  assert.match(segel,/<h1 class="page-title">Segelboot Anhänger kaufen: <br>Anhänger für Segelboot<\/h1>/);
  assert.match(segel,/<h2 class="sec-title">Welcher Segelboot Anhänger passt zu Ihrem Boot\?<\/h2>/);
  assert.match(segel,/<h2 class="sec-title">Alle Anhänger für Segelboote im Überblick<\/h2>/);
@@ -175,7 +175,7 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.equal((segel.match(/<h1\b/g)||[]).length,1);
 
  const custom=read('bootsanhaenger-nach-mass.html');
- assert.match(custom,/<title>Bootsanhänger nach Maß \| maßgeschneiderter Anhänger \| HEKU<\/title>/);
+ assert.match(custom,/<title>Maßgeschneiderter Anhänger: Bootsanhänger nach Maß \| HEKU<\/title>/);
  assert.match(custom,/<h1 class="page-title">Bootsanhänger nach Maß: <br>maßgeschneiderter Anhänger<\/h1>/);
  assert.match(custom,/Umbau und Nachrüstung bestehender Trailer/);
  assert.match(custom,/Rollen statt Gummischiene/);
@@ -186,11 +186,11 @@ test('Query-led pages state only catalog facts and link real accessory articles'
  assert.doesNotMatch(custom.slice(custom.indexOf('Umbau und Nachrüstung'), custom.indexOf('TECHNISCHE BASIS')),/patentiert|seit 1959|65\+/i);
 
  const tempo=read('100kmh-regelung.html');
- assert.match(tempo,/<title>100-km\/h-Zulassung für Anhänger: Voraussetzungen \| HEKU<\/title>/);
+ assert.match(tempo,/<title>100 km\/h Zulassung Anhänger: 750 kg, Reifen, Bußgeld \| HEKU<\/title>/);
  // Snippet (19.10.2026): Title <= 60, Description <= 155 Zeichen, HEKU-Fakten Tempo 100 korrekt.
  const tTitle=tempo.match(/<title>([^<]+)<\/title>/)[1], tDesc=tempo.match(/<meta name="description" content="([^"]+)">/)[1];
  assert.ok(tTitle.length<=60,tTitle); assert.ok(tDesc.length<=155,tDesc);
- assert.match(tDesc,/ungebremst Tempo 100 serienmäßig, gebremst optional \+140\/\+280 €/);
+ assert.equal(tDesc,'Tempo 100 mit Anhänger: Zulassung für 750-kg-Anhänger, Reifen mit Index L unter 6 Jahren, Plakette und Bußgeld laut BKatV. Mit Rechenbeispiel.');
  assert.equal(tempo.match(/<meta property="og:title" content="([^"]+)">/)[1],tTitle);
  assert.equal(tempo.match(/<meta property="og:description" content="([^"]+)">/)[1],tDesc);
  assert.match(tempo,/id="kurzantwort"/);
@@ -224,8 +224,8 @@ test('Query-led pages state only catalog facts and link real accessory articles'
 
 test('HU guide is indexable, sourced and corrects legacy trailer guidance',()=>{
  const file='tuev-bootsanhaenger.html', s=read(file);
- assert.match(s,/<title>TÜV für Bootsanhänger: Fristen, Kosten &amp; Prüfpunkte \| HEKU<\/title>/);
- assert.match(s,/<meta name="description" content="HU beim Bootsanhänger: Fristen bis 3,5 t, Kosten und Besonderheiten bei Bootstrailern, Korrosion nach dem Slippen, Radnabe, Bremse, Saisonkennzeichen\.">/);
+ assert.match(s,/<title>Bootstrailer HU: Besonderheiten, Fristen, Kosten \| HEKU<\/title>/);
+ assert.match(s,/<meta name="description" content="HU beim Bootstrailer und Bootsanhänger bis 3,5 t: Fristen, Kosten und Besonderheiten wie Korrosion nach dem Slippen, Bremse und Saisonkennzeichen\.">/);
  assert.match(s,/<h2 class="section-title" id="besonderheiten-bootstrailer">Besonderheiten bei Bootstrailern/);
  assert.doesNotMatch(s,/\[PRÜFEN/);
  assert.match(s,new RegExp(`<link rel="canonical" href="${BASE}/${file}">`));
