@@ -569,7 +569,7 @@ test('GA4 basic consent blocks Google until opt-in and keeps every tracked page 
   }
  }
  // Root- und Artikel-HTML plus Produkt-Template. 404.html und die Weiterleitungen produkte.html und karriere.html laden den Manager nicht.
- assert.equal(managedPages,114);
+ assert.equal(managedPages,115);
  assert.match(read('erfahrungen.html'),/src="\/heku-consent-v2\.js\?v=20261009-ga4"/);
  assert.doesNotMatch(read('404.html'),/heku-consent-v2|googletagmanager|gtag\(/);
  assert.doesNotMatch(read('produkte.html'),/heku-consent-v2/);
@@ -1242,4 +1242,11 @@ test('Mobile header keeps the burger separate from the configurator CTA',()=>{
  assert.match(css,/#nav \.nav-right > a\.btn-outline[\s\S]*?display: none !important/);
  assert.match(css,/#nav \.nav-burger[\s\S]*?min-width: 42px[\s\S]*?margin-left: 10px[\s\S]*?padding: 10px/);
  assert.match(css,/#nav \.nav-right > a\.btn-red[\s\S]*?padding-left: 13px[\s\S]*?padding-right: 13px/);
+});
+test('Insurance guide is indexable and linked from each relevant buying and registration guide',()=>{
+ const slug='bootstrailer-versicherung.html';
+ assert.ok(pages().includes(slug));
+ assert.ok(read(slug).includes('rel="canonical" href="'+BASE+'/'+slug+'"'));
+ for(const source of ['zulassung.html','gebrauchten-bootstrailer-kaufen.html','ratgeber-bootsanhaenger.html'])
+   assert.ok(read(source).includes('href="'+slug+'"'),source);
 });
