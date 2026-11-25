@@ -482,12 +482,24 @@ test('Konfigurator: one persistent H1, original step heading as H2',()=>{
  assert.match(s,/<h2 class="step-title">Angaben zu Ihrem Boot<\/h2>/);
  for(const id of ['step1','step2','step3','step4','laenge','breite','gewicht']) assert.equal((s.match(new RegExp('id="'+id+'"','g'))||[]).length,1);
 });
-test('Wohnmobile: primary CTA before contact, existing help preserved',()=>{
+test('Wohnmobile: Restaurierung und persönliche Ersatzteilanfrage statt Neufahrzeugverkauf',()=>{
  const s=read('wohnmobile.html');
- assert.match(s,/<a class="assortment-cta" href="\/bootstrailer.html">Aktuelle Bootsanhänger entdecken<\/a>/);
- assert.ok(s.indexOf('<a class="assortment-cta"')<s.indexOf('>So erreichen Sie uns<'));
- assert.match(s,/Wenn Sie Fragen zu einem früheren HEKU Wohnmobil/);
- assert.match(s,/tel:\+49521200066/);
+ assert.match(s,/Wir bauen keine neuen Wohnmobile mehr/);
+ assert.match(s,/Türeinstiege und Zierleisten/);
+ assert.match(s,/href="mailto:info@heku-fahrzeugbau.de\?subject=/);
+ assert.match(s,/href="tel:\+49521200066"/);
+});
+test('Kaufberatung Saison 2027: Modellvergleich stimmt mit den zentralen Zuladungen überein',()=>{
+ const html=read('bootstrailer.html');
+ const section=html.match(/<section[^>]*id="kaufberatung-2027"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+ assert.ok(section);
+ const models=JSON.parse(read('content/modelle/modelle.json'));
+ for(const name of ['B 750','B 900']){
+  const model=models.find(m=>m.name===name);
+  assert.ok(section.includes('href="'+model.slug+'"'));
+  assert.ok(section.includes(model.zuladung+' kg Zuladung'));
+ }
+ assert.ok(section.includes('href="konfigurator.html"'));
 });
 test('HEKU phone matches Robin’s confirmation: 0521 200066',()=>{
  for(const file of [...fs.readdirSync(ROOT).filter(f=>f.endsWith('.html')), ...pages().filter(f=>f.startsWith('artikel/'))]) {
